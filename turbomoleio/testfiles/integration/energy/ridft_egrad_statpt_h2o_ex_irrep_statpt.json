@@ -1,0 +1,1 @@
+{"@module": "turbomoleio.core.control", "@class": "Energy", "@version": null, "scf": {"@module": "numpy", "@class": "array", "dtype": "float64", "data": [-76.34300618239]}, "scfkin": {"@module": "numpy", "@class": "array", "dtype": "float64", "data": [75.9868947]}, "scfpot": {"@module": "numpy", "@class": "array", "dtype": "float64", "data": [-152.329901]}, "mp2": null}

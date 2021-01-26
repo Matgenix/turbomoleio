@@ -1,0 +1,61 @@
+
+ eiger (ucl-laptop) : TURBOMOLE V7.3 ( 22118 ) 1 Jul 2018 at 20:38:15
+ Copyright (C) 2018 TURBOMOLE GmbH, Karlsruhe
+
+
+    2018-11-21 17:23:02.938 
+
+ coordinate input file not found!
+  $atoms : cannot recognize atomic index list 
+  Fatal error in atodef: cannot assign basis sets 
+  use as maximum basis set dimension:                 10000
+ "test"                                                                         
+  
+ HOMO-LUMO Separation
+   HOMO:     7. a   3 a1    -0.71568641 H =    -19.47483 eV
+   LUMO:     8. b   3 a1    -0.57619174 H =    -15.67898 eV
+   Gap :                    +0.13949467 H =     +3.79585 eV
+ 
+Number of MOs=     28, Electrons=      8.00, Symmetry: c3v  
+ 
+   Nr.   Orbital    Occupation       Energy
+   28. b   6 e                     +2.142579 H =       +58.303 eV
+   27. a   6 e                     +2.096023 H =       +57.036 eV
+   26. b   8 a1                    +1.847634 H =       +50.277 eV
+   25. a   8 a1                    +1.724364 H =       +46.922 eV
+   24. b   5 e                     +1.600385 H =       +43.549 eV
+   23. a   5 e                     +1.542532 H =       +41.974 eV
+   22. b   7 a1                    +0.578290 H =       +15.736 eV
+   21. a   7 a1                    +0.548292 H =       +14.920 eV
+   20. b   4 e                     +0.486539 H =       +13.239 eV
+   19. a   4 e                     +0.467454 H =       +12.720 eV
+   18. b   6 a1                    +0.360781 H =        +9.817 eV
+   17. b   5 a1                    +0.334128 H =        +9.092 eV
+   16. a   6 a1                    +0.317603 H =        +8.642 eV
+   15. a   5 a1                    +0.259607 H =        +7.064 eV
+   14. b   3 e                     +0.162198 H =        +4.414 eV
+   13. a   3 e                     +0.151679 H =        +4.127 eV
+   12. b   2 e                     -0.165965 H =        -4.516 eV
+   11. a   2 e                     -0.177401 H =        -4.827 eV
+   10. b   4 a1                    -0.228907 H =        -6.229 eV
+    9. a   4 a1                    -0.239798 H =        -6.525 eV
+    8. b   3 a1                    -0.576192 H =       -15.679 eV
+    7. a   3 a1       1.000        -0.715686 H =       -19.475 eV
+    6. b   1 e        2.000        -0.807716 H =       -21.979 eV
+    5. a   1 e        2.000        -0.825583 H =       -22.465 eV
+    4. b   2 a1       1.000        -1.166347 H =       -31.738 eV
+    3. a   2 a1       1.000        -1.206319 H =       -32.826 eV
+    2. b   1 a1       1.000       -14.435996 H =      -392.824 eV
+    1. a   1 a1       1.000       -14.457427 H =      -393.407 eV
+
+
+    ------------------------------------------------------------------------
+         total  cpu-time :   0.01 seconds
+         total wall-time :   0.01 seconds
+    ------------------------------------------------------------------------
+
+   ****  eiger : all done  ****
+
+
+    2018-11-21 17:23:02.939 
+

@@ -1,0 +1,206 @@
+{
+  "all_done": true,
+  "header": {
+    "executable": "ridft",
+    "host": "ucl-laptop",
+    "tm_version": "7.3",
+    "tm_build": "22118",
+    "start_time": "2019-07-12 16:40:06.305000"
+  },
+  "centers": {
+    "center_of_mass": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "center_of_charge": [
+      -0.0,
+      0.0,
+      -0.08907541
+    ]
+  },
+  "coordinates": {
+    "coords": [
+      [
+        0.0,
+        0.0,
+        0.12917062
+      ],
+      [
+        1.75612466,
+        0.0,
+        -0.59831614
+      ],
+      [
+        -0.87806233,
+        1.52084857,
+        -0.59831614
+      ],
+      [
+        -0.87806233,
+        -1.52084857,
+        -0.59831614
+      ]
+    ],
+    "species": [
+      "n",
+      "h",
+      "h",
+      "h"
+    ],
+    "charges": [
+      7.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "isotopes": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "basis": {
+    "basis_per_specie": {
+      "n": "def-SV(P)",
+      "h": "def-SV(P)"
+    },
+    "aux_basis_per_specie": {
+      "n": "def-SV(P)",
+      "h": "def-SV(P)"
+    },
+    "number_scf_basis_func": 20,
+    "number_scf_aux_basis_func": 131
+  },
+  "symmetry": {
+    "symbol": "c1",
+    "n_reps": 1,
+    "reps": [
+      "a"
+    ]
+  },
+  "cosmo_header": null,
+  "density_functional_data": {
+    "functional_msg": "M06 meta-GGA functional\n Truhlar functional with 27% HF exchange\n USING XCfun library, see documentation\n XCFun library is being used, version:   1.99000000000000     \nXCFun DFT library Copyright 2009-2011 Ulf Ekstrom and contributors.\nSee http://admol.org/xcfun for more information.\n\nThis is free software; see the source code for copying conditions.\nThere is ABSOLUTELY NO WARRANTY; not even for MERCHANTABILITY or\nFITNESS FOR A PARTICULAR PURPOSE. For details see the documentation.\nScientific users of this library should cite\nU. Ekstrom, L. Visscher, R. Bast, A. J. Thorvaldsen and K. Ruud;\nJ.Chem.Theor.Comp. 2010, DOI: 10.1021/ct100117s\n\n\nXCFun uses functional: m06",
+    "functional_name": "m06",
+    "functional_type": "MHYB",
+    "xcfun": "1.99000000000000",
+    "spherical_gridsize": 3,
+    "gridpoints": 302
+  },
+  "rij_info": {
+    "marij": false,
+    "rij_memory": 1,
+    "rik": true,
+    "ricore": 500
+  },
+  "dftd": null,
+  "pre_scf_run": {
+    "diis": true,
+    "diis_error_vect": "FDS-SDF",
+    "conv_tot_en": 1e-06,
+    "conv_one_e_en": 0.001,
+    "virtual_orbital_shift_on": true,
+    "virtual_orbital_shift_limit": 0.1,
+    "orbital_characterization": "expanded",
+    "restart_file": "mos",
+    "n_occupied_orbitals": 5
+  },
+  "scf_iterations": {
+    "energies": [
+      -56.28467929817,
+      -56.40025311363,
+      -56.43984677096,
+      -56.451636696142,
+      -56.453981690065,
+      -56.454465966564,
+      -56.454561237643,
+      -56.454582639467,
+      -56.454587254219,
+      -56.453310433548
+    ],
+    "first_index": 1,
+    "n_steps": 10,
+    "dampings": [
+      0.7,
+      0.65,
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8,
+      0.85,
+      0.9,
+      0.95
+    ],
+    "converged": true
+  },
+  "scf_energies": {
+    "total_energy": -56.45331043355,
+    "kinetic_energy": 56.11917468313,
+    "potential_energy": -112.57248511668,
+    "virial_theorem": 1.99408120183,
+    "wavefunction_norm": 1.0
+  },
+  "cosmo_results": null,
+  "electrostatic_moments": {
+    "unrestricted_electrons": null,
+    "charge": -0.0,
+    "dipole": {
+      "norm": 0.7448,
+      "moment": [
+        0.002291,
+        0.0,
+        -0.744834
+      ]
+    },
+    "quadrupole": {
+      "trace": -15.416658000000002,
+      "anisotropy": 1.754185,
+      "moment": [
+        [
+          -4.553295,
+          -0.0,
+          0.001151
+        ],
+        [
+          -0.0,
+          -4.555021,
+          -0.0
+        ],
+        [
+          0.001151,
+          -0.0,
+          -6.308342
+        ]
+      ]
+    }
+  },
+  "timings": {
+    "cpu_time": 4.29,
+    "wall_time": 4.4,
+    "end_time": "2019-07-12 16:40:10.679000"
+  },
+  "s2": null,
+  "is_uhf": false,
+  "fermi": null,
+  "integral": {
+    "integral_neglect_threshold": 1.6e-09,
+    "thize": 1e-05,
+    "thime": 5
+  },
+  "pre_escf_run": null,
+  "escf_iterations": null,
+  "escf_gs_total_en": null,
+  "escf_excitations": null,
+  "rdgrad_memory": null,
+  "gradient": null,
+  "egrad_excited_state": null,
+  "statpt_info": null,
+  "relax_info": null,
+  "relax_gradient_values": null,
+  "relax_conv_info": null,
+  "aoforce_numerical_integration": null,
+  "aoforce_analysis": null
+}

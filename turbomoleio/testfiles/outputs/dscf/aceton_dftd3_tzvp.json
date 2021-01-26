@@ -1,0 +1,250 @@
+{
+  "all_done": true,
+  "header": {
+    "executable": "dscf",
+    "host": "ucl-laptop",
+    "tm_version": "7.3",
+    "tm_build": "22118",
+    "start_time": "2019-07-13 01:05:18.273000"
+  },
+  "centers": {
+    "center_of_mass": [
+      -0.0,
+      -0.0,
+      0.0
+    ],
+    "center_of_charge": [
+      -0.00071328,
+      0.15355432,
+      0.0
+    ]
+  },
+  "coordinates": {
+    "coords": [
+      [
+        0.04340035,
+        -2.43303953,
+        0.0
+      ],
+      [
+        2.40289845,
+        1.33092842,
+        0.0
+      ],
+      [
+        -2.44869437,
+        1.25914649,
+        0.0
+      ],
+      [
+        -0.00810063,
+        -0.18289217,
+        0.0
+      ],
+      [
+        2.09020694,
+        3.35088178,
+        0.0
+      ],
+      [
+        -4.02779836,
+        -0.02916167,
+        0.0
+      ],
+      [
+        3.51545227,
+        0.83515949,
+        1.64389798
+      ],
+      [
+        3.51545227,
+        0.83515949,
+        -1.64389798
+      ],
+      [
+        -2.56998075,
+        2.4714595,
+        1.64993688
+      ],
+      [
+        -2.56998075,
+        2.4714595,
+        -1.64993688
+      ]
+    ],
+    "species": [
+      "o",
+      "c",
+      "c",
+      "c",
+      "h",
+      "h",
+      "h",
+      "h",
+      "h",
+      "h"
+    ],
+    "charges": [
+      8.0,
+      6.0,
+      6.0,
+      6.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "isotopes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "basis": {
+    "basis_per_specie": {
+      "o": "def-TZVP",
+      "c": "def-TZVP",
+      "h": "def-TZVP"
+    },
+    "aux_basis_per_specie": {},
+    "number_scf_basis_func": 112,
+    "number_scf_aux_basis_func": null
+  },
+  "symmetry": {
+    "symbol": "c1",
+    "n_reps": 1,
+    "reps": [
+      "a"
+    ]
+  },
+  "cosmo_header": null,
+  "density_functional_data": {
+    "functional_msg": "B-P86 functional\n exchange:    LDA + Becke (B88)\n correlation: LDA (VWN) + Perdew (P86)",
+    "functional_name": "b-p",
+    "functional_type": "GGA",
+    "xcfun": null,
+    "spherical_gridsize": 3,
+    "gridpoints": 302
+  },
+  "rij_info": null,
+  "dftd": {
+    "correction": "D3",
+    "en_corr": -0.005018931
+  },
+  "pre_scf_run": {
+    "diis": true,
+    "diis_error_vect": "FDS-SDF",
+    "conv_tot_en": 1e-06,
+    "conv_one_e_en": 0.001,
+    "virtual_orbital_shift_on": true,
+    "virtual_orbital_shift_limit": 0.1,
+    "orbital_characterization": "expanded",
+    "restart_file": "mos",
+    "n_occupied_orbitals": 16
+  },
+  "scf_iterations": {
+    "energies": [
+      -192.29372814146,
+      -193.08338347268,
+      -193.19547684485,
+      -193.22921374733,
+      -193.2343284737,
+      -193.23583150356,
+      -193.23594199261,
+      -193.23596594359,
+      -193.23596869472,
+      -193.2356482383
+    ],
+    "first_index": 1,
+    "n_steps": 10,
+    "dampings": [
+      0.7,
+      0.65,
+      0.55,
+      0.6,
+      0.65,
+      0.7,
+      0.55,
+      0.6,
+      0.65,
+      0.7
+    ],
+    "converged": true
+  },
+  "scf_energies": {
+    "total_energy": -193.2356482383,
+    "kinetic_energy": 192.64012564901,
+    "potential_energy": -385.87577388731,
+    "virial_theorem": 1.99691815359,
+    "wavefunction_norm": 1.0
+  },
+  "cosmo_results": null,
+  "electrostatic_moments": {
+    "unrestricted_electrons": null,
+    "charge": -0.0,
+    "dipole": {
+      "norm": 1.0973,
+      "moment": [
+        0.001253,
+        1.097314,
+        -0.0
+      ]
+    },
+    "quadrupole": {
+      "trace": -56.837892,
+      "anisotropy": 3.55657,
+      "moment": [
+        [
+          -17.565754,
+          -0.026823,
+          0.0
+        ],
+        [
+          -0.026823,
+          -21.305483,
+          -0.0
+        ],
+        [
+          0.0,
+          -0.0,
+          -17.966656
+        ]
+      ]
+    }
+  },
+  "timings": {
+    "cpu_time": 7.48,
+    "wall_time": 7.76,
+    "end_time": "2019-07-13 01:05:25.976000"
+  },
+  "s2": null,
+  "is_uhf": false,
+  "fermi": null,
+  "integral": {
+    "integral_neglect_threshold": 2.9e-10,
+    "thize": 1e-05,
+    "thime": 5
+  },
+  "pre_escf_run": null,
+  "escf_iterations": null,
+  "escf_gs_total_en": null,
+  "escf_excitations": null,
+  "rdgrad_memory": null,
+  "gradient": null,
+  "egrad_excited_state": null,
+  "statpt_info": null,
+  "relax_info": null,
+  "relax_gradient_values": null,
+  "relax_conv_info": null,
+  "aoforce_numerical_integration": null,
+  "aoforce_analysis": null
+}

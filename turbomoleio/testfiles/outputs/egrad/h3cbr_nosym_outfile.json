@@ -1,0 +1,941 @@
+{
+  "@module": "turbomoleio.output.files",
+  "@class": "EgradOutput",
+  "@version": null,
+  "gradients": [
+    [
+      -0.09996147,
+      -5.740269e-10,
+      0.0634604
+    ],
+    [
+      0.01574765,
+      -0.0422101,
+      0.02783371
+    ],
+    [
+      0.01574765,
+      0.0422101,
+      0.02783371
+    ],
+    [
+      0.07004582,
+      3.319432e-10,
+      0.06391999
+    ],
+    [
+      -0.00157228,
+      1.391234e-10,
+      -0.183058
+    ]
+  ],
+  "dielectric": [
+    [
+      -0.105569,
+      -0.0,
+      -0.070185
+    ],
+    [
+      -0.0,
+      -0.142144,
+      0.0
+    ],
+    [
+      -0.070185,
+      0.0,
+      -0.741739
+    ]
+  ],
+  "dft": {
+    "@module": "turbomoleio.output.data",
+    "@class": "DFTData",
+    "@version": null,
+    "functional": {
+      "@module": "turbomoleio.output.data",
+      "@class": "FunctionalData",
+      "@version": null,
+      "msg": "B-P86 functional\n exchange:    LDA + Becke (B88)\n correlation: LDA (VWN) + Perdew (P86)",
+      "name": "b-p",
+      "func_type": "GGA",
+      "xcfun": null
+    },
+    "ri": null,
+    "spherical_gridsize": 3,
+    "gridpoints": 302,
+    "dispersion_correction": null
+  },
+  "escf": {
+    "@module": "turbomoleio.output.data",
+    "@class": "EscfData",
+    "@version": null,
+    "calc_type": "RPA SINGLET-EXCITATION",
+    "iterations": {
+      "@module": "turbomoleio.output.data",
+      "@class": "EscfIterationData",
+      "@version": null,
+      "steps": [
+        [
+          [
+            "a",
+            0,
+            0.1104432610623871
+          ]
+        ],
+        [
+          [
+            "a",
+            0,
+            0.0190230997462776
+          ]
+        ],
+        [
+          [
+            "a",
+            1,
+            0.001947044437673032
+          ]
+        ],
+        [
+          [
+            "a",
+            3,
+            0.0003570462887097596
+          ]
+        ],
+        [
+          [
+            "a",
+            7,
+            4.814041931370219e-05
+          ]
+        ],
+        [
+          [
+            "a",
+            10,
+            8.13515623576447e-06
+          ]
+        ]
+      ],
+      "converged": true
+    },
+    "residuum_convergence_criterium": 1e-05,
+    "n_occupied_orbitals": 22,
+    "orbital_characterization": "scfconv=6",
+    "max_davidson_iter": 25,
+    "machine_precision": 2.22e-16,
+    "max_core_mem": 500.0,
+    "max_cao_basis_vectors": 19574,
+    "max_treated_vectors": 18,
+    "irrep_data": {
+      "a": {
+        "tensor_space_dim": 660,
+        "n_roots": 10
+      }
+    },
+    "gs_tot_en": -2614.005271579,
+    "excitations": {
+      "a": [
+        {
+          "@module": "turbomoleio.output.data",
+          "@class": "SingleExcitation",
+          "@version": null,
+          "tot_en": -2613.775720134389,
+          "osc_stre": 8.016017144068707e-06,
+          "rot_stre": -4.894968129342401e-16,
+          "dominant_contributions": [
+            {
+              "occ_orb": {
+                "index": 22,
+                "irrep": "a",
+                "energy": -6.5,
+                "spin": null
+              },
+              "virt_orb": {
+                "index": 23,
+                "irrep": "a",
+                "energy": -0.66,
+                "spin": null
+              },
+              "coeff": 99.6
+            }
+          ],
+          "moments_columns": [
+            {
+              "electric_dipole": [
+                -0.007232,
+                0.0,
+                0.000285
+              ],
+              "magnetic_dipole": [
+                -0.0,
+                -0.001695,
+                0.0
+              ],
+              "electric_quadrupole": {
+                "trace": -0.0015840000000000001,
+                "anisotropy": 0.198319,
+                "moment": [
+                  [
+                    -0.091844,
+                    -0.0,
+                    0.068795
+                  ],
+                  [
+                    -0.0,
+                    0.091211,
+                    -0.0
+                  ],
+                  [
+                    0.068795,
+                    -0.0,
+                    -0.000951
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "@module": "turbomoleio.output.data",
+          "@class": "SingleExcitation",
+          "@version": null,
+          "tot_en": -2613.775699405615,
+          "osc_stre": 8.224629162771828e-06,
+          "rot_stre": -9.66648411509241e-16,
+          "dominant_contributions": [
+            {
+              "occ_orb": {
+                "index": 21,
+                "irrep": "a",
+                "energy": -6.5,
+                "spin": null
+              },
+              "virt_orb": {
+                "index": 23,
+                "irrep": "a",
+                "energy": -0.66,
+                "spin": null
+              },
+              "coeff": 99.6
+            }
+          ],
+          "moments_columns": [
+            {
+              "electric_dipole": [
+                -0.0,
+                -0.007331,
+                0.0
+              ],
+              "magnetic_dipole": [
+                0.001693,
+                -0.0,
+                0.0
+              ],
+              "electric_quadrupole": {
+                "trace": 0.0,
+                "anisotropy": 0.198708,
+                "moment": [
+                  [
+                    -0.0,
+                    0.091412,
+                    0.0
+                  ],
+                  [
+                    0.091412,
+                    0.0,
+                    0.069321
+                  ],
+                  [
+                    0.0,
+                    0.069321,
+                    0.0
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "@module": "turbomoleio.output.data",
+          "@class": "SingleExcitation",
+          "@version": null,
+          "tot_en": -2613.706980042843,
+          "osc_stre": 7.823604289623533e-06,
+          "rot_stre": 1.030607351403634e-15,
+          "dominant_contributions": [
+            {
+              "occ_orb": {
+                "index": 22,
+                "irrep": "a",
+                "energy": -6.5,
+                "spin": null
+              },
+              "virt_orb": {
+                "index": 24,
+                "irrep": "a",
+                "energy": 1.6,
+                "spin": null
+              },
+              "coeff": 99.8
+            }
+          ],
+          "moments_columns": [
+            {
+              "electric_dipole": [
+                -0.006272,
+                -0.0,
+                -6e-05
+              ],
+              "magnetic_dipole": [
+                0.0,
+                -0.002314,
+                0.0
+              ],
+              "electric_quadrupole": {
+                "trace": -0.0010170000000000001,
+                "anisotropy": 1.94461,
+                "moment": [
+                  [
+                    -0.292163,
+                    0.0,
+                    -1.08415
+                  ],
+                  [
+                    0.0,
+                    0.291348,
+                    -0.0
+                  ],
+                  [
+                    -1.08415,
+                    -0.0,
+                    -0.000202
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "@module": "turbomoleio.output.data",
+          "@class": "SingleExcitation",
+          "@version": null,
+          "tot_en": -2613.706961396243,
+          "osc_stre": 8.001878573530349e-06,
+          "rot_stre": -3.296274594859549e-15,
+          "dominant_contributions": [
+            {
+              "occ_orb": {
+                "index": 21,
+                "irrep": "a",
+                "energy": -6.5,
+                "spin": null
+              },
+              "virt_orb": {
+                "index": 24,
+                "irrep": "a",
+                "energy": 1.6,
+                "spin": null
+              },
+              "coeff": 99.8
+            }
+          ],
+          "moments_columns": [
+            {
+              "electric_dipole": [
+                -0.0,
+                0.006343,
+                0.0
+              ],
+              "magnetic_dipole": [
+                -0.002316,
+                -0.0,
+                -0.0
+              ],
+              "electric_quadrupole": {
+                "trace": -0.0,
+                "anisotropy": 1.945385,
+                "moment": [
+                  [
+                    -0.0,
+                    -0.291944,
+                    -0.0
+                  ],
+                  [
+                    -0.291944,
+                    0.0,
+                    1.084563
+                  ],
+                  [
+                    -0.0,
+                    1.084563,
+                    -0.0
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "@module": "turbomoleio.output.data",
+          "@class": "SingleExcitation",
+          "@version": null,
+          "tot_en": -2613.66710894843,
+          "osc_stre": 3.446477635523491e-07,
+          "rot_stre": 3.977540936294393e-15,
+          "dominant_contributions": [
+            {
+              "occ_orb": {
+                "index": 22,
+                "irrep": "a",
+                "energy": -6.5,
+                "spin": null
+              },
+              "virt_orb": {
+                "index": 25,
+                "irrep": "a",
+                "energy": 2.71,
+                "spin": null
+              },
+              "coeff": 51.1
+            },
+            {
+              "occ_orb": {
+                "index": 21,
+                "irrep": "a",
+                "energy": -6.5,
+                "spin": null
+              },
+              "virt_orb": {
+                "index": 26,
+                "irrep": "a",
+                "energy": 2.71,
+                "spin": null
+              },
+              "coeff": 48.9
+            }
+          ],
+          "moments_columns": [
+            {
+              "electric_dipole": [
+                -0.0,
+                -0.001236,
+                0.0
+              ],
+              "magnetic_dipole": [
+                -2.6e-05,
+                0.0,
+                0.001177
+              ],
+              "electric_quadrupole": {
+                "trace": -0.0,
+                "anisotropy": 0.021191,
+                "moment": [
+                  [
+                    -0.0,
+                    -0.000341,
+                    0.0
+                  ],
+                  [
+                    -0.000341,
+                    -0.0,
+                    0.01223
+                  ],
+                  [
+                    0.0,
+                    0.01223,
+                    -0.0
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "@module": "turbomoleio.output.data",
+          "@class": "SingleExcitation",
+          "@version": null,
+          "tot_en": -2613.665606953256,
+          "osc_stre": 0.002843863164112558,
+          "rot_stre": 1.384419809116297e-16,
+          "dominant_contributions": [
+            {
+              "occ_orb": {
+                "index": 22,
+                "irrep": "a",
+                "energy": -6.5,
+                "spin": null
+              },
+              "virt_orb": {
+                "index": 26,
+                "irrep": "a",
+                "energy": 2.71,
+                "spin": null
+              },
+              "coeff": 50.3
+            },
+            {
+              "occ_orb": {
+                "index": 21,
+                "irrep": "a",
+                "energy": -6.5,
+                "spin": null
+              },
+              "virt_orb": {
+                "index": 25,
+                "irrep": "a",
+                "energy": 2.71,
+                "spin": null
+              },
+              "coeff": 49.5
+            }
+          ],
+          "moments_columns": [
+            {
+              "electric_dipole": [
+                -0.112054,
+                -0.0,
+                -0.001636
+              ],
+              "magnetic_dipole": [
+                -0.0,
+                0.002253,
+                -0.0
+              ],
+              "electric_quadrupole": {
+                "trace": 0.0077399999999999995,
+                "anisotropy": 1.910539,
+                "moment": [
+                  [
+                    0.057421,
+                    -0.0,
+                    1.101587
+                  ],
+                  [
+                    -0.0,
+                    -0.055976,
+                    0.0
+                  ],
+                  [
+                    1.101587,
+                    0.0,
+                    0.006296
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "@module": "turbomoleio.output.data",
+          "@class": "SingleExcitation",
+          "@version": null,
+          "tot_en": -2613.665599765123,
+          "osc_stre": 0.002813652098252533,
+          "rot_stre": -2.778401634174415e-16,
+          "dominant_contributions": [
+            {
+              "occ_orb": {
+                "index": 21,
+                "irrep": "a",
+                "energy": -6.5,
+                "spin": null
+              },
+              "virt_orb": {
+                "index": 26,
+                "irrep": "a",
+                "energy": 2.71,
+                "spin": null
+              },
+              "coeff": 51.0
+            },
+            {
+              "occ_orb": {
+                "index": 22,
+                "irrep": "a",
+                "energy": -6.5,
+                "spin": null
+              },
+              "virt_orb": {
+                "index": 25,
+                "irrep": "a",
+                "energy": 2.71,
+                "spin": null
+              },
+              "coeff": 48.8
+            }
+          ],
+          "moments_columns": [
+            {
+              "electric_dipole": [
+                0.0,
+                -0.111468,
+                0.0
+              ],
+              "magnetic_dipole": [
+                -0.002253,
+                -0.0,
+                -1.3e-05
+              ],
+              "electric_quadrupole": {
+                "trace": -0.0,
+                "anisotropy": 1.906238,
+                "moment": [
+                  [
+                    -0.0,
+                    -0.056124,
+                    -0.0
+                  ],
+                  [
+                    -0.056124,
+                    0.0,
+                    1.099135
+                  ],
+                  [
+                    -0.0,
+                    1.099135,
+                    -0.0
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "@module": "turbomoleio.output.data",
+          "@class": "SingleExcitation",
+          "@version": null,
+          "tot_en": -2613.663555029604,
+          "osc_stre": 0.03127172958684877,
+          "rot_stre": -3.517239650760538e-15,
+          "dominant_contributions": [
+            {
+              "occ_orb": {
+                "index": 21,
+                "irrep": "a",
+                "energy": -6.5,
+                "spin": null
+              },
+              "virt_orb": {
+                "index": 25,
+                "irrep": "a",
+                "energy": 2.71,
+                "spin": null
+              },
+              "coeff": 48.9
+            },
+            {
+              "occ_orb": {
+                "index": 22,
+                "irrep": "a",
+                "energy": -6.5,
+                "spin": null
+              },
+              "virt_orb": {
+                "index": 26,
+                "irrep": "a",
+                "energy": 2.71,
+                "spin": null
+              },
+              "coeff": 48.1
+            }
+          ],
+          "moments_columns": [
+            {
+              "electric_dipole": [
+                -0.000312,
+                0.0,
+                0.3705
+              ],
+              "magnetic_dipole": [
+                0.0,
+                1e-05,
+                -0.0
+              ],
+              "electric_quadrupole": {
+                "trace": -1.8077699999999999,
+                "anisotropy": 1.271875,
+                "moment": [
+                  [
+                    -0.178523,
+                    0.0,
+                    0.00419
+                  ],
+                  [
+                    0.0,
+                    -0.178755,
+                    -0.0
+                  ],
+                  [
+                    0.00419,
+                    -0.0,
+                    -1.450493
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "@module": "turbomoleio.output.data",
+          "@class": "SingleExcitation",
+          "@version": null,
+          "tot_en": -2613.616755920937,
+          "osc_stre": 0.009013775155721588,
+          "rot_stre": -1.449981166882737e-15,
+          "dominant_contributions": [
+            {
+              "occ_orb": {
+                "index": 19,
+                "irrep": "a",
+                "energy": -10.95,
+                "spin": null
+              },
+              "virt_orb": {
+                "index": 23,
+                "irrep": "a",
+                "energy": -0.66,
+                "spin": null
+              },
+              "coeff": 99.7
+            }
+          ],
+          "moments_columns": [
+            {
+              "electric_dipole": [
+                0.0,
+                0.18655,
+                -0.0
+              ],
+              "magnetic_dipole": [
+                -0.001684,
+                0.0,
+                -0.0
+              ],
+              "electric_quadrupole": {
+                "trace": 0.0,
+                "anisotropy": 1.761889,
+                "moment": [
+                  [
+                    -0.0,
+                    0.162466,
+                    -0.0
+                  ],
+                  [
+                    0.162466,
+                    0.0,
+                    -1.004169
+                  ],
+                  [
+                    -0.0,
+                    -1.004169,
+                    0.0
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "@module": "turbomoleio.output.data",
+          "@class": "SingleExcitation",
+          "@version": null,
+          "tot_en": -2613.616731254137,
+          "osc_stre": 0.00907092816222283,
+          "rot_stre": -2.766998301627959e-16,
+          "dominant_contributions": [
+            {
+              "occ_orb": {
+                "index": 18,
+                "irrep": "a",
+                "energy": -10.96,
+                "spin": null
+              },
+              "virt_orb": {
+                "index": 23,
+                "irrep": "a",
+                "energy": -0.66,
+                "spin": null
+              },
+              "coeff": 99.7
+            }
+          ],
+          "moments_columns": [
+            {
+              "electric_dipole": [
+                -0.187014,
+                0.0,
+                -0.006715
+              ],
+              "magnetic_dipole": [
+                -0.0,
+                -0.001681,
+                -0.0
+              ],
+              "electric_quadrupole": {
+                "trace": 0.024291,
+                "anisotropy": 1.765618,
+                "moment": [
+                  [
+                    0.166266,
+                    0.0,
+                    1.006139
+                  ],
+                  [
+                    0.0,
+                    -0.16075,
+                    -0.0
+                  ],
+                  [
+                    1.006139,
+                    -0.0,
+                    0.018776
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "geometry": {
+    "@module": "turbomoleio.output.data",
+    "@class": "GeometryData",
+    "@version": null,
+    "center_of_mass": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "center_of_charge": [
+      0.0,
+      0.0,
+      -0.19107046
+    ],
+    "molecule": {
+      "@module": "pymatgen.core.structure",
+      "@class": "Molecule",
+      "charge": 0,
+      "spin_multiplicity": 1,
+      "sites": [
+        {
+          "name": "C",
+          "species": [
+            {
+              "element": "C",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            0.0,
+            0.0,
+            -1.609294542225382
+          ],
+          "properties": {}
+        },
+        {
+          "name": "H",
+          "species": [
+            {
+              "element": "H",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            0.5144252528997987,
+            0.8910106799693369,
+            -1.9452652267848616
+          ],
+          "properties": {}
+        },
+        {
+          "name": "H",
+          "species": [
+            {
+              "element": "H",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            0.5144252528997987,
+            -0.8910106799693369,
+            -1.9452652267848616
+          ],
+          "properties": {}
+        },
+        {
+          "name": "H",
+          "species": [
+            {
+              "element": "H",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -1.0288505110913695,
+            0.0,
+            -1.9452652267848616
+          ],
+          "properties": {}
+        },
+        {
+          "name": "Br",
+          "species": [
+            {
+              "element": "Br",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            0.0,
+            0.0,
+            0.3155062005906027
+          ],
+          "properties": {}
+        }
+      ]
+    }
+  },
+  "basis": {
+    "@module": "turbomoleio.output.data",
+    "@class": "BasisData",
+    "@version": null,
+    "basis_per_specie": {
+      "c": "def-SV(P)",
+      "h": "def-SV(P)",
+      "br": "def-SV(P)"
+    },
+    "aux_basis_per_specie": {},
+    "number_scf_basis_func": 52,
+    "number_scf_aux_basis_func": null
+  },
+  "run": {
+    "@module": "turbomoleio.output.data",
+    "@class": "RunData",
+    "@version": null,
+    "host": "ucl-laptop",
+    "start_time": "2019-07-12 23:16:31.463000",
+    "end_time": "2019-07-12 23:16:34.468000",
+    "cpu_time": 2.88,
+    "wall_time": 3.03
+  },
+  "tm": {
+    "@module": "turbomoleio.output.data",
+    "@class": "TurbomoleData",
+    "@version": null,
+    "version": "7.3",
+    "build": "22118",
+    "executable": "egrad"
+  },
+  "cosmo": null,
+  "integral": {
+    "@module": "turbomoleio.output.data",
+    "@class": "IntegralData",
+    "@version": null,
+    "integral_neglect_threshold": 3.3e-11,
+    "thize": 1e-05,
+    "thime": 5
+  },
+  "ex_state": 10
+}

@@ -1,0 +1,209 @@
+{
+  "@module": "turbomoleio.output.files",
+  "@class": "AoforceOutput",
+  "@version": null,
+  "numerical_integration": null,
+  "rotational": {
+    "@module": "turbomoleio.output.data",
+    "@class": "AoforceRotationalData",
+    "@version": null,
+    "b": [
+      56.3661785582,
+      56.3661785582,
+      0.0
+    ],
+    "intensities": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "m": [
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "dipole_moment": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "vibrational": {
+    "@module": "turbomoleio.output.data",
+    "@class": "AoforceVibrationalData",
+    "@version": null,
+    "frequencies": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      4265.84
+    ],
+    "symmetries": [
+      "a1g",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "ir": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      false
+    ],
+    "dDIP_dQ": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "intensities": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "intensities_perc": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "raman": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      true
+    ],
+    "eigenvectors": [
+      [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      [
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      [
+        [
+          0.0,
+          0.0,
+          -0.70711
+        ],
+        [
+          0.0,
+          0.0,
+          -0.70711
+        ]
+      ],
+      [
+        [
+          0.0,
+          0.0,
+          0.70711
+        ],
+        [
+          0.0,
+          0.0,
+          -0.70711
+        ]
+      ]
+    ],
+    "reduced_masses": [
+      1.008,
+      1.008,
+      1.008,
+      1.008,
+      1.008,
+      1.008
+    ],
+    "energies": {
+      "zpve": 0.0097183,
+      "scf": null,
+      "total": null
+    }
+  },
+  "run": {
+    "@module": "turbomoleio.output.data",
+    "@class": "RunData",
+    "@version": null,
+    "host": "ucl-laptop",
+    "start_time": "2019-07-12 23:26:49.347000",
+    "end_time": "2019-07-12 23:26:49.361000",
+    "cpu_time": 0.01,
+    "wall_time": 0.02
+  },
+  "tm": {
+    "@module": "turbomoleio.output.data",
+    "@class": "TurbomoleData",
+    "@version": null,
+    "version": "7.3",
+    "build": "22118",
+    "executable": "force"
+  }
+}

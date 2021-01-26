@@ -1,0 +1,75 @@
+{
+  "all_done": true,
+  "header": {
+    "executable": "relax",
+    "host": "ucl-laptop",
+    "tm_version": "7.3",
+    "tm_build": "22118",
+    "start_time": "2018-11-13 10:04:57.174000"
+  },
+  "centers": {
+    "center_of_mass": null,
+    "center_of_charge": null
+  },
+  "coordinates": null,
+  "basis": null,
+  "symmetry": {
+    "symbol": "c2v",
+    "n_reps": null,
+    "reps": null
+  },
+  "cosmo_header": null,
+  "density_functional_data": null,
+  "rij_info": null,
+  "dftd": null,
+  "pre_scf_run": null,
+  "scf_iterations": null,
+  "scf_energies": null,
+  "cosmo_results": null,
+  "electrostatic_moments": null,
+  "timings": {
+    "cpu_time": 0.02,
+    "wall_time": 0.02,
+    "end_time": "2018-11-13 10:04:57.186000"
+  },
+  "s2": null,
+  "is_uhf": false,
+  "fermi": null,
+  "integral": null,
+  "pre_escf_run": null,
+  "escf_iterations": null,
+  "escf_gs_total_en": null,
+  "escf_excitations": null,
+  "rdgrad_memory": null,
+  "gradient": null,
+  "egrad_excited_state": null,
+  "statpt_info": null,
+  "relax_info": {
+    "optimizations": [
+      "INTERNAL coordinates"
+    ],
+    "thr_int_coord": 1e-07
+  },
+  "relax_gradient_values": {
+    "norm_cartesian": 0.06345,
+    "norm_internal": 0.048142,
+    "max_internal": 0.048142
+  },
+  "relax_conv_info": {
+    "energy_change": {
+      "value": 76.3427619,
+      "thr": 1e-06,
+      "conv": false
+    },
+    "rms_displ": null,
+    "rms_grad": null,
+    "max_displ": null,
+    "max_grad": {
+      "value": 0.0481415,
+      "thr": 0.001,
+      "conv": false
+    }
+  },
+  "aoforce_numerical_integration": null,
+  "aoforce_analysis": null
+}

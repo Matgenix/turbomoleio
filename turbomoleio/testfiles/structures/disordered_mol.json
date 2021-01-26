@@ -1,0 +1,1 @@
+{"@module": "pymatgen.core.structure", "@class": "Molecule", "charge": 0, "spin_multiplicity": 2, "sites": [{"name": "Fe:0.500, Ni:0.500", "species": [{"element": "Fe", "occu": 0.5}, {"element": "Ni", "occu": 0.5}], "xyz": [0.0, 0.0, 0.0], "properties": {}}, {"name": "O", "species": [{"element": "O", "occu": 1}], "xyz": [1.0, 1.0, 1.0], "properties": {}}]}

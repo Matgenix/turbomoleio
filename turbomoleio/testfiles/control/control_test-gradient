@@ -1,0 +1,87 @@
+$title
+dscf
+$operating system unix
+$symmetry c2v
+$redundant    file=coord
+$user-defined bonds    file=coord
+$coord    file=coord
+$intdef    file=coord
+$optimize
+ internal   on
+ redundant  on
+ cartesian  off
+ global     off
+ basis      off
+$atoms
+o  1                                                                           \
+   basis =o def-SV(P)
+h  2-3                                                                         \
+   basis =h def-SV(P)
+$basis    file=basis
+$rundimensions
+   dim(fock,dens)=211
+   natoms=3
+   nshell=10
+   nbf(CAO)=19
+   dim(trafo[SAO<-->AO/CAO])=25
+   rhfshells=1
+   nbf(AO)=18
+$scfmo   file=mos
+$closed shells
+ a1      1-3                                    ( 2 )
+ b1      1                                      ( 2 )
+ b2      1                                      ( 2 )
+$scfiterlimit      200
+$thize     0.10000000E-04
+$thime        5
+$scfdump
+$scfintunit
+ unit=30       size=0        file=twoint
+$scfdiis
+$maxcor    500 MiB  per_core
+$scforbitalshift  automatic=.1
+$drvopt
+   cartesian  on
+   basis      off
+   global     off
+   hessian    on
+   dipole     on
+   nuclear polarizability
+$interconversion  off
+   qconv=1.d-7
+   maxiter=25
+$coordinateupdate
+   dqmax=0.3
+   interpolate  on
+   statistics    5
+$forceupdate
+   ahlrichs numgeo=1  mingeo=3 maxgeo=4 modus=<g|dq> dynamic fail=0.3
+   threig=0.005  reseig=0.005  thrbig=3.0  scale=1.00  damping=0.0
+$forceinit off
+   diag=default
+$energy    file=energy
+$grad          cartesian gradients
+  cycle =      1    SCF energy =      -76.3427618513   |dE/dxyz| =  0.007189
+    0.00000000000000      0.00000000000000     -0.12636613439117      o
+    1.47156989594430      0.00000000000000      1.00289806768955      h
+   -1.47156989594430      0.00000000000000      1.00289806768955      h
+  0.00000000000000D+00  0.00000000000000D+00  0.42282619767347D-02
+  -.35342745543910D-02  0.00000000000000D+00  -.21002264113607D-02
+  0.35342745543909D-02  0.00000000000000D+00  -.21002264113607D-02
+$forceapprox    file=forceapprox
+$dft
+   functional b-p
+   gridsize   m3
+$scfconv   6
+$scfdamp   start=0.700  step=0.050  min=0.050
+$last step     grad
+$orbital_max_rnorm 0.31351846212772E-03
+$last SCF energy change = -76.342762
+$charge from dscf
+         -0.000 (not to be modified here)
+$dipole from dscf
+  x     0.00000000000000    y     0.00000000000000    z     0.83436505783854    a.u.
+   | dipole | =    2.1207604686  debye
+$maximum norm of cartesian gradient = 0.41341734E-01
+$maximum norm of internal gradient = 0.48141504E-01
+$end

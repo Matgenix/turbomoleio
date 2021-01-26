@@ -1,0 +1,47 @@
+
+ eiger (ucl-laptop) : TURBOMOLE V7.3 ( 22118 ) 1 Jul 2018 at 20:38:15
+ Copyright (C) 2018 TURBOMOLE GmbH, Karlsruhe
+
+
+    2018-11-21 17:23:22.691 
+
+ coordinate input file not found!
+  $atoms : cannot recognize atomic index list 
+  Fatal error in atodef: cannot assign basis sets 
+  use as maximum basis set dimension:                 10000
+                                                                                
+  
+ HOMO-LUMO Separation
+   HOMO:     4.     3 a1    -0.20101888 H =     -5.47001 eV
+   LUMO:     5.     4 a1    +0.04252655 H =     +1.15721 eV
+   Gap :                    +0.24354543 H =     +6.62721 eV
+ 
+Number of MOs=     14, Electrons=     10.00, Symmetry: c3v  
+ 
+   Nr.   Orbital    Occupation       Energy
+   14.     6 e                     +2.551641 H =       +69.434 eV
+   13.     8 a1                    +2.229927 H =       +60.679 eV
+   12.     5 e                     +2.022879 H =       +55.045 eV
+   11.     7 a1                    +0.905688 H =       +24.645 eV
+   10.     4 e                     +0.840177 H =       +22.862 eV
+    9.     6 a1                    +0.696416 H =       +18.950 eV
+    8.     5 a1                    +0.673356 H =       +18.323 eV
+    7.     3 e                     +0.498776 H =       +13.572 eV
+    6.     2 e                     +0.125790 H =        +3.423 eV
+    5.     4 a1                    +0.042527 H =        +1.157 eV
+    4.     3 a1       2.000        -0.201019 H =        -5.470 eV
+    3.     1 e        4.000        -0.410193 H =       -11.162 eV
+    2.     2 a1       2.000        -0.766509 H =       -20.858 eV
+    1.     1 a1       2.000       -13.968370 H =      -380.099 eV
+
+
+    ------------------------------------------------------------------------
+         total  cpu-time :   0.01 seconds
+         total wall-time :   0.01 seconds
+    ------------------------------------------------------------------------
+
+   ****  eiger : all done  ****
+
+
+    2018-11-21 17:23:22.692 
+

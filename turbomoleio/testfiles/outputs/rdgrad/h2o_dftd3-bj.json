@@ -1,0 +1,100 @@
+{
+  "all_done": true,
+  "header": {
+    "executable": "rdgrad",
+    "host": "ucl-laptop",
+    "tm_version": "7.3",
+    "tm_build": "22118",
+    "start_time": "2019-07-12 16:54:48.154000"
+  },
+  "centers": {
+    "center_of_mass": null,
+    "center_of_charge": null
+  },
+  "coordinates": null,
+  "basis": null,
+  "symmetry": {
+    "symbol": "c1",
+    "n_reps": 1,
+    "reps": [
+      "a"
+    ]
+  },
+  "cosmo_header": null,
+  "density_functional_data": {
+    "functional_msg": "B-P86 functional\n exchange:    LDA + Becke (B88)\n correlation: LDA (VWN) + Perdew (P86)",
+    "functional_name": "b-p",
+    "functional_type": "GGA",
+    "xcfun": null,
+    "spherical_gridsize": 3,
+    "gridpoints": 302
+  },
+  "rij_info": null,
+  "dftd": null,
+  "pre_scf_run": null,
+  "scf_iterations": null,
+  "scf_energies": null,
+  "cosmo_results": null,
+  "electrostatic_moments": null,
+  "timings": {
+    "cpu_time": 0.05,
+    "wall_time": 0.31,
+    "end_time": "2019-07-12 16:54:48.402000"
+  },
+  "s2": null,
+  "is_uhf": false,
+  "fermi": null,
+  "integral": {
+    "integral_neglect_threshold": 1.8e-11,
+    "thize": 1e-05,
+    "thime": 5
+  },
+  "pre_escf_run": null,
+  "escf_iterations": null,
+  "escf_gs_total_en": null,
+  "escf_excitations": null,
+  "rdgrad_memory": 1,
+  "gradient": {
+    "gradients": [
+      [
+        8.094075e-14,
+        -3.532929e-14,
+        0.04147667
+      ],
+      [
+        -0.02702357,
+        3.887335e-14,
+        -0.02072172
+      ],
+      [
+        0.02702357,
+        4.153627e-14,
+        -0.02072172
+      ]
+    ],
+    "dielectric": [
+      [
+        -0.076592,
+        -0.0,
+        0.0
+      ],
+      [
+        -0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -0.04513
+      ]
+    ]
+  },
+  "egrad_excited_state": null,
+  "statpt_info": null,
+  "relax_info": null,
+  "relax_gradient_values": null,
+  "relax_conv_info": null,
+  "aoforce_numerical_integration": null,
+  "aoforce_analysis": null
+}

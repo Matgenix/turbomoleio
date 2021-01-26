@@ -1,0 +1,285 @@
+{
+  "all_done": true,
+  "header": {
+    "executable": "force",
+    "host": "ucl-laptop",
+    "tm_version": "7.3",
+    "tm_build": "22118",
+    "start_time": "2019-07-12 23:26:49.347000"
+  },
+  "centers": {
+    "center_of_mass": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "center_of_charge": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "coordinates": {
+    "coords": [
+      [
+        0.0,
+        0.0,
+        0.72786195
+      ],
+      [
+        0.0,
+        0.0,
+        -0.72786195
+      ]
+    ],
+    "species": [
+      "h",
+      "h"
+    ],
+    "charges": [
+      1.0,
+      1.0
+    ],
+    "isotopes": [
+      0,
+      0
+    ]
+  },
+  "basis": {
+    "basis_per_specie": {
+      "h": "def-SV(P)"
+    },
+    "aux_basis_per_specie": {},
+    "number_scf_basis_func": 4,
+    "number_scf_aux_basis_func": null
+  },
+  "symmetry": {
+    "symbol": "d6h",
+    "n_reps": 12,
+    "reps": [
+      "a1g",
+      "a2g",
+      "b1g",
+      "b2g",
+      "e1g",
+      "e2g",
+      "a1u",
+      "a2u",
+      "b1u",
+      "b2u",
+      "e1u",
+      "e2u"
+    ]
+  },
+  "cosmo_header": null,
+  "density_functional_data": null,
+  "rij_info": null,
+  "dftd": null,
+  "pre_scf_run": null,
+  "scf_iterations": null,
+  "scf_energies": null,
+  "cosmo_results": null,
+  "electrostatic_moments": null,
+  "timings": {
+    "cpu_time": 0.01,
+    "wall_time": 0.02,
+    "end_time": "2019-07-12 23:26:49.361000"
+  },
+  "s2": null,
+  "is_uhf": false,
+  "fermi": null,
+  "integral": null,
+  "pre_escf_run": null,
+  "escf_iterations": null,
+  "escf_gs_total_en": null,
+  "escf_excitations": null,
+  "rdgrad_memory": null,
+  "gradient": null,
+  "egrad_excited_state": null,
+  "statpt_info": null,
+  "relax_info": null,
+  "relax_gradient_values": null,
+  "relax_conv_info": null,
+  "aoforce_numerical_integration": null,
+  "aoforce_analysis": {
+    "rotational": {
+      "dipole_moment": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "b": [
+        56.3661785582,
+        56.3661785582,
+        0.0
+      ],
+      "intensities": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "m": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    "vibrational": {
+      "frequencies": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        4265.84
+      ],
+      "symmetries": [
+        "a1g",
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "ir": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        false
+      ],
+      "dDIP_dQ": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "intensities": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "intensities_perc": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "raman": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        true
+      ],
+      "eigenvectors": [
+        [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        [
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ]
+        ],
+        [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        [
+          [
+            0.0,
+            0.0,
+            -0.70711
+          ],
+          [
+            0.0,
+            0.0,
+            -0.70711
+          ]
+        ],
+        [
+          [
+            0.0,
+            0.0,
+            0.70711
+          ],
+          [
+            0.0,
+            0.0,
+            -0.70711
+          ]
+        ]
+      ],
+      "reduced_masses": [
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008
+      ],
+      "energies": {
+        "zpve": 0.0097183,
+        "scf": null,
+        "total": null
+      }
+    }
+  }
+}
