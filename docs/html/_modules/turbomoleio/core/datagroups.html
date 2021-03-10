@@ -1,0 +1,997 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>turbomoleio.core.datagroups &mdash; turbomoleio 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> turbomoleio
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datagroups.html">The data group files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../coord.html">The coord file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../definerunner.html">Running define</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../output_parsing.html">Outputs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendix.html">Appendix</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/introduction.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/parsing_logs.html">Output logs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/definerunner.html">Define runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/versioning.html">Versioning</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">turbomoleio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>turbomoleio.core.datagroups</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for turbomoleio.core.datagroups</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># The turbomoleio package, a python interface to Turbomole</span>
+<span class="c1"># for preparing inputs, parsing outputs and other related tools.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (C) 2018-2021 BASF SE, Matgenix SRL.</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of turbomoleio.</span>
+<span class="c1">#</span>
+<span class="c1"># Turbomoleio is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># Turbomoleio is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with turbomoleio (see ~turbomoleio/COPYING). If not,</span>
+<span class="c1"># see &lt;https://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;Utility module for the &quot;data group&quot; model of TurboMole.</span>
+
+<span class="sd">This module contains utility functions to parse, manipulate and write files</span>
+<span class="sd">formatted using the &quot;data group&quot; convention of TurboMole. Examples of files</span>
+<span class="sd">that are written in this fashion are the &quot;control&quot; file, the &quot;coord&quot; file, the</span>
+<span class="sd">&quot;basis&quot; file and many other files written by TurboMole.</span>
+
+<span class="sd">Files using the &quot;data group&quot; model of TurboMole are human readable ASCII files</span>
+<span class="sd">in which data is formally split into consistent &quot;groups&quot;. Each &quot;data group&quot;</span>
+<span class="sd">consists of a keyword starting with a dollar (&quot;$&quot;) sign (e.g. &quot;$symmetry&quot;,</span>
+<span class="sd">&quot;$open shell&quot;, &quot;$optimize&quot; ...) and its associated data. The associated data</span>
+<span class="sd">can be empty or just one value/word but it can also be very large (e.g.</span>
+<span class="sd">molecular orbitals : &quot;$scfmo&quot; data group contained in the &quot;mos&quot; file).</span>
+
+<span class="sd">A complete description of the data group model of TurboMole can be found in</span>
+<span class="sd">the user&#39;s manual, as well as a description of all the keywords available.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+
+<span class="kn">from</span> <span class="nn">monty.json</span> <span class="kn">import</span> <span class="n">MSONable</span>
+
+
+<div class="viewcode-block" id="cleanup_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.cleanup_string">[docs]</a><span class="k">def</span> <span class="nf">cleanup_string</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">cleanup_types</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a cleaned data groups string.</span>
+
+<span class="sd">    This function allows to clean up a data groups string. It allows to :</span>
+<span class="sd">    - remove everything before the first dollar (&quot;$&quot;) sign,</span>
+<span class="sd">    - remove blank lines,</span>
+<span class="sd">    - remove spaces and tabs before &quot;#&quot; comments,</span>
+<span class="sd">    - remove spaces and tabs before &quot;$&quot; signs.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        string (str): A string that should be in the &quot;data group&quot; format of</span>
+<span class="sd">            TurboMole. Typically, this string is read from file (e.g. control,</span>
+<span class="sd">            coord, basis, ...).</span>
+<span class="sd">        cleanup_types (list of str, optional): List of the cleanup types that</span>
+<span class="sd">            should be performed. Valid types are &quot;BEFORE_FIRST_DOLLAR&quot;,</span>
+<span class="sd">            &quot;BLANK_LINES&quot;, &quot;LEADING_SPACES_DOLLAR&quot; and &quot;LEADING_SPACES_HASH&quot;.</span>
+<span class="sd">            Defaults to None in which case all four types of cleanup will be</span>
+<span class="sd">            performed.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: A cleaned up string.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If one of the cleanup_types is not valid, if there is no</span>
+<span class="sd">            dollar (&quot;$&quot;) sign, if one of the dollar (&quot;$&quot;) or hash (&quot;#&quot;) signs</span>
+<span class="sd">            is preceded by characters other than a space or a tab in a line or</span>
+<span class="sd">            if there is no &quot;$end&quot; at the end of the file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;$&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No dollar (&quot;$&quot;) sign in the string.&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cleanup_types</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cleanup_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;BLANK_LINES&quot;</span><span class="p">,</span> <span class="s2">&quot;LEADING_SPACES_DOLLAR&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;LEADING_SPACES_HASH&quot;</span><span class="p">,</span> <span class="s2">&quot;BEFORE_FIRST_DOLLAR&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">cleanup_type</span> <span class="ow">in</span> <span class="n">cleanup_types</span><span class="p">:</span>
+        <span class="c1"># Removing lines before the first dollar sign (except if this dollar</span>
+        <span class="c1"># sign is in a hash comment)</span>
+        <span class="k">if</span> <span class="n">cleanup_type</span> <span class="o">==</span> <span class="s1">&#39;BEFORE_FIRST_DOLLAR&#39;</span><span class="p">:</span>
+            <span class="n">newlines</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">after_first_dollar</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">after_first_dollar</span> <span class="ow">or</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">):</span>
+                    <span class="n">newlines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;$&#39;</span><span class="p">):</span>
+                    <span class="n">after_first_dollar</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">newlines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">lstrip</span><span class="p">())</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">newlines</span><span class="p">)</span>
+        <span class="c1"># Removing all blank lines</span>
+        <span class="k">elif</span> <span class="n">cleanup_type</span> <span class="o">==</span> <span class="s1">&#39;BLANK_LINES&#39;</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\n[ \t]*){2,}&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span>
+                            <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+        <span class="c1"># Removing all spaces and tabs before dollar signs</span>
+        <span class="k">elif</span> <span class="n">cleanup_type</span> <span class="o">==</span> <span class="s1">&#39;LEADING_SPACES_DOLLAR&#39;</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^[ \t]*\$&#39;</span><span class="p">,</span> <span class="s1">&#39;$&#39;</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span>
+                            <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+        <span class="c1"># Removing all spaces before hash signs</span>
+        <span class="k">elif</span> <span class="n">cleanup_type</span> <span class="o">==</span> <span class="s1">&#39;LEADING_SPACES_HASH&#39;</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^[ \t]*#&#39;</span><span class="p">,</span> <span class="s1">&#39;#&#39;</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span>
+                            <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Cleanup of type &quot;</span><span class="si">{}</span><span class="s1">&quot; &#39;</span>
+                             <span class="s1">&#39;is not a valid type.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cleanup_type</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;^[ \t\S]+\$&#39;</span><span class="p">,</span>
+                            <span class="n">string</span><span class="o">=</span><span class="n">string</span><span class="p">,</span>
+                            <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Some character(s) are preceding a &#39;</span>
+                             <span class="s1">&#39;dollar (&quot;$&quot;) sign.&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="s1">&#39;$end&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No &quot;$end&quot; in the string.&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">string</span></div>
+
+
+<div class="viewcode-block" id="remove_comments"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.remove_comments">[docs]</a><span class="k">def</span> <span class="nf">remove_comments</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">comment_types</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a data group string with comment lines removed.</span>
+
+<span class="sd">    Comments or additional information in TurboMole is typically specified in</span>
+<span class="sd">    three different ways : a line starting with a hash (&quot;#&quot;) symbol, a data</span>
+<span class="sd">    group with the keyword &quot;$dummy&quot; (can span multiple lines), anything</span>
+<span class="sd">    after the &quot;$end&quot; keyword or anything after a hash (&quot;#&quot;) symbol (so-called</span>
+<span class="sd">    &quot;inline&quot; comments). This function removes all types of comments in</span>
+<span class="sd">    a data group formatted string. Note also that if a newline is added after</span>
+<span class="sd">    the &quot;$end&quot; keyword if not present.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        string (str): A string that should be in the &quot;data group&quot; format of</span>
+<span class="sd">            TurboMole. Typically, this string is read from file (e.g. control,</span>
+<span class="sd">            coord, basis, ...).</span>
+<span class="sd">        comment_types (:obj:`list`, optional): List of the types of comments</span>
+<span class="sd">            that should be removed. Valid types are &quot;HASH_START&quot;, &quot;DUMMY&quot;,</span>
+<span class="sd">            &quot;AFTER_END&quot; and &quot;HASH_INLINE&quot;. Defaults to None in which case all</span>
+<span class="sd">            four types of comments will be removed.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: A string without the comment lines.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If one of the comment_types is not valid.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">comment_types</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">comment_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;HASH_START&quot;</span><span class="p">,</span> <span class="s2">&quot;DUMMY&quot;</span><span class="p">,</span> <span class="s2">&quot;AFTER_END&quot;</span><span class="p">,</span> <span class="s2">&quot;HASH_INLINE&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">comment_type</span> <span class="ow">in</span> <span class="n">comment_types</span><span class="p">:</span>
+        <span class="c1"># Removing lines starting with a hash symbol</span>
+        <span class="k">if</span> <span class="n">comment_type</span> <span class="o">==</span> <span class="s1">&#39;HASH_START&#39;</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^#.*\n?&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+        <span class="c1"># Removing portions of the file corresponding to a $dummy data group</span>
+        <span class="k">elif</span> <span class="n">comment_type</span> <span class="o">==</span> <span class="s1">&#39;DUMMY&#39;</span><span class="p">:</span>
+            <span class="n">old</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="c1"># Loop is needed because replaced characters are not used in</span>
+            <span class="c1"># consecutive regex searches</span>
+            <span class="k">while</span> <span class="n">old</span> <span class="o">!=</span> <span class="n">string</span><span class="p">:</span>
+                <span class="n">old</span> <span class="o">=</span> <span class="n">string</span>
+                <span class="n">string</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^\$dummy[^$]*\$&#39;</span><span class="p">,</span> <span class="s1">&#39;$&#39;</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span>
+                                <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+            <span class="c1"># Dummy data group at the end of the file</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^\$dummy[\s\S]*\Z&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span>
+                            <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+        <span class="c1"># Removing lines after $end</span>
+        <span class="k">elif</span> <span class="n">comment_type</span> <span class="o">==</span> <span class="s1">&#39;AFTER_END&#39;</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^\$end[\s\S]*\Z&#39;</span><span class="p">,</span> <span class="s1">&#39;$end</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span>
+                            <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+        <span class="c1"># Removing inline comments i.e. #-starting comments in the middle of</span>
+        <span class="c1"># a line (e.g. : &quot;$symmetry c1 # Symmetry of the system&quot;)</span>
+        <span class="c1"># Note that lines starting with a hash symbol will also be replaced</span>
+        <span class="c1"># by a blank line</span>
+        <span class="k">elif</span> <span class="n">comment_type</span> <span class="o">==</span> <span class="s1">&#39;HASH_INLINE&#39;</span><span class="p">:</span>
+            <span class="c1"># Only matches if there is something other than white spaces</span>
+            <span class="c1"># before the hash (&quot;#&quot;) symbol. Only the first capturing group</span>
+            <span class="c1"># is reinserted with the &quot;\1&quot;, while the lookahead (&quot;(?=$)&quot;) is</span>
+            <span class="c1"># checking for the end of the line but leaving it as it is, be it</span>
+            <span class="c1"># a newline or an end of file.</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(^\s*\S.*?)(#.*)(?=$)&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;\1&#39;</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Comment of type &quot;</span><span class="si">{}</span><span class="s1">&quot; &#39;</span>
+                             <span class="s1">&#39;is not a valid type.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">comment_type</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">string</span></div>
+
+
+<div class="viewcode-block" id="split_string_to_dg_list"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.split_string_to_dg_list">[docs]</a><span class="k">def</span> <span class="nf">split_string_to_dg_list</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">cleanup_types</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">remove_comment_types</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Splits a string into a list of data groups.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        string (str): A string that should be in the &quot;data group&quot; format of</span>
+<span class="sd">            TurboMole. Typically, this string is read from file (e.g. control,</span>
+<span class="sd">            coord, basis, ...).</span>
+<span class="sd">        cleanup_types (list of str, optional): List of the cleanup types that</span>
+<span class="sd">            should be performed before splitting the string into a list of</span>
+<span class="sd">            data groups. Valid types are &quot;BEFORE_FIRST_DOLLAR&quot;,</span>
+<span class="sd">            &quot;HASH_START&quot;, &quot;DUMMY&quot;, &quot;AFTER_END&quot; and &quot;BLANK_LINES&quot;. Defaults to</span>
+<span class="sd">            None in which case all five types of comments will be removed.</span>
+<span class="sd">        remove_comment_types (list of str, optional): List of the types of</span>
+<span class="sd">            comments that should be removed before splitting the string into a</span>
+<span class="sd">            list of data groups. Valid types are &quot;BEFORE_FIRST_DOLLAR&quot;,</span>
+<span class="sd">            &quot;HASH_START&quot;, &quot;DUMMY&quot;, &quot;AFTER_END&quot; and &quot;BLANK_LINES&quot;. Defaults to</span>
+<span class="sd">            None in which case all five types of comments will be removed.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: The list of data groups in the string.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If there is no dollar (&quot;$&quot;) sign in the string, i.e.</span>
+<span class="sd">            the string is not or incorrectly formatted with respect to the</span>
+<span class="sd">            data group format of TurboMole.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; split_string_to_dg_list(&quot;$title\n$end\n&quot;)</span>
+<span class="sd">        [&#39;$title\n&#39;, &#39;$end\n&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; split_string_to_dg_list(&quot;no dollar sign&quot;)</span>
+<span class="sd">        []</span>
+<span class="sd">        &gt;&gt;&gt; split_string_to_dg_list(&quot;\n\n$title\n&quot;</span>
+<span class="sd">        ...                         &quot;$optimize\n&quot;</span>
+<span class="sd">        ...                         &quot; internal   on\n&quot;</span>
+<span class="sd">        ...                         &quot; redundant  on\n&quot;</span>
+<span class="sd">        ...                         &quot; cartesian  off\n&quot;</span>
+<span class="sd">        ...                         &quot; global     off\n&quot;</span>
+<span class="sd">        ...                         &quot; basis      off\n&quot;)</span>
+<span class="sd">        [&#39;$title\n&#39;, &#39;$optimize\n internal   on\n redundant  on\n cartesian  off\n global     off\n basis      off\n&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">string</span> <span class="o">=</span> <span class="n">cleanup_string</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="n">string</span><span class="p">,</span> <span class="n">cleanup_types</span><span class="o">=</span><span class="n">cleanup_types</span><span class="p">)</span>
+    <span class="n">string</span> <span class="o">=</span> <span class="n">remove_comments</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="n">string</span><span class="p">,</span> <span class="n">comment_types</span><span class="o">=</span><span class="n">remove_comment_types</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;$&#39;</span> <span class="o">+</span> <span class="n">dg</span> <span class="k">for</span> <span class="n">dg</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;$&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]]</span></div>
+
+
+<div class="viewcode-block" id="remove_dg_from_list"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.remove_dg_from_list">[docs]</a><span class="k">def</span> <span class="nf">remove_dg_from_list</span><span class="p">(</span><span class="n">dg_to_remove</span><span class="p">,</span> <span class="n">dg_list</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns new list with a data group removed from the initial list.</span>
+
+<span class="sd">    This function will remove dg_to_remove from a list of data groups. If the</span>
+<span class="sd">    data group is duplicated, all occurrences are removed. The standard usage</span>
+<span class="sd">    is to remove the data group if it is an exact match (i.e. if the data</span>
+<span class="sd">    group to be removed is followed by a space, a tab, a new line or a return).</span>
+<span class="sd">    One can also remove all data groups starting with `dg_to_remove` by using</span>
+<span class="sd">    strict=False.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dg_to_remove (str): Data group to be removed from the list. Can be</span>
+<span class="sd">            given with or without the dollar (&quot;$&quot;) sign.</span>
+<span class="sd">        dg_list (list): List of strings. Each string should be a data group,</span>
+<span class="sd">            i.e. should start with a dollar (&quot;$&quot;) sign and should not contain</span>
+<span class="sd">            any other dollar sign.</span>
+<span class="sd">        strict (bool): If False, all the data groups starting with</span>
+<span class="sd">            `dg_to_remove` will be removed from the list. Otherwise, the data</span>
+<span class="sd">            group is removed only if it is an exact match of `dg_to_remove`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: The list of data groups with `dg_to_remove` removed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">dg_to_remove</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;$&quot;</span><span class="p">:</span>
+        <span class="n">dg_to_remove</span> <span class="o">=</span> <span class="n">dg_to_remove</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">new_dg_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">strict</span><span class="p">:</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;^\$&#39;</span> <span class="o">+</span> <span class="n">dg_to_remove</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;\s&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;^\$&#39;</span> <span class="o">+</span> <span class="n">dg_to_remove</span>
+    <span class="k">for</span> <span class="n">dg</span> <span class="ow">in</span> <span class="n">dg_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">pattern</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="n">dg</span><span class="p">):</span>
+            <span class="n">new_dg_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_dg_list</span></div>
+
+
+<div class="viewcode-block" id="compare_datagroup_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.compare_datagroup_string">[docs]</a><span class="k">def</span> <span class="nf">compare_datagroup_string</span><span class="p">(</span><span class="n">dg1</span><span class="p">,</span> <span class="n">dg2</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compares to datagroup strings as split from the DataGroups object.</span>
+<span class="sd">    Return True if the two match.</span>
+<span class="sd">    The two strings should have the same number of lines. Each line should have the</span>
+<span class="sd">    same number of chunks. Chunks will be separated using spaces and &quot;=&quot;. Each chunk</span>
+<span class="sd">    should match exactly as a string, except if they are numbers. In that, if a tol</span>
+<span class="sd">    is specified they will be converted to float and their difference should be lower</span>
+<span class="sd">    than the tolerance.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dg1 (str): the first datagroup string to be compared.</span>
+<span class="sd">        dg2 (str): the second datagroup string to be compared.</span>
+<span class="sd">        tol (float): the tolerance allowed when comparing numbers. If None</span>
+<span class="sd">            even the number should match as strings.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if the string match.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">lines1</span> <span class="o">=</span> <span class="n">dg1</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+    <span class="n">lines2</span> <span class="o">=</span> <span class="n">dg2</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines1</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines2</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">for</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">lines1</span><span class="p">,</span> <span class="n">lines2</span><span class="p">):</span>
+        <span class="n">strings1</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\s+|=&quot;</span><span class="p">,</span> <span class="n">l1</span><span class="p">)</span>
+        <span class="n">strings2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\s+|=&quot;</span><span class="p">,</span> <span class="n">l2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">strings1</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">strings2</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">strings1</span><span class="p">,</span> <span class="n">strings2</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">tol</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">f1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">s1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">))</span>
+                    <span class="n">f2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">s2</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">f1</span> <span class="o">-</span> <span class="n">f2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">tol</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="kc">False</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">s1</span> <span class="o">!=</span> <span class="n">s2</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">elif</span> <span class="n">s1</span> <span class="o">!=</span> <span class="n">s2</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="DataGroups"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups">[docs]</a><span class="k">class</span> <span class="nc">DataGroups</span><span class="p">(</span><span class="n">MSONable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generic class for data group formatted files and strings.</span>
+
+<span class="sd">    DataGroups is a generic class for parsing, manipulating and generating</span>
+<span class="sd">    strings/files using the data group format of TurboMole.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dg_list</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes a `DataGroups` class.</span>
+
+<span class="sd">        The DataGroups object defines a set of key-value-like pairs. A data</span>
+<span class="sd">        group is a key starting with a dollar (&quot;$&quot;) sign. The value</span>
+<span class="sd">        corresponding to the data group is called the data block. When</span>
+<span class="sd">        initializing `DataGroups` from a string (e.g. reading a file), comments</span>
+<span class="sd">        and/or unnecessary lines/spaces/... may be present in that string. In</span>
+<span class="sd">        that case, the initial string is kept as a reference. Note that if</span>
+<span class="sd">        changes are applied to the DataGroups object, the initial string is</span>
+<span class="sd">        not updated as comments may interfere with the modifications. The</span>
+<span class="sd">        actual string corresponding to the data group list (`dg_list`) is</span>
+<span class="sd">        always in line with the data group list.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            string (str): A string in the data group format.</span>
+<span class="sd">            dg_list (list of str): A list of the data groups.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">dg_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">string</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Both &quot;string&quot; and &quot;dg_list&quot; are None.&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initial_string</span> <span class="o">=</span> <span class="n">string</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dg_list</span> <span class="o">=</span> <span class="n">split_string_to_dg_list</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="n">string</span><span class="p">,</span>
+                                                   <span class="n">cleanup_types</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                                   <span class="n">remove_comment_types</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dg_list</span> <span class="o">=</span> <span class="n">dg_list</span>
+            <span class="k">if</span> <span class="n">string</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">initial_string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dg_list</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">initial_string</span> <span class="o">=</span> <span class="n">string</span>
+
+<div class="viewcode-block" id="DataGroups.kill_data_group"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.kill_data_group">[docs]</a>    <span class="k">def</span> <span class="nf">kill_data_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Removes `data_group` from this `DataGroups` object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data_group (str): Data group to be removed.</span>
+<span class="sd">            strict (bool): If True `data_group` should be an exact match.</span>
+<span class="sd">                If False, any Data group starting with `data_group` will be</span>
+<span class="sd">                removed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dg_list</span> <span class="o">=</span> <span class="n">remove_dg_from_list</span><span class="p">(</span><span class="n">dg_to_remove</span><span class="o">=</span><span class="n">data_group</span><span class="p">,</span>
+                                           <span class="n">dg_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dg_list</span><span class="p">,</span>
+                                           <span class="n">strict</span><span class="o">=</span><span class="n">strict</span><span class="p">)</span></div>
+
+    <span class="n">kdg</span> <span class="o">=</span> <span class="n">kill_data_group</span>
+
+<div class="viewcode-block" id="DataGroups.add_data_group"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.add_data_group">[docs]</a>    <span class="k">def</span> <span class="nf">add_data_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds `data_group`-&gt;`data_block` to this `DataGroups` object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data_group (str): Data group (key) to be added. The dollar (&quot;$&quot;)</span>
+<span class="sd">                sign will be automatically added if not present.</span>
+<span class="sd">            data_block (str): Data block corresponding to the data group.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: if data_group already exists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">data_group</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;$&#39;</span><span class="p">:</span>
+            <span class="n">data_group</span> <span class="o">=</span> <span class="s1">&#39;$&#39;</span> <span class="o">+</span> <span class="n">data_group</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_data_group</span><span class="p">(</span><span class="n">data_group</span><span class="o">=</span><span class="n">data_group</span><span class="p">,</span>
+                                <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Data group &quot;</span><span class="si">{}</span><span class="s1">&quot; already exists in this &#39;</span>
+                               <span class="s1">&#39;DataGroups object.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_group</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;^\$[a-zA-Z][ \-\w\(\)]*&#39;</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="n">data_group</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Data group should start with a letter and be &#39;</span>
+                             <span class="s1">&#39;followed by alphanumeric characters, a space, &#39;</span>
+                             <span class="s1">&#39;&quot;-&quot;, &quot;_&quot;, &quot;(&quot; or &quot;)&quot;.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data_block</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
+            <span class="n">data_block</span> <span class="o">=</span> <span class="n">data_block</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="k">if</span> <span class="n">data_block</span><span class="o">.</span><span class="n">startswith</span><span class="p">((</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dg_list</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dg_list</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="p">))</span></div>
+
+    <span class="n">adg</span> <span class="o">=</span> <span class="n">add_data_group</span>
+
+<div class="viewcode-block" id="DataGroups.show_data_group"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.show_data_group">[docs]</a>    <span class="k">def</span> <span class="nf">show_data_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">show_from_subfile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">raise_if_multiple_subfiles</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">raise_if_missing_subfile</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">raise_if_regular_and_subfile</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Shows `data_group` from this `DataGroups` object.</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            data_group (str): Data group (key) to be added. The dollar (&quot;$&quot;)</span>
+<span class="sd">                sign will be automatically added if not present.</span>
+<span class="sd">            strict (bool): Whether `data_group` should be an exact match or</span>
+<span class="sd">                if data groups starting with `data_group` are allowed.</span>
+<span class="sd">            default (str): the default value that will be returned if the</span>
+<span class="sd">                data_group is not present in the list. Default is None.</span>
+<span class="sd">            show_from_subfile (bool): If True, will show `data_group` from</span>
+<span class="sd">                within the &quot;subfile&quot; if the data block contains a</span>
+<span class="sd">                &quot;file=FILENAME&quot;. If False the &quot;file=FILENAME&quot; block is simply</span>
+<span class="sd">                returned. This supposes that file exists in the current</span>
+<span class="sd">                directory.</span>
+<span class="sd">            raise_if_multiple_subfiles (bool): Whether to raise an error if</span>
+<span class="sd">                multiple &quot;file=&quot; directives are present in this data group. If</span>
+<span class="sd">                False, just returns the standard control data block.</span>
+<span class="sd">            raise_if_missing_subfile (bool): Whether to raise an error if the</span>
+<span class="sd">                subfile does not exist in the current directory or exists but</span>
+<span class="sd">                is empty. If False, just returns the standard data block.</span>
+<span class="sd">            raise_if_regular_and_subfile (bool): Whether to raise an error if</span>
+<span class="sd">                data group contains both a reference to a file with a</span>
+<span class="sd">                &quot;file=FILENAME&quot; and regular data block options. If</span>
+<span class="sd">                False, just returns the standard data block.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: the value of the selected datagroup. None if no `data_group`</span>
+<span class="sd">                is found.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: if multiple occurrences of `data_group` are found</span>
+<span class="sd">                (and raise_if_multiple_subfiles is True), if the subfile is</span>
+<span class="sd">                missing or empty (and raise_if_missing_subfile is True) or if</span>
+<span class="sd">                regular data block options coexist with a reference to a subfile</span>
+<span class="sd">                 (and raise_if_regular_and_subfile is True).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">data_group</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;$&quot;</span><span class="p">:</span>
+            <span class="n">data_group</span> <span class="o">=</span> <span class="n">data_group</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">if</span> <span class="n">strict</span><span class="p">:</span>
+            <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;^\$&#39;</span> <span class="o">+</span> <span class="n">data_group</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;[=\s]&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;^\$&#39;</span> <span class="o">+</span> <span class="n">data_group</span>
+
+        <span class="n">matches</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">dg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dg_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">pattern</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="n">dg</span><span class="p">):</span>
+                <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">default</span>
+        <span class="n">dollar_data_group</span> <span class="o">=</span> <span class="s1">&#39;$&#39;</span> <span class="o">+</span> <span class="n">data_group</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Found multiple occurrences of data group &#39;</span>
+                               <span class="s1">&#39;&quot;</span><span class="si">{}</span><span class="s1">&quot;.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dollar_data_group</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">strict</span><span class="p">:</span>
+            <span class="n">data_block</span> <span class="o">=</span> <span class="n">matches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">dollar_data_group</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^\$&#39;</span> <span class="o">+</span> <span class="n">data_group</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;[-\w]*&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">matches</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">data_block</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^ &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">match</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">show_from_subfile</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">data_block</span>
+
+        <span class="n">subfiles_count</span> <span class="o">=</span> <span class="n">data_block</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;file=&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">subfiles_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">data_block</span>
+        <span class="k">elif</span> <span class="n">subfiles_count</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_subfile_fname</span><span class="p">(</span><span class="n">data_block</span><span class="o">=</span><span class="n">data_block</span><span class="p">,</span>
+                                               <span class="n">raise_if_regular_and_subfile</span><span class="o">=</span><span class="n">raise_if_regular_and_subfile</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">subfile_string</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">subfile_string</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+                    <span class="n">subfile</span> <span class="o">=</span> <span class="n">DataGroups</span><span class="p">(</span><span class="n">subfile_string</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">subfile</span><span class="o">.</span><span class="n">show_data_group</span><span class="p">(</span><span class="n">data_group</span><span class="o">=</span><span class="n">data_group</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">raise_if_missing_subfile</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;File &quot;</span><span class="si">{}</span><span class="s1">&quot; for data group &quot;</span><span class="si">{}</span><span class="s1">&quot; is &#39;</span>
+                                   <span class="s1">&#39;missing or empty.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">data_group</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">data_block</span>
+        <span class="k">elif</span> <span class="n">raise_if_multiple_subfiles</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Multiple &quot;file=FILENAME&quot; directives.&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">data_block</span></div>
+
+    <span class="n">sdg</span> <span class="o">=</span> <span class="n">show_data_group</span>
+
+<div class="viewcode-block" id="DataGroups.change_data_group"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.change_data_group">[docs]</a>    <span class="k">def</span> <span class="nf">change_data_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Changes the value of the `data_group` to the new `data_block` in this</span>
+<span class="sd">        `DataGroups` object. If the key is not present will be added.</span>
+
+<span class="sd">        It will first apply the kill_data_group and then add_data_group. Note</span>
+<span class="sd">        that in the current implementation, the data group will be moved to</span>
+<span class="sd">        the end of the data groups object (just before $end).</span>
+
+<span class="sd">        If `data_block` is None it is equivalent to kill_data_group. To set</span>
+<span class="sd">        a data group with no explicit value use an empty string for `data_block`</span>
+<span class="sd">        (e.g. to add $uhf the input should be data_group=&quot;uhf&quot; and data_block=&quot;&quot;).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data_group (str): Data group (key) to be changed. The dollar (&quot;$&quot;)</span>
+<span class="sd">                sign will be automatically added if not present.</span>
+<span class="sd">            data_block (str): Data block corresponding to the data group.</span>
+<span class="sd">                If None it will simply kill_data_group for the specified</span>
+<span class="sd">                data_group value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill_data_group</span><span class="p">(</span><span class="n">data_group</span><span class="o">=</span><span class="n">data_group</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">data_block</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_data_group</span><span class="p">(</span><span class="n">data_group</span><span class="o">=</span><span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="o">=</span><span class="n">data_block</span><span class="p">)</span></div>
+
+    <span class="n">cdg</span> <span class="o">=</span> <span class="n">change_data_group</span>
+
+<div class="viewcode-block" id="DataGroups.modify_data_group_options"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.modify_data_group_options">[docs]</a>    <span class="k">def</span> <span class="nf">modify_data_group_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given a data group that allows several options on separate line</span>
+<span class="sd">        (e.g. $dft), updates the values of the options according to the</span>
+<span class="sd">        dictionary provided.</span>
+<span class="sd">        The option dictionary should have the form:</span>
+<span class="sd">        {&quot;option_name1&quot;: &quot;option_name1 option_value&quot;,</span>
+<span class="sd">         &quot;option_name2&quot;: &quot;option_name2=option_value&quot;}.</span>
+<span class="sd">        The key will be used to identify the line to be modified and that line</span>
+<span class="sd">        would be entirely replaced by the value.</span>
+<span class="sd">        Since different options may be defined in different ways, no</span>
+<span class="sd">        attempt is made here to identify the suitable format for the option.</span>
+<span class="sd">        It is responsibility of the caller to specify the line for the option</span>
+<span class="sd">        in the correct format.</span>
+
+<span class="sd">        If the datagroup is not present will be created with the specified options.</span>
+
+<span class="sd">        If the entire data group should be modified it would be safer to use</span>
+<span class="sd">        change_data_group.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data_group (str): Data group (key) to be changed. The dollar (&quot;$&quot;)</span>
+<span class="sd">                sign will be automatically added if not present.</span>
+<span class="sd">            options (dict): The options that should be added or updated. If the</span>
+<span class="sd">                value of one key is None the option will be removed if present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">dg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_data_group</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># start from a line  with a space if dg is not present (should not be empty)</span>
+        <span class="k">if</span> <span class="n">dg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dg</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span>
+
+        <span class="c1"># copy the dict as it will modified</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="n">new_lines</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">dg</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+            <span class="c1"># check if one of the lines matches the options. If yes replace</span>
+            <span class="c1"># the line and remove it from the optiond dict, otherwise keep</span>
+            <span class="c1"># the oriiginal line.</span>
+            <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+                <span class="k">if</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+                    <span class="n">opt_kv</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">opt</span><span class="p">)</span>
+                    <span class="c1"># if None skip the line</span>
+                    <span class="k">if</span> <span class="n">opt_kv</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">new_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;   &quot;</span> <span class="o">+</span> <span class="n">opt_kv</span><span class="p">)</span>
+                    <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+        <span class="c1"># add all the options that were not present in the original set</span>
+        <span class="c1"># except for None. Sorted so that the results are deterministic</span>
+        <span class="n">new_values</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">new_values</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">opt_kv</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">new_values</span><span class="p">):</span>
+            <span class="n">new_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;   &quot;</span> <span class="o">+</span> <span class="n">opt_kv</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">change_data_group</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">new_lines</span><span class="p">))</span></div>
+
+    <span class="n">mdgo</span> <span class="o">=</span> <span class="n">modify_data_group_options</span>
+
+<div class="viewcode-block" id="DataGroups.show_data_group_option"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.show_data_group_option">[docs]</a>    <span class="k">def</span> <span class="nf">show_data_group_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given a data group that allows several options on separate line</span>
+<span class="sd">        (e.g. $dft), returns the value of the option provided.</span>
+
+<span class="sd">        Since each value may be defined in a different way, the returned</span>
+<span class="sd">        value will include anything after the option specified. It is up</span>
+<span class="sd">        to the caller determine if there are symbols like &quot;=&quot; that should</span>
+<span class="sd">        be removed, depending on the data group and option that is queried.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data_group (str): Data group (key) to be shown. The dollar (&quot;$&quot;)</span>
+<span class="sd">                sign will be automatically added if not present.</span>
+<span class="sd">            option (str): The options that should be returned.</span>
+<span class="sd">            default (str): the default value that will be returned if the</span>
+<span class="sd">                data_group or the option are not present in the list.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The value of the option.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">dg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_data_group</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_from_subfile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                  <span class="n">raise_if_missing_subfile</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">default</span>
+
+        <span class="n">compiled_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\s*</span><span class="si">{}</span><span class="s2">(.*)$&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">option</span><span class="p">),</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">dg</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="n">compiled_re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">default</span></div>
+
+    <span class="n">sdgo</span> <span class="o">=</span> <span class="n">show_data_group_option</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">number_of_data_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dg_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+    <span class="n">ndg</span> <span class="o">=</span> <span class="n">number_of_data_groups</span>
+
+<div class="viewcode-block" id="DataGroups.empty"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.empty">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">empty</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates an empty DataGroups object.</span>
+
+<span class="sd">        An empty DataGroups object only contains the &quot;$end\n&quot; data group.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">dg_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;$end</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="DataGroups.as_dict"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.as_dict">[docs]</a>    <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a dictionary representing the DataGroups object.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;@module&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span>
+                <span class="s2">&quot;@class&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                <span class="s2">&quot;string&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_string</span><span class="p">,</span>
+                <span class="s2">&quot;dg_list&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dg_list</span><span class="p">}</span></div>
+
+<div class="viewcode-block" id="DataGroups.from_dict"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates DataGroups object from a dictionary.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;string&#39;</span><span class="p">],</span> <span class="n">dg_list</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;dg_list&#39;</span><span class="p">])</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns string representation of this DataGroups object.</span>
+
+<span class="sd">        The string representation of the DataGroups object is supposed to be</span>
+<span class="sd">        written to a file and used as an input to TurboMole executables.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dg_list</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DataGroups.to_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.to_file">[docs]</a>    <span class="k">def</span> <span class="nf">to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Writes this DataGroups object to a file.</span>
+<span class="sd">        If the file exists it will be overwritten.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): Name of the file to which this DataGroups object</span>
+<span class="sd">                should be written.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="DataGroups.from_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.from_file">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates DataGroups object reading from a given file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): Name of the file from which this DataGroups object</span>
+<span class="sd">                should be read.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="n">string</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_subfile_fname</span><span class="p">(</span><span class="n">data_block</span><span class="p">,</span> <span class="n">raise_if_regular_and_subfile</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract the name of the file from a datagroup string.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data_block (str): the string with the content of the data group.</span>
+<span class="sd">            raise_if_regular_and_subfile (bool): if True will raise an error if the</span>
+<span class="sd">                string contains both a file=FILENAME and other data. If False will</span>
+<span class="sd">                return the filename anyway.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (str): the name of the file, None if no match for &quot;file=filename&quot; is found.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: if raise_if_regular_and_subfile is True and file=FILENAME</span>
+<span class="sd">                is not the only content of the string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;file=([^\s]+)&#39;</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">pattern</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="n">data_block</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">data_block_test</span> <span class="o">=</span> <span class="n">data_block</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">data_block_test</span> <span class="o">=</span> <span class="n">data_block_test</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">data_block_test</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="n">raise_if_regular_and_subfile</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Both a reference to a file &#39;</span>
+                               <span class="s1">&#39;(&quot;file=FILENAME&quot;) and regular data &#39;</span>
+                               <span class="s1">&#39;blocks are in the data group.&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DataGroups.show_subfile_fname"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.show_subfile_fname">[docs]</a>    <span class="k">def</span> <span class="nf">show_subfile_fname</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">raise_if_regular_and_subfile</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract the name of the file from a datagroup.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data_group (str): the string with the content of the data group.</span>
+<span class="sd">            raise_if_regular_and_subfile (bool): if True will raise an error if the</span>
+<span class="sd">                string contains both a file=FILENAME and other data. If False will</span>
+<span class="sd">                return the filename anyway.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (str): the name of the file, None if no match for &quot;file=filename&quot; is found.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: if raise_if_regular_and_subfile is True and file=FILENAME</span>
+<span class="sd">                is not the only content of the string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_subfile_fname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sdg</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">show_from_subfile</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                                       <span class="n">raise_if_regular_and_subfile</span><span class="o">=</span><span class="n">raise_if_regular_and_subfile</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataGroups.compare"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.compare">[docs]</a>    <span class="k">def</span> <span class="nf">compare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datagroups</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignored_dg</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compares the current object with another DataGroups. Aside from the datagroups</span>
+<span class="sd">        that should be ignored, (define in the ignored_dg argument), the two should contain</span>
+<span class="sd">        the same amount of elements in dg_list and each one from the current object</span>
+<span class="sd">        should have a matching elements in the one that is passed as argument.</span>
+<span class="sd">        To match two strings should have the same number of lines. Each line should have the</span>
+<span class="sd">        same number of chunks. Each chunk should match exactly as a string, except if</span>
+<span class="sd">        they are numbers. In that, if a tol is specified they will be converted to float</span>
+<span class="sd">        and their difference should be lower than the tolerance.</span>
+
+<span class="sd">        If the two objects match None will be returned, otherwise a message describing</span>
+<span class="sd">        the property that caused the match to fail.</span>
+
+<span class="sd">        Note that, given the variety of notations supported by Turbomole, this function is to</span>
+<span class="sd">        be intended more for testing purposes rather than as a complete tool to guarantee the</span>
+<span class="sd">        equivalence of two control file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            datagroups (DataGroups): a Datagroups that should match with the current instance.</span>
+<span class="sd">            tol (float): the tolerance allowed when comparing numbers. If None</span>
+<span class="sd">                even the number should match as strings.</span>
+<span class="sd">            ignored_dg (list): a list of datagroups that should be ignored for the comparison.</span>
+<span class="sd">                It is expected to be the name of the datagroup, thus starting with a &quot;$&quot;.</span>
+<span class="sd">                If the &quot;$&quot; symbol is not present will be added before trying to match the</span>
+<span class="sd">                datagroup to skip.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None if the results match or a string describing a source of difference otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">dg_other_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">datagroups</span><span class="o">.</span><span class="n">dg_list</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">ignored_dg</span><span class="p">:</span>
+            <span class="c1"># add the initial $ to each datagroup if not already present</span>
+            <span class="n">ignored_dg</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;$&quot;</span> <span class="o">+</span> <span class="n">dg</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">dg</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;$&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">dg</span> <span class="k">for</span> <span class="n">dg</span> <span class="ow">in</span> <span class="n">ignored_dg</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">dg1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dg_list</span><span class="p">:</span>
+            <span class="c1"># skip the check if dg1 matches the list of datagroups that should be ignored</span>
+            <span class="k">if</span> <span class="n">ignored_dg</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="n">dg1</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">dg</span><span class="p">)</span> <span class="k">for</span> <span class="n">dg</span> <span class="ow">in</span> <span class="n">ignored_dg</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">dg2</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dg_other_list</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">compare_datagroup_string</span><span class="p">(</span><span class="n">dg1</span><span class="p">,</span> <span class="n">dg2</span><span class="p">,</span> <span class="n">tol</span><span class="p">):</span>
+                    <span class="n">dg_other_list</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                    <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;Datagroup does not match to any of the references: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dg1</span><span class="p">)</span>
+
+        <span class="c1"># check that all the remaining datagroups in the second control belong to the ignore list</span>
+        <span class="k">for</span> <span class="n">dg2</span> <span class="ow">in</span> <span class="n">dg_other_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ignored_dg</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">dg2</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">dg</span><span class="p">)</span> <span class="k">for</span> <span class="n">dg</span> <span class="ow">in</span> <span class="n">ignored_dg</span><span class="p">):</span>
+                <span class="k">return</span> <span class="s2">&quot;Datagroup in the reference does not match to any of the current &quot;</span> \
+                       <span class="s2">&quot;control: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dg2</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, Guido Petretto, David Waroquiers, Jan Kloppenburg.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

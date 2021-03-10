@@ -1,0 +1,706 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>turbomoleio.output.files &mdash; turbomoleio 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> turbomoleio
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datagroups.html">The data group files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../coord.html">The coord file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../definerunner.html">Running define</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../output_parsing.html">Outputs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendix.html">Appendix</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/introduction.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/parsing_logs.html">Output logs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/definerunner.html">Define runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/versioning.html">Versioning</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">turbomoleio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>turbomoleio.output.files</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for turbomoleio.output.files</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># The turbomoleio package, a python interface to Turbomole</span>
+<span class="c1"># for preparing inputs, parsing outputs and other related tools.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (C) 2018-2021 BASF SE, Matgenix SRL.</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of turbomoleio.</span>
+<span class="c1">#</span>
+<span class="c1"># Turbomoleio is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># Turbomoleio is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with turbomoleio (see ~turbomoleio/COPYING). If not,</span>
+<span class="c1"># see &lt;https://www.gnu.org/licenses/&gt;.</span>
+
+<span class="kn">from</span> <span class="nn">turbomoleio.output.data</span> <span class="kn">import</span> <span class="n">BaseData</span><span class="p">,</span> <span class="n">CosmoData</span><span class="p">,</span> <span class="n">TurbomoleData</span><span class="p">,</span> <span class="n">RunData</span><span class="p">,</span> <span class="n">BasisData</span><span class="p">,</span> <span class="n">IntegralData</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.output.data</span> <span class="kn">import</span> <span class="n">DFTData</span><span class="p">,</span> <span class="n">ScfData</span><span class="p">,</span> <span class="n">ScfEnergiesData</span><span class="p">,</span> <span class="n">ElectrostaticMomentsData</span><span class="p">,</span> <span class="n">GeometryData</span><span class="p">,</span> <span class="n">SpinData</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.output.data</span> <span class="kn">import</span> <span class="n">SmearingData</span><span class="p">,</span> <span class="n">EscfData</span><span class="p">,</span> <span class="n">AoforceNumericalIntegrationData</span><span class="p">,</span> <span class="n">AoforceRotationalData</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.output.data</span> <span class="kn">import</span> <span class="n">AoforceVibrationalData</span><span class="p">,</span> <span class="n">RelaxConvergenceData</span><span class="p">,</span> <span class="n">RelaxData</span><span class="p">,</span> <span class="n">RelaxGradientsData</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.output.data</span> <span class="kn">import</span> <span class="n">StatptData</span><span class="p">,</span> <span class="n">SymmetryData</span>
+
+
+<div class="viewcode-block" id="ScfOutput"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.ScfOutput">[docs]</a><span class="k">class</span> <span class="nc">ScfOutput</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Object containing the data of the output of an scf calculation, i.e. dscf or ridft.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dft</span><span class="p">,</span> <span class="n">scf</span><span class="p">,</span> <span class="n">energies</span><span class="p">,</span> <span class="n">electrostatic</span><span class="p">,</span> <span class="n">geometry</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span>
+                 <span class="n">cosmo</span><span class="p">,</span> <span class="n">spin</span><span class="p">,</span> <span class="n">integral</span><span class="p">,</span> <span class="n">smearing</span><span class="p">,</span> <span class="n">symmetry</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            dft (DFTData): information about dft calculation.</span>
+<span class="sd">            scf (ScfData): information about scf loop.</span>
+<span class="sd">            energies (ScfEnergiesData): final energy of scf calculation.</span>
+<span class="sd">            electrostatic (ElectrostaticMomentsData): information about electrostatic moments.</span>
+<span class="sd">            geometry (GeometryData): the geometry of the system.</span>
+<span class="sd">            basis (BasisData): the basis used for the calculation.</span>
+<span class="sd">            run (RunData): information about calculation running (e.g. timings, ...)</span>
+<span class="sd">            tm (TurbomoleData): information about the turbomole used for the calculation.</span>
+<span class="sd">            cosmo (CosmoData): cosmo approximations and results.</span>
+<span class="sd">            spin (SpinData): information about the spin of the system.</span>
+<span class="sd">            integral (IntegralData): information about the thresholds for integrals.</span>
+<span class="sd">            smearing (SmearingData): information about the smearing ($fermi datagroup).</span>
+<span class="sd">            symmetry (SymmetryData): information about the symmetry of the molecule</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dft</span> <span class="o">=</span> <span class="n">dft</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scf</span> <span class="o">=</span> <span class="n">scf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energies</span> <span class="o">=</span> <span class="n">energies</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">electrostatic</span> <span class="o">=</span> <span class="n">electrostatic</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">geometry</span> <span class="o">=</span> <span class="n">geometry</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis</span> <span class="o">=</span> <span class="n">basis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">run</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tm</span> <span class="o">=</span> <span class="n">tm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cosmo</span> <span class="o">=</span> <span class="n">cosmo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spin</span> <span class="o">=</span> <span class="n">spin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">integral</span> <span class="o">=</span> <span class="n">integral</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">smearing</span> <span class="o">=</span> <span class="n">smearing</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">symmetry</span> <span class="o">=</span> <span class="n">symmetry</span>
+
+<div class="viewcode-block" id="ScfOutput.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.ScfOutput.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates an instance of ScfOutput from a parser based on the stdout</span>
+<span class="sd">        of a Turbomole executable.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parser (Parser): the parser to be used to extract the data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ScfOutput.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dft</span> <span class="o">=</span> <span class="n">DFTData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">scf</span> <span class="o">=</span> <span class="n">ScfData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">energies</span> <span class="o">=</span> <span class="n">ScfEnergiesData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">electrostatic</span> <span class="o">=</span> <span class="n">ElectrostaticMomentsData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">geometry</span> <span class="o">=</span> <span class="n">GeometryData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">basis</span> <span class="o">=</span> <span class="n">BasisData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">run</span> <span class="o">=</span> <span class="n">RunData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">tm</span> <span class="o">=</span> <span class="n">TurbomoleData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">cosmo</span> <span class="o">=</span> <span class="n">CosmoData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">spin</span> <span class="o">=</span> <span class="n">SpinData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">integral</span> <span class="o">=</span> <span class="n">IntegralData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">smearing</span> <span class="o">=</span> <span class="n">SmearingData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">symmetry</span> <span class="o">=</span> <span class="n">SymmetryData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">dft</span><span class="o">=</span><span class="n">dft</span><span class="p">,</span> <span class="n">scf</span><span class="o">=</span><span class="n">scf</span><span class="p">,</span> <span class="n">energies</span><span class="o">=</span><span class="n">energies</span><span class="p">,</span> <span class="n">electrostatic</span><span class="o">=</span><span class="n">electrostatic</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span>
+                   <span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">run</span><span class="o">=</span><span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="o">=</span><span class="n">tm</span><span class="p">,</span> <span class="n">cosmo</span><span class="o">=</span><span class="n">cosmo</span><span class="p">,</span> <span class="n">spin</span><span class="o">=</span><span class="n">spin</span><span class="p">,</span> <span class="n">integral</span><span class="o">=</span><span class="n">integral</span><span class="p">,</span>
+                   <span class="n">smearing</span><span class="o">=</span><span class="n">smearing</span><span class="p">,</span> <span class="n">symmetry</span><span class="o">=</span><span class="n">symmetry</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="EscfOutput"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.EscfOutput">[docs]</a><span class="k">class</span> <span class="nc">EscfOutput</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Object containing the data of the output of an escf calculation.</span>
+<span class="sd">    Parses also the information relative to the dft part, which is common to the</span>
+<span class="sd">    output of the scf calculation that preceeds the escf.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dft</span><span class="p">,</span> <span class="n">escf</span><span class="p">,</span> <span class="n">geometry</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">cosmo</span><span class="p">,</span> <span class="n">integral</span><span class="p">,</span> <span class="n">symmetry</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            dft (DFTData): information about dft calculation.</span>
+<span class="sd">            escf (EscfData): information about the excited state calculation.</span>
+<span class="sd">            geometry (GeometryData): the geometry of the system.</span>
+<span class="sd">            basis (BasisData): the basis used for the calculation.</span>
+<span class="sd">            run (RunData): information about calculation running (e.g. timings, ...)</span>
+<span class="sd">            tm (TurbomoleData): information about the turbomole used for the calculation.</span>
+<span class="sd">            cosmo (CosmoData): cosmo approximations and results.</span>
+<span class="sd">            integral (IntegralData): information about the thresholds for integrals.</span>
+<span class="sd">            symmetry (SymmetryData): information about the symmetry of the molecule</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dft</span> <span class="o">=</span> <span class="n">dft</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">escf</span> <span class="o">=</span> <span class="n">escf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">geometry</span> <span class="o">=</span> <span class="n">geometry</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis</span> <span class="o">=</span> <span class="n">basis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">run</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tm</span> <span class="o">=</span> <span class="n">tm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cosmo</span> <span class="o">=</span> <span class="n">cosmo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">integral</span> <span class="o">=</span> <span class="n">integral</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">symmetry</span> <span class="o">=</span> <span class="n">symmetry</span>
+
+<div class="viewcode-block" id="EscfOutput.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.EscfOutput.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates an instance of EscfOutput from a parser based on the stdout</span>
+<span class="sd">        of a Turbomole executable.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parser (Parser): the parser to be used to extract the data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            EscfOutput.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dft</span> <span class="o">=</span> <span class="n">DFTData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">escf</span> <span class="o">=</span> <span class="n">EscfData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">run</span> <span class="o">=</span> <span class="n">RunData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">tm</span> <span class="o">=</span> <span class="n">TurbomoleData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">geometry</span> <span class="o">=</span> <span class="n">GeometryData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">basis</span> <span class="o">=</span> <span class="n">BasisData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">cosmo</span> <span class="o">=</span> <span class="n">CosmoData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">integral</span> <span class="o">=</span> <span class="n">IntegralData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">symmetry</span> <span class="o">=</span> <span class="n">SymmetryData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">dft</span><span class="o">=</span><span class="n">dft</span><span class="p">,</span> <span class="n">escf</span><span class="o">=</span><span class="n">escf</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">run</span><span class="o">=</span><span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="o">=</span><span class="n">tm</span><span class="p">,</span>
+                   <span class="n">cosmo</span><span class="o">=</span><span class="n">cosmo</span><span class="p">,</span> <span class="n">integral</span><span class="o">=</span><span class="n">integral</span><span class="p">,</span> <span class="n">symmetry</span><span class="o">=</span><span class="n">symmetry</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="EscfOnlyOutput"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.EscfOnlyOutput">[docs]</a><span class="k">class</span> <span class="nc">EscfOnlyOutput</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Minimal version of the object containing the data of the output of an escf calculation.</span>
+<span class="sd">    Parses only the information relative to escf calculation, ignoring the part that is common</span>
+<span class="sd">    to the output of the scf calculation that preceeds the escf.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">escf</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            escf (EscfData): information about the excited state calculation.</span>
+<span class="sd">            run (RunData): information about calculation running (e.g. timings, ...)</span>
+<span class="sd">            tm (TurbomoleData): information about the turbomole used for the calculation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">escf</span> <span class="o">=</span> <span class="n">escf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">run</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tm</span> <span class="o">=</span> <span class="n">tm</span>
+
+<div class="viewcode-block" id="EscfOnlyOutput.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.EscfOnlyOutput.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates an instance of EscfOnlyOutput from a parser based on the stdout</span>
+<span class="sd">        of a Turbomole executable.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parser (Parser): the parser to be used to extract the data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            EscfOnlyOutput.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">escf</span> <span class="o">=</span> <span class="n">EscfData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">run</span> <span class="o">=</span> <span class="n">RunData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">tm</span> <span class="o">=</span> <span class="n">TurbomoleData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">escf</span><span class="o">=</span><span class="n">escf</span><span class="p">,</span> <span class="n">run</span><span class="o">=</span><span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="o">=</span><span class="n">tm</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="GradOutput"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.GradOutput">[docs]</a><span class="k">class</span> <span class="nc">GradOutput</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Object containing the data of the output of a simple gradient calculation,</span>
+<span class="sd">    i.e. grad and rdgrad.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gradients</span><span class="p">,</span> <span class="n">dielectric</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">memory</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            gradients (list): matrix of shape (natoms, 3) containing the values of</span>
+<span class="sd">                the cartesian gradients.</span>
+<span class="sd">            dielectric (list): 3x3 matrix containing the values of the dielectric tensor.</span>
+<span class="sd">            run (RunData): information about calculation running (e.g. timings, ...)</span>
+<span class="sd">            tm (TurbomoleData): information about the turbomole used for the calculation.</span>
+<span class="sd">            memory (int): memory in MB used. Available only for rdgrad.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gradients</span> <span class="o">=</span> <span class="n">gradients</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dielectric</span> <span class="o">=</span> <span class="n">dielectric</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">run</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tm</span> <span class="o">=</span> <span class="n">tm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">memory</span> <span class="o">=</span> <span class="n">memory</span>
+
+<div class="viewcode-block" id="GradOutput.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.GradOutput.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates an instance of GradOutput from a parser based on the stdout</span>
+<span class="sd">        of a Turbomole executable.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parser (Parser): the parser to be used to extract the data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            GradOutput.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">grad_data</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">gradient</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">grad_data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">run</span> <span class="o">=</span> <span class="n">RunData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">tm</span> <span class="o">=</span> <span class="n">TurbomoleData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">memory</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">rdgrad_memory</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">gradients</span><span class="o">=</span><span class="n">grad_data</span><span class="p">[</span><span class="s2">&quot;gradients&quot;</span><span class="p">],</span> <span class="n">dielectric</span><span class="o">=</span><span class="n">grad_data</span><span class="p">[</span><span class="s2">&quot;dielectric&quot;</span><span class="p">],</span>
+                   <span class="n">run</span><span class="o">=</span><span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="o">=</span><span class="n">tm</span><span class="p">,</span> <span class="n">memory</span><span class="o">=</span><span class="n">memory</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="EgradOutput"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.EgradOutput">[docs]</a><span class="k">class</span> <span class="nc">EgradOutput</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Object containing the data of the output of an egrad calculation.</span>
+<span class="sd">    It combines the outputs of standard gradients calculations with the</span>
+<span class="sd">    output of escf.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gradients</span><span class="p">,</span> <span class="n">dielectric</span><span class="p">,</span> <span class="n">dft</span><span class="p">,</span> <span class="n">escf</span><span class="p">,</span> <span class="n">geometry</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">cosmo</span><span class="p">,</span>
+                 <span class="n">integral</span><span class="p">,</span> <span class="n">ex_state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            gradients (list): matrix of shape (natoms, 3) containing the values of</span>
+<span class="sd">                the cartesian gradients.</span>
+<span class="sd">            dielectric (list): 3x3 matrix containing the values of the dielectric tensor.</span>
+<span class="sd">            dft (DFTData): information about dft calculation.</span>
+<span class="sd">            escf (EscfData): information about the excited state calculation.</span>
+<span class="sd">            geometry (GeometryData): the geometry of the system.</span>
+<span class="sd">            basis (BasisData): the basis used for the calculation.</span>
+<span class="sd">            run (RunData): information about calculation running (e.g. timings, ...)</span>
+<span class="sd">            tm (TurbomoleData): information about the turbomole used for the calculation.</span>
+<span class="sd">            cosmo (CosmoData): cosmo approximations and results.</span>
+<span class="sd">            integral (IntegralData): information about the thresholds for integrals.</span>
+<span class="sd">            ex_state (int): the (1-based) index of the excited state used for the gradients.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gradients</span> <span class="o">=</span> <span class="n">gradients</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dielectric</span> <span class="o">=</span> <span class="n">dielectric</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dft</span> <span class="o">=</span> <span class="n">dft</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">escf</span> <span class="o">=</span> <span class="n">escf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">geometry</span> <span class="o">=</span> <span class="n">geometry</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis</span> <span class="o">=</span> <span class="n">basis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">run</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tm</span> <span class="o">=</span> <span class="n">tm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cosmo</span> <span class="o">=</span> <span class="n">cosmo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">integral</span> <span class="o">=</span> <span class="n">integral</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ex_state</span> <span class="o">=</span> <span class="n">ex_state</span>
+
+<div class="viewcode-block" id="EgradOutput.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.EgradOutput.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates an instance of EgradOutput from a parser based on the stdout</span>
+<span class="sd">        of a Turbomole executable.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parser (Parser): the parser to be used to extract the data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            EgradOutput.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">grad_data</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">gradient</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">grad_data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">dft</span> <span class="o">=</span> <span class="n">DFTData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">escf</span> <span class="o">=</span> <span class="n">EscfData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">run</span> <span class="o">=</span> <span class="n">RunData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">tm</span> <span class="o">=</span> <span class="n">TurbomoleData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">geometry</span> <span class="o">=</span> <span class="n">GeometryData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">basis</span> <span class="o">=</span> <span class="n">BasisData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">cosmo</span> <span class="o">=</span> <span class="n">CosmoData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">integral</span> <span class="o">=</span> <span class="n">IntegralData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">egrad_ex</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">egrad_excited_state</span>
+        <span class="n">ex_state</span> <span class="o">=</span> <span class="n">egrad_ex</span><span class="p">[</span><span class="s2">&quot;index&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">egrad_ex</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">gradients</span><span class="o">=</span><span class="n">grad_data</span><span class="p">[</span><span class="s2">&quot;gradients&quot;</span><span class="p">],</span> <span class="n">dielectric</span><span class="o">=</span><span class="n">grad_data</span><span class="p">[</span><span class="s2">&quot;dielectric&quot;</span><span class="p">],</span>
+                   <span class="n">dft</span><span class="o">=</span><span class="n">dft</span><span class="p">,</span> <span class="n">escf</span><span class="o">=</span><span class="n">escf</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">run</span><span class="o">=</span><span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="o">=</span><span class="n">tm</span><span class="p">,</span>
+                   <span class="n">cosmo</span><span class="o">=</span><span class="n">cosmo</span><span class="p">,</span> <span class="n">integral</span><span class="o">=</span><span class="n">integral</span><span class="p">,</span> <span class="n">ex_state</span><span class="o">=</span><span class="n">ex_state</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="RelaxOutput"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.RelaxOutput">[docs]</a><span class="k">class</span> <span class="nc">RelaxOutput</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Object containing the data of the output of a relax calculation (not statpt).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">gradients</span><span class="p">,</span> <span class="n">convergence</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            info (RelaxData): initial information provided in relax.</span>
+<span class="sd">            gradients (RelaxGradientsData): gradient values extracted from the relax</span>
+<span class="sd">                output that take into account the frozen coordinates.</span>
+<span class="sd">            convergence (RelaxConvergenceData): final information about convergence</span>
+<span class="sd">                according to what is defined in the control file.</span>
+<span class="sd">            run (RunData): information about calculation running (e.g. timings, ...)</span>
+<span class="sd">            tm (TurbomoleData): information about the turbomole used for the calculation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="n">info</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gradients</span> <span class="o">=</span> <span class="n">gradients</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">convergence</span> <span class="o">=</span> <span class="n">convergence</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">run</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tm</span> <span class="o">=</span> <span class="n">tm</span>
+
+<div class="viewcode-block" id="RelaxOutput.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.RelaxOutput.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates an instance of RelaxOutput from a parser based on the stdout</span>
+<span class="sd">        of a Turbomole executable.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parser (Parser): the parser to be used to extract the data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            RelaxOutput.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="n">RelaxData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">gradients</span> <span class="o">=</span> <span class="n">RelaxGradientsData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">convergence</span> <span class="o">=</span> <span class="n">RelaxConvergenceData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">run</span> <span class="o">=</span> <span class="n">RunData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">tm</span> <span class="o">=</span> <span class="n">TurbomoleData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">info</span><span class="o">=</span><span class="n">info</span><span class="p">,</span> <span class="n">gradients</span><span class="o">=</span><span class="n">gradients</span><span class="p">,</span> <span class="n">convergence</span><span class="o">=</span><span class="n">convergence</span><span class="p">,</span> <span class="n">run</span><span class="o">=</span><span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="o">=</span><span class="n">tm</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="StatptOutput"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.StatptOutput">[docs]</a><span class="k">class</span> <span class="nc">StatptOutput</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Object containing the data of the output of a statpt calculation (not relax).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">gradients</span><span class="p">,</span> <span class="n">convergence</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            info (StatptData): initial information provided in statpt.</span>
+<span class="sd">            gradients (RelaxGradientsData): gradient values extracted from the statpt</span>
+<span class="sd">                output that take into account the frozen coordinates.</span>
+<span class="sd">            convergence (RelaxConvergenceData): final information about convergence</span>
+<span class="sd">                according to what is defined in the control file.</span>
+<span class="sd">            run (RunData): information about calculation running (e.g. timings, ...)</span>
+<span class="sd">            tm (TurbomoleData): information about the turbomole used for the calculation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="n">info</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gradients</span> <span class="o">=</span> <span class="n">gradients</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">convergence</span> <span class="o">=</span> <span class="n">convergence</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">run</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tm</span> <span class="o">=</span> <span class="n">tm</span>
+
+<div class="viewcode-block" id="StatptOutput.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.StatptOutput.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates an instance of StatptOutput from a parser based on the stdout</span>
+<span class="sd">        of a Turbomole executable.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parser (Parser): the parser to be used to extract the data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            StatptOutput.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="n">StatptData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">gradients</span> <span class="o">=</span> <span class="n">RelaxGradientsData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">convergence</span> <span class="o">=</span> <span class="n">RelaxConvergenceData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">run</span> <span class="o">=</span> <span class="n">RunData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">tm</span> <span class="o">=</span> <span class="n">TurbomoleData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">info</span><span class="o">=</span><span class="n">info</span><span class="p">,</span> <span class="n">gradients</span><span class="o">=</span><span class="n">gradients</span><span class="p">,</span> <span class="n">convergence</span><span class="o">=</span><span class="n">convergence</span><span class="p">,</span> <span class="n">run</span><span class="o">=</span><span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="o">=</span><span class="n">tm</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="AoforceOutput"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.AoforceOutput">[docs]</a><span class="k">class</span> <span class="nc">AoforceOutput</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Object containing the data of the output of an aforce calculation.</span>
+<span class="sd">    Works native aoforce calculations and after a numforce.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numerical_integration</span><span class="p">,</span> <span class="n">rotational</span><span class="p">,</span> <span class="n">vibrational</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            numerical_integration (AoforceNumericalIntegrationData): information about the</span>
+<span class="sd">                numerical integration in aoforce. Missing if from a numforce calculation.</span>
+<span class="sd">            rotational (AoforceRotationalData): analysis of rotational states in aoforce.</span>
+<span class="sd">            vibrational (AoforceVibrationalData): analysis of vibrational states in aoforce.</span>
+<span class="sd">            run (RunData): information about calculation running (e.g. timings, ...)</span>
+<span class="sd">            tm (TurbomoleData): information about the turbomole used for the calculation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numerical_integration</span> <span class="o">=</span> <span class="n">numerical_integration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rotational</span> <span class="o">=</span> <span class="n">rotational</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vibrational</span> <span class="o">=</span> <span class="n">vibrational</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">run</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tm</span> <span class="o">=</span> <span class="n">tm</span>
+
+<div class="viewcode-block" id="AoforceOutput.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.AoforceOutput.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates an instance of AoforceOutput from a parser based on the stdout</span>
+<span class="sd">        of a Turbomole executable.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parser (Parser): the parser to be used to extract the data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            AoforceOutput.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ni</span> <span class="o">=</span> <span class="n">AoforceNumericalIntegrationData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">rot</span> <span class="o">=</span> <span class="n">AoforceRotationalData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">vib</span> <span class="o">=</span> <span class="n">AoforceVibrationalData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">run</span> <span class="o">=</span> <span class="n">RunData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">tm</span> <span class="o">=</span> <span class="n">TurbomoleData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">numerical_integration</span><span class="o">=</span><span class="n">ni</span><span class="p">,</span> <span class="n">rotational</span><span class="o">=</span><span class="n">rot</span><span class="p">,</span> <span class="n">vibrational</span><span class="o">=</span><span class="n">vib</span><span class="p">,</span> <span class="n">run</span><span class="o">=</span><span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="o">=</span><span class="n">tm</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="JobexOutput"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.JobexOutput">[docs]</a><span class="k">class</span> <span class="nc">JobexOutput</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Object containing the data of the output of the last step of a jobex calculation.</span>
+<span class="sd">    Namely the outputs of the last energy, gradient and relax calulations stored in</span>
+<span class="sd">    the &quot;job.last&quot; file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">relax</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            energy (ScfOutput): the output data of the energy calculation.</span>
+<span class="sd">            gradient: the output data of the energy calculation. The type depends on</span>
+<span class="sd">                the type of calculation. Can be GradOutput, EgradOutput or coming from</span>
+<span class="sd">                other executables.</span>
+<span class="sd">            relax (RelaxOutput or StatptOutput): the output data of the relax calculation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">energy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gradient</span> <span class="o">=</span> <span class="n">gradient</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relax</span> <span class="o">=</span> <span class="n">relax</span>
+
+<div class="viewcode-block" id="JobexOutput.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.JobexOutput.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates an instance of JobexOutput from a parser based on the output</span>
+<span class="sd">        contained in the &quot;job.last&quot; file generated by jobex. Splits the output</span>
+<span class="sd">        in the different types of executables and generates suitable objects</span>
+<span class="sd">        for them.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parser (Parser): the parser to be used to extract the data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            JobexOutput.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">exec_en</span><span class="p">,</span> <span class="n">p_en</span><span class="p">,</span> <span class="n">exec_grad</span><span class="p">,</span> <span class="n">p_grad</span><span class="p">,</span> <span class="n">exec_relax</span><span class="p">,</span> <span class="n">p_relax</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get_split_jobex_parsers</span><span class="p">()</span>
+
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">gradient</span> <span class="o">=</span> <span class="n">relax</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">exec_en</span> <span class="ow">in</span> <span class="n">exec_to_out_obj</span><span class="p">:</span>
+            <span class="n">energy</span> <span class="o">=</span> <span class="n">exec_to_out_obj</span><span class="p">[</span><span class="n">exec_en</span><span class="p">]</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">p_en</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">exec_grad</span> <span class="ow">in</span> <span class="n">exec_to_out_obj</span><span class="p">:</span>
+            <span class="n">gradient</span> <span class="o">=</span> <span class="n">exec_to_out_obj</span><span class="p">[</span><span class="n">exec_grad</span><span class="p">]</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">p_grad</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">exec_relax</span> <span class="ow">in</span> <span class="n">exec_to_out_obj</span><span class="p">:</span>
+            <span class="n">relax</span> <span class="o">=</span> <span class="n">exec_to_out_obj</span><span class="p">[</span><span class="n">exec_relax</span><span class="p">]</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">p_relax</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">energy</span><span class="o">=</span><span class="n">energy</span><span class="p">,</span> <span class="n">gradient</span><span class="o">=</span><span class="n">gradient</span><span class="p">,</span> <span class="n">relax</span><span class="o">=</span><span class="n">relax</span><span class="p">)</span></div></div>
+
+
+<span class="c1"># correspondence between name of the tm executable/name of the log file</span>
+<span class="c1"># and the object used to parse the output.</span>
+<span class="c1"># Does not include jobex since the output of jobex is in the &quot;job.last&quot; file.</span>
+<span class="n">exec_to_out_obj</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;dscf&quot;</span><span class="p">:</span> <span class="n">ScfOutput</span><span class="p">,</span>
+    <span class="s2">&quot;ridft&quot;</span><span class="p">:</span> <span class="n">ScfOutput</span><span class="p">,</span>
+    <span class="s2">&quot;escf&quot;</span><span class="p">:</span> <span class="n">EscfOutput</span><span class="p">,</span>
+    <span class="s2">&quot;grad&quot;</span><span class="p">:</span> <span class="n">GradOutput</span><span class="p">,</span>
+    <span class="s2">&quot;rdgrad&quot;</span><span class="p">:</span> <span class="n">GradOutput</span><span class="p">,</span>
+    <span class="s2">&quot;egrad&quot;</span><span class="p">:</span> <span class="n">EgradOutput</span><span class="p">,</span>
+    <span class="s2">&quot;relax&quot;</span><span class="p">:</span> <span class="n">RelaxOutput</span><span class="p">,</span>
+    <span class="s2">&quot;statpt&quot;</span><span class="p">:</span> <span class="n">StatptOutput</span><span class="p">,</span>
+    <span class="s2">&quot;aoforce&quot;</span><span class="p">:</span> <span class="n">AoforceOutput</span><span class="p">,</span>
+    <span class="s2">&quot;force&quot;</span><span class="p">:</span> <span class="n">AoforceOutput</span><span class="p">,</span> <span class="c1"># because when executed aoforce has the name &quot;force&quot; in the header.</span>
+<span class="p">}</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, Guido Petretto, David Waroquiers, Jan Kloppenburg.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

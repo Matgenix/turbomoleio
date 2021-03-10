@@ -1,0 +1,418 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Testing &mdash; turbomoleio 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Versioning" href="versioning.html" />
+    <link rel="prev" title="Define runner" href="definerunner.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> turbomoleio
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../datagroups.html">The data group files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coord.html">The coord file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../definerunner.html">Running define</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../output_parsing.html">Outputs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix.html">Appendix</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parsing_logs.html">Output logs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="definerunner.html">Define runner</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-test-suite">The test suite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#unit-tests">Unit tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#integration-tests">Integration tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#writing-new-tests">Writing new tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="versioning.html">Versioning</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">turbomoleio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Testing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/developer/testing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="testing">
+<span id="developer-testing"></span><h1>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h1>
+<p>Tests are an essential part of the development process. Their aim is to check that the
+different portions of the code meet their design and behave as intended. Providing an exhaustive
+guide about how to write tests in python is beyond the scope of this document, so in this section we
+will instead explain the details of the tests in turbomoleio: how they are organized,
+what are the tools available and how you should proceed to introduce tests for your new developments.</p>
+<p>In turbomoleio we divide the tests in two groups. The definition could be considered somewhat
+arbitrary with respect to the standard ones, but in the following we use the following naming convention:</p>
+<ul class="simple">
+<li><p><strong>unit tests</strong>: aiming at testing each single component on its own (no TURBOMOLE executable
+runs inside these tests).</p></li>
+<li><p><strong>integration tests</strong>: testing the integration among different components and in particular
+with the TURBOMOLE executables.</p></li>
+</ul>
+<p>When implementing a new feature you should always implement a series of tests before
+adding it to turbomoleio. It is also important to consider adding new tests when a bug is identified
+and fixed. This will prevent that such a bug will be reintroduced in later developments.</p>
+<div class="section" id="the-test-suite">
+<span id="developer-test-suite"></span><h2>The test suite<a class="headerlink" href="#the-test-suite" title="Permalink to this headline">¶</a></h2>
+<p>The testing suite is based on <strong>pytest</strong> and makes wide use of its functionalities, like for example
+fixtures, marking and custom command line arguments. The pytest package should thus be installed
+and the tests should be executed using the <code class="docutils literal notranslate"><span class="pre">pytest</span></code> command. For a reference on all its features you
+can refer to the <a class="reference external" href="https://docs.pytest.org">pytest documentation</a>. To get the coverage of the
+tests you also need to install the <strong>pytest-cov</strong> package.</p>
+<p>Summing up, aside from the standard dependencies in BASFflows, the easiest way to prepare your environment
+to run the tests is to run</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install pytest pytest-cov mongomock
+</pre></div>
+</div>
+<p>To run the integration tests of course a standard installation of Turbomole should be available, so
+that the tests can call the different executables.</p>
+<p>Once this is done you can run each test separately going to the different folders and executing
+the <code class="docutils literal notranslate"><span class="pre">pytest</span></code> command or use the <code class="docutils literal notranslate"><span class="pre">runtest.sh</span></code> script present in the root folder of the project.
+Running <code class="docutils literal notranslate"><span class="pre">runtest.sh</span> <span class="pre">-u</span></code> will run all the unit tests, while <code class="docutils literal notranslate"><span class="pre">runtest.sh</span> <span class="pre">-i</span></code> will run all
+the integration tests. In both cases it will produce a detailed report of the level of coverage.
+If you wish, you can then run</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>coverage html -d coverage_html
+</pre></div>
+</div>
+<p>to generate an html version of the coverage report. The configurations for the coverage are given
+in the <code class="docutils literal notranslate"><span class="pre">.coveragerc_unit</span></code> and <code class="docutils literal notranslate"><span class="pre">.coveragerc_integration</span></code> files, present in the root folder of
+the project.</p>
+</div>
+<div class="section" id="unit-tests">
+<h2>Unit tests<a class="headerlink" href="#unit-tests" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned above, we call unit tests those that test each single component on its own.
+Each module folder in turbomoleio contains a <code class="docutils literal notranslate"><span class="pre">tests</span></code> subfolder where the unit tests for
+all the components in that module are implemented.
+All the functions, objects and their methods have some unit test that will verify that
+it behaves as expected. This is done, for example, by checking:</p>
+<ul class="simple">
+<li><p>the returned values of functions and methods,</p></li>
+<li><p>the attributes set in objects,</p></li>
+<li><p>the side effects of a function (e.g. creation or modification of files),</p></li>
+<li><p>that the expected exceptions are raised under specific conditions,</p></li>
+</ul>
+<p>These tests will be limited to a specific component and thus may require to
+<a class="reference external" href="https://docs.python.org/3/library/unittest.mock.html">mock</a> functions or objects to determine
+a specific outcome of the test (see <a class="reference external" href="https://realpython.com/python-mock-library/">this guide</a>
+for some examples). Mocks are also required for
+all the calls towards external applications and in particular to the TURBOMOLE executables.
+Since in the turbomoleio code the calls to TURBOMOLE executables is done for the <code class="docutils literal notranslate"><span class="pre">DefineRunner</span></code>
+class, specific mocks will be done for its testing.</p>
+<p>For all the cases where inputs and outputs should be read or modified a set of prepared files are
+used. These files, mainly Turbomole inputs and outputs, are stored in the
+<code class="docutils literal notranslate"><span class="pre">turbomoleio/testfiles</span></code> folder.
+Using these test files and with the additional help of the mocking it is possible to direct and
+verify in detail what happens inside the component under test. For this reason the unit tests can achieve
+a very high coverage rate, of the code, where by coverage we intend the fraction of the lines of
+code that are executed by at least one test. As of version 1.0.0 the global coverage of the unit
+tests alone is 99% and developers should aim at keeping this value as high as possible.</p>
+</div>
+<div class="section" id="integration-tests">
+<h2>Integration tests<a class="headerlink" href="#integration-tests" title="Permalink to this headline">¶</a></h2>
+<p>Integration tests aim to verify the integration between the different components and
+in particular with the Turbomole executables. For this reason they are all collected in the
+<code class="docutils literal notranslate"><span class="pre">turbomoleio/integrations_tests</span></code> folder and, to allow to execute them separately, they
+are all <em>marked</em> by setting the <code class="docutils literal notranslate"><span class="pre">integration</span></code> pytest mark for each module:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pytestmark</span> <span class="o">=</span> <span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">integration</span>
+</pre></div>
+</div>
+<p>Since, aside from in <code class="docutils literal notranslate"><span class="pre">DefineRunner</span></code>, in the turbomole source code there are no explicit
+calls to TURBOMOLE executable, the integration tests will also check if the I/O features implemented
+keep working in the same way when the files are directly used or produced by TURBOMOLE.
+To be more explicit one can check if a file that has been produced or modified with
+turbomoleio keeps being read correctly in TURBOMOLE and if an output file produced
+by an execution of TURBOMOLE is still parsed correctly. For some functionalities anyway
+there is not really a meaning in performing an integration test. In these cases the
+portion of the code can be excluded from the coverage analysis.</p>
+<p>The integration tests are all performed using the <code class="xref py py-func docutils literal notranslate"><span class="pre">turbomoleio.testfiles.utils.run_itest()</span></code>
+helper function. This first runs <code class="docutils literal notranslate"><span class="pre">define</span></code> using <code class="docutils literal notranslate"><span class="pre">DefineRunner</span></code> based on the parameters given
+in input, the produced control file is compared with a reference stored previously. If successful
+the required turbomole executables are run and the outputs are extracted using the objects
+implemented here. The numerical values of these outputs are checked with a respect to
+references stored in JSON files. Note that the comparison is performed using the
+<code class="xref py py-func docutils literal notranslate"><span class="pre">turbomoleio.testfiles.utils.assert_almost_equal()</span></code>. For this comparison some values
+are outright excluded from the check. In some cases a comparison will be obviously meaningless
+(e.g. the date of execution, the elapsed time), while in some other cases the values,
+while physically and chemically equivalent, may be reported in slightly different ways in
+the TURBOMOLE output and it would be extremely impractical to make a meaningful
+comparison for them (e.g. the  order of the acoustic modes from aoforce
+can vary on different machines, even for the same version of TURBOMOLE. While checking the
+list of eigenvalues is trivial, verifying that the two lists of eigenvectors, represented
+in different order, are indeed equivalent up to a numerical tolerance would be cumbersome).</p>
+<p>This procedure is repeated for different kinds of inputs and for the different
+TURBOMOLE executables currently supported by the turbomoleio objects.</p>
+<p>Aside from preventing the introduction of errors when modifying existing parts of the code,
+integration tests can thus be used to verify that the implemented I/O functionalities
+will keep working for <strong>new versions of TURBOMOLE</strong>. It is inevitable that when moving
+from one TURBOMOLE version to another at least some of the integration tests will fail. This
+might be for some changes in the inputs, in the underlying implementations or even for some
+options being removed or renamed altogether. Another possibility is that the output given
+in the <code class="docutils literal notranslate"><span class="pre">stdout</span></code> has changed its format and that the parser now fails to correctly
+extract the results of the calculation. turbomoleio has been initially developed to
+target TURBOMOLE version 7.3 and the tests are designed for that specific version only.
+As new versions of TURBOMOLE are released the tests can be updated to match the new input and outputs
+definitions, but care should be taken by checking exactly which part of the test is leading
+to a failure.</p>
+<p>In light of all this, two custom options have been added to pytest in turbomoleio. The first is a way
+to tune the value of the tolerance when comparing numerical values. This can be changed by
+running the tests with the <code class="docutils literal notranslate"><span class="pre">--itest-tol</span></code>. For example running</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest --itest-tol<span class="o">=</span><span class="m">0</span>.01
+</pre></div>
+</div>
+<p>performs a much looser comparison (note that this is an absolute tolearance).
+The second option is <code class="docutils literal notranslate"><span class="pre">--generate-itest-ref</span></code>. When running
+the tests with this option, instead of using the reference files to check the
+correctness of the outputs produced by the tests, the outputs will instead be used to generate
+a new version of the JSON reference files and overwrite the previous ones.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">--generate-itest-ref</span></code> should be used with extreme care. The original files
+provided with turbomoleio have been tested across different machines
+to verify that the tests pass on different environments. This option should
+be used only if the output objects parser are changed or if the reference version of TURBOMOLE
+is updated. In any case it would be wise not to run the whole set of tests with this option,
+but instead target only the specific test for which the reference file should be updated.
+For example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest --generate-itest-ref test_dscf.py -k test_run_dscf_hf
+</pre></div>
+</div>
+</div>
+<p>Writing integration tests that trigger all the possible cases in the code is basically impossible.
+Some errors and checks in the source code are only triggered in presence of exceptional errors
+(e.g. wrongly formatted output files) and this cannot be easily reproduced systematically.
+In addition, while there is no strict limit for the execution time of a single test, these should be
+short enough to be executed in a reasonable amount of time with small computational resources.
+Lastly for some functions and objects there is little gain in testing their behavior in direct connection
+with an actual TURBOMOLE calculation. For all these reasons the aim for the coverage of the integration
+tests is lower compared to the unit tests. As of version 1.0.0 the integration tests alone cover 89% of
+the turbomoleio source code.</p>
+</div>
+<div class="section" id="writing-new-tests">
+<h2>Writing new tests<a class="headerlink" href="#writing-new-tests" title="Permalink to this headline">¶</a></h2>
+<p>New contributions to turbomoleio should always come with their set of unit and, if suitable, integration tests.
+The tests that you add should be organized in the same way as the other tests already available,
+as described in the previous sections.</p>
+<p>The test functions and files should be named starting with <code class="docutils literal notranslate"><span class="pre">test_</span></code> to be correctly discovered by
+pytest (this can be customized, but sticking to the standard is the easiest option). If you have some
+experience with the standard python testing utils, notice that in turbomoleio you should <em>not</em>
+subclass <code class="docutils literal notranslate"><span class="pre">unittest.TestCase</span></code>, since this is incompatible with some of the functionalities in
+pytest. All the options provided by <code class="docutils literal notranslate"><span class="pre">TestCase</span></code> can be easily replaced by pytest options and
+fixtures.</p>
+<p>As for the other developments, you can use the tests already present as a reference for implementing
+your own. Several resources are available online discussing the testing best practices and the
+pytest documentation is a good starting point as well. Here we will limit to the description of
+the options and utils specific to turbomoleio.</p>
+<p>Helper functions and utilities specific for testing can be found in the <code class="xref py py-mod docutils literal notranslate"><span class="pre">turbomoleio.testfiles.utils</span></code>
+module. In particular this contains a context manager that is used in most of the tests present
+in the test suite: <code class="xref py py-func docutils literal notranslate"><span class="pre">turbomoleio.testfiles.utils.temp_dir()</span></code>.
+Whenever you write a test that needs to access files from or write files to the file system this should be done
+in a temporary directory specific for the test, otherwise the files will be written all over the project
+folders. This context manager can be easily used to create the temporary directory, optionally change directory
+to that one, and changing back to the initial directory when leaving the context manager, optionally
+deleting the temporary directory..</p>
+<p>This function can be used in connection with the <code class="docutils literal notranslate"><span class="pre">delete_tmp_dir</span></code> fixture, that should be passed
+to its <code class="docutils literal notranslate"><span class="pre">delete</span></code> argument. The <code class="docutils literal notranslate"><span class="pre">delete_tmp_dir</span></code>, a boolean value <code class="docutils literal notranslate"><span class="pre">True</span></code> by default, can be switched
+to <code class="docutils literal notranslate"><span class="pre">False</span></code> calling pytest with the <code class="docutils literal notranslate"><span class="pre">--keep-tmpdir</span></code> option. When this happens the path to the
+temporary folder will be printed (with the <code class="docutils literal notranslate"><span class="pre">print</span></code> function) by <code class="docutils literal notranslate"><span class="pre">temp_dir</span></code>. This means that you will
+have this in the output for the failing tests and this will give you the way to inspect the files that were
+used and produced by the test and better understand why a test has failed.</p>
+<p><code class="docutils literal notranslate"><span class="pre">delete_tmp_dir</span></code>, as well as the other general fixtures, is implemented in the pytest standard <code class="docutils literal notranslate"><span class="pre">conftest.py</span></code>
+file in the root folder of the project, with the others being mainly options to ease the access to the
+test files. These files are stored in the <code class="docutils literal notranslate"><span class="pre">turbomoleio/testfiles</span></code> folder. You can add there the files that
+might be needed for your unit and integration tests. Modifying existing files is possible, even though discouraged.
+If it cannot be avoided (e.g. for the update to a new TURBOMOLE version) you should at least
+check that all the tests relying on the files that you plan to modify will keep working as expected.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="versioning.html" class="btn btn-neutral float-right" title="Versioning" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="definerunner.html" class="btn btn-neutral float-left" title="Define runner" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, Guido Petretto, David Waroquiers, Jan Kloppenburg.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

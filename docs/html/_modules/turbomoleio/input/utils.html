@@ -1,0 +1,477 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>turbomoleio.input.utils &mdash; turbomoleio 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> turbomoleio
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datagroups.html">The data group files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../coord.html">The coord file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../definerunner.html">Running define</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../output_parsing.html">Outputs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendix.html">Appendix</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/introduction.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/parsing_logs.html">Output logs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/definerunner.html">Define runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/versioning.html">Versioning</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">turbomoleio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>turbomoleio.input.utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for turbomoleio.input.utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># The turbomoleio package, a python interface to Turbomole</span>
+<span class="c1"># for preparing inputs, parsing outputs and other related tools.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (C) 2018-2021 BASF SE, Matgenix SRL.</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of turbomoleio.</span>
+<span class="c1">#</span>
+<span class="c1"># Turbomoleio is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># Turbomoleio is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with turbomoleio (see ~turbomoleio/COPYING). If not,</span>
+<span class="c1"># see &lt;https://www.gnu.org/licenses/&gt;.</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">cerberus</span>
+<span class="kn">from</span> <span class="nn">monty.serialization</span> <span class="kn">import</span> <span class="n">loadfn</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.input.define</span> <span class="kn">import</span> <span class="n">DefineError</span>
+
+
+<div class="viewcode-block" id="get_define_template"><a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.utils.get_define_template">[docs]</a><span class="k">def</span> <span class="nf">get_define_template</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the dict generate from the default templates available.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name (str): name of the template present in the folder.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: the template converted from the yaml file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.yaml&quot;</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">+=</span> <span class="s2">&quot;.yaml&quot;</span>
+
+    <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;templates&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Could not find template file </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filepath</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">loadfn</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ParametersValidationError"><a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.utils.ParametersValidationError">[docs]</a><span class="k">class</span> <span class="nc">ParametersValidationError</span><span class="p">(</span><span class="n">DefineError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Exception raised when the validation of the parameters fails due</span>
+<span class="sd">    with respect to the defined schema.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="ex_setter"><a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.utils.ex_setter">[docs]</a><span class="k">def</span> <span class="nf">ex_setter</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper function for setting excited states in the cerberus schema</span>
+<span class="sd">    of DefineRunner.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">setter</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">doc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ex_method&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">setter</span></div>
+
+
+<span class="n">ex_method</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;rpa&quot;</span><span class="p">,</span> <span class="s2">&quot;cis&quot;</span><span class="p">,</span> <span class="s2">&quot;dynpol&quot;</span><span class="p">,</span> <span class="s2">&quot;polly&quot;</span><span class="p">]</span>
+<span class="n">ex_multi</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;singlet&quot;</span><span class="p">,</span> <span class="s2">&quot;doublet&quot;</span><span class="p">,</span> <span class="s2">&quot;triplet&quot;</span><span class="p">]</span>
+<span class="n">mp2_calc</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mp2&quot;</span><span class="p">,</span> <span class="s2">&quot;adc(2)&quot;</span><span class="p">,</span> <span class="s2">&quot;ccsd(t)&quot;</span><span class="p">,</span> <span class="s2">&quot;ccsdt&quot;</span><span class="p">]</span>
+
+
+<span class="c1">#: The schema for the validation of the DefineRunner parameters. Based on cerberus.</span>
+<span class="n">schema_define_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+              <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;metric&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+               <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span>
+    <span class="s2">&quot;copymo&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+               <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span>
+    <span class="s2">&quot;sym&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span>
+    <span class="s2">&quot;sym_eps&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span>
+    <span class="s2">&quot;desy&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+    <span class="s2">&quot;desy_eps&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                 <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;desy&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span>
+    <span class="s2">&quot;ired&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+    <span class="s2">&quot;usemo&quot;</span><span class="p">:</span>  <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+               <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span>
+    <span class="s2">&quot;ex_method&quot;</span><span class="p">:</span>  <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                   <span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="n">ex_method</span><span class="p">,</span>
+                   <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ex_multi&quot;</span><span class="p">:</span> <span class="n">ex_multi</span><span class="p">},</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span>
+    <span class="s2">&quot;ex_multi&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                 <span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="n">ex_multi</span><span class="p">,</span>
+                 <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ex_method&quot;</span><span class="p">:</span> <span class="n">ex_method</span><span class="p">},</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span>
+    <span class="s2">&quot;ex_all_states&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                      <span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                      <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ex_method&quot;</span><span class="p">,</span> <span class="s2">&quot;ex_multi&quot;</span><span class="p">],</span>
+                      <span class="s2">&quot;default_setter&quot;</span><span class="p">:</span> <span class="n">ex_setter</span><span class="p">(</span><span class="mi">10</span><span class="p">)},</span>
+    <span class="s2">&quot;ex_irrep_states&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;dict&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                        <span class="s2">&quot;keyschema&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+                        <span class="s2">&quot;valueschema&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">},</span>
+                        <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ex_method&quot;</span><span class="p">,</span> <span class="s2">&quot;ex_multi&quot;</span><span class="p">]},</span>
+    <span class="s2">&quot;ex_mp2&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;dict&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+               <span class="s2">&quot;keyschema&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+               <span class="s2">&quot;valueschema&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;list&quot;</span><span class="p">,</span> <span class="s2">&quot;valueschema&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}},</span>
+               <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ex_method&quot;</span><span class="p">,</span> <span class="s2">&quot;ex_multi&quot;</span><span class="p">]},</span>
+    <span class="s2">&quot;ex_frequency&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                     <span class="s2">&quot;default_setter&quot;</span><span class="p">:</span> <span class="n">ex_setter</span><span class="p">(</span><span class="mi">589</span><span class="p">)},</span>
+    <span class="s2">&quot;ex_frequency_unit&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                          <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                          <span class="s2">&quot;default_setter&quot;</span><span class="p">:</span> <span class="n">ex_setter</span><span class="p">(</span><span class="s2">&quot;nm&quot;</span><span class="p">)},</span>
+    <span class="s2">&quot;ex_exopt&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                 <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+    <span class="s2">&quot;method&quot;</span><span class="p">:</span>  <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;dft&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;dft&quot;</span><span class="p">,</span> <span class="s2">&quot;hf&quot;</span><span class="p">,</span> <span class="s2">&quot;mp2&quot;</span><span class="p">,</span> <span class="s2">&quot;adc(2)&quot;</span><span class="p">,</span> <span class="s2">&quot;ccsd(t)&quot;</span><span class="p">,</span> <span class="s2">&quot;ccsdt&quot;</span><span class="p">]},</span>
+    <span class="s2">&quot;mp2energy&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                  <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span>
+    <span class="s2">&quot;basis&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+    <span class="s2">&quot;basis_atom&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;dict&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                   <span class="s2">&quot;keyschema&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">},</span>
+                   <span class="s2">&quot;valueschema&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">}},</span>
+    <span class="s2">&quot;charge&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+               <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span>
+    <span class="s2">&quot;unpaired_electrons&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+                           <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                           <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span>
+    <span class="s2">&quot;rijk&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;oneof&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">],</span> <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ri&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}},</span>
+                      <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">False</span><span class="p">]}]},</span>
+    <span class="s2">&quot;ri&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+           <span class="s2">&quot;oneof&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">],</span> <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;rijk&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}},</span>
+                     <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">False</span><span class="p">]}]},</span>
+    <span class="s2">&quot;marij&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+              <span class="s2">&quot;oneof&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">],</span> <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;rijk&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;ri&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}},</span>
+                        <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">False</span><span class="p">]}]},</span>
+    <span class="s2">&quot;functional&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                   <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span>
+    <span class="s2">&quot;gridsize&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                 <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span>
+    <span class="s2">&quot;maxcor&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+               <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+               <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="n">mp2_calc</span><span class="p">}},</span>
+    <span class="s2">&quot;use_f12&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;oneof&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">],</span> <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="n">mp2_calc</span><span class="p">}},</span>
+                          <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">False</span><span class="p">]}]},</span>
+    <span class="s2">&quot;use_f12*&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="s2">&quot;oneof&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">],</span> <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="n">mp2_calc</span><span class="p">,</span> <span class="s2">&quot;use_f12&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}},</span>
+                           <span class="p">{</span><span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">False</span><span class="p">]}]},</span>
+    <span class="s2">&quot;maxiter&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="n">mp2_calc</span><span class="p">}},</span>
+    <span class="s2">&quot;scfiterlimit&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">},</span>
+    <span class="s2">&quot;scfconv&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min&quot;</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span>
+                <span class="s2">&quot;max&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">},</span>
+    <span class="s2">&quot;coord_file&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                   <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span>
+    <span class="s2">&quot;disp&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+             <span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;DFT-D1&quot;</span><span class="p">,</span> <span class="s2">&quot;DFT-D2&quot;</span><span class="p">,</span> <span class="s2">&quot;DFT-D3&quot;</span><span class="p">,</span> <span class="s2">&quot;DFT-D3 BJ&quot;</span><span class="p">],</span>
+             <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span>
+    <span class="s2">&quot;use_cosmo&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+    <span class="s2">&quot;epsilon&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;use_cosmo&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}},</span>
+    <span class="s2">&quot;nppa&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+             <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+             <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;use_cosmo&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}},</span>
+    <span class="s2">&quot;nspa&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+             <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+             <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;use_cosmo&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}},</span>
+    <span class="s2">&quot;disex&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+              <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+              <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;use_cosmo&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}},</span>
+    <span class="s2">&quot;rsolv&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+              <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+             <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;use_cosmo&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}},</span>
+    <span class="s2">&quot;routf&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+              <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;use_cosmo&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}},</span>
+    <span class="s2">&quot;cavity&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+               <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+               <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;use_cosmo&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}},</span>
+    <span class="s2">&quot;use_old_amat&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;nullable&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                     <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                     <span class="s2">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;use_cosmo&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}}</span>
+<span class="p">}</span>
+
+
+<span class="c1">#: An instance of cerberus.Validator that can be used to validate the input for DefineRunner.</span>
+<span class="n">define_parameters_validator</span> <span class="o">=</span> <span class="n">cerberus</span><span class="o">.</span><span class="n">Validator</span><span class="p">(</span><span class="n">schema</span><span class="o">=</span><span class="n">schema_define_params</span><span class="p">,</span> <span class="n">ignore_none_values</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="validate_parameters"><a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.utils.validate_parameters">[docs]</a><span class="k">def</span> <span class="nf">validate_parameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function using the cerberus tool and the schema_define_params dictionary</span>
+<span class="sd">    to validate the dictionary that should be passed to DefineRunner in the</span>
+<span class="sd">    parameters argument.</span>
+<span class="sd">    Consider it as an experimental feature.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        parameters (dict): the dictionary that should be validate.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if valid according to the schema defined, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">define_parameters_validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, Guido Petretto, David Waroquiers, Jan Kloppenburg.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
