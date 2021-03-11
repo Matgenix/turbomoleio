@@ -32,6 +32,11 @@ from turbomoleio.core.molecule import CollinearBendingAngle, PerpendicularBendin
 from turbomoleio.core.molecule import MoleculeSystem
 from turbomoleio.core.datagroups import DataGroups
 
+try:
+    from pymatgen.core.periodic_table import DummySpecies
+except ImportError:
+    DummySpecies = None
+
 
 replace_comments_re = re.compile(r"^\s*#.*?$", flags=re.MULTILINE)
 
@@ -460,7 +465,11 @@ $end
     def test_dummy_atoms(self, molecule_filepath):
         ms = MoleculeSystem.from_file(molecule_filepath, fmt="coord")
         mol = ms.molecule
-        assert isinstance(mol[-1].specie, DummySpecie)
+        print(mol[-1].specie)
+        print(mol[-1].specie.__class__)
+        # Pymatgen's Specie and DummySpecie have been changed to Species and
+        # DummySpecies in v2020.10.9. We keep testing both for backward compatibility.
+        assert isinstance(mol[-1].specie, (DummySpecies, DummySpecie))
         assert mol[-1].specie.symbol == "Q"
 
 
