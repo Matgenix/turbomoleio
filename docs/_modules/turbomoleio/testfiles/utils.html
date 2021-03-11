@@ -1,0 +1,721 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>turbomoleio.testfiles.utils &mdash; turbomoleio 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> turbomoleio
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datagroups.html">The data group files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../coord.html">The coord file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../definerunner.html">Running define</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../output_parsing.html">Outputs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendix.html">Appendix</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/introduction.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/parsing_logs.html">Output logs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/definerunner.html">Define runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/versioning.html">Versioning</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Additional information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bugs.html">Reporting bugs</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">turbomoleio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>turbomoleio.testfiles.utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for turbomoleio.testfiles.utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># The turbomoleio package, a python interface to Turbomole</span>
+<span class="c1"># for preparing inputs, parsing outputs and other related tools.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (C) 2018-2021 BASF SE, Matgenix SRL.</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of turbomoleio.</span>
+<span class="c1">#</span>
+<span class="c1"># Turbomoleio is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># Turbomoleio is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with turbomoleio (see ~turbomoleio/COPYING). If not,</span>
+<span class="c1"># see &lt;https://www.gnu.org/licenses/&gt;.</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">shlex</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">numbers</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
+<span class="kn">from</span> <span class="nn">monty.os</span> <span class="kn">import</span> <span class="n">cd</span>
+<span class="kn">from</span> <span class="nn">monty.json</span> <span class="kn">import</span> <span class="n">MSONable</span><span class="p">,</span> <span class="n">MontyDecoder</span>
+<span class="kn">from</span> <span class="nn">monty.serialization</span> <span class="kn">import</span> <span class="n">dumpfn</span><span class="p">,</span> <span class="n">loadfn</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.input.define</span> <span class="kn">import</span> <span class="n">DefineRunner</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.output.states</span> <span class="kn">import</span> <span class="n">EigerRunner</span><span class="p">,</span> <span class="n">States</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.core.control</span> <span class="kn">import</span> <span class="n">Control</span>
+
+
+<span class="n">TESTDIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="ItestError"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.ItestError">[docs]</a><span class="k">class</span> <span class="nc">ItestError</span><span class="p">(</span><span class="ne">BaseException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    error to be raised if an itest fails</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="temp_dir"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.temp_dir">[docs]</a><span class="nd">@contextmanager</span>
+<span class="k">def</span> <span class="nf">temp_dir</span><span class="p">(</span><span class="n">delete</span><span class="p">,</span> <span class="n">changedir</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Context manager that creates a temporary directory with tempfile.mkdtemp and cd to it with monty.os.cd.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        delete (bool): if True the directory will be deleted at the end of the job, if False it will be preserved.</span>
+<span class="sd">        changedir (bool): if True inside the context manager will make a cd to the temporary directoy.</span>
+
+<span class="sd">    Yields:</span>
+<span class="sd">        the path to the temporary directory created.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">testdir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">delete</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Running folder: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">testdir</span><span class="p">))</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">changedir</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">cd</span><span class="p">(</span><span class="n">testdir</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">testdir</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">testdir</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">delete</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">testdir</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_control_filepath"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.get_control_filepath">[docs]</a><span class="k">def</span> <span class="nf">get_control_filepath</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The path to a reference control file in the testfiles/control folder.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): the name of the reference control file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: the absolute path to the coord file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TESTDIR</span><span class="p">,</span> <span class="s1">&#39;control&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="touch_file"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.touch_file">[docs]</a><span class="k">def</span> <span class="nf">touch_file</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Touches a file at the specified path.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path (str): path to the file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">utime</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="assert_MSONable"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.assert_MSONable">[docs]</a><span class="k">def</span> <span class="nf">assert_MSONable</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">test_if_subclass</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tests if obj is MSONable and tries to verify whether the contract is</span>
+<span class="sd">    fulfilled. Tries to convert an object to a dictionary and back and</span>
+<span class="sd">    checking if the dictionaries are equivalent</span>
+
+<span class="sd">    By default, the method tests whether obj is an instance of MSONable.</span>
+<span class="sd">    This check can be deactivated by setting test_if_subclass to False.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        obj: the object to be tests</span>
+<span class="sd">        test_if_subclass:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">test_if_subclass</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">MSONable</span><span class="p">)</span>
+
+    <span class="c1"># applies as_dict/from dict and compares the resulting dictionaries</span>
+    <span class="c1"># use numpy assert_equal to also match numpy arrays</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_equal</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">as_dict</span><span class="p">(),</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">as_dict</span><span class="p">())</span><span class="o">.</span><span class="n">as_dict</span><span class="p">())</span>
+    <span class="c1"># tests that the string is compatible with json</span>
+    <span class="k">assert</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">to_json</span><span class="p">(),</span> <span class="bp">cls</span><span class="o">=</span><span class="n">MontyDecoder</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="gisnan"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.gisnan">[docs]</a><span class="k">def</span> <span class="nf">gisnan</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Auxiliary function imported from numpy.testing._private version 16.2.</span>
+<span class="sd">    Used in assert_almost_equal. Imported here since it is not exposed</span>
+<span class="sd">    in the public interface.</span>
+
+<span class="sd">    like isnan, but always raise an error if type not supported instead of</span>
+<span class="sd">    returning a TypeError object.</span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    isnan and other ufunc sometimes return a NotImplementedType object instead</span>
+<span class="sd">    of raising any exception. This function is a wrapper to make sure an</span>
+<span class="sd">    exception is always raised.</span>
+<span class="sd">    This should be removed once this problem is solved at the Ufunc level.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">st</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">st</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">NotImplemented</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;isnan not supported for this type&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">st</span></div>
+
+
+<div class="viewcode-block" id="assert_almost_equal"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.assert_almost_equal">[docs]</a><span class="k">def</span> <span class="nf">assert_almost_equal</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">desired</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ignored_values</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">err_msg</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function imported from numpy.testing: assert_equal. Version 16.2.</span>
+<span class="sd">    Two key modifications compared to the original implementation:</span>
+<span class="sd">    1) allow comparison of numbers with a tolerance on the difference (other functions</span>
+<span class="sd">        in numpy that allow a tolerance as an argument do not support comparison</span>
+<span class="sd">        between dictionaries).</span>
+<span class="sd">    2) allow to skip the explicit comparison of some attributes in dictionaries.</span>
+
+<span class="sd">    Raises an AssertionError if two objects are not equal within the required tolerances.</span>
+<span class="sd">    Given two objects (scalars, lists, tuples, dictionaries or numpy arrays),</span>
+<span class="sd">    check that all elements of these objects are almost equal. An exception is raised</span>
+<span class="sd">    at the first conflicting values.</span>
+<span class="sd">    Comparison for numerical values is performed with assert_allclose</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        actual: the object to check.</span>
+<span class="sd">        desired : the expected object.</span>
+<span class="sd">        rtol (float): relative tolerance.</span>
+<span class="sd">        atol (float): absolute tolerance.</span>
+<span class="sd">        ignored_values (list): if a comparison between two dictionaries, keywords contained</span>
+<span class="sd">            in this list will not be compared (the key should still exist in both the</span>
+<span class="sd">            dictionaries though).</span>
+<span class="sd">        err_msg (str): the error message to be printed in case of failure.</span>
+<span class="sd">        verbose (bool): if True, the conflicting values are appended to the error message.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        AssertionError: if actual and desired are not equal.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__tracebackhide__</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Hide traceback for py.test</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">desired</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">actual</span><span class="p">)))</span>
+        <span class="n">assert_almost_equal</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">actual</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">desired</span><span class="p">),</span> <span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="p">,</span> <span class="n">ignored_values</span><span class="p">,</span> <span class="n">err_msg</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">ignored_values</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ignored_values</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">desired</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">actual</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+
+            <span class="c1"># don&#39;t check nested values if the key belong to the list to skip</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">ignored_values</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">actual</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">desired</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="p">,</span> <span class="n">ignored_values</span><span class="p">,</span> <span class="s1">&#39;key=</span><span class="si">%r</span><span class="se">\n</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">err_msg</span><span class="p">),</span> <span class="n">verbose</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">desired</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="n">assert_almost_equal</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">actual</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">desired</span><span class="p">),</span> <span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="p">,</span> <span class="n">ignored_values</span><span class="p">,</span> <span class="n">err_msg</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">desired</span><span class="p">)):</span>
+            <span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">actual</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">desired</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="p">,</span> <span class="n">ignored_values</span><span class="p">,</span> <span class="s1">&#39;item=</span><span class="si">%r</span><span class="se">\n</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">err_msg</span><span class="p">),</span> <span class="n">verbose</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="kn">from</span> <span class="nn">numpy.core</span> <span class="kn">import</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">isscalar</span><span class="p">,</span> <span class="n">signbit</span>
+    <span class="kn">from</span> <span class="nn">numpy.lib</span> <span class="kn">import</span> <span class="n">iscomplexobj</span><span class="p">,</span> <span class="n">real</span><span class="p">,</span> <span class="n">imag</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">ndarray</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">desired</span><span class="p">,</span> <span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">desired</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">,</span> <span class="n">err_msg</span><span class="o">=</span><span class="n">err_msg</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">build_err_msg</span><span class="p">([</span><span class="n">actual</span><span class="p">,</span> <span class="n">desired</span><span class="p">],</span> <span class="n">err_msg</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+
+    <span class="c1"># Handle complex numbers: separate into real/imag to handle</span>
+    <span class="c1"># nan/inf/negative zero correctly</span>
+    <span class="c1"># XXX: catch ValueError for subclasses of ndarray where iscomplex fail</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">usecomplex</span> <span class="o">=</span> <span class="n">iscomplexobj</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span> <span class="ow">or</span> <span class="n">iscomplexobj</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+        <span class="n">usecomplex</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">if</span> <span class="n">usecomplex</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">iscomplexobj</span><span class="p">(</span><span class="n">actual</span><span class="p">):</span>
+            <span class="n">actualr</span> <span class="o">=</span> <span class="n">real</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span>
+            <span class="n">actuali</span> <span class="o">=</span> <span class="n">imag</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">actualr</span> <span class="o">=</span> <span class="n">actual</span>
+            <span class="n">actuali</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">iscomplexobj</span><span class="p">(</span><span class="n">desired</span><span class="p">):</span>
+            <span class="n">desiredr</span> <span class="o">=</span> <span class="n">real</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+            <span class="n">desiredi</span> <span class="o">=</span> <span class="n">imag</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">desiredr</span> <span class="o">=</span> <span class="n">desired</span>
+            <span class="n">desiredi</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">actualr</span><span class="p">,</span> <span class="n">desiredr</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">)</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">actuali</span><span class="p">,</span> <span class="n">desiredi</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="c1"># isscalar test to check cases such as [np.nan] != np.nan</span>
+    <span class="k">if</span> <span class="n">isscalar</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span> <span class="o">!=</span> <span class="n">isscalar</span><span class="p">(</span><span class="n">actual</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="n">a_is_number</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">)</span>
+    <span class="n">d_is_number</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">desired</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">a_is_number</span> <span class="o">!=</span> <span class="n">d_is_number</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">a_is_number</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">desired</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="c1"># Inf/nan/negative zero handling</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">isdesnan</span> <span class="o">=</span> <span class="n">gisnan</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+        <span class="n">isactnan</span> <span class="o">=</span> <span class="n">gisnan</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">isdesnan</span> <span class="ow">and</span> <span class="n">isactnan</span><span class="p">:</span>
+            <span class="k">return</span>  <span class="c1"># both nan, so equal</span>
+
+        <span class="c1"># allow 0.0 and -0.0 to match</span>
+        <span class="k">if</span> <span class="n">desired</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">actual</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span>
+            <span class="c1"># if not signbit(desired) == signbit(actual):</span>
+            <span class="c1">#     raise AssertionError(msg)</span>
+
+    <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">NotImplementedError</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">isdesnat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">isnat</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+        <span class="n">isactnat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">isnat</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span>
+        <span class="n">dtypes_match</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span>
+        <span class="k">if</span> <span class="n">isdesnat</span> <span class="ow">and</span> <span class="n">isactnat</span><span class="p">:</span>
+            <span class="c1"># If both are NaT (and have the same dtype -- datetime or</span>
+            <span class="c1"># timedelta) they are considered equal.</span>
+            <span class="k">if</span> <span class="n">dtypes_match</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">NotImplementedError</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># First check if they are equal with ==. If not Use assert allclose instead of __eq__</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">desired</span> <span class="o">==</span> <span class="n">actual</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="c1"># try:</span>
+            <span class="c1">#     np.testing.assert_allclose(actual, desired, rtol=rtol, atol=atol)</span>
+            <span class="c1"># except (AssertionError, TypeError):</span>
+            <span class="c1">#     raise AssertionError(msg)</span>
+
+    <span class="k">except</span> <span class="p">(</span><span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="c1"># this handles the case when the two types are not even comparable</span>
+        <span class="k">if</span> <span class="s1">&#39;elementwise == comparison&#39;</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span></div>
+
+
+<div class="viewcode-block" id="has_matplotlib"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.has_matplotlib">[docs]</a><span class="k">def</span> <span class="nf">has_matplotlib</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    True if matplotlib is installed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">matplotlib</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="get_tfp"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.get_tfp">[docs]</a><span class="k">def</span> <span class="nf">get_tfp</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    get test file path</span>
+<span class="sd">    Args:</span>
+<span class="sd">        file_name: optional the name of the file to get the path to</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        full path if a file is given or the path of the testfile directory is file_name is None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tfp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">file_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">tfp</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tfp</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_sp"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.get_sp">[docs]</a><span class="k">def</span> <span class="nf">get_sp</span><span class="p">(</span><span class="n">struc</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The path to a structure in the testfiles/structures folder.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        struc (str): the name of the structure.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: the absolute path to the coord file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_tfp</span><span class="p">(),</span> <span class="s1">&#39;structures&#39;</span><span class="p">,</span> <span class="n">struc</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_control_integration"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.get_control_integration">[docs]</a><span class="k">def</span> <span class="nf">get_control_integration</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The path to a reference control file in the testfiles/integration/control folder.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): the name of the reference control file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: the absolute path to the coord file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_tfp</span><span class="p">(),</span> <span class="s1">&#39;integration&#39;</span><span class="p">,</span> <span class="s1">&#39;control&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ItestConfig"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.ItestConfig">[docs]</a><span class="k">class</span> <span class="nc">ItestConfig</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper class to store the configuration parameters used inside the integration</span>
+<span class="sd">    test function. The actual values are expected to be set by pytest.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">define_timeout</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">generate_ref</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-4</span>
+    <span class="n">delete_tmp_dir</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<span class="n">ignored_itest_parsed_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;start_time&quot;</span><span class="p">,</span> <span class="s2">&quot;end_time&quot;</span><span class="p">,</span> <span class="s2">&quot;wall_time&quot;</span><span class="p">,</span> <span class="s2">&quot;cpu_time&quot;</span><span class="p">,</span> <span class="s2">&quot;construction_timings&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;host&quot;</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="s2">&quot;build&quot;</span><span class="p">,</span> <span class="s2">&quot;eigenvectors&quot;</span><span class="p">,</span> <span class="s2">&quot;reduced_masses&quot;</span><span class="p">,</span> <span class="s2">&quot;electric_dipole&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;magnetic_dipole&quot;</span><span class="p">,</span> <span class="s2">&quot;electric_quadrupole&quot;</span><span class="p">,</span> <span class="s2">&quot;@version&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="run_itest"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.run_itest">[docs]</a><span class="k">def</span> <span class="nf">run_itest</span><span class="p">(</span><span class="n">executables</span><span class="p">,</span> <span class="n">define_options</span><span class="p">,</span> <span class="n">coord_filename</span><span class="p">,</span> <span class="n">control_reference_filename</span><span class="p">,</span> <span class="n">file_classes</span><span class="p">,</span>
+              <span class="n">arguments</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">datagroups_options</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Runs the integration tests. First define is executed and the produced control file is compared</span>
+<span class="sd">    with the reference. If successful the required turbomole executables are run and the numerical values</span>
+<span class="sd">    of the outputs will be checked with the reference.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        executables: string or list of strings identifying the list of programs that should be executed.</span>
+<span class="sd">        define_options (dict): the options passed to DefineRunner.</span>
+<span class="sd">        coord_filename (str): the filename of the coord used. Will be taken from the testfiles/structures folder.</span>
+<span class="sd">        control_reference_filename (str): the name of the reference control file used to check the correctness of</span>
+<span class="sd">            the execution of DefineRunner. Will be taken from the testfiles/integration/control folder.</span>
+<span class="sd">        file_classes: a list of classes subclassing BaseData (or even a single one if only one program required)</span>
+<span class="sd">            they will be used to generate outputs from stdout and compared with the reference.</span>
+<span class="sd">        arguments: string or list of strings with the arguments to be passed to the each executable.</span>
+<span class="sd">        datagroups_options (dict): a dict of the form {&quot;datagroup_name&quot;: &quot;datagroup_value&quot;}. Can contain</span>
+<span class="sd">            additional datagroups that will be set with the cdg utility before running the calculation.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if the test passed successfully</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">executables</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="n">executables</span> <span class="o">=</span> <span class="p">[</span><span class="n">executables</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_classes</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="n">file_classes</span> <span class="o">=</span> <span class="p">[</span><span class="n">file_classes</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">arguments</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">arguments</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">executables</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arguments</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="n">arguments</span> <span class="o">=</span> <span class="p">[</span><span class="n">arguments</span><span class="p">]</span>
+
+    <span class="n">opt_define_timeout</span> <span class="o">=</span> <span class="n">ItestConfig</span><span class="o">.</span><span class="n">define_timeout</span>
+    <span class="n">opt_generate_ref</span> <span class="o">=</span> <span class="n">ItestConfig</span><span class="o">.</span><span class="n">generate_ref</span>
+    <span class="n">opt_tol</span> <span class="o">=</span> <span class="n">ItestConfig</span><span class="o">.</span><span class="n">tol</span>
+
+    <span class="k">with</span> <span class="n">temp_dir</span><span class="p">(</span><span class="n">ItestConfig</span><span class="o">.</span><span class="n">delete_tmp_dir</span><span class="p">)</span> <span class="k">as</span> <span class="n">tmp_dir</span><span class="p">:</span>
+        <span class="c1"># get the coord file (for the structure defined in the string)</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">get_sp</span><span class="p">(</span><span class="n">coord_filename</span><span class="p">),</span> <span class="s1">&#39;coord&#39;</span><span class="p">)</span>
+
+        <span class="n">dr</span> <span class="o">=</span> <span class="n">DefineRunner</span><span class="p">(</span><span class="n">define_options</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">opt_define_timeout</span><span class="p">)</span>
+        <span class="n">define_out</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">run_full</span><span class="p">()</span>
+
+        <span class="c1"># define should complete normally</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">define_out</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ItestError</span><span class="p">(</span><span class="s2">&quot;Define did not complete normally.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">datagroups_options</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">Control</span><span class="o">.</span><span class="n">from_file</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">datagroups_options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">cdg</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">to_file</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">opt_generate_ref</span><span class="p">:</span> <span class="c1"># pragma: no cover</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">get_control_integration</span><span class="p">(</span><span class="n">control_reference_filename</span><span class="p">))</span>
+
+        <span class="n">ref_control</span> <span class="o">=</span> <span class="n">Control</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">get_control_integration</span><span class="p">(</span><span class="n">control_reference_filename</span><span class="p">))</span>
+
+        <span class="n">current_control</span> <span class="o">=</span> <span class="n">Control</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;control&quot;</span><span class="p">)</span>
+        <span class="n">compare_control</span> <span class="o">=</span> <span class="n">current_control</span><span class="o">.</span><span class="n">compare</span><span class="p">(</span><span class="n">ref_control</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">opt_tol</span><span class="p">)</span>
+        <span class="c1"># print the output of Control.compare if the compare fails</span>
+        <span class="k">assert</span> <span class="n">compare_control</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="n">compare_control</span>
+
+        <span class="k">for</span> <span class="n">executable</span><span class="p">,</span> <span class="n">exec_args</span><span class="p">,</span> <span class="n">out_parser</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">executables</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">file_classes</span><span class="p">):</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="n">executable</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">exec_args</span><span class="p">:</span>
+                <span class="n">cmd</span> <span class="o">+=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">exec_args</span><span class="p">)</span>
+            <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                                       <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+            <span class="n">program_std_out</span><span class="p">,</span> <span class="n">program_std_err</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">ret_code</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">ret_code</span> <span class="ow">or</span> <span class="s2">&quot;ended normally&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">program_std_err</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">ItestError</span><span class="p">(</span><span class="s2">&quot;Executable </span><span class="si">{}</span><span class="s2"> has failed with return code </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">executable</span><span class="p">,</span> <span class="n">ret_code</span><span class="p">))</span>
+
+                <span class="k">if</span> <span class="n">out_parser</span><span class="p">:</span>
+                    <span class="c1"># for jobex the outputs are not in the stdout but in the job.last file</span>
+                    <span class="k">if</span> <span class="n">executable</span> <span class="o">==</span> <span class="s2">&quot;jobex&quot;</span><span class="p">:</span>
+                        <span class="n">out</span> <span class="o">=</span> <span class="n">out_parser</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;job.last&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">out</span> <span class="o">=</span> <span class="n">out_parser</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">program_std_out</span><span class="p">)</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span>
+                    <span class="n">out_ref_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_tfp</span><span class="p">(),</span> <span class="s2">&quot;integration&quot;</span><span class="p">,</span> <span class="s2">&quot;logs_json&quot;</span><span class="p">,</span>
+                                                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">_</span><span class="si">{}</span><span class="s2">.json&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">control_reference_filename</span><span class="p">,</span> <span class="n">executable</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="n">opt_generate_ref</span><span class="p">:</span>
+                        <span class="n">dumpfn</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">out_ref_path</span><span class="p">)</span>
+                    <span class="n">out_ref</span> <span class="o">=</span> <span class="n">loadfn</span><span class="p">(</span><span class="n">out_ref_path</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+                    <span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">out_ref</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">opt_tol</span><span class="p">,</span> <span class="n">ignored_values</span><span class="o">=</span><span class="n">ignored_itest_parsed_keys</span><span class="p">)</span>
+
+                <span class="n">c</span> <span class="o">=</span> <span class="n">Control</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;control&quot;</span><span class="p">)</span>
+                <span class="n">e</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">energy</span>
+                <span class="k">if</span> <span class="n">e</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">e_ref_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_tfp</span><span class="p">(),</span> <span class="s2">&quot;integration&quot;</span><span class="p">,</span> <span class="s2">&quot;energy&quot;</span><span class="p">,</span>
+                                              <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">_</span><span class="si">{}</span><span class="s2">.json&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">control_reference_filename</span><span class="p">,</span> <span class="n">executable</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="n">opt_generate_ref</span><span class="p">:</span>
+                        <span class="n">dumpfn</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">e_ref_path</span><span class="p">)</span>
+                    <span class="n">e_ref</span> <span class="o">=</span> <span class="n">loadfn</span><span class="p">(</span><span class="n">e_ref_path</span><span class="p">)</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">scf</span><span class="p">,</span> <span class="n">e_ref</span><span class="o">.</span><span class="n">scf</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">opt_tol</span><span class="p">)</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">total</span><span class="p">,</span> <span class="n">e_ref</span><span class="o">.</span><span class="n">total</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">opt_tol</span><span class="p">)</span>
+
+                <span class="n">g</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">gradient</span>
+                <span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">g_ref_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_tfp</span><span class="p">(),</span> <span class="s2">&quot;integration&quot;</span><span class="p">,</span> <span class="s2">&quot;gradient&quot;</span><span class="p">,</span>
+                                              <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">_</span><span class="si">{}</span><span class="s2">.json&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">control_reference_filename</span><span class="p">,</span> <span class="n">executable</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="n">opt_generate_ref</span><span class="p">:</span>
+                        <span class="n">dumpfn</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">g_ref_path</span><span class="p">)</span>
+                    <span class="n">g_ref</span> <span class="o">=</span> <span class="n">loadfn</span><span class="p">(</span><span class="n">g_ref_path</span><span class="p">)</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">gradients</span><span class="p">,</span> <span class="n">g_ref</span><span class="o">.</span><span class="n">gradients</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">opt_tol</span><span class="p">)</span>
+
+                <span class="c1"># check that the output from eiger and our parser give the same results</span>
+                <span class="n">states</span> <span class="o">=</span> <span class="n">States</span><span class="o">.</span><span class="n">from_file</span><span class="p">()</span>
+                <span class="n">eiger_runner</span> <span class="o">=</span> <span class="n">EigerRunner</span><span class="p">()</span>
+                <span class="n">eiger_runner</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+                <span class="n">eiger_out</span> <span class="o">=</span> <span class="n">eiger_runner</span><span class="o">.</span><span class="n">get_eiger_output</span><span class="p">()</span>
+                <span class="k">assert</span> <span class="n">eiger_out</span><span class="o">.</span><span class="n">compare_states</span><span class="p">(</span><span class="n">states</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">_stdout&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">executable</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">program_std_out</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="c1"># if an exception is raised write down the output file for debugging then reraise</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">_stdout&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">executable</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">program_std_out</span><span class="p">)</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">_stderr&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">executable</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">program_std_err</span><span class="p">)</span>
+
+                <span class="k">raise</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018-2021 BASF SE, Matgenix SRL.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

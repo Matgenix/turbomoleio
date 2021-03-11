@@ -20,21 +20,17 @@
     along with turbomoleio (see ~turbomoleio/COPYING). If not,
     see <https://www.gnu.org/licenses/>.
 
-==========
-Versioning
-==========
+==============
+Reporting bugs
+==============
 
-turbomoleio adopts a `semantic versioning <https://semver.org/>`_ to identify the different
-versions of the packages when released. In particular, given a version number
-MAJOR.MINOR.PATCH, increment the:
+You can report bugs, request new features, and make contributions (e.g. providing
+patches) by opening a new issue on File bug reports or feature requests, and make
+contributions (e.g. code patches), by opening a "new issue" on GitHub:
 
-#. MAJOR version when you make incompatible API changes,
-#. MINOR version when you add functionality in a backwards-compatible manner, and
-#. PATCH version when you make backwards-compatible bug fixes.
+- turbomoleio issues: https://github.com/matgenix/turbomoleio/issues
 
-To ease the access to the version number, this is stored as a string in a single
-point in the python code, i.e. in the :mod:`turbomoleio.__version__` module.
-This file is accessed by the ``turbomoleio/__init__.py`` module, by the ``setup.py``
-file and by the ``doc/conf.py`` file used to configure the generation of the documentation.
-When creating a new version of turbomoleio you should thus only update the version in
-``turbomoleio/__version__.py``.
+For bugs, please give as much information as you can in the issue. Try to provide a
+small self-contained code snippet that reproduces the problem. Also specify which
+version of turbomoleio you are using and as much information as you can about your
+environment (OS, python version, versions of external packages, Turbomole version, ...).

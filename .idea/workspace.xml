@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1029d736-a0a9-4dfb-9627-399dfd8fe1a7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/docs/html/_sources/bugs.rst.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/html/_sources/changelog.rst.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/html/_sources/license.rst.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/html/bugs.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/html/changelog.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/html/license.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs_rst/bugs.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs_rst/changelog.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tasks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/.nojekyll" beforeDir="false" afterPath="$PROJECT_DIR$/docs_rst/license.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/.buildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/.buildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/cerberus/validator.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/cerberus/validator.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/core/control.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/core/control.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/core/datagroups.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/core/datagroups.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/core/molecule.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/core/molecule.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/core/tests/test_control.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/core/tests/test_control.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/core/tests/test_datagroups.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/core/tests/test_datagroups.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/core/tests/test_molecule.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/core/tests/test_molecule.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/input/define.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/input/define.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/input/tests/test_define.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/input/tests/test_define.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/input/tests/test_utils.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/input/tests/test_utils.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/input/utils.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/input/utils.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/output/data.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/output/data.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/output/files.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/output/files.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/output/parser.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/output/parser.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/output/states.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/output/states.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/output/tests/test_data.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/output/tests/test_data.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/output/tests/test_files.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/output/tests/test_files.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/output/tests/test_parser.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/output/tests/test_parser.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/output/tests/test_states.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/output/tests/test_states.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/testfiles/utils.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_modules/turbomoleio/testfiles/utils.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_sources/appendix.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_sources/appendix.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_sources/coord.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_sources/coord.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_sources/datagroups.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_sources/datagroups.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_sources/definerunner.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_sources/definerunner.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_sources/developer/definerunner.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_sources/developer/definerunner.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_sources/developer/introduction.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_sources/developer/introduction.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_sources/developer/parsing_logs.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_sources/developer/parsing_logs.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_sources/developer/testing.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_sources/developer/testing.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_sources/developer/versioning.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_sources/developer/versioning.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_sources/index.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_sources/index.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/_sources/output_parsing.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/_sources/output_parsing.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/api/modules.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/api/modules.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/api/turbomoleio.core.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/api/turbomoleio.core.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/api/turbomoleio.core.tests.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/api/turbomoleio.core.tests.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/api/turbomoleio.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/api/turbomoleio.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/api/turbomoleio.input.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/api/turbomoleio.input.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/api/turbomoleio.input.templates.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/api/turbomoleio.input.templates.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/api/turbomoleio.input.tests.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/api/turbomoleio.input.tests.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/api/turbomoleio.output.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/api/turbomoleio.output.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/api/turbomoleio.output.tests.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/api/turbomoleio.output.tests.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/api/turbomoleio.testfiles.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/api/turbomoleio.testfiles.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/appendix.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/appendix.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/coord.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/coord.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/datagroups.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/datagroups.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/definerunner.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/definerunner.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/developer/definerunner.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/developer/definerunner.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/developer/introduction.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/developer/introduction.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/developer/parsing_logs.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/developer/parsing_logs.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/developer/testing.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/developer/testing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/developer/versioning.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/developer/versioning.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/genindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/genindex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/objects.inv" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/objects.inv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/output_parsing.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/output_parsing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/py-modindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/py-modindex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/search.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/html/searchindex.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/html/searchindex.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/api/modules.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/api/turbomoleio.core.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/api/turbomoleio.core.tests.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/api/turbomoleio.input.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/api/turbomoleio.input.templates.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/api/turbomoleio.input.tests.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/api/turbomoleio.output.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/api/turbomoleio.output.tests.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/api/turbomoleio.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/api/turbomoleio.testfiles.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/appendix.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_rst/appendix.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/conf.py" beforeDir="false" afterPath="$PROJECT_DIR$/docs_rst/conf.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/coord.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_rst/coord.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/datagroups.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_rst/datagroups.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/definerunner.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_rst/definerunner.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/developer/definerunner.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_rst/developer/definerunner.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/developer/introduction.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_rst/developer/introduction.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/developer/parsing_logs.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_rst/developer/parsing_logs.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/developer/testing.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_rst/developer/testing.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/developer/versioning.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_rst/developer/versioning.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/index.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_rst/index.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_rst/output_parsing.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs_rst/output_parsing.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-2096892745">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.open.time.1" value="1" />
+          <entry key="project.opened" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="COPYING" value="1" />
+          <entry key="Makefile" value="1" />
+          <entry key="html" value="4" />
+          <entry key="nojekyll" value="1" />
+          <entry key="png" value="2" />
+          <entry key="py" value="51" />
+          <entry key="rst" value="23" />
+          <entry key="sh" value="2" />
+          <entry key="txt" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Bash" value="2" />
+          <entry key="HTML" value="4" />
+          <entry key="Image" value="2" />
+          <entry key="PLAIN_TEXT" value="4" />
+          <entry key="Python" value="51" />
+          <entry key="ReST" value="23" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="Makefile" value="8" />
+          <entry key="py" value="166" />
+          <entry key="rst" value="1457" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="PLAIN_TEXT" value="8" />
+          <entry key="Python" value="166" />
+          <entry key="ReST" value="1457" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/turbomoleio/output/files.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="22" selection-start-line="22" selection-end-line="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs_rst/developer/definerunner.rst">
+          <provider selected="true" editor-type-id="restructured-text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/turbomoleio/core/control.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="20" column="38" selection-end-line="20" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs_rst/index.rst">
+          <provider selected="true" editor-type-id="restructured-text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs_rst/changelog.rst">
+          <provider selected="true" editor-type-id="restructured-text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs_rst/license.rst">
+          <provider selected="true" editor-type-id="restructured-text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs_rst/bugs.rst">
+          <provider selected="true" editor-type-id="restructured-text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/setup.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1515">
+              <caret line="101" column="45" selection-start-line="101" selection-start-column="45" selection-end-line="101" selection-end-column="45" />
+              <folding>
+                <element signature="e#58#68#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tasks.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="329">
+              <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
+              <folding>
+                <element signature="e#111#134#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/turbomoleio/core/datagroups.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="21" selection-start-line="21" selection-end-line="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>Copyright 2019, Guido Petretto, David Waroquiers, Jan Kloppenburg</find>
+      <find>Copyright</find>
+      <find>kloppenb</find>
+      <find>michiel</find>
+      <find>Shells</find>
+    </findStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/turbomoleio/core/tests/__init__.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/core/tests/test_control.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/core/tests/test_datagroups.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/core/tests/test_molecule.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/input/templates/__init__.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/input/tests/__init__.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/input/tests/test_define.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/input/tests/test_utils.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/integration_tests/test_aoforce.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/integration_tests/test_datagroups.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/integration_tests/test_define.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/integration_tests/test_dscf.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/integration_tests/test_escf.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/integration_tests/test_jobex.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/integration_tests/test_molecule.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/integration_tests/test_relax.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/integration_tests/test_ridft.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/integration_tests/test_rimp2.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/output/tests/__init__.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/output/tests/test_data.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/output/tests/test_files.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/output/tests/test_parser.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/output/tests/test_states.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/output/__init__.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/output/data.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/output/files.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/output/parser.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/output/states.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/testfiles/__init__.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/testfiles/utils.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/testfiles/tests/test_utils.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/__init__.py" />
+        <option value="$PROJECT_DIR$/turbomoleio/__version__.py" />
+        <option value="$PROJECT_DIR$/docs_rst/Makefile" />
+        <option value="$PROJECT_DIR$/docs_rst/output_parsing.rst" />
+        <option value="$PROJECT_DIR$/docs_rst/definerunner.rst" />
+        <option value="$PROJECT_DIR$/docs_rst/datagroups.rst" />
+        <option value="$PROJECT_DIR$/docs_rst/coord.rst" />
+        <option value="$PROJECT_DIR$/docs_rst/appendix.rst" />
+        <option value="$PROJECT_DIR$/docs_rst/developer/versioning.rst" />
+        <option value="$PROJECT_DIR$/docs_rst/developer/testing.rst" />
+        <option value="$PROJECT_DIR$/docs_rst/developer/parsing_logs.rst" />
+        <option value="$PROJECT_DIR$/docs_rst/developer/introduction.rst" />
+        <option value="$PROJECT_DIR$/docs_rst/developer/definerunner.rst" />
+        <option value="$PROJECT_DIR$/turbomoleio/core/control.py" />
+        <option value="$PROJECT_DIR$/docs_rst/bugs.rst" />
+        <option value="$PROJECT_DIR$/docs_rst/license.rst" />
+        <option value="$PROJECT_DIR$/docs_rst/index.rst" />
+        <option value="$PROJECT_DIR$/docs_rst/changelog.rst" />
+        <option value="$PROJECT_DIR$/setup.py" />
+        <option value="$PROJECT_DIR$/tasks.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="1038" />
+    <option name="y" value="27" />
+    <option name="width" value="1920" />
+    <option name="height" value="1053" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State />
+          <State>
+            <id>Python</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Python</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="turbomoleio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="turbomoleio" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="turbomoleio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="turbomoleio" type="462c0819:PsiDirectoryNode" />
+              <item name="docs" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="zielu.svntoolbox.prj.config" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docs_rst" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1029d736-a0a9-4dfb-9627-399dfd8fe1a7" name="Default Changelist" comment="" />
+      <created>1614953193844</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1614953193844</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="1069" y="27" width="1920" height="1053" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49817517" visible="true" weight="0.24986821" />
+      <window_info id="Structure" order="1" sideWeight="0.5018248" side_tool="true" visible="true" weight="0.24986821" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.4010929" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/turbomoleio/output/tests/test_files.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/turbomoleio/output/tests/test_parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/turbomoleio/output/tests/test_states.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/turbomoleio/output/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/turbomoleio/output/parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/turbomoleio/output/states.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/turbomoleio/testfiles/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/turbomoleio/testfiles/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/turbomoleio/testfiles/tests/test_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/turbomoleio/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/.nojekyll">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/html/index.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="73" selection-start-line="19" selection-start-column="73" selection-end-line="19" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/html/_images/energy_geopt.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/html/_images/scf_iterations.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/turbomoleio/core/symmetry.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="35" column="1" selection-start-line="35" selection-start-column="1" selection-end-line="35" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/COPYING">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/turbomoleio/__version__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/turbomoleio/integration_tests/test_define.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="46" lean-forward="true" selection-start-line="8" selection-start-column="2" selection-end-line="16" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/api/turbomoleio.core.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/api/turbomoleio.input.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/api/turbomoleio.output.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/api/turbomoleio.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/api/turbomoleio.testfiles.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/html/api/turbomoleio.core.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-11160" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/generate_api.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtests.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/turbomoleio/output/data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="38" lean-forward="true" selection-start-line="1" selection-end-line="20" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/output_parsing.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/definerunner.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/datagroups.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/coord.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/conf.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/appendix.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/developer/versioning.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/developer/testing.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/developer/parsing_logs.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/developer/introduction.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/developer/definerunner.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/turbomoleio/core/datagroups.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/html/_sources/api/turbomoleio.core.tests.rst.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-125" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/bugs.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/html/license.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/html/_modules/turbomoleio/core/control.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="2" lean-forward="true" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/license.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/turbomoleio/output/files.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/index.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs_rst/changelog.rst">
+      <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1515">
+          <caret line="101" column="45" selection-start-line="101" selection-start-column="45" selection-end-line="101" selection-end-column="45" />
+          <folding>
+            <element signature="e#58#68#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/turbomoleio/core/control.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="38" selection-end-line="20" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tasks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="329">
+          <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
+          <folding>
+            <element signature="e#111#134#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

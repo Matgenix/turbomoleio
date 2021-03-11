@@ -1,0 +1,1244 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>turbomoleio.core.control &mdash; turbomoleio 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> turbomoleio
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datagroups.html">The data group files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../coord.html">The coord file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../definerunner.html">Running define</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../output_parsing.html">Outputs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendix.html">Appendix</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/introduction.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/parsing_logs.html">Output logs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/definerunner.html">Define runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/versioning.html">Versioning</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Additional information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bugs.html">Reporting bugs</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">turbomoleio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>turbomoleio.core.control</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for turbomoleio.core.control</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># The turbomoleio package, a python interface to Turbomole</span>
+<span class="c1"># for preparing inputs, parsing outputs and other related tools.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (C) 2018-2021 BASF SE, Matgenix SRL.</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of turbomoleio.</span>
+<span class="c1">#</span>
+<span class="c1"># Turbomoleio is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># Turbomoleio is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with turbomoleio (see ~turbomoleio/COPYING). If not,</span>
+<span class="c1"># see &lt;https://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains the object and functions to interact directly with a</span>
+<span class="sd">control file. Based on the DataGroups class.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">fractions</span> <span class="kn">import</span> <span class="n">Fraction</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">from</span> <span class="nn">monty.json</span> <span class="kn">import</span> <span class="n">MSONable</span>
+<span class="kn">from</span> <span class="nn">monty.os</span> <span class="kn">import</span> <span class="n">makedirs_p</span><span class="p">,</span> <span class="n">cd</span>
+<span class="kn">from</span> <span class="nn">pymatgen.util.plotting</span> <span class="kn">import</span> <span class="n">add_fig_kwargs</span><span class="p">,</span> <span class="n">get_ax_fig_plt</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.core.datagroups</span> <span class="kn">import</span> <span class="n">DataGroups</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.core.symmetry</span> <span class="kn">import</span> <span class="n">irrep_size</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.core.molecule</span> <span class="kn">import</span> <span class="n">get_mol_and_indices_frozen</span><span class="p">,</span> <span class="n">MoleculeSystem</span>
+
+
+<div class="viewcode-block" id="Defaults"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Defaults">[docs]</a><span class="k">class</span> <span class="nc">Defaults</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class collecting default values used by TM executables when not</span>
+<span class="sd">    present in the control file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">METRIC</span> <span class="o">=</span> <span class="mi">3</span></div>
+
+
+<div class="viewcode-block" id="Energy"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Energy">[docs]</a><span class="k">class</span> <span class="nc">Energy</span><span class="p">(</span><span class="n">MSONable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents the &quot;energy&quot; data group of TurboMole.</span>
+<span class="sd">    Usually stored in the &quot;energy&quot; file or directly in the control file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scfkin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scfpot</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mp2</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            scf (list): energies from scf calculations.</span>
+<span class="sd">            scfkin (list): kinetic contribution to the scf energy.</span>
+<span class="sd">            scfpot (list): potential contribution to the scf energy.</span>
+<span class="sd">            mp2 (list): mp2 contribution to the total energy (not counted in scf).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">scf</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scfkin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">scfkin</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scfpot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">scfpot</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mp2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mp2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mp2</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scf</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">mp2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mp2</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scf</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Energy.from_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Energy.from_string">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates Energy object reading from a string.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            string (str): the string of the &quot;energy&quot; datagroup.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">energy_dg_sp</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+        <span class="n">header_sp</span> <span class="o">=</span> <span class="n">energy_dg_sp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">h_ind</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;SCF&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;SCFKIN&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;SCFPOT&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;MP2&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">h_ind</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">h_ind</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">header_sp</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="n">scf</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">scfkin</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">scfpot</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">mp2</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">h_ind</span><span class="p">[</span><span class="s2">&quot;MP2&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">energy_dg_sp</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">lsp</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">lsp</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">scf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">lsp</span><span class="p">[</span><span class="n">h_ind</span><span class="p">[</span><span class="s2">&quot;SCF&quot;</span><span class="p">]]))</span>
+            <span class="n">scfkin</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">lsp</span><span class="p">[</span><span class="n">h_ind</span><span class="p">[</span><span class="s2">&quot;SCFKIN&quot;</span><span class="p">]]))</span>
+            <span class="n">scfpot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">lsp</span><span class="p">[</span><span class="n">h_ind</span><span class="p">[</span><span class="s2">&quot;SCFPOT&quot;</span><span class="p">]]))</span>
+            <span class="k">if</span> <span class="n">mp2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">mp2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">lsp</span><span class="p">[</span><span class="n">h_ind</span><span class="p">[</span><span class="s2">&quot;MP2&quot;</span><span class="p">]]))</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">scf</span><span class="o">=</span><span class="n">scf</span><span class="p">,</span> <span class="n">scfkin</span><span class="o">=</span><span class="n">scfkin</span><span class="p">,</span> <span class="n">scfpot</span><span class="o">=</span><span class="n">scfpot</span><span class="p">,</span> <span class="n">mp2</span><span class="o">=</span><span class="n">mp2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Energy.from_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Energy.from_file">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;energy&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates Energy object reading from a given file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): Name of the file from which this Energy object</span>
+<span class="sd">                should be read, default is &quot;energy&quot;.</span>
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: if the energy file comes from a subfile and is missing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dg</span> <span class="o">=</span> <span class="n">DataGroups</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="n">dg</span><span class="o">.</span><span class="n">show_data_group</span><span class="p">(</span><span class="s2">&quot;energy&quot;</span><span class="p">,</span> <span class="n">show_from_subfile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">raise_if_missing_subfile</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">string</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_steps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The number of steps present</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scf</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">delta_e</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The variation of the total energy in the last step.</span>
+<span class="sd">        None if less than 2 steps presents.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+
+<div class="viewcode-block" id="Energy.plot"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Energy.plot">[docs]</a>    <span class="nd">@add_fig_kwargs</span>
+    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plot the evolution of the energies.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ax (Axes):  a matplotlib Axes or None if a new figure should be created.</span>
+<span class="sd">            kwargs: arguments passed to matplotlib plot function.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A matplotlib Figure</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">ax</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">plt</span> <span class="o">=</span> <span class="n">get_ax_fig_plt</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Steps&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Energy&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">fig</span></div></div>
+
+
+<div class="viewcode-block" id="Gradient"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Gradient">[docs]</a><span class="k">class</span> <span class="nc">Gradient</span><span class="p">(</span><span class="n">MSONable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents the &quot;grad&quot; data group of TurboMole.</span>
+<span class="sd">    Usually stored in the &quot;gradient&quot; file or directly in the control file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gradients</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">energies</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">molecules</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            gradients (list): gradients for all the steps and all the atoms</span>
+<span class="sd">                with shape nsteps*natoms*3.</span>
+<span class="sd">            energies (list): total energies for each step.</span>
+<span class="sd">            molecules (list): list of MoleculeSystem with coordinates for each step.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gradients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">gradients</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">energies</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">molecules</span> <span class="o">=</span> <span class="n">molecules</span>
+
+<div class="viewcode-block" id="Gradient.from_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Gradient.from_string">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates Gradient object reading from a given file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            string (str): the string of the &quot;grad&quot; datagroup.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># skip the first as it is before the first</span>
+        <span class="n">cycles</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;cycle =&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+
+        <span class="n">gradients</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">energies</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">molecules</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cycles</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;energy\s+=\s+([+-]?[0-9]*[.]?[0-9]+)&quot;</span><span class="p">,</span> <span class="n">header</span><span class="p">)</span>
+            <span class="n">energies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)))</span>
+            <span class="n">coordinates</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">grad</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="n">l</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">)</span>
+                <span class="n">lsp</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">lsp</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># can be with or without frozen indices</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lsp</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">lsp</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+                    <span class="n">coordinates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">lsp</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="n">grad</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">lsp</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Encountered line with unexpected number of tokens: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+
+            <span class="n">gradients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
+            <span class="n">mol</span><span class="p">,</span> <span class="n">fi</span> <span class="o">=</span> <span class="n">get_mol_and_indices_frozen</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">coordinates</span><span class="p">))</span>
+            <span class="n">molecules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MoleculeSystem</span><span class="p">(</span><span class="n">molecule</span><span class="o">=</span><span class="n">mol</span><span class="p">,</span> <span class="n">frozen_indices</span><span class="o">=</span><span class="n">fi</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">gradients</span><span class="o">=</span><span class="n">gradients</span><span class="p">,</span> <span class="n">energies</span><span class="o">=</span><span class="n">energies</span><span class="p">,</span> <span class="n">molecules</span><span class="o">=</span><span class="n">molecules</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Gradient.from_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Gradient.from_file">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;gradient&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates Gradient object reading from a given file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): Name of the file from which this Gradient object</span>
+<span class="sd">                should be read, default is &quot;gradient&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dg</span> <span class="o">=</span> <span class="n">DataGroups</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="n">dg</span><span class="o">.</span><span class="n">show_data_group</span><span class="p">(</span><span class="s2">&quot;grad&quot;</span><span class="p">,</span> <span class="n">show_from_subfile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">raise_if_missing_subfile</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">string</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">norms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Total norm of the gradients for each step</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gradients</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">max_gradients</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Norms of the largest gradients for each step</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gradients</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_steps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The number of steps present</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gradients</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">last_grad_norm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The value of the last gradient norm</span>
+<span class="sd">        None if no steps presents.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">norms</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">last_grad_max</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The value of the maximum value of the gradient in the last step.</span>
+<span class="sd">        None if no steps presents.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_gradients</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<div class="viewcode-block" id="Gradient.plot"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Gradient.plot">[docs]</a>    <span class="nd">@add_fig_kwargs</span>
+    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plot the evolution of the maximum and the norm of the gradient.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            kwargs: arguments passed to matplotlib plot function.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A matplotlib Figure</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">norms</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Gradient norm&quot;</span><span class="p">)</span>
+
+        <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_gradients</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Steps&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Gradient max&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">fig</span></div></div>
+
+
+<div class="viewcode-block" id="Shells"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Shells">[docs]</a><span class="k">class</span> <span class="nc">Shells</span><span class="p">(</span><span class="n">MSONable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Object describing the occupation of a type of shells.</span>
+<span class="sd">    It can map $closed shells, $alpha shells and $beta shells</span>
+<span class="sd">    ($open shells not supported).</span>
+<span class="sd">    Handles integer, fractional and floating point occupations.</span>
+<span class="sd">    Occupations are stored as Fraction objects</span>
+<span class="sd">    Supports presence of the same irrep in multiple lines.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="n">occupations</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            states (list): list of tuples (irrep, irrep_index) with the occupied</span>
+<span class="sd">                states for each.</span>
+<span class="sd">            occupations (list): list of Fraction with the occupations for each state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="o">=</span> <span class="n">states</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">occupations</span> <span class="o">=</span> <span class="n">occupations</span>
+
+<div class="viewcode-block" id="Shells.from_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Shells.from_string">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates an instance of Shells from a string.</span>
+<span class="sd">        Examples of a string:</span>
+<span class="sd">           a1      1-3                      ( 2 )</span>
+<span class="sd">           b1      1,3                       ( 2 )</span>
+<span class="sd">           b2      1                        ( 2 )</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            string (str): the string of the datagroup.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Shells</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">states_per_irrep</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">states</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">occupations</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># for the occupations matches integers, fractions (e.g.: 1 / 3)</span>
+        <span class="c1"># and floats (e.g.: 0.833473)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^\s*([\w\&#39;</span><span class="se">\&quot;</span><span class="s2">]+)\s+([\d\-\s,]+)\s+\(([.\s\d/]+)\)&quot;</span>
+
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">l</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Could not match occupation regex for line: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+
+            <span class="n">irrep</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1"># states could be a string of the form &quot;1-3,5-8,12&quot; with &quot;-&quot; defining intervals</span>
+            <span class="c1"># and &quot;,&quot; separating groups.</span>
+            <span class="n">states_str</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">irrep_occupation</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+            <span class="n">states_per_irrep</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">states_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="s2">&quot;-&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+                    <span class="n">split</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
+                    <span class="n">states_per_irrep</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">split</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">split</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">states_per_irrep</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">states_per_irrep</span><span class="p">:</span>
+                <span class="n">states</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">irrep</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span>
+                <span class="n">occupations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">irrep_occupation</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">states</span><span class="p">,</span> <span class="n">occupations</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Shells.from_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Shells.from_file">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">shells_type</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates an instance of Shells from a file containing</span>
+<span class="sd">        the datagroup.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            shells_type (str): the type of shell. The supported type are</span>
+<span class="sd">                &quot;closed&quot;, &quot;alpha&quot; or &quot;beta&quot;.</span>
+<span class="sd">            filename (str): the name of the file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Shells</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if the shell of the specified type is not present</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">dg</span> <span class="o">=</span> <span class="n">DataGroups</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="n">dg</span><span class="o">.</span><span class="n">show_data_group</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> shells&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">shells_type</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">string</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No shells of type </span><span class="si">{}</span><span class="s2"> if file </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">shells_type</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">string</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">irreps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set of irreducible representations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">total_electrons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Total number of electrons present in all the shells.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Fraction: the total number of electrons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tot</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">occupations</span><span class="p">):</span>
+            <span class="n">irrep</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">degeneracy</span> <span class="o">=</span> <span class="n">irrep_size</span><span class="p">[</span><span class="n">irrep</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span>
+            <span class="n">tot</span> <span class="o">+=</span> <span class="n">o</span> <span class="o">*</span> <span class="n">degeneracy</span>
+
+        <span class="k">return</span> <span class="n">tot</span>
+
+<div class="viewcode-block" id="Shells.to_datagroup"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Shells.to_datagroup">[docs]</a>    <span class="k">def</span> <span class="nf">to_datagroup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a string that can be used to set the datagroup in control.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">             The string of the data group.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">dg_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">state</span><span class="p">,</span> <span class="n">occ</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">occupations</span><span class="p">):</span>
+            <span class="n">dg_dict</span><span class="p">[</span><span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">occ</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="c1"># sort to make output reproducible and more easily readable</span>
+        <span class="k">for</span> <span class="n">irrep</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dg_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">for</span> <span class="n">occ</span><span class="p">,</span> <span class="n">states</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dg_dict</span><span class="p">[</span><span class="n">irrep</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])):</span>
+
+                <span class="n">states</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">states</span><span class="p">)</span>
+                <span class="c1"># add one fictitious state to trigger the addition of the last step</span>
+                <span class="n">states</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">states</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="c1"># get the string representations of the groups</span>
+                <span class="n">groups</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">states</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">states</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="n">states</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">states</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">end</span> <span class="o">=</span> <span class="n">states</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="n">start</span> <span class="o">==</span> <span class="n">end</span><span class="p">:</span>
+                            <span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">start</span><span class="p">))</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+                        <span class="n">start</span> <span class="o">=</span> <span class="n">states</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">group_str</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">occ</span><span class="o">.</span><span class="n">denominator</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">str_occ</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">occ</span><span class="o">.</span><span class="n">numerator</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">str_occ</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> / </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">occ</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">occ</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
+                <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot; </span><span class="si">{0}</span><span class="s2">      </span><span class="si">{1:&lt;37}</span><span class="s2"> ( </span><span class="si">{2}</span><span class="s2"> )&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">irrep</span><span class="p">,</span> <span class="n">group_str</span><span class="p">,</span> <span class="n">str_occ</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Shells.as_dict"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Shells.as_dict">[docs]</a>    <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A JSON serializable dict representation of Shells.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">occupations</span> <span class="o">=</span> <span class="p">[(</span><span class="n">o</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">o</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">occupations</span><span class="p">]</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">states</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">,</span> <span class="n">occupations</span><span class="o">=</span><span class="n">occupations</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">d</span></div>
+
+<div class="viewcode-block" id="Shells.from_dict"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Shells.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates an instance of Shell from a JSON serialized representation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            d (dict): the dictionary with the data to inizialize Shells</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">             A Shells instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">occupations</span> <span class="o">=</span> <span class="p">[</span><span class="n">Fraction</span><span class="p">(</span><span class="n">numerator</span><span class="o">=</span><span class="n">o</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">denominator</span><span class="o">=</span><span class="n">o</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;occupations&quot;</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">states</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;states&quot;</span><span class="p">],</span> <span class="n">occupations</span><span class="o">=</span><span class="n">occupations</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Control"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control">[docs]</a><span class="k">class</span> <span class="nc">Control</span><span class="p">(</span><span class="n">DataGroups</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Represents the control string/file for TurboMole.</span>
+
+<span class="sd">    The `Control` class is used to store the parameters of a control file.</span>
+<span class="sd">    Parameters in a control file are stored as &quot;Data Groups&quot;. A data group</span>
+<span class="sd">    is a key-value pair storing data &quot;value&quot; for the specific &quot;key&quot;. Value may</span>
+<span class="sd">    be a single number, a string or a series of strings, numbers or</span>
+<span class="sd">    combinations thereof.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dg_list</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes a `Control` class.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            string: The control string (in the data group format).</span>
+<span class="sd">                Usually read from file.</span>
+<span class="sd">            dg_list: List of the data groups in the control string/file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Control</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="n">string</span><span class="p">,</span> <span class="n">dg_list</span><span class="o">=</span><span class="n">dg_list</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Control.from_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.from_file">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;control&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates Control object reading from a given file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): Name of the file from which this Control object</span>
+<span class="sd">                should be read, default is &quot;control&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Control.to_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.to_file">[docs]</a>    <span class="k">def</span> <span class="nf">to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;control&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Writes this Control object to a file.</span>
+<span class="sd">        If the file exists it will be overwritten.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): Name of the file to which this Control object</span>
+<span class="sd">                should be written.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Control</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Control.add_cosmo"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.add_cosmo">[docs]</a>    <span class="k">def</span> <span class="nf">add_cosmo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nppa</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nspa</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">disex</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rsolv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">routf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cavity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">use_old_amat</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds the $cosmo datagroup to the control, using the keyworkds to set the cosmo options.</span>
+<span class="sd">        If None all the options will not be written to the control file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            epsilon (float): permittivity used for scaling of the screening charges</span>
+<span class="sd">            nppa (int): number of basis grid points per atom</span>
+<span class="sd">            nspa (int): number of segments per atom</span>
+<span class="sd">            disex (float): distance threshold for A matrix elements (Angstrom)</span>
+<span class="sd">            rsolv (float): distance to outer solvent sphere for cavity construction (Angstrom)</span>
+<span class="sd">            routf (float): factor for outer cavity construction in the outlying charge correction</span>
+<span class="sd">            cavity (str): acceptable values are &quot;open&quot; (leave untidy seams between atoms) and</span>
+<span class="sd">                &quot;closed&quot; (pave intersection seams with segments)</span>
+<span class="sd">            use_old_amat (bool): if True adds the ``use_old_amat`` to the ``$cosmo`` datagroup,</span>
+<span class="sd">                i.e. uses A matrix setup of TURBOMOLE 5.7.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">cosmo_lines</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">epsilon</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cosmo_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;   epsilon=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epsilon</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">nppa</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cosmo_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;   nppa=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nppa</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">nspa</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cosmo_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;   nspa=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nspa</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">disex</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cosmo_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;   disex=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">disex</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">rsolv</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cosmo_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;   rsolv=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rsolv</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">routf</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cosmo_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;   routf=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">routf</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">cavity</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cosmo_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;   cavity=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cavity</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">use_old_amat</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">cosmo_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;   use_old_amat&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdg</span><span class="p">(</span><span class="s2">&quot;$cosmo&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cosmo_lines</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdg</span><span class="p">(</span><span class="s2">&quot;$cosmo_out&quot;</span><span class="p">,</span> <span class="s1">&#39; = out.cosmo&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Control.from_metric"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.from_metric">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_metric</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">metric</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a new Control containing the value of the metric in $redund_inp</span>
+<span class="sd">        and an empty $coord</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            metric (int): the value of the metric</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">metric_str</span> <span class="o">=</span> <span class="s2">&quot;$redund_inp</span><span class="se">\n</span><span class="s2">    metric </span><span class="si">{}</span><span class="se">\n</span><span class="s2">$coord</span><span class="se">\n</span><span class="s2">$end&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">metric</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="n">metric_str</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        An Energy object with the data from the $energy data group.</span>
+<span class="sd">        None if the datagroup is absent/empty or if the file is missing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">energy_data_block</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_data_group</span><span class="p">(</span><span class="s1">&#39;$energy&#39;</span><span class="p">,</span> <span class="n">show_from_subfile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">energy_data_block</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;file=&quot;</span> <span class="ow">in</span> <span class="n">energy_data_block</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">Energy</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="n">energy_data_block</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A Gradient object with the data from the $grad data group.</span>
+<span class="sd">        None if the datagroup is absent/empty or if the file is missing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">grad_data_block</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_data_group</span><span class="p">(</span><span class="s1">&#39;$grad&#39;</span><span class="p">,</span> <span class="n">show_from_subfile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">grad_data_block</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;file=&quot;</span> <span class="ow">in</span> <span class="n">grad_data_block</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">Gradient</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="n">grad_data_block</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Control.set_disp"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.set_disp">[docs]</a>    <span class="k">def</span> <span class="nf">set_disp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dispersion_correction</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the dispersion correction.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dispersion_correction (str): the name of the method used for the dispersion correction.</span>
+<span class="sd">                Supported values are &quot;DFT-D1&quot;, &quot;DFT-D2&quot; &quot;DFT-D3&quot; and &quot;DFT-D3 BJ&quot;, case insensitive.</span>
+<span class="sd">                If None all the &quot;disp&quot; datagroup will be eliminated.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">dg</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;olddisp&quot;</span><span class="p">,</span> <span class="s2">&quot;disp&quot;</span><span class="p">,</span> <span class="s2">&quot;disp3&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kill_data_group</span><span class="p">(</span><span class="n">dg</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dispersion_correction</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">dispersion_correction</span> <span class="o">=</span> <span class="n">dispersion_correction</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">dispersion_correction</span> <span class="o">==</span> <span class="s2">&quot;dft-d1&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_data_group</span><span class="p">(</span><span class="s2">&quot;olddisp&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">dispersion_correction</span> <span class="o">==</span> <span class="s2">&quot;dft-d2&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_data_group</span><span class="p">(</span><span class="s2">&quot;disp&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">dispersion_correction</span> <span class="o">==</span> <span class="s2">&quot;dft-d3&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_data_group</span><span class="p">(</span><span class="s2">&quot;disp3&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">dispersion_correction</span> <span class="o">==</span> <span class="s2">&quot;dft-d3 bj&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_data_group</span><span class="p">(</span><span class="s2">&quot;disp3&quot;</span><span class="p">,</span> <span class="s2">&quot;bj&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unsupported value for dispersion_correction: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dispersion_correction</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Control.remove_last_energy"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.remove_last_energy">[docs]</a>    <span class="k">def</span> <span class="nf">remove_last_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">backup_suffix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes last energy step from the energy data group and writes it to</span>
+<span class="sd">        the correct file, depending on the original location of the data group.</span>
+<span class="sd">        N.B. if the energies are in control and not in an external file, this</span>
+<span class="sd">        will call the to_file of the current instance of Control. If other</span>
+<span class="sd">        modifications have been done to the dg_list will be written to the</span>
+<span class="sd">        file as well.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): name of the file to which the current instance of</span>
+<span class="sd">                Control will be written in case the energies are control.</span>
+<span class="sd">                If energies are in external file it will be ignored.</span>
+<span class="sd">            backup_suffix (str): if not None a file named filename+backup_suffix</span>
+<span class="sd">                will be created with the current content of Control.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: if there is no energy step to be removed or if energy</span>
+<span class="sd">                file is missing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">energy_dg</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">show_data_group</span><span class="p">(</span><span class="s2">&quot;energy&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">show_from_subfile</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">energy_dg_sp</span> <span class="o">=</span> <span class="n">energy_dg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_dg_sp</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;No energy to remove in the &quot;energy&quot; data group.&#39;</span><span class="p">)</span>
+        <span class="n">energy_dg_sp</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">new_energy_dg_sp</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">energy_dg_sp</span><span class="p">)</span>
+
+        <span class="n">block_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_data_group</span><span class="p">(</span><span class="s2">&quot;energy&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">show_from_subfile</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">dg_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_subfile_fname</span><span class="p">(</span><span class="n">block_data</span><span class="p">,</span> <span class="n">raise_if_regular_and_subfile</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dg_filename</span><span class="p">:</span>
+            <span class="n">dg</span> <span class="o">=</span> <span class="n">DataGroups</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">dg_filename</span><span class="p">)</span>
+            <span class="n">dg</span><span class="o">.</span><span class="n">change_data_group</span><span class="p">(</span><span class="s2">&quot;energy&quot;</span><span class="p">,</span> <span class="n">new_energy_dg_sp</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">backup_suffix</span><span class="p">:</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">dg_filename</span><span class="p">,</span> <span class="n">dg_filename</span><span class="o">+</span><span class="n">backup_suffix</span><span class="p">)</span>
+            <span class="n">dg</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">dg_filename</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The datagroup is in the current file. An output filename&quot;</span>
+                             <span class="s2">&quot;should be specified.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">change_data_group</span><span class="p">(</span><span class="s2">&quot;energy&quot;</span><span class="p">,</span> <span class="n">new_energy_dg_sp</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">backup_suffix</span><span class="p">:</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="o">+</span><span class="n">backup_suffix</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Control.remove_last_gradient"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.remove_last_gradient">[docs]</a>    <span class="k">def</span> <span class="nf">remove_last_gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">backup_suffix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes last gradient step from the grad data group and writes it to</span>
+<span class="sd">        the correct file, depending on the original location of the data group.</span>
+<span class="sd">        N.B. if the gradients are in control and not in an external file, this</span>
+<span class="sd">        will call the to_file of the current instance of Control. If other</span>
+<span class="sd">        modifications have been done to the dg_list will be written to the</span>
+<span class="sd">        file as well.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): name of the file to which the current instance of</span>
+<span class="sd">                Control will be written in case the gradients are control.</span>
+<span class="sd">                If gradients are in external file it will be ignored.</span>
+<span class="sd">            backup_suffix (str): if not None a file named filename+backup_suffix</span>
+<span class="sd">                will be created with the current content of Control.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: if there is no gradient step to be removed or if</span>
+<span class="sd">                gradient file is missing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">grad_dg</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">show_data_group</span><span class="p">(</span><span class="s2">&quot;grad&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">show_from_subfile</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;cycle&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">grad_dg</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;No gradient to remove in the &quot;grad&quot; data group.&#39;</span><span class="p">)</span>
+
+        <span class="c1"># take the string until before the last &quot;cycle&quot;</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(.+)\n\s*cycle.+$&quot;</span><span class="p">,</span> <span class="n">grad_dg</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+        <span class="n">new_grad_dg</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">block_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_data_group</span><span class="p">(</span><span class="s2">&quot;grad&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">show_from_subfile</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">dg_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_subfile_fname</span><span class="p">(</span><span class="n">block_data</span><span class="p">,</span> <span class="n">raise_if_regular_and_subfile</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dg_filename</span><span class="p">:</span>
+            <span class="n">dg</span> <span class="o">=</span> <span class="n">DataGroups</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">dg_filename</span><span class="p">)</span>
+            <span class="n">dg</span><span class="o">.</span><span class="n">change_data_group</span><span class="p">(</span><span class="s2">&quot;grad&quot;</span><span class="p">,</span> <span class="n">new_grad_dg</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">backup_suffix</span><span class="p">:</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">dg_filename</span><span class="p">,</span> <span class="n">dg_filename</span><span class="o">+</span><span class="n">backup_suffix</span><span class="p">)</span>
+            <span class="n">dg</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">dg_filename</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The datagroup is in the current file. An output filename&quot;</span>
+                             <span class="s2">&quot;should be specified.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">change_data_group</span><span class="p">(</span><span class="s2">&quot;grad&quot;</span><span class="p">,</span> <span class="n">new_grad_dg</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">backup_suffix</span><span class="p">:</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="o">+</span><span class="n">backup_suffix</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Control.get_shells"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.get_shells">[docs]</a>    <span class="k">def</span> <span class="nf">get_shells</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shells_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract a Shell object for a specific type of shell.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            shells_type: the type of shell. Can be &quot;closed&quot;, &quot;alpha&quot; or &quot;beta&quot;.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            An instance of Shells</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_data_group</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> shells&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">shells_type</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">string</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No shells of type </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">shells_type</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">Shells</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">string</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_uhf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        True if the $uhf datagroup is present in control.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_data_group</span><span class="p">(</span><span class="s2">&quot;uhf&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Control.get_charge"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.get_charge">[docs]</a>    <span class="k">def</span> <span class="nf">get_charge</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract the charge from the &quot;$charge from xxx&quot; datagroup.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: the charge in the control file. None if not present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_data_group</span><span class="p">(</span><span class="s2">&quot;charge from&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dg</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">dg</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Control.get_subfiles_list"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.get_subfiles_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_subfiles_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extracts the list of files referenced in the datagroups with</span>
+<span class="sd">        &quot;file=xxx&quot; and &quot;file xxx&quot;.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: list of files referenced in the datagroups.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">dg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dg_list</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">dg</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+                <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot; file[ =](.*)&quot;</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
+                    <span class="n">files</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">files</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Control.cpc"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.cpc">[docs]</a>    <span class="k">def</span> <span class="nf">cpc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest_dir</span><span class="p">,</span> <span class="n">force_overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Copies the control file and all files referenced here.</span>
+<span class="sd">        Creates the destination folder if not already existing.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dest_dir (str): path to the destionation folder.</span>
+<span class="sd">            force_overwrite (bool): if True files already present in the</span>
+<span class="sd">                destination folder will be overwritten.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dest_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">dest_dir</span><span class="p">)</span>
+        <span class="n">makedirs_p</span><span class="p">(</span><span class="n">dest_dir</span><span class="p">)</span>
+        <span class="n">dest_control_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dest_dir</span><span class="p">,</span> <span class="s2">&quot;control&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">dest_control_path</span><span class="p">)</span> <span class="ow">or</span> <span class="n">force_overwrite</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">dest_control_path</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_subfiles_list</span><span class="p">():</span>
+            <span class="n">dest_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dest_dir</span><span class="p">,</span> <span class="n">fn</span><span class="p">)</span>
+            <span class="c1"># copy only if the file exists</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">dest_file_path</span><span class="p">)</span> <span class="ow">or</span> <span class="n">force_overwrite</span><span class="p">):</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">dest_file_path</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="kdg"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.kdg">[docs]</a><span class="k">def</span> <span class="nf">kdg</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">backup_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function that removes `data_group` from the control file specified by the path.</span>
+<span class="sd">    Comments and empty lines will be removed. The file will be overwritten.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data_group (str): Data group to be removed.</span>
+<span class="sd">        filepath (str): path to the control file</span>
+<span class="sd">        strict (bool): If True `data_group` should be an exact match.</span>
+<span class="sd">            If False, any Data group starting with `data_group` will be removed.</span>
+<span class="sd">        backup_file (str): filename to which the original file will be backed up.</span>
+<span class="sd">            If None no backup will be created.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">backup_file</span><span class="p">:</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">backup_file</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Control</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">kdg</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">strict</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="sdg"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.sdg">[docs]</a><span class="k">def</span> <span class="nf">sdg</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">show_from_subfile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">raise_if_multiple_subfiles</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">raise_if_missing_subfile</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">raise_if_regular_and_subfile</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function that shows the `data_group` from the control file specified by the path.</span>
+<span class="sd">    Comments and empty lines will be removed.</span>
+<span class="sd">    If the filepath is a full path (i.e. not just a file name), it will change</span>
+<span class="sd">    directory to the specified one, so that the subfiles are correctly read.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data_group (str): Data group to be removed.</span>
+<span class="sd">        filepath (str): path to the control file</span>
+<span class="sd">        default (str): the default value that will be returned if the</span>
+<span class="sd">                data_group is not present in the list. Default is None.</span>
+<span class="sd">        show_from_subfile (bool): If True, will show `data_group` from within the</span>
+<span class="sd">            &quot;subfile&quot; if the data block contains a &quot;file=FILENAME&quot;. If</span>
+<span class="sd">            False the &quot;file=FILENAME&quot; block is simply returned. This</span>
+<span class="sd">            supposes that file exists in the current directory.</span>
+<span class="sd">        raise_if_multiple_subfiles (bool): Whether to raise an error if</span>
+<span class="sd">            multiple &quot;file=&quot; directives are present in this data group. If</span>
+<span class="sd">            False, just returns the standard control data block.</span>
+<span class="sd">        raise_if_missing_subfile (bool): Whether to raise an error if the</span>
+<span class="sd">                subfile does not exist in the current directory or exists but</span>
+<span class="sd">                is empty. If False, just returns the standard control data block.</span>
+<span class="sd">        raise_if_regular_and_subfile (bool): Whether to raise an error if</span>
+<span class="sd">            data group contains both a reference to a file with a</span>
+<span class="sd">            &quot;file=FILENAME&quot; and regular data block options. If</span>
+<span class="sd">            False, just returns the standard control data block.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        str: the value of the selected datagroup. None if `no data_group` is found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># cd to the directory so that the referenced subfiles are working</span>
+    <span class="n">dirname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">cd</span><span class="p">(</span><span class="n">dirname</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">Control</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="n">str_dg</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">sdg</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+                       <span class="n">show_from_subfile</span><span class="o">=</span><span class="n">show_from_subfile</span><span class="p">,</span>
+                       <span class="n">raise_if_multiple_subfiles</span><span class="o">=</span><span class="n">raise_if_multiple_subfiles</span><span class="p">,</span>
+                       <span class="n">raise_if_missing_subfile</span><span class="o">=</span><span class="n">raise_if_missing_subfile</span><span class="p">,</span>
+                       <span class="n">raise_if_regular_and_subfile</span><span class="o">=</span><span class="n">raise_if_regular_and_subfile</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">str_dg</span></div>
+
+
+<div class="viewcode-block" id="adg"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.adg">[docs]</a><span class="k">def</span> <span class="nf">adg</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">backup_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function that adds `data_group` with `data_block` from the control file specified by the path.</span>
+<span class="sd">    Comments and empty lines will be removed. The file will be overwritten.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data_group (str): Data group (key) to be added. The dollar (&quot;$&quot;)</span>
+<span class="sd">            sign will be automatically added if not present.</span>
+<span class="sd">        data_block (str): Data block corresponding to the data group.</span>
+<span class="sd">        filepath (str): path to the control file</span>
+<span class="sd">        backup_file (str): filename to which the original file will be backed up.</span>
+<span class="sd">            If None no backup will be created.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">            RuntimeError: if data_group already exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">backup_file</span><span class="p">:</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">backup_file</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Control</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">adg</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="cdg"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.cdg">[docs]</a><span class="k">def</span> <span class="nf">cdg</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">backup_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function that replaces an existing `data_group` with `data_block` from the control file specified</span>
+<span class="sd">    by the path. Comments and empty lines will be removed. The file will be overwritten.</span>
+
+<span class="sd">    If `data_block` is None it is equivalent to kdg. To set a data group with no</span>
+<span class="sd">    explicit value use and empty string for `data_block` (e.g. to add $uhf the input</span>
+<span class="sd">    should be data_group=&quot;uhf&quot; and data_block=&quot;&quot;).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data_group (str): Data group (key) to be added. The dollar (&quot;$&quot;)</span>
+<span class="sd">            sign will be automatically added if not present.</span>
+<span class="sd">        data_block (str): Data block corresponding to the data group.</span>
+<span class="sd">            If None it will simply kill_data_group for the specified data_group value.</span>
+<span class="sd">        filepath (str): path to the control file</span>
+<span class="sd">        backup_file (str): filename to which the original file will be backed up.</span>
+<span class="sd">            If None no backup will be created.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">backup_file</span><span class="p">:</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">backup_file</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Control</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">cdg</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="mdgo"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.mdgo">[docs]</a><span class="k">def</span> <span class="nf">mdgo</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">backup_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function that, given a data group that allows several options on separate</span>
+<span class="sd">    line (e.g. $dft), updates the values of the options according to the</span>
+<span class="sd">    dictionary provided.</span>
+<span class="sd">    The option dictionary should have the form</span>
+<span class="sd">    {&quot;option_name1&quot;: &quot;option_name1 option_value&quot;,</span>
+<span class="sd">     &quot;option_name2&quot;: &quot;option_name2=option_value&quot;}.</span>
+<span class="sd">    The key will be used to identify the line to be modified and that line</span>
+<span class="sd">    would be entirely replaced by the value.</span>
+<span class="sd">    Since different options may be defined in different ways, no</span>
+<span class="sd">    attempt is made here to identify the suitable format for the option.</span>
+<span class="sd">    It is responsibility of the caller to specify the line for the option</span>
+<span class="sd">    in the correct format.</span>
+
+<span class="sd">    If the datagroup is not present will be created with the specified options.</span>
+
+<span class="sd">    If the entire data group should be modifed it would be safer to use</span>
+<span class="sd">    change_data_group.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data_group (str): Data group (key) to be changed. The dollar (&quot;$&quot;)</span>
+<span class="sd">            sign will be automatically added if not present.</span>
+<span class="sd">        options (dict): The options that should be added or updated. If the</span>
+<span class="sd">            value of one key is None the option will be removed if present.</span>
+<span class="sd">        filepath (str): path to the control file</span>
+<span class="sd">        backup_file (str): filename to which the original file will be backed up.</span>
+<span class="sd">            If None no backup will be created.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">backup_file</span><span class="p">:</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">backup_file</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Control</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">mdgo</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="sdgo"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.sdgo">[docs]</a><span class="k">def</span> <span class="nf">sdgo</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given a data group that allows several options on separate line</span>
+<span class="sd">    (e.g. $dft), returns the value of the option provided.</span>
+
+<span class="sd">    Since each value may be defined in a different way, the returned</span>
+<span class="sd">    value will include anything after the option specified. It is up</span>
+<span class="sd">    to the caller determine if there are symbols like &quot;=&quot; that should</span>
+<span class="sd">    be removed, depending on the data group and option that is queried.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data_group (str): Data group (key) to be changed. The dollar (&quot;$&quot;)</span>
+<span class="sd">            sign will be automatically added if not present.</span>
+<span class="sd">        option (str): The options that should be returned.</span>
+<span class="sd">        filepath (str): path to the control file.</span>
+<span class="sd">        default (str): the default value that will be returned if the</span>
+<span class="sd">            data_group or the option are not present in the list.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: The value of the option.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Control</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">sdgo</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="cpc"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.cpc">[docs]</a><span class="k">def</span> <span class="nf">cpc</span><span class="p">(</span><span class="n">dest_dir</span><span class="p">,</span> <span class="n">force_overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">control_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Copies a control file from the specified folder and all files</span>
+<span class="sd">    referenced there to the destination folder.</span>
+<span class="sd">    Creates the destination folder if not already existing.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dest_dir (str): path to the destination folder.</span>
+<span class="sd">        force_overwrite (bool): if True files already present in the</span>
+<span class="sd">            destination folder will be overwritten.</span>
+<span class="sd">        control_dir (str): path to the directory containing the control file</span>
+<span class="sd">            and the other files to be copied. If None the current dir will</span>
+<span class="sd">            be used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">control_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">control_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+
+    <span class="n">dest_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">dest_dir</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">cd</span><span class="p">(</span><span class="n">control_dir</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">Control</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;control&quot;</span><span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">cpc</span><span class="p">(</span><span class="n">dest_dir</span><span class="o">=</span><span class="n">dest_dir</span><span class="p">,</span> <span class="n">force_overwrite</span><span class="o">=</span><span class="n">force_overwrite</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018-2021 BASF SE, Matgenix SRL.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

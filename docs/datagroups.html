@@ -1,0 +1,431 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>The data group files &mdash; turbomoleio 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The coord file" href="coord.html" />
+    <link rel="prev" title="turbomoleio" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> turbomoleio
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User guide</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The data group files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-datagroups-object">The DataGroups object</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#accessing-a-data-group-value">Accessing a data group value</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modifying-a-data-group-value">Modifying a data group value</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#the-control-object">The Control object</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="coord.html">The coord file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="definerunner.html">Running define</a></li>
+<li class="toctree-l1"><a class="reference internal" href="output_parsing.html">Outputs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="developer/introduction.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/parsing_logs.html">Output logs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/definerunner.html">Define runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/versioning.html">Versioning</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Additional information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">Reporting bugs</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">turbomoleio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>The data group files</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/datagroups.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="the-data-group-files">
+<span id="datagroup-files"></span><h1>The data group files<a class="headerlink" href="#the-data-group-files" title="Permalink to this headline">¶</a></h1>
+<p>Most of the input and output files in TURBOMOLE are structured as a list of data groups separated
+by a <code class="docutils literal notranslate"><span class="pre">$</span></code> symbol.  (e.g. <code class="docutils literal notranslate"><span class="pre">$coord</span></code>). The initial part of the of each group usually determines the type of
+data with optional values that might be defined on the same line or on subsequent lines.
+In turbomoleio a basic object is implemented to allow the parsing and writing of generic data groups files,
+with a set of subclasses to interact with selected types of file that require specific functionalities
+(e.g. the <code class="docutils literal notranslate"><span class="pre">control</span></code> file).</p>
+<div class="section" id="the-datagroups-object">
+<h2>The DataGroups object<a class="headerlink" href="#the-datagroups-object" title="Permalink to this headline">¶</a></h2>
+<p>The most basic object to interact with data group files is <a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups" title="turbomoleio.core.datagroups.DataGroups"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.datagroups.DataGroups</span></code></a>.
+It keeps an internal representation of the file given by a list of data groups, i.e. of strings that should
+contain a single data group and start with <code class="docutils literal notranslate"><span class="pre">$</span></code>, stored in the <code class="docutils literal notranslate"><span class="pre">dg_list</span></code> attribute.
+Given the TURBOMOLE (lack of) conventions (i.e. the keyword can be one or more words separated by
+spaces and there is no complete list of the possible keywords available), the defining keyword at the
+beginning of the data group cannot be identified unambiguously.
+For this reason all the methods in the <code class="docutils literal notranslate"><span class="pre">DataGroups</span></code> objects and its subclasses make a distinction between
+the defining keyword (referred as <code class="docutils literal notranslate"><span class="pre">data_group</span></code>) and its value (the <code class="docutils literal notranslate"><span class="pre">data_block</span></code>), but this is done just
+by matching the value of <code class="docutils literal notranslate"><span class="pre">data_group</span></code> with the beginning of each string in <code class="docutils literal notranslate"><span class="pre">dg_list</span></code> and no validation
+is performed on the names provided.</p>
+<p>When reading from an existing data group file to generate an instance of <code class="docutils literal notranslate"><span class="pre">DataGroups</span></code> the list of
+data groups will be extracted by parsing the content of the file, while cleaning it up of the superfluous
+parts, trying to reduce the content of the object to just the data relevant to TURBOMOLE. In particular
+the following steps are applied:</p>
+<ul class="simple">
+<li><p>remove everything before the first dollar (“$”) sign</p></li>
+<li><p>remove blank lines</p></li>
+<li><p>remove spaces and tabs before the <code class="docutils literal notranslate"><span class="pre">#</span></code> comments</p></li>
+<li><p>remove spaces and tabs before the <code class="docutils literal notranslate"><span class="pre">$</span></code> signs</p></li>
+<li><p>remove comments, both with a full line (i.e lines starting with <code class="docutils literal notranslate"><span class="pre">#</span></code>) and inline (e.g. <code class="docutils literal notranslate"><span class="pre">$uhf</span> <span class="pre">#</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">an</span> <span class="pre">comment</span></code>)</p></li>
+<li><p>remove all the <code class="docutils literal notranslate"><span class="pre">$dummy</span></code> data groups</p></li>
+<li><p>remove all the lines after the <code class="docutils literal notranslate"><span class="pre">$end</span></code> data group</p></li>
+<li><p>split the data groups based on the <code class="docutils literal notranslate"><span class="pre">$</span></code> symbol</p></li>
+</ul>
+<p>While it is apparently not strictly required by TURBOMOLE, in turbomoleio the presence of the final
+<code class="docutils literal notranslate"><span class="pre">$end</span></code> data group, marking the end of the data groups list, is mandatory. Parsing files with the
+missing keyword will result in an error. Note that, while some other checks are also performed while
+parsing a file, if the file is not automatically generated by TURBOMOLE, it is responsibility of the
+user to verify that the format is correct. In addition the full initial string is stored under the
+<code class="docutils literal notranslate"><span class="pre">string</span></code> attribute. This value however is never updated when the list of data groups is
+modified, so it should just be used as a reference for the initial content of a parsed file.</p>
+<p>An instance of <code class="docutils literal notranslate"><span class="pre">DataGroups</span></code> can be written to a file with the <code class="docutils literal notranslate"><span class="pre">to_file</span></code> method that will
+contain only the data included in the <code class="docutils literal notranslate"><span class="pre">dg_list</span></code>.
+The object also offers a series of methods to view and modify the data groups present in the list.
+These are inspired from the standard scripts distributed with TURBOMOLE, but are entirely implemented
+in python and may have some differences in their behavior, in addition to have some more options.
+Note that, while the examples provided below are based on a <code class="docutils literal notranslate"><span class="pre">control</span></code> for simplicity, the methods
+can be applied to any file structured with data groups.</p>
+<div class="section" id="accessing-a-data-group-value">
+<h3>Accessing a data group value<a class="headerlink" href="#accessing-a-data-group-value" title="Permalink to this headline">¶</a></h3>
+<p>The method to get the value of a data group is <code class="docutils literal notranslate"><span class="pre">show_data_group</span></code> with its shortcut <code class="docutils literal notranslate"><span class="pre">sdg</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">data_group</span></code> string in input will be used to match the beginning of the elements of <code class="docutils literal notranslate"><span class="pre">dg_list</span></code>.
+Note that the leading <code class="docutils literal notranslate"><span class="pre">$</span></code> symbol is optional, if missing from <code class="docutils literal notranslate"><span class="pre">data_group</span></code> it will be added
+internally before trying to match the data groups. The <code class="docutils literal notranslate"><span class="pre">strict</span></code> argument means that there should be
+an <em>exact</em> match with the element of the list (i.e. if the data group to be removed is followed by
+a space, a tab, a new line or a return). To avoid ambiguities only one value matching the <code class="docutils literal notranslate"><span class="pre">data_group</span></code>
+can be present in the list. If more than one are encountered an exception is raised. The method will
+return the string following the matched value of <code class="docutils literal notranslate"><span class="pre">data_group</span></code>. In case no matching is found
+instead the <code class="docutils literal notranslate"><span class="pre">default</span></code> value is returned.</p>
+<p>A particular case is given by the data groups whose value is contained in another file. A typical example
+in the <code class="docutils literal notranslate"><span class="pre">control</span></code> file is for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$coord    file=coord
+</pre></div>
+</div>
+<p>In this case <code class="docutils literal notranslate"><span class="pre">show_data_group</span></code> can be asked to open the file with name <code class="docutils literal notranslate"><span class="pre">coord</span></code> and return the content
+of the <code class="docutils literal notranslate"><span class="pre">$coord</span></code> data group there, instead of returning simply <code class="docutils literal notranslate"><span class="pre">file=coord</span></code>. This will happen if the
+<code class="docutils literal notranslate"><span class="pre">show_from_subfile</span></code> is set to True (the default). If such a file is not present in the current working
+directory the <code class="docutils literal notranslate"><span class="pre">file=coord</span></code> string will be returned.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The subfile used to read a datagroup is the one in the working directory where the python
+code is being executed. Always make sure that you are in the correct folder of the file that
+you intent to read.</p>
+</div>
+<p>In some cases a data group can contain different options that are being set. Consider for example the
+<code class="docutils literal notranslate"><span class="pre">$dft</span></code> data group:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$dft
+   functional b-p
+   gridsize   m3
+</pre></div>
+</div>
+<p>You might be interested in extracting the value of the functional. In this case you can use the
+the <code class="docutils literal notranslate"><span class="pre">show_data_group_option</span></code> method (and the <code class="docutils literal notranslate"><span class="pre">sdgo</span></code> shortcut) providing both the <code class="docutils literal notranslate"><span class="pre">data_group</span></code>
+and the <code class="docutils literal notranslate"><span class="pre">option</span></code> that should be matched:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dg</span><span class="o">.</span><span class="n">show_data_group_option</span><span class="p">(</span><span class="n">data_group</span><span class="o">=</span><span class="s2">&quot;dft&quot;</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="s2">&quot;functional&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this case the code will return `` b-p``. Since also for these kind of options the convertions
+are not uniform in TURBOMOLE (e.g. the name of the option and the value can be separated by a <code class="docutils literal notranslate"><span class="pre">=</span></code>)
+the support offered by this method are relatively limited. The code
+will just check among the lines in the <code class="docutils literal notranslate"><span class="pre">$dft</span></code> data group if one starts with the specified
+<code class="docutils literal notranslate"><span class="pre">option</span></code> are return the remaining string contained in the line.</p>
+</div>
+<div class="section" id="modifying-a-data-group-value">
+<span id="mod-data-group"></span><h3>Modifying a data group value<a class="headerlink" href="#modifying-a-data-group-value" title="Permalink to this headline">¶</a></h3>
+<p>Different methods allow to change the values of the <code class="docutils literal notranslate"><span class="pre">dg_list</span></code>.
+The first considered is <code class="docutils literal notranslate"><span class="pre">kill_data_group</span></code> (or its shortcut <code class="docutils literal notranslate"><span class="pre">kdg</span></code>) that allows to remove an element from
+<code class="docutils literal notranslate"><span class="pre">dg_list</span></code>. The <code class="docutils literal notranslate"><span class="pre">data_group</span></code> and <code class="docutils literal notranslate"><span class="pre">strict</span></code> arguments have the same meaning as in <code class="docutils literal notranslate"><span class="pre">show_data_group</span></code>,
+but here <strong>all</strong> the data groups matching will be removed from the list. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dg</span><span class="o">.</span><span class="n">kill_data_group</span><span class="p">(</span><span class="s2">&quot;$thi&quot;</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>removes both <code class="docutils literal notranslate"><span class="pre">$thize</span></code> and <code class="docutils literal notranslate"><span class="pre">$thime</span></code> from a data groups list, while with <code class="docutils literal notranslate"><span class="pre">strict=True</span></code> none
+of them is removed.</p>
+<p>The next operation available is to add a new datagroup with <code class="docutils literal notranslate"><span class="pre">add_data_group</span></code> (or its shortcut <code class="docutils literal notranslate"><span class="pre">adg</span></code>).
+This adds an element to the list given by the <code class="docutils literal notranslate"><span class="pre">data_group</span></code> string (with a prepended <code class="docutils literal notranslate"><span class="pre">$</span></code>, if not already
+present) joined with the <code class="docutils literal notranslate"><span class="pre">data_block</span></code> string. The new element will be added at the end of the list, but
+before the <code class="docutils literal notranslate"><span class="pre">$end</span></code> data group. Note that if you want to add a data group with no explicit
+value you need to provide an empty string as <code class="docutils literal notranslate"><span class="pre">data_block</span></code>. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dg</span><span class="o">.</span><span class="n">add_data_group</span><span class="p">(</span><span class="s2">&quot;$symmetry&quot;</span><span class="p">,</span> <span class="s2">&quot;c1&quot;</span><span class="p">)</span>
+<span class="n">dg</span><span class="o">.</span><span class="n">add_data_group</span><span class="p">(</span><span class="s2">&quot;uhf&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">change_data_group</span></code> (and its shortcut <code class="docutils literal notranslate"><span class="pre">cdg</span></code>) changes the value of the <cite>data_group</cite> to
+the new <code class="docutils literal notranslate"><span class="pre">data_block</span></code> value. The method first performs a
+<code class="docutils literal notranslate"><span class="pre">kill_data_group</span></code> with <code class="docutils literal notranslate"><span class="pre">strict=True</span></code> and then <code class="docutils literal notranslate"><span class="pre">add_data_group</span></code>. The side effect is
+that the changed datagroup will be moved to the end of the <code class="docutils literal notranslate"><span class="pre">dg_list</span></code>. The data group will
+be added if not already present. If <cite>data_block</cite> is <code class="docutils literal notranslate"><span class="pre">None</span></code> only the <code class="docutils literal notranslate"><span class="pre">kill_data_group</span></code> will
+be applied. To set a data group with no explicit value use an empty string for <cite>data_block</cite>. Examples:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># change $scfiterlimit to 100</span>
+<span class="n">dg</span><span class="o">.</span><span class="n">change_data_group</span><span class="p">(</span><span class="s2">&quot;$scfiterlimit&quot;</span><span class="p">,</span> <span class="s2">&quot;100&quot;</span><span class="p">)</span>
+<span class="c1"># remove $scfconv (equivalent to dg.kill_data_group(&quot;scfconv&quot;)</span>
+<span class="n">dg</span><span class="o">.</span><span class="n">change_data_group</span><span class="p">(</span><span class="s2">&quot;scfconv&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">data_block</span></code> argument of <code class="docutils literal notranslate"><span class="pre">add_data_group</span></code> and <code class="docutils literal notranslate"><span class="pre">change_data_group</span></code> should be a string,
+i.e. if the data block is a number, it should be the string representation of that number, as
+shown above with “$scfiterlimit” set to “100”.</p>
+</div>
+<p>Lastly, you have a method to modify the options contained in a data group. As for the <code class="docutils literal notranslate"><span class="pre">show_data_group_option</span></code>
+method, also <code class="docutils literal notranslate"><span class="pre">modify_data_group_options</span></code> (shortcut: <code class="docutils literal notranslate"><span class="pre">mdgo</span></code>) has some limitations.
+The <code class="docutils literal notranslate"><span class="pre">data_group</span></code> will be used to match the data group, while the <code class="docutils literal notranslate"><span class="pre">options</span></code> argument should be a dictionary
+where the keys are used to identify the line that should be modified (much like <code class="docutils literal notranslate"><span class="pre">show_data_group_option</span></code>)
+but the values should contain the <strong>whole line that will replace the original one</strong>
+In connection with the <code class="docutils literal notranslate"><span class="pre">$dft</span></code> example one can run</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;functional&quot;</span><span class="p">:</span> <span class="s2">&quot;functional pbe&quot;</span><span class="p">}</span>
+<span class="n">dg</span><span class="o">.</span><span class="n">modify_data_group_options</span><span class="p">(</span><span class="n">data_group</span><span class="o">=</span><span class="s2">&quot;dft&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will modify the data group in the object to look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$dft
+   functional pbe
+   gridsize   m3
+</pre></div>
+</div>
+<p>In a similar way to <code class="docutils literal notranslate"><span class="pre">change_data_group</span></code> if the value is None the line will be removed, if the option has no
+explicit value the value in the dictionary should be set to an empty string. If no line is matching the key
+of the option a new line with the value will be added. If no data group is matching the <code class="docutils literal notranslate"><span class="pre">data_group</span></code> value
+the data group will be added to the list with the specified options only.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Note that <strong>these methods will act on the list in the object and not on the file from which they were parsed</strong>.
+If you need to update a file you should call the <code class="docutils literal notranslate"><span class="pre">to_file</span></code> method after modifying the list in the
+object.</p>
+</div>
+</div>
+</div>
+<div class="section" id="the-control-object">
+<span id="control-object"></span><h2>The Control object<a class="headerlink" href="#the-control-object" title="Permalink to this headline">¶</a></h2>
+<p>An important subclass of <code class="docutils literal notranslate"><span class="pre">DataGroups</span></code> is <a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.control.Control" title="turbomoleio.core.control.Control"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.control.Control</span></code></a>. This is specifically
+designed to interact with the <code class="docutils literal notranslate"><span class="pre">control</span></code> file providing additional functionalities besides the one
+described for the basic data groups files. Different options are available to extract frequently
+accessed data groups (e.g. the <code class="docutils literal notranslate"><span class="pre">get_charge</span></code> method) or to set specific group of options (e.g.
+<code class="docutils literal notranslate"><span class="pre">set_disp</span></code> to specify the dispersion correction). The list of such methods is likely to increase
+over time, so the best option is to directly check its API. A few methods however need a particular
+attention.</p>
+<p>First we can consider the <code class="docutils literal notranslate"><span class="pre">energy</span></code> and <code class="docutils literal notranslate"><span class="pre">gradient</span></code> attributes, that read the data from the
+<code class="docutils literal notranslate"><span class="pre">$energy</span></code> and <code class="docutils literal notranslate"><span class="pre">$gradient</span></code> data groups, respectively and generate instances of the
+<a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.control.Energy" title="turbomoleio.core.control.Energy"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.control.Energy</span></code></a> and <a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.control.Gradient" title="turbomoleio.core.control.Gradient"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.control.Gradient</span></code></a> objects.
+These will not only provide the parsed numerical values of the energies and gradients organized
+in lists, but also offer some methods for analysing and plotting the data. For example the
+evolution of the energy during the steps of a geometry optimization can be obtained with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">Control</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;control&quot;</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/energy_geopt.png"><img alt="energy" class="align-center" src="_images/energy_geopt.png" style="width: 500px;" /></a>
+<p>Another important method is <code class="docutils literal notranslate"><span class="pre">get_shells</span></code> that extracts the list of occupied shells
+divided according to the irreducible representation from the the <code class="docutils literal notranslate"><span class="pre">alpha/beta/closed</span> <span class="pre">shells</span></code>
+data groups and generate an instance of the <a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.control.Shells" title="turbomoleio.core.control.Shells"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.control.Shells</span></code></a> object.
+This is used to generate the list of occupied states.</p>
+<p>Finally we mention the <code class="docutils literal notranslate"><span class="pre">cpc</span></code> that reproduces the <code class="docutils literal notranslate"><span class="pre">cpc</span></code> script command available in
+TURBOMOLE. Note that this does not call the original script, but it is a python implementation
+that reproduces a similar effect.</p>
+<p>It should also be noted that the <a class="reference internal" href="api/turbomoleio.core.html#module-turbomoleio.core.control" title="turbomoleio.core.control"><code class="xref py py-mod docutils literal notranslate"><span class="pre">turbomoleio.core.control</span></code></a> module contains a set of functions
+that allow to directly access and modify a control file without passing explicitly through the object.
+The <code class="docutils literal notranslate"><span class="pre">sdg</span></code>, <code class="docutils literal notranslate"><span class="pre">kdg</span></code>, <code class="docutils literal notranslate"><span class="pre">cdg</span></code>, <code class="docutils literal notranslate"><span class="pre">sdgo</span></code>, <code class="docutils literal notranslate"><span class="pre">mdgo</span></code> and <code class="docutils literal notranslate"><span class="pre">cpc</span></code> functions read the file from
+the specified path and convert it to a <code class="docutils literal notranslate"><span class="pre">Control</span></code> object, apply the corresponding method
+and, if needed, directly write the modified version to the file system. Note that since these
+operations all use the <code class="docutils literal notranslate"><span class="pre">Control</span></code> object you will still have all the side effects of parsing
+a data group file mentioned above (e.g. removing the comments).</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="coord.html" class="btn btn-neutral float-right" title="The coord file" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="turbomoleio" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018-2021 BASF SE, Matgenix SRL.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
