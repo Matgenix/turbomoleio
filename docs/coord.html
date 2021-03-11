@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>The coord file &mdash; turbomoleio 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Running define" href="definerunner.html" />
+    <link rel="prev" title="The data group files" href="datagroups.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> turbomoleio
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="datagroups.html">The data group files</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The coord file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="definerunner.html">Running define</a></li>
+<li class="toctree-l1"><a class="reference internal" href="output_parsing.html">Outputs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="developer/introduction.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/parsing_logs.html">Output logs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/definerunner.html">Define runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/versioning.html">Versioning</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Additional information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">Reporting bugs</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">turbomoleio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>The coord file</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/coord.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="the-coord-file">
+<h1>The coord file<a class="headerlink" href="#the-coord-file" title="Permalink to this headline">¶</a></h1>
+<p>In TURBOMOLE the coord file mainly contains the coordinates and the types of the atoms
+of the molecule that should be simulated. These information can be stored in
+<a class="reference external" href="http://pymatgen.org/">pymatgen</a> <code class="docutils literal notranslate"><span class="pre">Molecule</span></code> object. However thare are a set
+of data, stored in different data groups, that provide further information
+about the geometry of the molecule, more precisely on the dynamic during a geometry
+optimization. For this reason in turbomoleio the <code class="docutils literal notranslate"><span class="pre">coord</span></code> file is represented
+through a <a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem" title="turbomoleio.core.molecule.MoleculeSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.molecule.MoleculeSystem</span></code></a> object. This has methods
+to read and generate a <code class="docutils literal notranslate"><span class="pre">coord</span></code> file that can be read by TURBOMOLE. Other file formats
+can be written taking advantage of the conversion from <code class="docutils literal notranslate"><span class="pre">Molecule</span></code>, but the output will be
+limited to the geometry of the molecule.</p>
+<p>Internally the <code class="docutils literal notranslate"><span class="pre">MoleculeSystem</span></code> stores the geometry of the molecule using a
+pymatgen <code class="docutils literal notranslate"><span class="pre">Molecule</span></code>. This allows to exploit all the functionalities available in
+the pymatgen package. Other attributes are used to determine the values of other data
+groups. The simplest one is <code class="docutils literal notranslate"><span class="pre">frozen_indices</span></code> that determines which atoms should have the
+cartesian coordinates frozen. Translated in the <code class="docutils literal notranslate"><span class="pre">coord</span></code> file format the atoms with an <code class="docutils literal notranslate"><span class="pre">f</span></code>
+at the end of the coordinate line. For example with <code class="docutils literal notranslate"><span class="pre">frozen_indices={0,2}</span></code> the coord file
+will look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$coord
+   -0.00000000000000      0.00000000000000      0.00000000000000  n  f
+   -1.17616323936717      2.03717448857876      0.00000000000000  o
+   -1.17616323936717     -2.03717448857876      0.00000000000000  o  f
+    2.35232647873438      0.00000000000000      0.00000000000000  o
+$end
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For all the properties set in <code class="docutils literal notranslate"><span class="pre">MoleculeSystem</span></code> that refers to the indices of
+the atoms in the <code class="docutils literal notranslate"><span class="pre">Molecule</span></code> the convention is to use <strong>0-based indices</strong>.
+This is true for <code class="docutils literal notranslate"><span class="pre">frozen_indices</span></code>, <code class="docutils literal notranslate"><span class="pre">int_def</span></code> and <code class="docutils literal notranslate"><span class="pre">user_defined_bonds</span></code>.
+The values used then in the <code class="docutils literal notranslate"><span class="pre">coord</span></code> file are 1-based instead. The conversion
+is done internally and you should always use 0-based indices in the python code.</p>
+</div>
+<p>An important and more complicated attribute is <code class="docutils literal notranslate"><span class="pre">int_def</span></code> that, if present, is used to
+fill the <code class="docutils literal notranslate"><span class="pre">$intdef</span></code> data group in the <code class="docutils literal notranslate"><span class="pre">coord</span></code> file. The attribute should be a list of
+internal coordinates given as subclasses of <a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.molecule.InternalDefinition" title="turbomoleio.core.molecule.InternalDefinition"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.molecule.InternalDefinition</span></code></a>.
+Each subclass define a type of internal variable as defined from TURBOMOLE. For example the
+<a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.molecule.Distance" title="turbomoleio.core.molecule.Distance"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.molecule.Distance</span></code></a> represent an internal variable of type <code class="docutils literal notranslate"><span class="pre">stre</span></code>.
+For the internal definitions that are most commonly used (<code class="docutils literal notranslate"><span class="pre">stre</span></code>, <code class="docutils literal notranslate"><span class="pre">bend</span></code> and <code class="docutils literal notranslate"><span class="pre">tors</span></code>) helper
+methods are provided in <code class="docutils literal notranslate"><span class="pre">MoleculeSystem</span></code> to append additional internal definition to an existing
+instance. For example the following python code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">MoleculeSystem</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;coord&quot;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">add_distance</span><span class="p">(</span><span class="n">atom1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">atom2</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">add_bond_angle</span><span class="p">(</span><span class="n">atom1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">atom2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">vertex</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>will result in a coord file with this structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$coord
+    -0.00000000000000 0.00000000000000 0.00000000000000 n
+    -1.17616323936717 2.03717448857876 0.00000000000000 o
+    -1.17616323936717 -2.03717448857876 0.00000000000000 o
+    2.35232647873438 0.00000000000000 0.00000000000000 o
+$intdef
+    1 f 1.0 stre 1 2 val=1.5
+    2 k 1.0 bend 2 3 4
+$user-defined bonds
+    1-2, 2-4, 3-4
+$end
+</pre></div>
+</div>
+<p>We stress again that the indices provided by the are 0-based as opposed in the one produced in the
+file, that are 1-based.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Following pymatgen conventions the <code class="docutils literal notranslate"><span class="pre">Molecule</span></code> object contained in <code class="docutils literal notranslate"><span class="pre">MoleculeSystem</span></code> has coordinates
+in angstrom, while the <code class="docutils literal notranslate"><span class="pre">coord</span></code> file contains coordinates in Bohr. The values provided for the
+internal definitions in the helper methods and in the <code class="docutils literal notranslate"><span class="pre">InternalDefinition</span></code> subclasses are written
+in <code class="docutils literal notranslate"><span class="pre">$intdef</span></code> as they are provided. Their units are the same as those defined in TURBOMOLE for
+that specific type of internal coordinate.</p>
+</div>
+<p>Note that the helper methods have also automatically set the <code class="docutils literal notranslate"><span class="pre">$user-defined</span> <span class="pre">bonds</span></code>. This brings us
+to the last attribute that can be set in <code class="docutils literal notranslate"><span class="pre">MoleculeSystem</span></code>: <code class="docutils literal notranslate"><span class="pre">user_defined_bonds</span></code>. This can contain
+a set of tuples of the form <code class="docutils literal notranslate"><span class="pre">(index1,</span> <span class="pre">symbol,</span> <span class="pre">index2)</span></code>, where the atom indices are 0-based
+and the symbol can be <code class="docutils literal notranslate"><span class="pre">-</span></code> or <code class="docutils literal notranslate"><span class="pre">|</span></code>.</p>
+<p>These attributes could be used to set the complete list of internal coordinates required by TURBOMOLE,
+but in general this would be more useful to define a few of them and call <code class="docutils literal notranslate"><span class="pre">define</span></code> afterwards with
+the <code class="docutils literal notranslate"><span class="pre">ired</span></code> option to let it generate a complete list of redundant internal coordinates. Given its
+potentially complicated structure, the <code class="docutils literal notranslate"><span class="pre">$redundant</span></code> data group is never parsed nor stored when
+reading a <code class="docutils literal notranslate"><span class="pre">coord</span></code> file that contains it.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="definerunner.html" class="btn btn-neutral float-right" title="Running define" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="datagroups.html" class="btn btn-neutral float-left" title="The data group files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018-2021 BASF SE, Matgenix SRL.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

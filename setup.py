@@ -96,7 +96,7 @@ setup_args = dict(name="turbomoleio",
                   description=about['__description__'],
                   long_description="  ",
                   author="Michiel van Setten, David Waroquiers, Guido Petretto, Jan Kloppenburg",
-                  author_email="mjvansetten@gmail.com, david.waroquiers@uclouvain.be, guido.petretto@uclouvain.be, "
+                  author_email="mjvansetten@gmail.com, david.waroquiers@matgenix.com, guido.petretto@matgenix.com, "
                                "jan.kloppenburg@uclouvain.be",
                   #url=url,
                   #download_url=download_url,
