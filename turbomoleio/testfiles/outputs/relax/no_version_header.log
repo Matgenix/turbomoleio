@@ -1,0 +1,274 @@
+
+ relax (hpclogin03) : TURBOMOLE rev. compiled 14 May 2018 at 15:41:44
+ Copyright (C) 2018 TURBOMOLE GmbH, Karlsruhe
+
+
+    2019-07-12 15:48:23.149 
+
+
+
+                           this is  R E L A X 
+
+
+             conversion cartesian <---> internal coordinates
+          coordinate and force constant update in optimizations
+
+           by heinz schiffer, hans horn, christoph koelmel,
+          marco haeser, michael ehrig, and reinhart ahlrichs
+
+                          quantum chemistry group
+                          universitaet  karlsruhe
+                                  germany
+
+
+
+   *************************************************************************
+   dscf                                                                     
+   *************************************************************************
+
+
+
+ keyword $redundant  missing in file <control>
+
+
+------------------------------------------------------------------------
+ $optimize
+
+ optimization will be performed with respect to
+ - CARTESIAN coordinates
+
+------------------------------------------------------------------------
+ $coordinateupdate
+
+ upper limit for coordinate changes =   0.3000    
+ interpolation/extrapolation has been enabled
+ display optimization statistics for the last   5 cycles
+
+ ------------------------------------------------------------------------------
+
+     relaxation of NUCLEAR COORDINATES in cartesian space
+
+ ------------------------------------------------------------------------------
+
+
+  number of optimization cycles                         :    1
+  coordinate update delimiter                           :  0.30000
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ NOTE that the hessian will NOT be updated since
+ - no update method has been specified
+ - #(available geoms) =   1 is smaller than mingeo =   3
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+  method for the update of the Hessian-matrix           :    0 (no update)
+
+  number of previous coordinate sets available          :    1
+    lower threshold for eigenvalues of the Hessian      :  0.00500
+    reset value                                         :  0.00500
+    upper threshold for eigenvalues of the Hessian      :    3.0000
+ 
+
+   ATOM               CARTESIAN COORDINATES
+    1 o       0.00000000000000      0.00000000000000     -0.12178983933899
+    2 h       1.41713420892173      0.00000000000000      0.96657854674257
+    3 h      -1.41713420892173      0.00000000000000      0.96657854674257
+
+    ---------------------------------------------------------------------
+
+    SYMMETRY HANDLING
+
+ symmetry group of the molecule :   c1 
+
+ the group has the following generators :
+   c1(z)
+
+    1 symmetry operations found
+
+    ---------------------------------------------------------------------
+
+    PROCESS AND ANALYZE INPUT INFORMATION ...
+
+
+ total number of atoms                :    3
+ number of SYMMETRY INDEPENDENT atoms :    3
+
+
+ NUMBER OF SYMMETRY RESTRICTED DEGREES OF FREEDOM :    9
+   CONSTITUTED BY    3  DEGREES OF TRANSLATIONAL MOTIONS
+                     3             ROTATIONAL
+                     3             INTERNAL
+
+
+    ---------------------------------------------------------------------
+
+   ATOM               CARTESIAN GRADIENTS
+    1 o       0.00000000000026     -0.00000000000082      0.04134173359118
+    2 h      -0.02705094210923      0.00000000000002     -0.02065428957418
+    3 h       0.02705094210926     -0.00000000000002     -0.02065428957425
+
+  cartesian forces do not vanish : sum(F) =     0.00003315
+  x-component=  0.00000000 y-component= -0.00000000 z-component=  0.00003315
+
+        NUMBER OF SYMMETRY NON-REDUNDANT DEGREES OF FREEDOM
+        FOR OPTIMIZATION IN CARTESIAN SPACE :    9
+        ENERGY =     -76.3427618513 a.u.; # of cycle =    1
+
+   1.  (  1o  x )          0.00000000         0.00000000
+   2.  (  1o  y )          0.00000000        -0.00000000
+   3.  (  1o  z )         -0.12178984         0.04134173
+   4.  (  2h  x )          1.41713421        -0.02705094
+   5.  (  2h  y )          0.00000000         0.00000000
+   6.  (  2h  z )          0.96657855        -0.02065429
+   7.  (  3h  x )         -1.41713421         0.02705094
+   8.  (  3h  y )          0.00000000        -0.00000000
+   9.  (  3h  z )          0.96657855        -0.02065429
+
+  norm of actual CARTESIAN gradient : .63450E-01
+
+
+ force constant matrix will be initialized using
+  default DIAGONAL elements
+
+
+ input hessian will NOT be updated !
+
+      COORDINATE TYPE                      FORCE CONSTANT
+  (this assignment may be invalid in the case of strong coupled coordinates!)
+
+   1.  (  1o  x )                               0.50000
+   2.  (  1o  y )                               0.50000
+   3.  (  1o  z )                               0.50000
+   4.  (  2h  x )                               0.50000
+   5.  (  2h  y )                               0.50000
+   6.  (  2h  z )                               0.50000
+   7.  (  3h  x )                               0.50000
+   8.  (  3h  y )                               0.50000
+   9.  (  3h  z )                               0.50000
+ 
+
+------------------------------------------------------------------------
+
+  PROVIDING UPDATED COORDINATES by QUASI-NEWTON STEP ... 
+
+------------------------------------------------------------------------
+
+  predicted ENERGY CHANGE :   -4.02585 mHartree
+  (note that only an approximate hessian is used)
+
+  NORM OF COORDINATE CHANGE IS    0.12690
+
+
+    geometry change & new cartesians :
+   1.  (  1o  x )                          -0.0000000000   -0.0000000000
+   2.  (  1o  y )                           0.0000000000    0.0000000000
+   3.  (  1o  z )                          -0.0826834672   -0.2044733065
+   4.  (  2h  x )                           0.0541018842    1.4712360931
+   5.  (  2h  y )                          -0.0000000000   -0.0000000000
+   6.  (  2h  z )                           0.0413085791    1.0078871259
+   7.  (  3h  x )                          -0.0541018842   -1.4712360931
+   8.  (  3h  y )                           0.0000000000    0.0000000000
+   9.  (  3h  z )                           0.0413085791    1.0078871259
+      change and new values without conversion factor qout:
+             -0.0000000000   -0.0000000000
+              0.0000000000    0.0000000000
+             -0.0826834672   -0.2044733065
+              0.0541018842    1.4712360931
+             -0.0000000000   -0.0000000000
+              0.0413085791    1.0078871259
+             -0.0541018842   -1.4712360931
+              0.0000000000    0.0000000000
+              0.0413085791    1.0078871259
+
+  Updated coordinates will not be transformed into principal axis system
+
+            *******************************************
+   ATOM      NEW CARTESIAN COORDINATES
+
+    1 o      -0.00000000000052      0.00000000000164     -0.20447330652134
+    2 h       1.47123609314019     -0.00000000000004      1.00788712589092
+    3 h      -1.47123609314025      0.00000000000003      1.00788712589108
+
+            cartesian coordinates written on $coord
+            *******************************************
+
+
+  ---------------------------------------------------------------------
+  dscf                                                                         
+  Optimization statistics for    1 cycles
+  ---------------------------------------------------------------------
+
+   cartesian coordinate no.   1.  (  1o  x )                               
+     cycle        coordinate         gradient
+         1           0.00000000        0.00000000
+         2          -0.00000000
+
+   cartesian coordinate no.   2.  (  1o  y )                               
+     cycle        coordinate         gradient
+         1           0.00000000       -0.00000000
+         2           0.00000000
+
+   cartesian coordinate no.   3.  (  1o  z )                               
+     cycle        coordinate         gradient
+         1          -0.12178984        0.04134173
+         2          -0.20447331
+
+   cartesian coordinate no.   4.  (  2h  x )                               
+     cycle        coordinate         gradient
+         1           1.41713421       -0.02705094
+         2           1.47123609
+
+   cartesian coordinate no.   5.  (  2h  y )                               
+     cycle        coordinate         gradient
+         1           0.00000000        0.00000000
+         2          -0.00000000
+
+   cartesian coordinate no.   6.  (  2h  z )                               
+     cycle        coordinate         gradient
+         1           0.96657855       -0.02065429
+         2           1.00788713
+
+   cartesian coordinate no.   7.  (  3h  x )                               
+     cycle        coordinate         gradient
+         1          -1.41713421        0.02705094
+         2          -1.47123609
+
+   cartesian coordinate no.   8.  (  3h  y )                               
+     cycle        coordinate         gradient
+         1           0.00000000       -0.00000000
+         2           0.00000000
+
+   cartesian coordinate no.   9.  (  3h  z )                               
+     cycle        coordinate         gradient
+         1           0.96657855       -0.02065429
+         2           1.00788713
+
+   Norm of cartesian gradient vectors :
+       cycle           norm
+         1            .63450E-01
+
+   Energy statistics (Hartree) :
+       1      -76.342761851
+
+ $forceinit flag ' on ' will be switched off !
+
+
+      ****************************************************************** 
+                          CONVERGENCE INFORMATION
+
+                               Converged?     Value      Criterion
+             Energy change         no      76.3427619   0.0000010
+             MAX geom. grad.       no       0.0413417   0.0010000
+      ****************************************************************** 
+
+
+    ------------------------------------------------------------------------
+         total  cpu-time :   0.03 seconds
+         total wall-time :   0.05 seconds
+    ------------------------------------------------------------------------
+
+   ****  relax : all done  ****
+
+
+    2019-07-12 15:48:23.172 
+

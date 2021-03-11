@@ -1,0 +1,446 @@
+ operating system is UNIX !
+
+ force (ucl-laptop) : TURBOMOLE V7.3 ( 22118 ) 1 Jul 2018 at 20:38:15
+ Copyright (C) 2018 TURBOMOLE GmbH, Karlsruhe
+
+
+    2019-07-12 23:26:49.347 
+
+
+
+                             T U R B O M O L E   
+
+                          a o f o r c e - program
+
+                        using direct algorithms for
+
+                       SCF level calculations of
+                         * harmonic force constants
+                         * hyperpolarizabilities
+                         * IR and RAMAN intensities
+                         * VCD intensities
+
+                       DFT level calculations of
+                         * harmonic force constants
+                         * IR intensities
+                                                   
+       Stephan Boecker, Peter Deglmann, Filipp Furche and Marco Haeser
+                          Quantum Chemistry Group
+                          Universitaet  Karlsruhe
+                                   Germany
+
+ 
+ 
+ 
+ 
+     References :
+ 
+       RI-J implementation:
+         Peter Deglmann, Klaus May, Filipp Furche, Reinhart Ahlrichs
+                 Chem. Phys. Lett. 384:103 (2004)
+ 
+       Efficiency, technical details:
+         Peter Deglmann, Filipp Furche, Reinhart Ahlrichs
+                 Chem. Phys. Lett. 362:511 (2002)
+ 
+       Search of lowest eigenvalues by iterative diagonalization:
+         Peter Deglmann, Filipp Furche
+                 J. Chem. Phys. 117:9535 (2002)
+ 
+       Vibrational circular dichroism implementation:
+        Kevin Reiter, Michael Kuehn, Florian Weigend
+                 J. Chem. Phys. 146:054102 (2017)  
+ 
+ 
+
+
+              +--------------------------------------------------+
+              | Atomic coordinate, charge and isotop information |
+              +--------------------------------------------------+
+
+                    atomic coordinates            atom    charge  isotop
+          0.00000000    0.00000000    0.72786195    h      1.000     0
+          0.00000000    0.00000000   -0.72786195    h      1.000     0
+ 
+       center of nuclear mass  :    0.00000000    0.00000000    0.00000000
+       center of nuclear charge:    0.00000000    0.00000000    0.00000000
+
+   *************************************************************************
+   dscf                                                                     
+   *************************************************************************
+
+
+
+              +--------------------------------------------------+
+              |               basis set information              |
+              +--------------------------------------------------+
+
+              we will work with the 1s 3p 5d 7f 9g ... basis set
+              ...i.e. with spherical basis functions...
+
+   type   atoms  prim   cont   basis
+   ---------------------------------------------------------------------------
+    h        2      4      2   def-SV(P)   [2s|4s]
+   ---------------------------------------------------------------------------
+   total:    2      8      4
+   ---------------------------------------------------------------------------
+
+   total number of primitive shells          :    4
+   total number of contracted shells         :    4
+   total number of cartesian basis functions :    4
+   total number of SCF-basis functions       :    4
+
+
+ symmetry group of the molecule :   d6h
+
+ the group has the following generators :
+   c6(z)
+   c2(x)
+   mirror plane sigma(xy)
+
+   24 symmetry operations found
+
+ there are 12 real representations :
+ a1g  a2g  b1g  b2g  e1g  e2g  a1u  a2u  b1u  b2u  e1u  e2u 
+
+ maximum number of shells which are related by symmetry :  2
+
+
+ determining totally symmetric integral contributions 
+    - equivalent to irreducible tensor elements - 
+ which can be formed within each triple of representations :
+
+             representation triple      contributions
+
+              a1g   a1g   a1g             1
+              a1g   a2g   a2g             1
+              a1g   b1g   b1g             1
+              a1g   b2g   b2g             1
+              a1g   e1g   e1g             1
+              a1g   e2g   e2g             1
+              a1g   a1u   a1u             1
+              a1g   a2u   a2u             1
+              a1g   b1u   b1u             1
+              a1g   b2u   b2u             1
+              a1g   e1u   e1u             1
+              a1g   e2u   e2u             1
+              a2g   a1g   a2g             1
+              a2g   a2g   a1g             1
+              a2g   b1g   b2g             1
+              a2g   b2g   b1g             1
+              a2g   e1g   e1g             1
+              a2g   e2g   e2g             1
+              a2g   a1u   a2u             1
+              a2g   a2u   a1u             1
+              a2g   b1u   b2u             1
+              a2g   b2u   b1u             1
+              a2g   e1u   e1u             1
+              a2g   e2u   e2u             1
+              b1g   a1g   b1g             1
+              b1g   a2g   b2g             1
+              b1g   b1g   a1g             1
+              b1g   b2g   a2g             1
+              b1g   e1g   e2g             1
+              b1g   e2g   e1g             1
+              b1g   a1u   b1u             1
+              b1g   a2u   b2u             1
+              b1g   b1u   a1u             1
+              b1g   b2u   a2u             1
+              b1g   e1u   e2u             1
+              b1g   e2u   e1u             1
+              b2g   a1g   b2g             1
+              b2g   a2g   b1g             1
+              b2g   b1g   a2g             1
+              b2g   b2g   a1g             1
+              b2g   e1g   e2g             1
+              b2g   e2g   e1g             1
+              b2g   a1u   b2u             1
+              b2g   a2u   b1u             1
+              b2g   b1u   a2u             1
+              b2g   b2u   a1u             1
+              b2g   e1u   e2u             1
+              b2g   e2u   e1u             1
+              e1g   a1g   e1g             1
+              e1g   a2g   e1g             1
+              e1g   b1g   e2g             1
+              e1g   b2g   e2g             1
+              e1g   e1g   a1g             1
+              e1g   e1g   a2g             1
+              e1g   e1g   e2g             1
+              e1g   e2g   b1g             1
+              e1g   e2g   b2g             1
+              e1g   e2g   e1g             1
+              e1g   a1u   e1u             1
+              e1g   a2u   e1u             1
+              e1g   b1u   e2u             1
+              e1g   b2u   e2u             1
+              e1g   e1u   a1u             1
+              e1g   e1u   a2u             1
+              e1g   e1u   e2u             1
+              e1g   e2u   b1u             1
+              e1g   e2u   b2u             1
+              e1g   e2u   e1u             1
+              e2g   a1g   e2g             1
+              e2g   a2g   e2g             1
+              e2g   b1g   e1g             1
+              e2g   b2g   e1g             1
+              e2g   e1g   b1g             1
+              e2g   e1g   b2g             1
+              e2g   e1g   e1g             1
+              e2g   e2g   a1g             1
+              e2g   e2g   a2g             1
+              e2g   e2g   e2g             1
+              e2g   a1u   e2u             1
+              e2g   a2u   e2u             1
+              e2g   b1u   e1u             1
+              e2g   b2u   e1u             1
+              e2g   e1u   b1u             1
+              e2g   e1u   b2u             1
+              e2g   e1u   e1u             1
+              e2g   e2u   a1u             1
+              e2g   e2u   a2u             1
+              e2g   e2u   e2u             1
+              a1u   a1g   a1u             1
+              a1u   a2g   a2u             1
+              a1u   b1g   b1u             1
+              a1u   b2g   b2u             1
+              a1u   e1g   e1u             1
+              a1u   e2g   e2u             1
+              a1u   a1u   a1g             1
+              a1u   a2u   a2g             1
+              a1u   b1u   b1g             1
+              a1u   b2u   b2g             1
+              a1u   e1u   e1g             1
+              a1u   e2u   e2g             1
+              a2u   a1g   a2u             1
+              a2u   a2g   a1u             1
+              a2u   b1g   b2u             1
+              a2u   b2g   b1u             1
+              a2u   e1g   e1u             1
+              a2u   e2g   e2u             1
+              a2u   a1u   a2g             1
+              a2u   a2u   a1g             1
+              a2u   b1u   b2g             1
+              a2u   b2u   b1g             1
+              a2u   e1u   e1g             1
+              a2u   e2u   e2g             1
+              b1u   a1g   b1u             1
+              b1u   a2g   b2u             1
+              b1u   b1g   a1u             1
+              b1u   b2g   a2u             1
+              b1u   e1g   e2u             1
+              b1u   e2g   e1u             1
+              b1u   a1u   b1g             1
+              b1u   a2u   b2g             1
+              b1u   b1u   a1g             1
+              b1u   b2u   a2g             1
+              b1u   e1u   e2g             1
+              b1u   e2u   e1g             1
+              b2u   a1g   b2u             1
+              b2u   a2g   b1u             1
+              b2u   b1g   a2u             1
+              b2u   b2g   a1u             1
+              b2u   e1g   e2u             1
+              b2u   e2g   e1u             1
+              b2u   a1u   b2g             1
+              b2u   a2u   b1g             1
+              b2u   b1u   a2g             1
+              b2u   b2u   a1g             1
+              b2u   e1u   e2g             1
+              b2u   e2u   e1g             1
+              e1u   a1g   e1u             1
+              e1u   a2g   e1u             1
+              e1u   b1g   e2u             1
+              e1u   b2g   e2u             1
+              e1u   e1g   a1u             1
+              e1u   e1g   a2u             1
+              e1u   e1g   e2u             1
+              e1u   e2g   b1u             1
+              e1u   e2g   b2u             1
+              e1u   e2g   e1u             1
+              e1u   a1u   e1g             1
+              e1u   a2u   e1g             1
+              e1u   b1u   e2g             1
+              e1u   b2u   e2g             1
+              e1u   e1u   a1g             1
+              e1u   e1u   a2g             1
+              e1u   e1u   e2g             1
+              e1u   e2u   b1g             1
+              e1u   e2u   b2g             1
+              e1u   e2u   e1g             1
+              e2u   a1g   e2u             1
+              e2u   a2g   e2u             1
+              e2u   b1g   e1u             1
+              e2u   b2g   e1u             1
+              e2u   e1g   b1u             1
+              e2u   e1g   b2u             1
+              e2u   e1g   e1u             1
+              e2u   e2g   a1u             1
+              e2u   e2g   a2u             1
+              e2u   e2g   e2u             1
+              e2u   a1u   e2g             1
+              e2u   a2u   e2g             1
+              e2u   b1u   e1g             1
+              e2u   b2u   e1g             1
+              e2u   e1u   b1g             1
+              e2u   e1u   b2g             1
+              e2u   e1u   e1g             1
+              e2u   e2u   a1g             1
+              e2u   e2u   a2g             1
+              e2u   e2u   e2g             1
+
+ reading cartesian hessian from $hessian,
+ file=<hessian>
+
+
+ actual cartesian coordinates & gradients will be read from $grad 
+
+            ----------------------------
+            actual cartesian coordinates
+            ----------------------------
+    1 h       0.00000000000000      0.00000000000000      0.72786195176158
+    2 h       0.00000000000000      0.00000000000000     -0.72786195176158
+
+              --------------------------
+              actual cartesian gradients
+              --------------------------
+    1 h       0.00000000000000      0.00000000000000     -0.00002565974902
+    2 h       0.00000000000000      0.00000000000000      0.00002565974902
+
+ dipole moment read from <control>
+
+                -----------------------
+                permanent dipole moment
+                -----------------------
+             x              y             z
+          0.0000000      0.0000000      0.0000000      (debyes)
+
+ dipole derivatives read from <dipgrad>
+
+        ----------------------------------------------------
+        cartesian dipole derivative matrix (debyes/angstrom)
+        ----------------------------------------------------
+
+  atom       1 h                              2 h 
+            x          y          z          x          y          z
+ 
+  x      0.000000   0.000000   0.000000   0.000000   0.000000   0.000000
+  y      0.000000   0.000000   0.000000   0.000000   0.000000   0.000000
+  z      0.000000   0.000000   0.000000   0.000000   0.000000   0.000000
+ 
+
+             -----------------------------------
+             rotational and vibrational analysis
+             -----------------------------------
+
+
+            ==============================================================
+            ATOMIC WEIGHTS (average over the natural occurance of isotops)
+            ==============================================================
+            ('*' denotes special isotop !)
+              1     h                 1.00797
+              2     h                 1.00797
+
+          -------------------------------------------------
+          CARTESIAN FORCE CONSTANT MATRIX (hartree/bohr**2)
+         (translational & rotational space projected out)
+          -------------------------------------------------
+
+   ATOM              1 h                           2 h 
+                  dx        dy        dz        dx        dy        dz
+   1 h     dx  0.0000000
+           dy  0.0000000 0.0000000
+           dz  0.0000000 0.0000000 0.3470709
+   2 h     dx  0.0000000 0.0000000 0.0000000 0.0000000
+           dy  0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
+           dz  0.0000000 0.0000000-0.3470709 0.0000000 0.0000000 0.3470709
+ 
+
+   *** projected hessian written onto $hessian (projected), file=<hessian> ***
+
+ dipole moment in principle axis system (a.u.) :
+     0.0000000000     0.0000000000     0.0000000000
+ norm :  0.000000000000000E+000
+
+ rotational constants b for rotations around axis of inertia
+ and optical intensities for (1 <-- 0) transition
+
+   b   :    56.3661785582    56.3661785582     0.0000000000   (cm**(-1))
+   b   :     1689815.5218     1689815.5218           0.0000     (MHz)
+  int. :     0.0000000000     0.0000000000     0.0000000000     (a.u.)
+
+   x   :     1.0000000000     0.0000000000     0.0000000000
+   y   :     0.0000000000     1.0000000000     0.0000000000
+   z   :     0.0000000000     0.0000000000     1.0000000000
+
+   ***  normal modes written onto $vibrational normal modes, file=<control>  ***
+
+ keyword $vibrational reduced masses missing in file <control>
+
+
+   ***  vibrational spectroscopic data written onto$vibrational spectrum   
+        file=<control>  ***
+
+          ---------------------------------------------------
+          NORMAL MODES and VIBRATIONAL FREQUENCIES (cm**(-1))
+          ---------------------------------------------------
+
+ imaginary wave numbers indicate a negative curvature of the energy surface.
+ zero frequency modes have no physical meaning except being generators of
+ translations and rotations. each vibrational normal mode - given in terms of
+ cartesian displacement vectors of all atoms - has been normalized to unity.
+ to obtain mass-weigthed normal coordinates in a.u. divide the tabulated
+ modes by sqrt(reduced mass * 1822.88853).
+ band intensities or cross sections refer to independent non-degenerate normal
+ modes, that is, the intensities of degenerate modes have yet to be added.
+ dDIP/dQ is the normal mode derivative of the dipole moment.
+
+
+       mode               1        2        3        4        5        6
+
+     frequency           0.00     0.00     0.00     0.00     0.00  4265.84
+
+     symmetry                                                         a1g 
+
+        IR                -        -        -        -        -       NO 
+|dDIP/dQ|   (a.u.)     0.0000   0.0000   0.0000   0.0000   0.0000   0.0000
+intensity (km/mol)       0.00     0.00     0.00     0.00     0.00     0.00
+intensity (  %   )       0.00     0.00     0.00     0.00     0.00     0.00
+ 
+       RAMAN              -        -        -        -        -       YES
+ 
+  1   h           x   1.00000  0.00000  0.00000  0.00000  0.00000  0.00000
+                  y   0.00000  1.00000  0.00000  0.00000  0.00000  0.00000
+                  z   0.00000  0.00000  0.00000  0.00000 -0.70711  0.70711
+  2   h           x   0.00000  0.00000  1.00000  0.00000  0.00000  0.00000
+                  y   0.00000  0.00000  0.00000  1.00000  0.00000  0.00000
+                  z   0.00000  0.00000  0.00000  0.00000 -0.70711 -0.70711
+
+reduced mass(g/mol)     1.008    1.008    1.008    1.008    1.008    1.008
+ 
+
+ <geterg> : there is no data group $energy 
+
+
+         **************************************************************
+         *                                                            *
+         *  zero point VIBRATIONAL energy  :      0.0097183  Hartree  *
+         *                                                            *
+         **************************************************************
+
+
+
+
+ time elapsed for vibrational analysis     0.00 sec
+
+
+    ------------------------------------------------------------------------
+         total  cpu-time :   0.01 seconds
+         total wall-time :   0.02 seconds
+    ------------------------------------------------------------------------
+
+   ****  force : all done  ****
+
+
+    2019-07-12 23:26:49.361 
+

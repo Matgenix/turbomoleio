@@ -1,0 +1,1290 @@
+ operating system is UNIX !
+
+ escf (ucl-laptop) : TURBOMOLE V7.3 ( 22118 ) 1 Jul 2018 at 20:38:15
+ Copyright (C) 2018 TURBOMOLE GmbH, Karlsruhe
+
+
+    2019-04-11 17:02:19.618 
+
+
+
+
+                                e s c f
+
+                             TURBOMOLE GmbH
+
+
+          integral direct evaluation of 
+
+                    * excitation energies and transition moments 
+                    * dynamic response properties 
+                    * stabilities
+
+
+
+          references (see also programs dscf and ridft) 
+
+          implementation and benchmarks (review) 
+          F. Furche and D. Rappoport,  
+          "Density functional methods for excited states: 
+          equilibrium structure and electronic spectra",
+          ch. III of "Computational Photochemistry", ed. by 
+          M. Olivucci, vol. 16 of "Theoretical and Computational 
+          Chemistry", Elsevier, Amsterdam, 2005.
+
+          Bethe-Salpeter equation
+          K. Krause and W. Klopper,
+          J. Comput. Chem. 38 (2017) 383.
+
+          nonorthonormal Krylov space methods 
+          F. Furche, B. T. Krull, B. D. Nguyen, and J. Kwon, 
+          J. Chem. Phys. 144 (2016), 174105.
+
+          two-component GW quasi particle energies 
+          M. Kuehn and F. Weigend, 
+          J. Chem. Theory Comput. 11 (2015), 969.
+
+          two-component TDDFT with spin-orbit coupling 
+          M. Kuehn and F. Weigend, 
+          J. Chem. Theory Comput. 9 (2013), 5341.
+          M. Kuehn and F. Weigend, 
+          J. Chem. Phys. 142 (2015), 034116.
+
+          GW quasi particle energies
+          M. J. van Setten, F. Weigend, and F. Evers,
+          J. Chem. Theory Comput. 9 (2013), 232.
+
+          current-density dependent meta-GGA Linear Response
+          J. E. Bates and F. Furche, 
+          J. Chem. Phys. 137 (2012), 164105.
+
+          spin-flip method 
+          M. Kuehn and F. Weigend, 
+          Chem. Phys. Chem. 12 (2011), 3331.
+
+          RI-J method 
+          R. Bauernschmitt, M. Haeser, O. Treutler, and R. Ahlrichs,
+          Chem. Phys. Lett. 264 (1997), 573.
+
+          density functional implementation               
+          R. Bauernschmitt and R. Ahlrichs,
+          Chem. Phys. Lett. 256 (1996), 454.
+          R. Bauernschmitt and R. Ahlrichs,
+          J. Chem. Phys. 104 (1996), 9047.
+
+          UHF extension (RPA and CIS)
+          C. Ochsenfeld, J. Gauss, and R. Ahlrichs, 
+          J. Chem. Phys. 103 (1995), 7401.
+
+          integral direct algorithm                 
+          H. Weiss, R. Ahlrichs, and M. Haeser, 
+          J. Chem. Phys. 99 (1993), 1262.
+                                     
+
+
+
+ UHF mode switched on !
+
+
+              +--------------------------------------------------+
+              | Atomic coordinate, charge and isotop information |
+              +--------------------------------------------------+
+
+                    atomic coordinates            atom    charge  isotop
+          2.91365085    0.00000000    2.47857830    al    13.000     0
+         -1.45682542    2.52329565    2.47857830    al    13.000     0
+         -1.45682542   -2.52329565    2.47857830    al    13.000     0
+          2.91365085    0.00000000   -2.47857830    al    13.000     0
+         -1.45682542   -2.52329565   -2.47857830    al    13.000     0
+         -1.45682542    2.52329565   -2.47857830    al    13.000     0
+ 
+       center of nuclear mass  :    0.00000000    0.00000000    0.00000000
+       center of nuclear charge:    0.00000000    0.00000000    0.00000000
+
+   *************************************************************************
+   Al6 triplett                                                             
+   *************************************************************************
+
+
+
+              +--------------------------------------------------+
+              |               basis set information              |
+              +--------------------------------------------------+
+
+              we will work with the 1s 3p 5d 7f 9g ... basis set
+              ...i.e. with spherical basis functions...
+
+   type   atoms  prim   cont   basis
+   ---------------------------------------------------------------------------
+    al       6     36     18   def-SV(P)   [4s3p1d|10s7p1d]
+   ---------------------------------------------------------------------------
+   total:    6    216    108
+   ---------------------------------------------------------------------------
+
+   total number of primitive shells          :   18
+   total number of contracted shells         :   48
+   total number of cartesian basis functions :  114
+   total number of SCF-basis functions       :  108
+
+
+ residuum convergence criterium   :  0.10E-04
+
+
+ integral neglect threshold       :  0.29E-10
+ integral storage threshold THIZE :  0.10E-04
+ integral storage threshold THIME :         5
+
+ 
+             FOUND RI-J FLAG !
+ 
+  
+ AUXILIARY BASIS SET information:
+
+              we will work with the 1s 3p 5d 7f 9g ... basis set
+              ...i.e. with spherical basis functions...
+
+   type   atoms  prim   cont   basis
+   ---------------------------------------------------------------------------
+    al       6     56     31   def-SV(P)   [5s3p2d1f|12s4p5d1f]
+   ---------------------------------------------------------------------------
+   total:    6    336    186
+   ---------------------------------------------------------------------------
+
+   total number of primitive shells          :   22
+   total number of contracted shells         :   66
+   total number of cartesian basis functions :  216
+   total number of SCF-basis functions       :  186
+
+ RPA UHF-EXCITATION-CALCULATION (spin-conserved)
+ 
+             FOUND DFT-FLAG !
+ 
+
+ symmetry group of the molecule :   d3h
+
+ the group has the following generators :
+   c3(z)
+   c2(x)
+   mirror plane sigma(xy)
+
+   12 symmetry operations found
+
+ there are 6 real representations :   a1'  a2'  e'   a1"  a2"  e"  
+
+ maximum number of shells which are related by symmetry :  6
+
+ IRREPs of excited states :   a1'  a2'  e'   a1"  a2"  e"  
+ 
+
+ determining totally symmetric integral contributions 
+    - equivalent to irreducible tensor elements - 
+ which can be formed within each triple of representations :
+
+             representation triple      contributions
+
+              a1'   a1'   a1'             1
+              a1'   a2'   a2'             1
+              a1'   e'    e'              1
+              a1'   a1"   a1"             1
+              a1'   a2"   a2"             1
+              a1'   e"    e"              1
+              a2'   a1'   a2'             1
+              a2'   a2'   a1'             1
+              a2'   e'    e'              1
+              a2'   a1"   a2"             1
+              a2'   a2"   a1"             1
+              a2'   e"    e"              1
+              e'    a1'   e'              1
+              e'    a2'   e'              1
+              e'    e'    a1'             1
+              e'    e'    a2'             1
+              e'    e'    e'              1
+              e'    a1"   e"              1
+              e'    a2"   e"              1
+              e'    e"    a1"             1
+              e'    e"    a2"             1
+              e'    e"    e"              1
+              a1"   a1'   a1"             1
+              a1"   a2'   a2"             1
+              a1"   e'    e"              1
+              a1"   a1"   a1'             1
+              a1"   a2"   a2'             1
+              a1"   e"    e'              1
+              a2"   a1'   a2"             1
+              a2"   a2'   a1"             1
+              a2"   e'    e"              1
+              a2"   a1"   a2'             1
+              a2"   a2"   a1'             1
+              a2"   e"    e'              1
+              e"    a1'   e"              1
+              e"    a2'   e"              1
+              e"    e'    a1"             1
+              e"    e'    a2"             1
+              e"    e'    e"              1
+              e"    a1"   e'              1
+              e"    a2"   e'              1
+              e"    e"    a1'             1
+              e"    e"    a2'             1
+              e"    e"    e'              1
+
+    mo occupation :
+   irrep   mo's   occupied
+    a1'     13        7
+    a2'      5        1
+    e'      18        7
+    a1"      5        1
+    a2"     13        5
+    e"      18        6
+ 
+ number of basis functions   :                    108
+ number of occupied orbitals :                     40
+ 
+ ALPHA-Occupation:                    40
+ BETA-Occupation :                    38
+  
+           ------------------
+           density functional
+           ------------------
+ B-P86 functional
+ exchange:    LDA + Becke (B88)
+ correlation: LDA (VWN) + Perdew (P86)
+
+ iterations will be done with small grid
+  
+ spherical integration : Lebedev's spherical grid
+ spherical gridsize    :                     3
+    i.e. gridpoints    :                   302
+ value for diffuse not defined
+ radial integration    : Chebyshev 2nd kind (scaling 3)
+ radial gridsize       :                     3
+ integration cells     :                     1
+ partition function    : becke
+ partition sharpness   :                     3
+  
+ grid rotated due to d3 symmetry
+  
+           ----------------------
+               RI - INFORMATION
+           ----------------------
+
+ biggest AO integral is expected to be     7.882179841
+
+ Threshold for integral neglect (rithr2):   0.29E-10
+ Threshold for integral neglect (rithr1):   0.29E-10
+
+ Contributions to RI integral batches: 
+  neglected integral batches:                  1044
+  direct contribution:                            0
+  memory contribution:                   132
+ Core memory available (ricore)            40 MiB
+ Core memory needed for (P|Q) and Cholesky 1 MiB
+ Core memory used for integrals            2 MiB
+  
+ ****************************************
+ Memory allocated for RIDFT 2 MiB
+ ****************************************
+                                            
+  MOs are in ASCII format !
+
+
+ reading orbital data $uhfmo_alpha  from file control
+ orbital characterization : scfconv=7
+
+ reading orbital data $uhfmo_beta  from file control
+ orbital characterization : scfconv=7
+ preparing numerical integration ....
+          Overall gridpoints after grid construction =          2081
+
+ Calculating ground state density on molecular grid
+
+ Integral of ground state total density: Na =   77.99685819674815    
+
+ Integral of ground state spin density:  Nb =   1.999782035609213    
+
+
+ all orbitals will be included in the transformation
+
+ number of non-frozen orbitals          :   108
+ number of non-frozen occupied orbitals :    40
+ all orbitals will be included in the transformation
+
+ number of non-frozen orbitals          :   108
+ number of non-frozen occupied orbitals :    38
+
+ dimension of super-tensorspace: 1
+
+          IRREP   tensor space dimension   number of roots
+
+           a1'             473                   1
+           a2'             417                   1
+           e'              895                   1
+           a1"             418                   1
+           a2"             482                   1
+           e"              900                   1
+
+ maximum number of Davidson iterations set to   25
+
+
+ machine precision: 2.22D-16
+
+
+ logfile unrs_a1'  will be constructed
+
+ logfile unrs_a2'  will be constructed
+
+ logfile unrs_e'   will be constructed
+
+ logfile unrs_a1"  will be constructed
+
+ logfile unrs_a2"  will be constructed
+
+ logfile unrs_e"   will be constructed
+
+
+                       Nonorthonormal Krylov Space Iteration
+
+
+ total number of roots to be determined: 6
+
+
+ maximum core memory set to    50 MB,
+ corresponding to      242 vectors in CAO basis
+
+
+ maximum number of simultaneously treated vectors (including degeneracy):       16
+
+
+ Iteration IRREP Converged      Max. Euclidean
+                 roots          residual norm
+
+    1       a1'      0        6.654169659636565D-03
+            a2'      0        6.187752130622285D-03
+            e'       0        8.161894574765941D-03
+            a1"      0        1.113725652706829D-02
+            a2"      0        1.312871599346648D-02
+            e"       0        7.807385098671133D-03
+ 
+    2       a1'      0        3.598730821235728D-03
+            a2'      0        1.514762961834989D-03
+            e'       0        4.718876623893839D-03
+            a1"      0        3.942529140671579D-03
+            a2"      0        8.386722830411766D-03
+            e"       0        3.670981654837603D-03
+ 
+    3       a1'      0        1.095931184115630D-03
+            a2'      0        3.604387041503111D-04
+            e'       0        1.900556376217077D-03
+            a1"      0        1.636928806039162D-04
+            a2"      0        4.315288155353409D-03
+            e"       0        1.441335105187092D-03
+ 
+    4       a1'      0        2.595056210333508D-04
+            a2'      0        1.004497923234434D-04
+            e'       0        4.246202598823975D-04
+            a1"      0        1.106835956080867D-05
+            a2"      0        1.659157084705762D-03
+            e"       0        3.333981887229024D-04
+ 
+    5       a1'      0        1.168800659870121D-04
+            a2'      0        1.571131587244486D-05
+            e'       0        1.276880574301601D-04
+            a1"      1        9.860393176678156D-07
+            a2"      0        8.429559951862312D-04
+            e"       0        2.177079066964018D-04
+ 
+    6       a1'      0        3.441735530023169D-05
+            a2'      1        2.156225554660378D-06
+            e'       0        4.985012937501192D-05
+            a1"      1        9.860393176678156D-07
+            a2"      0        4.946344211240311D-04
+            e"       0        5.040120971358927D-05
+ 
+    7       a1'      1        8.045536850520791D-06
+            a2'      1        2.156225554660378D-06
+            e'       0        1.463707813233495D-05
+            a1"      1        9.860393176678156D-07
+            a2"      0        1.686078254905978D-04
+            e"       1        8.657903351636711D-06
+ 
+    8       a1'      1        8.045536850520791D-06
+            a2'      1        2.156225554660378D-06
+            e'       1        7.498136063687718D-06
+            a1"      1        9.860393176678156D-07
+            a2"      0        2.202739953593287D-05
+            e"       1        8.657903351636711D-06
+ 
+    9       a1'      1        8.045536850520791D-06
+            a2'      1        2.156225554660378D-06
+            e'       1        7.498136063687718D-06
+            a1"      1        9.860393176678156D-07
+            a2"      1        7.467232111392707D-06
+            e"       1        8.657903351636711D-06
+ 
+
+ converged!
+
+
+ Switching to fine grid
+
+ preparing numerical integration ....
+          Overall gridpoints after grid construction =          7043
+
+ Calculating ground state density on molecular grid
+
+ Integral of ground state total density: Na =   77.99995750386620    
+
+ Integral of ground state spin density:  Nb =   1.999995303117498    
+
+
+
+ Iteration IRREP Converged      Max. Euclidean
+                 roots          residual norm
+
+   10       a1'      0        1.057394448457922D-05
+            a2'      1        9.250142329899783D-06
+            e'       0        1.007463462310458D-05
+            a1"      0        1.594658738785667D-05
+            a2"      0        3.337130285424268D-05
+            e"       0        1.534038539925200D-05
+ 
+
+ NOTE: Residual norms are larger than 1.00D-05 due to mgrid option!
+
+ Eigenpairs written on logfile unrs_a1' 
+
+ Eigenpairs written on logfile unrs_a2' 
+
+ Eigenpairs written on logfile unrs_e'  
+
+ Eigenpairs written on logfile unrs_a1" 
+
+ Eigenpairs written on logfile unrs_a2" 
+
+ Eigenpairs written on logfile unrs_e"  
+
+
+
+ IRREP   Vector     Eigenvalue           Euclidean residual norm
+
+  a1'       1    4.173497297461286D-03    1.057394448457922D-05
+
+  a2'       1    3.948387714868579D-03    9.250142329899783D-06
+
+  e'        1    6.507704703755720D-04    1.007463462310458D-05
+
+  a1"       1    3.044133418856267D-03    1.594658738785667D-05
+
+  a2"       1    2.012993584077823D-03    3.337130285424268D-05
+
+  e"        1    2.390310295119010D-03    1.534038539925200D-05
+ 
+
+
+
+
+                    Selection rules for point group d3h 
+
+
+ Subduction with respect to d3h :
+
+    Polar vector representation: e', a2"                     
+
+    Axial vector representation: a2', e"                     
+
+    Symmetric second rank tensor representation: a1', e', e"                 
+
+
+
+
+                            Ground state
+
+
+ Total energy:                           -1454.248687078000    
+
+ Charge:
+
+               elec          nuc         total
+
+           -78.000000    78.000000    -0.000000
+
+
+ Electric dipole moment:
+
+               elec          nuc         total   
+
+    x        0.000000     0.000000     0.000000    Norm:              0.000000
+    y        0.000000     0.000000     0.000000
+    z        0.000000     0.000000     0.000000    Norm / debye:      0.000000
+
+
+ Electric quadrupole moment:
+
+               elec          nuc         total   
+
+   xx     -390.390407   331.085089   -59.305318
+   yy     -390.390407   331.085089   -59.305318    1/3*trace:       -59.000865
+   zz     -537.573290   479.181332   -58.391958
+   xy        0.000000     0.000000     0.000000
+   xz        0.000000     0.000000     0.000000    Anisotropy:        0.913360
+   yz        0.000000     0.000000     0.000000
+
+
+
+ ==============================================================================
+
+                              I R R E P   a1' 
+
+ ==============================================================================
+
+
+ Excitation is electric dipole forbidden
+
+ Excitation is magnetic dipole forbidden
+
+ Excitation is electric quadrupole allowed
+
+
+
+
+                             1 a1' excitation
+
+
+ Total energy:                           -1454.184084467391    
+
+ Excitation energy:                      0.6460261060871524E-01
+
+ Excitation energy / eV:                  1.757927230889995    
+
+ Excitation energy / nm:                  705.2865546868977    
+
+ Excitation energy / cm^(-1):             14178.63410560368    
+
+
+ Oscillator strength:
+
+    velocity representation:              0.000000000000000    
+
+    length representation:                0.000000000000000    
+
+    mixed representation:                 0.000000000000000    
+
+
+ Rotatory strength:
+
+    velocity representation:              0.000000000000000    
+
+    velocity rep. / 10^(-40)erg*cm^3:     0.000000000000000    
+
+    length representation:                0.000000000000000    
+
+    length rep. / 10^(-40)erg*cm^3:       0.000000000000000    
+
+
+ Dominant contributions:
+
+      occ. orbital   energy / eV   virt. orbital     energy / eV   |coeff.|^2*100
+        7 e'  alpha           -4.84      8 e'  alpha           -3.02       99.4
+ 
+                   <Za|Za> =    0.9957463436
+                   <Zb|Zb> =    0.0042536564
+                   <Za|Zb> =   -0.0030434985
+
+         1/2 <Za+Zb|Za+Zb> =    0.4969565015
+         1/2 <Za-Zb|Za-Zb> =    0.5030434985
+
+                     <Z|Z> =    1.0000000000
+
+
+ Change of electron number:
+
+            -0.000000
+
+
+ Electric transition dipole moment (velocity rep.):
+
+    x        0.000000        Norm:                  0.000000
+    y        0.000000
+    z        0.000000        Norm / debye:          0.000000
+
+
+ Electric transition dipole moment (length rep.):
+
+    x        0.000000        Norm:                  0.000000
+    y        0.000000
+    z        0.000000        Norm / debye:          0.000000
+
+
+ Magnetic transition dipole moment / i:
+
+    x        0.000000        Norm:                  0.000000
+    y        0.000000
+    z        0.000000        Norm / Bohr mag.:      0.000000
+
+
+ Electric quadrupole transition moment:
+
+   xx       -0.944023
+   yy       -0.944023        1/3*trace:            -0.574155
+   zz        0.165579
+   xy        0.000000
+   xz        0.000000        Anisotropy:            1.109601
+   yz        0.000000
+
+
+
+ ==============================================================================
+
+                              I R R E P   a2' 
+
+ ==============================================================================
+
+
+ Excitation is electric dipole forbidden
+
+ Excitation is magnetic dipole allowed
+
+ Excitation is electric quadrupole forbidden
+
+
+
+
+                             1 a2' excitation
+
+
+ Total energy:                           -1454.185850880511    
+
+ Excitation energy:                      0.6283619748893610E-01
+
+ Excitation energy / eV:                  1.709860663687799    
+
+ Excitation energy / nm:                  725.1131430736651    
+
+ Excitation energy / cm^(-1):             13790.95123847652    
+
+
+ Oscillator strength:
+
+    velocity representation:              0.000000000000000    
+
+    length representation:                0.000000000000000    
+
+    mixed representation:                 0.000000000000000    
+
+
+ Rotatory strength:
+
+    velocity representation:              0.000000000000000    
+
+    velocity rep. / 10^(-40)erg*cm^3:     0.000000000000000    
+
+    length representation:                0.000000000000000    
+
+    length rep. / 10^(-40)erg*cm^3:       0.000000000000000    
+
+
+ Dominant contributions:
+
+      occ. orbital   energy / eV   virt. orbital     energy / eV   |coeff.|^2*100
+        7 e'  alpha           -4.84      8 e'  alpha           -3.02       98.9
+ 
+                   <Za|Za> =    0.9933827280
+                   <Zb|Zb> =    0.0066172720
+                   <Za|Zb> =   -0.0051577989
+
+         1/2 <Za+Zb|Za+Zb> =    0.4948422011
+         1/2 <Za-Zb|Za-Zb> =    0.5051577989
+
+                     <Z|Z> =    1.0000000000
+
+
+ Change of electron number:
+
+             0.000000
+
+
+ Electric transition dipole moment (velocity rep.):
+
+    x        0.000000        Norm:                  0.000000
+    y        0.000000
+    z        0.000000        Norm / debye:          0.000000
+
+
+ Electric transition dipole moment (length rep.):
+
+    x        0.000000        Norm:                  0.000000
+    y        0.000000
+    z        0.000000        Norm / debye:          0.000000
+
+
+ Magnetic transition dipole moment / i:
+
+    x        0.000000        Norm:                  0.001132
+    y        0.000000
+    z       -0.001132        Norm / Bohr mag.:      0.310191
+
+
+ Electric quadrupole transition moment:
+
+   xx        0.000000
+   yy        0.000000        1/3*trace:             0.000000
+   zz        0.000000
+   xy        0.000000
+   xz        0.000000        Anisotropy:            0.000000
+   yz        0.000000
+
+
+
+ ==============================================================================
+
+                              I R R E P   e'  
+
+ ==============================================================================
+
+
+ Excitation is electric dipole allowed
+
+ Excitation is magnetic dipole forbidden
+
+ Excitation is electric quadrupole allowed
+
+
+
+
+                             1 e' excitation
+
+
+ Total energy:                           -1454.223176874740    
+
+ Excitation energy:                      0.2551020326017752E-01
+
+ Excitation energy / eV:                 0.6941682472899162    
+
+ Excitation energy / nm:                  1786.083481785748    
+
+ Excitation energy / cm^(-1):             5598.842439609399    
+
+
+ Oscillator strength:
+
+    velocity representation:             0.6654370070163069E-02
+
+    length representation:               0.3292062371796902E-03
+
+    mixed representation:                0.1480087879688073E-02
+
+
+ Rotatory strength:
+
+    velocity representation:              0.000000000000000    
+
+    velocity rep. / 10^(-40)erg*cm^3:     0.000000000000000    
+
+    length representation:                0.000000000000000    
+
+    length rep. / 10^(-40)erg*cm^3:       0.000000000000000    
+
+
+ Dominant contributions:
+
+      occ. orbital   energy / eV   virt. orbital     energy / eV   |coeff.|^2*100
+        7 a1' beta            -4.98      7 e'  beta            -4.26       99.1
+ 
+                   <Za|Za> =    0.0057871389
+                   <Zb|Zb> =    0.9942128611
+                   <Za|Zb> =    0.0006883751
+
+         1/2 <Za+Zb|Za+Zb> =    0.5006883751
+         1/2 <Za-Zb|Za-Zb> =    0.4993116249
+
+                     <Z|Z> =    1.0000000000
+
+
+
+                              1st column
+
+ Change of electron number:
+
+             0.000000
+
+
+ Electric transition dipole moment (velocity rep.):
+
+    x        0.442310        Norm:                  0.442310
+    y        0.000000
+    z        0.000000        Norm / debye:          1.124249
+
+
+ Electric transition dipole moment (length rep.):
+
+    x       -0.098380        Norm:                  0.098380
+    y        0.000000
+    z        0.000000        Norm / debye:          0.250059
+
+
+ Magnetic transition dipole moment / i:
+
+    x        0.000000        Norm:                  0.000000
+    y        0.000000
+    z        0.000000        Norm / Bohr mag.:      0.000000
+
+
+ Electric quadrupole transition moment:
+
+   xx       -3.935608
+   yy        3.935608        1/3*trace:             0.000000
+   zz        0.000000
+   xy        0.000000
+   xz        0.000000        Anisotropy:            6.816673
+   yz        0.000000
+
+
+                              2nd column
+
+ Change of electron number:
+
+             0.000000
+
+
+ Electric transition dipole moment (velocity rep.):
+
+    x        0.000000        Norm:                  0.442310
+    y        0.442310
+    z        0.000000        Norm / debye:          1.124249
+
+
+ Electric transition dipole moment (length rep.):
+
+    x        0.000000        Norm:                  0.098380
+    y       -0.098380
+    z        0.000000        Norm / debye:          0.250059
+
+
+ Magnetic transition dipole moment / i:
+
+    x        0.000000        Norm:                  0.000000
+    y        0.000000
+    z        0.000000        Norm / Bohr mag.:      0.000000
+
+
+ Electric quadrupole transition moment:
+
+   xx        0.000000
+   yy        0.000000        1/3*trace:             0.000000
+   zz        0.000000
+   xy        3.935608
+   xz        0.000000        Anisotropy:            6.816673
+   yz        0.000000
+
+
+
+ ==============================================================================
+
+                              I R R E P   a1" 
+
+ ==============================================================================
+
+
+ Excitation is electric dipole forbidden
+
+ Excitation is magnetic dipole forbidden
+
+ Excitation is electric quadrupole forbidden
+
+
+
+
+                             1 a1" excitation
+
+
+ Total energy:                           -1454.193513412009    
+
+ Excitation energy:                      0.5517366599072665E-01
+
+ Excitation energy / eV:                  1.501352483424919    
+
+ Excitation energy / nm:                  825.8170241516684    
+
+ Excitation energy / cm^(-1):             12109.21996767988    
+
+
+ Oscillator strength:
+
+    velocity representation:              0.000000000000000    
+
+    length representation:                0.000000000000000    
+
+    mixed representation:                 0.000000000000000    
+
+
+ Rotatory strength:
+
+    velocity representation:              0.000000000000000    
+
+    velocity rep. / 10^(-40)erg*cm^3:     0.000000000000000    
+
+    length representation:                0.000000000000000    
+
+    length rep. / 10^(-40)erg*cm^3:       0.000000000000000    
+
+
+ Dominant contributions:
+
+      occ. orbital   energy / eV   virt. orbital     energy / eV   |coeff.|^2*100
+        6 e"  beta            -5.88      7 e'  beta            -4.26       99.2
+ 
+                   <Za|Za> =    0.0068290856
+                   <Zb|Zb> =    0.9931709144
+                   <Za|Zb> =   -0.0037642628
+
+         1/2 <Za+Zb|Za+Zb> =    0.4962357372
+         1/2 <Za-Zb|Za-Zb> =    0.5037642628
+
+                     <Z|Z> =    1.0000000000
+
+
+ Change of electron number:
+
+             0.000000
+
+
+ Electric transition dipole moment (velocity rep.):
+
+    x        0.000000        Norm:                  0.000000
+    y        0.000000
+    z        0.000000        Norm / debye:          0.000000
+
+
+ Electric transition dipole moment (length rep.):
+
+    x        0.000000        Norm:                  0.000000
+    y        0.000000
+    z        0.000000        Norm / debye:          0.000000
+
+
+ Magnetic transition dipole moment / i:
+
+    x        0.000000        Norm:                  0.000000
+    y        0.000000
+    z        0.000000        Norm / Bohr mag.:      0.000000
+
+
+ Electric quadrupole transition moment:
+
+   xx        0.000000
+   yy        0.000000        1/3*trace:             0.000000
+   zz        0.000000
+   xy        0.000000
+   xz        0.000000        Anisotropy:            0.000000
+   yz        0.000000
+
+
+
+ ==============================================================================
+
+                              I R R E P   a2" 
+
+ ==============================================================================
+
+
+ Excitation is electric dipole allowed
+
+ Excitation is magnetic dipole forbidden
+
+ Excitation is electric quadrupole forbidden
+
+
+
+
+                             1 a2" excitation
+
+
+ Total energy:                           -1454.203820680952    
+
+ Excitation energy:                      0.4486639704810074E-01
+
+ Excitation energy / eV:                  1.220877304796388    
+
+ Excitation energy / nm:                  1015.534022291829    
+
+ Excitation energy / cm^(-1):             9847.035922971481    
+
+
+ Oscillator strength:
+
+    velocity representation:             0.1472776403197139E-03
+
+    length representation:               0.6040364584859194E-05
+
+    mixed representation:                0.2982634142379568E-04
+
+
+ Rotatory strength:
+
+    velocity representation:              0.000000000000000    
+
+    velocity rep. / 10^(-40)erg*cm^3:     0.000000000000000    
+
+    length representation:                0.000000000000000    
+
+    length rep. / 10^(-40)erg*cm^3:       0.000000000000000    
+
+
+ Dominant contributions:
+
+      occ. orbital   energy / eV   virt. orbital     energy / eV   |coeff.|^2*100
+        7 a1' beta            -4.98      6 a2" beta            -3.28       56.1
+        7 a1' alpha           -5.20      6 a2" alpha           -3.43       31.6
+        6 e"  beta            -5.88      7 e'  beta            -4.26        5.6
+ 
+                   <Za|Za> =    0.3572686773
+                   <Zb|Zb> =    0.6427313227
+                   <Za|Zb> =   -0.4386906997
+
+         1/2 <Za+Zb|Za+Zb> =    0.0613093003
+         1/2 <Za-Zb|Za-Zb> =    0.9386906997
+
+                     <Z|Z> =    1.0000000000
+
+
+ Change of electron number:
+
+             0.000000
+
+
+ Electric transition dipole moment (velocity rep.):
+
+    x        0.000000        Norm:                  0.070170
+    y        0.000000
+    z       -0.070170        Norm / debye:          0.178357
+
+
+ Electric transition dipole moment (length rep.):
+
+    x        0.000000        Norm:                  0.014211
+    y        0.000000
+    z       -0.014211        Norm / debye:          0.036120
+
+
+ Magnetic transition dipole moment / i:
+
+    x        0.000000        Norm:                  0.000000
+    y        0.000000
+    z        0.000000        Norm / Bohr mag.:      0.000000
+
+
+ Electric quadrupole transition moment:
+
+   xx        0.000000
+   yy        0.000000        1/3*trace:             0.000000
+   zz        0.000000
+   xy        0.000000
+   xz        0.000000        Anisotropy:            0.000000
+   yz        0.000000
+
+
+
+ ==============================================================================
+
+                              I R R E P   e"  
+
+ ==============================================================================
+
+
+ Excitation is electric dipole forbidden
+
+ Excitation is magnetic dipole allowed
+
+ Excitation is electric quadrupole allowed
+
+
+
+
+                             1 e" excitation
+
+
+ Total energy:                           -1454.199796278302    
+
+ Excitation energy:                      0.4889079969809258E-01
+
+ Excitation energy / eV:                  1.330386919652914    
+
+ Excitation energy / nm:                  931.9412433701223    
+
+ Excitation energy / cm^(-1):             10730.29020836654    
+
+
+ Oscillator strength:
+
+    velocity representation:              0.000000000000000    
+
+    length representation:                0.000000000000000    
+
+    mixed representation:                 0.000000000000000    
+
+
+ Rotatory strength:
+
+    velocity representation:              0.000000000000000    
+
+    velocity rep. / 10^(-40)erg*cm^3:     0.000000000000000    
+
+    length representation:                0.000000000000000    
+
+    length rep. / 10^(-40)erg*cm^3:       0.000000000000000    
+
+
+ Dominant contributions:
+
+      occ. orbital   energy / eV   virt. orbital     energy / eV   |coeff.|^2*100
+        7 e'  alpha           -4.84      6 a2" alpha           -3.43       94.7
+ 
+                   <Za|Za> =    0.9537151256
+                   <Zb|Zb> =    0.0462848744
+                   <Za|Zb> =   -0.0139261535
+
+         1/2 <Za+Zb|Za+Zb> =    0.4860738465
+         1/2 <Za-Zb|Za-Zb> =    0.5139261535
+
+                     <Z|Z> =    1.0000000000
+
+
+
+                              1st column
+
+ Change of electron number:
+
+             0.000000
+
+
+ Electric transition dipole moment (velocity rep.):
+
+    x        0.000000        Norm:                  0.000000
+    y        0.000000
+    z        0.000000        Norm / debye:          0.000000
+
+
+ Electric transition dipole moment (length rep.):
+
+    x        0.000000        Norm:                  0.000000
+    y        0.000000
+    z        0.000000        Norm / debye:          0.000000
+
+
+ Magnetic transition dipole moment / i:
+
+    x        0.000000        Norm:                  0.001292
+    y        0.001292
+    z        0.000000        Norm / Bohr mag.:      0.354194
+
+
+ Electric quadrupole transition moment:
+
+   xx        0.000000
+   yy        0.000000        1/3*trace:             0.000000
+   zz        0.000000
+   xy        0.000000
+   xz        0.051585        Anisotropy:            0.089348
+   yz        0.000000
+
+
+                              2nd column
+
+ Change of electron number:
+
+             0.000000
+
+
+ Electric transition dipole moment (velocity rep.):
+
+    x        0.000000        Norm:                  0.000000
+    y        0.000000
+    z        0.000000        Norm / debye:          0.000000
+
+
+ Electric transition dipole moment (length rep.):
+
+    x        0.000000        Norm:                  0.000000
+    y        0.000000
+    z        0.000000        Norm / debye:          0.000000
+
+
+ Magnetic transition dipole moment / i:
+
+    x       -0.001292        Norm:                  0.001292
+    y        0.000000
+    z        0.000000        Norm / Bohr mag.:      0.354194
+
+
+ Electric quadrupole transition moment:
+
+   xx        0.000000
+   yy        0.000000        1/3*trace:             0.000000
+   zz        0.000000
+   xy        0.000000
+   xz        0.000000        Anisotropy:            0.089348
+   yz        0.051585
+
+ SUMMARY OF EXCITATION ENERGIES AND DIPOLE OSCILLATOR STRENGTHS (velocity/length):
+
+ -----------------------------------------------------------------------------------------------
+ |    Exc.   | energy (Eh) | energy (eV) | energy (cm-1) | energy (nm) | Osc.(vel) | Osc.(len) |
+ -----------------------------------------------------------------------------------------------
+ |     1 a1' |    0.064603 |     1.75793 |     14178.634 |     705.287 |   0.00000 |   0.00000 |
+ -----------------------------------------------------------------------------------------------
+ Transitions are electric dipole forbidden in irrep a1' 
+ Transitions are magnetic dipole forbidden in irrep a1' 
+
+
+ -----------------------------------------------------------------------------------------------
+ |    Exc.   | energy (Eh) | energy (eV) | energy (cm-1) | energy (nm) | Osc.(vel) | Osc.(len) |
+ -----------------------------------------------------------------------------------------------
+ |     1 a2' |    0.062836 |     1.70986 |     13790.951 |     725.113 |   0.00000 |   0.00000 |
+ -----------------------------------------------------------------------------------------------
+ Transitions are electric dipole forbidden in irrep a2' 
+
+
+ -----------------------------------------------------------------------------------------------
+ |    Exc.   | energy (Eh) | energy (eV) | energy (cm-1) | energy (nm) | Osc.(vel) | Osc.(len) |
+ -----------------------------------------------------------------------------------------------
+ |     1 e'  |    0.025510 |     0.69417 |      5598.842 |    1786.083 |   0.00665 |   0.00033 |
+ -----------------------------------------------------------------------------------------------
+ Transitions are magnetic dipole forbidden in irrep e'  
+
+
+ -----------------------------------------------------------------------------------------------
+ |    Exc.   | energy (Eh) | energy (eV) | energy (cm-1) | energy (nm) | Osc.(vel) | Osc.(len) |
+ -----------------------------------------------------------------------------------------------
+ |     1 a1" |    0.055174 |     1.50135 |     12109.220 |     825.817 |   0.00000 |   0.00000 |
+ -----------------------------------------------------------------------------------------------
+ Transitions are electric dipole forbidden in irrep a1" 
+ Transitions are magnetic dipole forbidden in irrep a1" 
+
+
+ -----------------------------------------------------------------------------------------------
+ |    Exc.   | energy (Eh) | energy (eV) | energy (cm-1) | energy (nm) | Osc.(vel) | Osc.(len) |
+ -----------------------------------------------------------------------------------------------
+ |     1 a2" |    0.044866 |     1.22088 |      9847.036 |    1015.534 |   0.00015 |   0.00001 |
+ -----------------------------------------------------------------------------------------------
+ Transitions are magnetic dipole forbidden in irrep a2" 
+
+
+ -----------------------------------------------------------------------------------------------
+ |    Exc.   | energy (Eh) | energy (eV) | energy (cm-1) | energy (nm) | Osc.(vel) | Osc.(len) |
+ -----------------------------------------------------------------------------------------------
+ |     1 e"  |    0.048891 |     1.33039 |     10730.290 |     931.941 |   0.00000 |   0.00000 |
+ -----------------------------------------------------------------------------------------------
+ Transitions are electric dipole forbidden in irrep e"  
+
+
+
+
+    ------------------------------------------------------------------------
+         total  cpu-time :   1.32 seconds
+         total wall-time :   1.40 seconds
+    ------------------------------------------------------------------------
+
+   ****  escf : all done  ****
+
+
+    2019-04-11 17:02:20.985 
+
