@@ -26,10 +26,14 @@ jobs:
         id: full-python-version
         shell: bash
         run: echo ::set-output name=version::$(python -c "import sys; print('-'.join(str(v) for v in sys.version_info))")
+        
+      - name: Install pytest
+        shell: bash
+        run: pip install pytest
 
       - name: Install turbomoleio
         shell: bash
-        run: python setup.py install
+        run: pip install .
 
       - name: Run pytest
         shell: bash
