@@ -54,6 +54,7 @@ def pytest_configure(config):
     from turbomoleio.testfiles.utils import ItestConfig
     ItestConfig.define_timeout = config.getoption("--define-timeout")
     ItestConfig.generate_ref = config.getoption("--generate-itest-ref")
+    ItestConfig.dryrun = config.getoption("--dryrun-itest")
     ItestConfig.tol = config.getoption("--itest-tol")
     ItestConfig.delete_tmp_dir = not config.getoption("--keep-tmpdir")
 
@@ -69,6 +70,10 @@ def pytest_addoption(parser):
     parser.addoption("--generate-itest-ref", action="store_true", default=False,
                      help="The output control file generated during the integration tests will be copied to the "
                           "reference folder. N.B. this will overwrite previously existing files.")
+
+    parser.addoption("--dryrun-itest", action="store_true", default=False,
+                     help="The files generated during the integration tests will be compared against "
+                          "reference files. A list of all differences will be provided.")
 
     parser.addoption("--itest-tol", default=1e-4, type=float,
                      help="The absolute tolerance used in the integration test to match floating point"

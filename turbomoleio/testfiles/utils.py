@@ -298,6 +298,136 @@ def assert_almost_equal(actual, desired, rtol=1e-7, atol=0, ignored_values=None,
             raise
 
 
+REF_DICT_TEST_OTHER = 'REF_DICT_TEST_OTHER'
+REF_SEQUENCE_TEST_OTHER = 'REF_SEQUENCE_TEST_OTHER'
+REF_STRING_TEST_OTHER = 'REF_STRING_TEST_OTHER'
+TEST_STRING_REF_OTHER = 'TEST_STRING_REF_OTHER'
+DICT_DIFFERENT_KEYS = 'DICT_DIFFERENT_KEYS'
+SEQUENCE_DIFFERENT_SIZES = 'SEQUENCE_DIFFERENT_SIZES'
+NUMBERS_DIFFER = 'NUMBERS_DIFFER'
+STRINGS_DIFFER = 'STRINGS_DIFFER'
+DIFFERENCE_TYPES = [REF_DICT_TEST_OTHER, REF_SEQUENCE_TEST_OTHER,
+                    REF_STRING_TEST_OTHER, TEST_STRING_REF_OTHER, DICT_DIFFERENT_KEYS,
+                    SEQUENCE_DIFFERENT_SIZES, NUMBERS_DIFFER, STRINGS_DIFFER]
+
+
+def _update_differences(differences, level, difference_type, message=None):
+    if difference_type not in DIFFERENCE_TYPES:
+        raise ValueError(f'Difference type "{difference_type}" is not valid')
+    msg = f'>>>{difference_type}<<<'
+    if message is not None:
+        msg += f'\n{message}'
+    level_t = tuple(level)
+    if level_t in differences:
+        raise RuntimeError('Should not be reached here')
+    differences[level_t] = msg
+
+
+def compare_differences(actual, desired, rtol=1e-7, atol=0, current_level=None):
+    """
+    Function to list all differences between test object and reference objects to within some tolerance.
+
+    Args:
+        actual: the object to check.
+        desired : the expected object.
+        rtol (float): relative tolerance.
+        atol (float): absolute tolerance.
+        current_level: current_level in a nested comparison.
+
+    Raises:
+        AssertionError: if actual and desired are not equal.
+    """
+    __tracebackhide__ = True  # Hide traceback for py.test
+    differences = {}
+    if current_level is None:
+        current_level = [('root', str(type(desired)))]
+    else:
+        current_level = list(current_level)
+
+    if isinstance(desired, dict):
+        if not isinstance(actual, dict):
+            _update_differences(differences, current_level, REF_DICT_TEST_OTHER,
+                                message=f'Reference object is a {dict}, '
+                                        f'tested object is a {type(actual)}')
+            return differences
+        if set(actual) != set(desired):
+            _update_differences(differences, current_level, DICT_DIFFERENT_KEYS,
+                                message=f'Keys in reference dict are different from keys in tested dict:\n'
+                                        f' - Reference keys: {sorted(desired.keys())}\n'
+                                        f' - Test keys: {sorted(actual.keys())}\n'
+                                        f' - Keys in reference but not in test: '
+                                        f'{sorted(set(desired).difference(set(actual)))}\n'
+                                        f' - Keys in test but not in reference: '
+                                        f'{sorted(set(actual).difference(set(desired)))}')
+
+        common_keys = sorted(set(desired).intersection(set(actual)))
+        for k in common_keys:
+            lvl = list(current_level)
+            lvl.append((k, str(type(desired[k]))))
+            differences.update(compare_differences(actual=actual[k], desired=desired[k],
+                                                   rtol=rtol, atol=atol,
+                                                   current_level=lvl))
+
+        return differences
+
+    if isinstance(desired, (list, tuple)):
+        if not isinstance(actual, (list, tuple)):
+            _update_differences(differences, current_level, REF_SEQUENCE_TEST_OTHER,
+                                message=f'Reference object is a {type(desired)}, '
+                                        f'tested object is a {type(actual)}')
+            return differences
+        if len(actual) != len(desired):
+            _update_differences(differences, current_level, SEQUENCE_DIFFERENT_SIZES,
+                                message=f'Number of items in reference list or tuple is {len(desired)},'
+                                        f'number of items in tested list or tuple is {len(actual)}')
+            #TODO: decide here if we test whether the first N are the same ? or if one is a subset of the other ?
+            # In any case, we should give more information of what is in there
+            return differences
+
+        for i, ref in enumerate(desired):
+            lvl = list(current_level)
+            lvl.append((i, str(type(ref))))
+            differences.update(compare_differences(actual=actual[i], desired=ref,
+                                                   rtol=rtol, atol=atol,
+                                                   current_level=lvl))
+            # TODO: decide here if we test whether there is a shuffling of the items ?
+        return differences
+
+    if isinstance(desired, str):
+        if not isinstance(actual, str):
+            _update_differences(differences, current_level, REF_STRING_TEST_OTHER,
+                                message=f'Reference object is a {type(desired)}, '
+                                        f'tested object is a {type(actual)}')
+            return differences
+
+        if desired != actual:
+            _update_differences(differences, current_level, STRINGS_DIFFER,
+                                message=f' - Reference string: {desired}\n'
+                                        f' - Test string: {actual}\n')
+        return differences
+    if isinstance(actual, str) and not isinstance(desired, str):
+        _update_differences(differences, current_level, TEST_STRING_REF_OTHER,
+                            message=f'Reference object is a {type(desired)}, '
+                                    f'tested object is a {type(actual)}')
+        return differences
+
+    # Here both arrays and scalar numbers are compared
+    # TODO: see if we want to differentiate between the two ?
+    actual, desired = np.asanyarray(actual), np.asanyarray(desired)
+    print(rtol, atol)
+    if not np.allclose(actual, desired, rtol=rtol, atol=atol):
+        print(np.allclose(actual, desired))
+        _update_differences(differences, current_level, NUMBERS_DIFFER,
+                            message=f'Reference and test numbers are not equal to tolerance rtol={rtol}, atol={atol}\n'
+                                    f' - Reference numbers: {desired}\n'
+                                    f' - Test numbers: {actual}')
+        # TODO: see if we test whether there is a shuffling of the items ?
+
+    # TODO: see if we want to integrate the other comparison stuff from assert_almost_equal (e.g. complex numbers, ...)
+
+    return differences
+
+
 def has_matplotlib():
     """
     True if matplotlib is installed.
@@ -358,6 +488,7 @@ class ItestConfig:
     """
     define_timeout = 10
     generate_ref = False
+    dryrun = False
     tol = 1e-4
     delete_tmp_dir = True
 
@@ -403,6 +534,7 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
 
     opt_define_timeout = ItestConfig.define_timeout
     opt_generate_ref = ItestConfig.generate_ref
+    opt_dryrun = ItestConfig.dryrun
     opt_tol = ItestConfig.tol
 
     with temp_dir(ItestConfig.delete_tmp_dir) as tmp_dir:
