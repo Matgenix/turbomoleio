@@ -25,9 +25,9 @@ Module containing miscellaneous utilities
 """
 
 from monty.tempfile import ScratchDir
-import re
 import pexpect.popen_spawn
 import signal
+from turbomoleio.output.data import TurbomoleData
 
 
 def define_quit():
@@ -51,8 +51,5 @@ def get_tm_version():
     """
     with ScratchDir('.'):
         define_quit()
-        with open('define.log', 'r') as f:
-            data = f.read()
-    r = r'TURBOMOLE.*V([\d\.]+\d)\s+.*'
-    match_version = re.search(r, data)
-    return match_version.group(1)
+        tm_data = TurbomoleData.from_file('define.log')
+    return tm_data.version
