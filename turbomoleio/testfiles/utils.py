@@ -301,14 +301,20 @@ def assert_almost_equal(actual, desired, rtol=1e-7, atol=0, ignored_values=None,
 REF_DICT_TEST_OTHER = 'REF_DICT_TEST_OTHER'
 REF_SEQUENCE_TEST_OTHER = 'REF_SEQUENCE_TEST_OTHER'
 REF_STRING_TEST_OTHER = 'REF_STRING_TEST_OTHER'
+REF_NUMBER_TEST_OTHER = 'REF_NUMBER_TEST_OTHER'
+TEST_NUMBER_REF_OTHER = 'TEST_NUMBER_REF_OTHER'
 TEST_STRING_REF_OTHER = 'TEST_STRING_REF_OTHER'
 DICT_DIFFERENT_KEYS = 'DICT_DIFFERENT_KEYS'
 SEQUENCE_DIFFERENT_SIZES = 'SEQUENCE_DIFFERENT_SIZES'
 NUMBERS_DIFFER = 'NUMBERS_DIFFER'
+ARRAYS_DIFFER = 'ARRAYS_DIFFER'
 STRINGS_DIFFER = 'STRINGS_DIFFER'
+OBJECTS_DIFFER = 'OBJECTS_DIFFER'
 DIFFERENCE_TYPES = [REF_DICT_TEST_OTHER, REF_SEQUENCE_TEST_OTHER,
-                    REF_STRING_TEST_OTHER, TEST_STRING_REF_OTHER, DICT_DIFFERENT_KEYS,
-                    SEQUENCE_DIFFERENT_SIZES, NUMBERS_DIFFER, STRINGS_DIFFER]
+                    REF_STRING_TEST_OTHER, REF_NUMBER_TEST_OTHER,
+                    TEST_NUMBER_REF_OTHER, TEST_STRING_REF_OTHER, DICT_DIFFERENT_KEYS,
+                    SEQUENCE_DIFFERENT_SIZES,
+                    NUMBERS_DIFFER, ARRAYS_DIFFER, STRINGS_DIFFER, OBJECTS_DIFFER]
 
 
 def _update_differences(differences, level, difference_type, message=None):
@@ -405,25 +411,50 @@ def compare_differences(actual, desired, rtol=1e-7, atol=0, current_level=None):
                                 message=f' - Reference string: {desired}\n'
                                         f' - Test string: {actual}\n')
         return differences
+
     if isinstance(actual, str) and not isinstance(desired, str):
         _update_differences(differences, current_level, TEST_STRING_REF_OTHER,
                             message=f'Reference object is a {type(desired)}, '
                                     f'tested object is a {type(actual)}')
         return differences
 
-    # Here both arrays and scalar numbers are compared
-    # TODO: see if we want to differentiate between the two ?
-    actual, desired = np.asanyarray(actual), np.asanyarray(desired)
-    print(rtol, atol)
-    if not np.allclose(actual, desired, rtol=rtol, atol=atol):
-        print(np.allclose(actual, desired))
-        _update_differences(differences, current_level, NUMBERS_DIFFER,
-                            message=f'Reference and test numbers are not equal to tolerance rtol={rtol}, atol={atol}\n'
-                                    f' - Reference numbers: {desired}\n'
-                                    f' - Test numbers: {actual}')
-        # TODO: see if we test whether there is a shuffling of the items ?
+    if isinstance(desired, numbers.Number):
+        if not isinstance(actual, numbers.Number):
+            _update_differences(differences, current_level, REF_STRING_TEST_OTHER,
+                                message=f'Reference object is a number ({type(desired)}), '
+                                        f'tested object is not a number ({type(actual)})')
+            return differences
 
-    # TODO: see if we want to integrate the other comparison stuff from assert_almost_equal (e.g. complex numbers, ...)
+        if not np.isclose(actual, desired, rtol=rtol, atol=atol):
+            _update_differences(differences, current_level, NUMBERS_DIFFER,
+                                message=f' - Reference number: {desired}\n'
+                                        f' - Test number: {actual}\n')
+        return differences
+
+    if isinstance(actual, numbers.Number) and not isinstance(desired, numbers.Number):
+        _update_differences(differences, current_level, TEST_NUMBER_REF_OTHER,
+                            message=f'Reference object is a {type(desired)}, '
+                                    f'tested object is a number ({type(actual)})')
+        return differences
+
+    # TODO: should we put this before the test on the lists so that when it is a list or tuple
+    # (or any type of sequence-like object), the array comparison is performed
+    actual_np, desired_np = np.asanyarray(actual), np.asanyarray(desired)
+    if isinstance(actual_np.dtype, numbers.Number) and isinstance(desired_np.dtype, numbers.Number):
+        if not np.allclose(actual, desired, rtol=rtol, atol=atol):
+            _update_differences(differences, current_level, ARRAYS_DIFFER,
+                                message=f'Reference and test arrays are not equal to tolerance '
+                                        f'rtol={rtol}, atol={atol}\n'
+                                        f' - Reference array: {desired}\n'
+                                        f' - Test array: {actual}')
+        return differences
+
+    # If the reference and tested objects are not a dict, list, tuple, str, number or array of numbers,
+    # compare the objects directly
+    if actual != desired:
+        _update_differences(differences, current_level, OBJECTS_DIFFER,
+                            message=f'Reference and test objects are not equal.')
+        return differences
 
     return differences
 
