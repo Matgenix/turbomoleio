@@ -387,8 +387,33 @@ def compare_differences(actual, desired, rtol=1e-7, atol=0, current_level=None):
 
         return differences
 
+    if isinstance(desired, numbers.Number):
+        if not isinstance(actual, numbers.Number):
+            _update_differences(differences, current_level, REF_STRING_TEST_OTHER,
+                                message=f'Reference object is a number ({type(desired)}), '
+                                        f'tested object is not a number ({type(actual)})')
+            return differences
+
+        if not np.isclose(actual, desired, rtol=rtol, atol=atol):
+            _update_differences(differences, current_level, NUMBERS_DIFFER,
+                                message=f' - Reference number: {desired}\n'
+                                        f' - Test number: {actual}\n')
+        return differences
+
+    if isinstance(actual, numbers.Number) and not isinstance(desired, numbers.Number):
+        _update_differences(differences, current_level, TEST_NUMBER_REF_OTHER,
+                            message=f'Reference object is a {type(desired)}, '
+                                    f'tested object is a number ({type(actual)})')
+        return differences
+
     actual_np, desired_np = np.asanyarray(actual), np.asanyarray(desired)
     if issubclass(actual_np.dtype.type, numbers.Number) and issubclass(desired_np.dtype.type, numbers.Number):
+        if actual_np.shape != desired_np.shape:
+            _update_differences(differences, current_level, ARRAYS_DIFFER,
+                                message=f'Reference and test arrays do not have the same shape\n'
+                                        f' - Shape of reference array: {desired_np.shape}\n'
+                                        f' - Shape of test array: {actual_np.shape}')
+            return differences
         if not np.allclose(actual_np, desired_np, rtol=rtol, atol=atol):
             _update_differences(differences, current_level, ARRAYS_DIFFER,
                                 message=f'Reference and test arrays are not equal to tolerance '
@@ -437,25 +462,6 @@ def compare_differences(actual, desired, rtol=1e-7, atol=0, current_level=None):
         _update_differences(differences, current_level, TEST_STRING_REF_OTHER,
                             message=f'Reference object is a {type(desired)}, '
                                     f'tested object is a {type(actual)}')
-        return differences
-
-    if isinstance(desired, numbers.Number):
-        if not isinstance(actual, numbers.Number):
-            _update_differences(differences, current_level, REF_STRING_TEST_OTHER,
-                                message=f'Reference object is a number ({type(desired)}), '
-                                        f'tested object is not a number ({type(actual)})')
-            return differences
-
-        if not np.isclose(actual, desired, rtol=rtol, atol=atol):
-            _update_differences(differences, current_level, NUMBERS_DIFFER,
-                                message=f' - Reference number: {desired}\n'
-                                        f' - Test number: {actual}\n')
-        return differences
-
-    if isinstance(actual, numbers.Number) and not isinstance(desired, numbers.Number):
-        _update_differences(differences, current_level, TEST_NUMBER_REF_OTHER,
-                            message=f'Reference object is a {type(desired)}, '
-                                    f'tested object is a number ({type(actual)})')
         return differences
 
     # If the reference and tested objects are not a dict, list, tuple, str, number or array of numbers,
