@@ -28,7 +28,7 @@ from monty.json import MSONable
 from turbomoleio.testfiles.utils import ItestError, temp_dir, touch_file, get_tfp, get_sp, get_control_integration
 from turbomoleio.testfiles.utils import assert_MSONable, assert_almost_equal, compare_differences
 from turbomoleio.testfiles.utils import REF_DICT_TEST_OTHER, DICT_DIFFERENT_KEYS, REF_SEQUENCE_TEST_OTHER
-from turbomoleio.testfiles.utils import SEQUENCE_DIFFERENT_SIZES, NUMBERS_DIFFER, STRINGS_DIFFER
+from turbomoleio.testfiles.utils import SEQUENCE_DIFFERENT_SIZES, NUMBERS_DIFFER, STRINGS_DIFFER, ARRAYS_DIFFER
 
 
 class MSONableExample(MSONable):
@@ -124,15 +124,13 @@ class TestFunctions(object):
 
         diffs = compare_differences({}, [])
         assert len(diffs) == 1
-        k = list(diffs.keys())[0]
-        assert k == (('root', '<class \'list\'>'), )
-        assert diffs[k].startswith(f'>>>{REF_SEQUENCE_TEST_OTHER}<<<')
+        assert diffs[0][0] == [('root', '<class \'list\'>'), ]
+        assert diffs[0][1].startswith(f'>>>{REF_SEQUENCE_TEST_OTHER}<<<')
 
         diffs = compare_differences([], {})
         assert len(diffs) == 1
-        k = list(diffs.keys())[0]
-        assert k == (('root', '<class \'dict\'>'), )
-        assert diffs[k].startswith(f'>>>{REF_DICT_TEST_OTHER}<<<')
+        assert diffs[0][0] == [('root', '<class \'dict\'>'), ]
+        assert diffs[0][1].startswith(f'>>>{REF_DICT_TEST_OTHER}<<<')
 
         diffs = compare_differences({1: [{},
                                          {3: 5, 4: {'hello': [0, 1, 2]}}],
@@ -140,47 +138,44 @@ class TestFunctions(object):
                                     {1: [{2: 4},
                                          {3: 5, 4: {'hello': [0, 1, 5]}}]})
         assert len(diffs) == 3
-        k1 = (('root', "<class 'dict'>"),)
-        k2 = (
+        k1 = [('root', "<class 'dict'>"), ]
+        k2 = [
             ('root', "<class 'dict'>"),
             (1, "<class 'list'>"),
             (0, "<class 'dict'>")
-        )
-        k3 = (
+        ]
+        k3 = [
             ('root', "<class 'dict'>"),
             (1, "<class 'list'>"),
             (1, "<class 'dict'>"),
             (4, "<class 'dict'>"),
-            ('hello', "<class 'list'>"),
-            (2, "<class 'int'>")
-        )
-        assert k1 in diffs
-        assert k2 in diffs
-        assert k3 in diffs
-        assert diffs[k1].startswith(f'>>>{DICT_DIFFERENT_KEYS}<<<')
-        assert diffs[k2].startswith(f'>>>{DICT_DIFFERENT_KEYS}<<<')
-        assert diffs[k3].startswith(f'>>>{NUMBERS_DIFFER}<<<')
+            ('hello', "<class 'list'>")
+        ]
+        diffs_levels = [diff[0] for diff in diffs]
+        assert k1 in diffs_levels
+        assert k2 in diffs_levels
+        assert k3 in diffs_levels
+        assert diffs[diffs_levels.index(k1)][1].startswith(f'>>>{DICT_DIFFERENT_KEYS}<<<')
+        assert diffs[diffs_levels.index(k2)][1].startswith(f'>>>{DICT_DIFFERENT_KEYS}<<<')
+        assert diffs[diffs_levels.index(k3)][1].startswith(f'>>>{ARRAYS_DIFFER}<<<')
 
         diffs = compare_differences({'hi': 'tata'},
                                     {'hi': 'titi'})
         assert len(diffs) == 1
-        k = list(diffs.keys())[0]
-        assert k == (('root', "<class 'dict'>"), ('hi', "<class 'str'>"))
-        assert diffs[k].startswith(f'>>>{STRINGS_DIFFER}<<<')
+        assert diffs[0][0] == [('root', "<class 'dict'>"), ('hi', "<class 'str'>")]
+        assert diffs[0][1].startswith(f'>>>{STRINGS_DIFFER}<<<')
 
         diffs = compare_differences({'hi': []},
                                     {'hi': [1]})
         assert len(diffs) == 1
-        k = list(diffs.keys())[0]
-        assert k == (('root', "<class 'dict'>"), ('hi', "<class 'list'>"))
-        assert diffs[k].startswith(f'>>>{SEQUENCE_DIFFERENT_SIZES}<<<')
+        assert diffs[0][0] == [('root', "<class 'dict'>"), ('hi', "<class 'list'>")]
+        assert diffs[0][1].startswith(f'>>>{ARRAYS_DIFFER}<<<')
 
         diffs = compare_differences([1, {'a': 0.5, 'b': 1.0}],
                                     [1, {'a': 0.5, 'b': 1.01}])
         assert len(diffs) == 1
-        k = list(diffs.keys())[0]
-        assert k == (('root', "<class 'list'>"), (1, "<class 'dict'>"), ('b', "<class 'float'>"))
-        assert diffs[k].startswith(f'>>>{NUMBERS_DIFFER}<<<')
+        assert diffs[0][0] == [('root', "<class 'list'>"), (1, "<class 'dict'>"), ('b', "<class 'float'>")]
+        assert diffs[0][1].startswith(f'>>>{NUMBERS_DIFFER}<<<')
 
         diffs = compare_differences([1, {'a': 0.5, 'b': 10.0}],
                                     [1, {'a': 0.5, 'b': 10.1}],
