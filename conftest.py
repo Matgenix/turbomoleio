@@ -9,6 +9,8 @@ from turbomoleio.core.control import Control
 TESTDIR = os.path.join(os.path.split(__file__)[0],
                        'turbomoleio',
                        'testfiles')
+DRYRUN_FPATH = os.path.join(os.path.split(__file__)[0],
+                            'dryrun_itest.json')
 
 
 @pytest.fixture(autouse=True, scope='session')
@@ -55,6 +57,7 @@ def pytest_configure(config):
     ItestConfig.define_timeout = config.getoption("--define-timeout")
     ItestConfig.generate_ref = config.getoption("--generate-itest-ref")
     ItestConfig.dryrun = config.getoption("--dryrun-itest")
+    ItestConfig.dryrun_fpath = config.getoption("--dryrun-fpath")
     ItestConfig.tol = config.getoption("--itest-tol")
     ItestConfig.delete_tmp_dir = not config.getoption("--keep-tmpdir")
 
@@ -73,7 +76,10 @@ def pytest_addoption(parser):
 
     parser.addoption("--dryrun-itest", action="store_true", default=False,
                      help="The files generated during the integration tests will be compared against "
-                          "reference files. A list of all differences will be provided.")
+                          "reference files. A list of all differences will be provided in a file.")
+
+    parser.addoption("--dryrun-fpath", default=DRYRUN_FPATH, type=str,
+                     help="Filepath for the results of the differences of the dryrun.")
 
     parser.addoption("--itest-tol", default=1e-4, type=float,
                      help="The absolute tolerance used in the integration test to match floating point"

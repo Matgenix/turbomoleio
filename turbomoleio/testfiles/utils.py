@@ -27,6 +27,7 @@ import subprocess
 import shlex
 import shutil
 import json
+import inspect
 import pytest
 import numbers
 import numpy as np
@@ -323,10 +324,18 @@ def _update_differences(differences, level, difference_type, message=None):
     msg = f'>>>{difference_type}<<<'
     if message is not None:
         msg += f'\n{message}'
+    all_levels = [tuple(item[0]) for item in differences]
     level_t = tuple(level)
-    if level_t in differences:
+    if level_t in all_levels:
         raise RuntimeError('Should not be reached here')
-    differences[level_t] = msg
+    differences.append((level, msg))
+
+
+# TODO: We should think about how to test eigenvectors, reduced_masses etc ...
+ignored_dryrun_itest_parsed_keys = ["start_time", "end_time", "wall_time", "cpu_time", "construction_timings",
+                                    "host", "version", "build", "eigenvectors", "reduced_masses", "electric_dipole",
+                                    "magnetic_dipole", "electric_quadrupole",
+                                    "@version"]
 
 
 def compare_differences(actual, desired, rtol=1e-7, atol=0, current_level=None):
@@ -344,7 +353,7 @@ def compare_differences(actual, desired, rtol=1e-7, atol=0, current_level=None):
         AssertionError: if actual and desired are not equal.
     """
     __tracebackhide__ = True  # Hide traceback for py.test
-    differences = {}
+    differences = []
     if current_level is None:
         current_level = [('root', str(type(desired)))]
     else:
@@ -368,12 +377,24 @@ def compare_differences(actual, desired, rtol=1e-7, atol=0, current_level=None):
 
         common_keys = sorted(set(desired).intersection(set(actual)))
         for k in common_keys:
+            if k in ignored_dryrun_itest_parsed_keys:
+                continue
             lvl = list(current_level)
             lvl.append((k, str(type(desired[k]))))
-            differences.update(compare_differences(actual=actual[k], desired=desired[k],
+            differences.extend(compare_differences(actual=actual[k], desired=desired[k],
                                                    rtol=rtol, atol=atol,
                                                    current_level=lvl))
 
+        return differences
+
+    actual_np, desired_np = np.asanyarray(actual), np.asanyarray(desired)
+    if issubclass(actual_np.dtype.type, numbers.Number) and issubclass(desired_np.dtype.type, numbers.Number):
+        if not np.allclose(actual_np, desired_np, rtol=rtol, atol=atol):
+            _update_differences(differences, current_level, ARRAYS_DIFFER,
+                                message=f'Reference and test arrays are not equal to tolerance '
+                                        f'rtol={rtol}, atol={atol}\n'
+                                        f' - Reference array: {desired}\n'
+                                        f' - Test array: {actual}')
         return differences
 
     if isinstance(desired, (list, tuple)):
@@ -393,7 +414,7 @@ def compare_differences(actual, desired, rtol=1e-7, atol=0, current_level=None):
         for i, ref in enumerate(desired):
             lvl = list(current_level)
             lvl.append((i, str(type(ref))))
-            differences.update(compare_differences(actual=actual[i], desired=ref,
+            differences.extend(compare_differences(actual=actual[i], desired=ref,
                                                    rtol=rtol, atol=atol,
                                                    current_level=lvl))
             # TODO: decide here if we test whether there is a shuffling of the items ?
@@ -435,18 +456,6 @@ def compare_differences(actual, desired, rtol=1e-7, atol=0, current_level=None):
         _update_differences(differences, current_level, TEST_NUMBER_REF_OTHER,
                             message=f'Reference object is a {type(desired)}, '
                                     f'tested object is a number ({type(actual)})')
-        return differences
-
-    # TODO: should we put this before the test on the lists so that when it is a list or tuple
-    # (or any type of sequence-like object), the array comparison is performed
-    actual_np, desired_np = np.asanyarray(actual), np.asanyarray(desired)
-    if isinstance(actual_np.dtype, numbers.Number) and isinstance(desired_np.dtype, numbers.Number):
-        if not np.allclose(actual, desired, rtol=rtol, atol=atol):
-            _update_differences(differences, current_level, ARRAYS_DIFFER,
-                                message=f'Reference and test arrays are not equal to tolerance '
-                                        f'rtol={rtol}, atol={atol}\n'
-                                        f' - Reference array: {desired}\n'
-                                        f' - Test array: {actual}')
         return differences
 
     # If the reference and tested objects are not a dict, list, tuple, str, number or array of numbers,
@@ -520,6 +529,7 @@ class ItestConfig:
     define_timeout = 10
     generate_ref = False
     dryrun = False
+    dryrun_fpath = 'dryrun_itest.json'
     tol = 1e-4
     delete_tmp_dir = True
 
@@ -566,7 +576,16 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
     opt_define_timeout = ItestConfig.define_timeout
     opt_generate_ref = ItestConfig.generate_ref
     opt_dryrun = ItestConfig.dryrun
+    dryrun_fpath = ItestConfig.dryrun_fpath
     opt_tol = ItestConfig.tol
+
+    dryrun_differences = []
+    if opt_dryrun:
+        frames = inspect.getouterframes(inspect.currentframe())
+        test_frame = frames[1]
+        fname_itest = test_frame.filename.split('/turbomoleio/')[-1].strip()
+        funct_itest = test_frame.function
+        line_itest = test_frame.lineno
 
     with temp_dir(ItestConfig.delete_tmp_dir) as tmp_dir:
         # get the coord file (for the structure defined in the string)
@@ -593,9 +612,12 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
         current_control = Control.from_file("control")
         compare_control = current_control.compare(ref_control, tol=opt_tol)
         # print the output of Control.compare if the compare fails
-        assert compare_control is None, compare_control
+        if opt_dryrun and compare_control is not None:
+            dryrun_differences.append(('control', compare_control))
+        else:
+            assert compare_control is None, compare_control
 
-        for executable, exec_args, out_parser in zip(executables, arguments, file_classes):
+        for iexec, (executable, exec_args, out_parser) in enumerate(zip(executables, arguments, file_classes)):
             cmd = [executable]
             if exec_args:
                 cmd += shlex.split(exec_args)
@@ -620,7 +642,12 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
                     if opt_generate_ref:
                         dumpfn(out, out_ref_path)
                     out_ref = loadfn(out_ref_path, cls=None)
-                    assert_almost_equal(out, out_ref, atol=opt_tol, ignored_values=ignored_itest_parsed_keys)
+                    if opt_dryrun:
+                        diffs = compare_differences(out, out_ref, atol=opt_tol)
+                        if diffs:
+                            dryrun_differences.append((f'{executable} ({iexec})', diffs))
+                    else:
+                        assert_almost_equal(out, out_ref, atol=opt_tol, ignored_values=ignored_itest_parsed_keys)
 
                 c = Control.from_file("control")
                 e = c.energy
@@ -630,8 +657,16 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
                     if opt_generate_ref:
                         dumpfn(e, e_ref_path)
                     e_ref = loadfn(e_ref_path)
-                    np.testing.assert_allclose(e.scf, e_ref.scf, atol=opt_tol)
-                    np.testing.assert_allclose(e.total, e_ref.total, atol=opt_tol)
+                    if opt_dryrun:
+                        diffs = compare_differences(e.scf, e_ref.scf, atol=opt_tol)
+                        if diffs:
+                            dryrun_differences.append((f'{executable} ({iexec}) Energy.scf', diffs))
+                        diffs = compare_differences(e.total, e_ref.total, atol=opt_tol)
+                        if diffs:
+                            dryrun_differences.append((f'{executable} ({iexec}) Energy.total', diffs))
+                    else:
+                        np.testing.assert_allclose(e.scf, e_ref.scf, atol=opt_tol)
+                        np.testing.assert_allclose(e.total, e_ref.total, atol=opt_tol)
 
                 g = c.gradient
                 if g is not None:
@@ -640,14 +675,24 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
                     if opt_generate_ref:
                         dumpfn(g, g_ref_path)
                     g_ref = loadfn(g_ref_path)
-                    np.testing.assert_allclose(g.gradients, g_ref.gradients, atol=opt_tol)
+                    if opt_dryrun:
+                        diffs = compare_differences(g.gradients, g_ref.gradients, atol=opt_tol)
+                        if diffs:
+                            dryrun_differences.append((f'{executable} ({iexec}) Gradient', diffs))
+                    else:
+                        np.testing.assert_allclose(g.gradients, g_ref.gradients, atol=opt_tol)
 
                 # check that the output from eiger and our parser give the same results
                 states = States.from_file()
                 eiger_runner = EigerRunner()
                 eiger_runner.run()
                 eiger_out = eiger_runner.get_eiger_output()
-                assert eiger_out.compare_states(states) is None
+                eiger_comp = eiger_out.compare_states(states)
+                if opt_dryrun:
+                    if eiger_comp is not None:
+                        dryrun_differences.append((f'{executable} ({iexec}) Eiger comparison', diffs))
+                else:
+                    assert eiger_comp is None
 
                 with open("{}_stdout".format(executable), "w") as f:
                     f.write(program_std_out)
@@ -659,5 +704,16 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
                     f.write(program_std_err)
 
                 raise
+
+        if opt_dryrun:
+            if dryrun_differences:
+                if not os.path.exists(dryrun_fpath):
+                    alldiffs = []
+                else:
+                    with open(dryrun_fpath, 'r') as f:
+                        alldiffs = json.load(f)
+                alldiffs.append(((fname_itest, funct_itest, line_itest), dryrun_differences))
+                with open(dryrun_fpath, 'w') as f:
+                    json.dump(alldiffs, f)
 
         return True
