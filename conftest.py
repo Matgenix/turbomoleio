@@ -57,7 +57,11 @@ def pytest_configure(config):
     ItestConfig.define_timeout = config.getoption("--define-timeout")
     ItestConfig.generate_ref = config.getoption("--generate-itest-ref")
     ItestConfig.dryrun = config.getoption("--dryrun-itest")
-    ItestConfig.dryrun_fpath = config.getoption("--dryrun-fpath")
+    dryrun_fpath = config.getoption("--dryrun-fpath")
+    ItestConfig.dryrun_fpath = os.path.join(
+        os.path.split(__file__)[0],
+        dryrun_fpath
+    )
     ItestConfig.tol = config.getoption("--itest-tol")
     ItestConfig.delete_tmp_dir = not config.getoption("--keep-tmpdir")
     # When running in dry mode, only the integration tests should be run and
