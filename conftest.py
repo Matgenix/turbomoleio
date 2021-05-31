@@ -60,6 +60,11 @@ def pytest_configure(config):
     ItestConfig.dryrun_fpath = config.getoption("--dryrun-fpath")
     ItestConfig.tol = config.getoption("--itest-tol")
     ItestConfig.delete_tmp_dir = not config.getoption("--keep-tmpdir")
+    # When running in dry mode, only the integration tests should be run and
+    # there should not be any failures.
+    if ItestConfig.dryrun:
+        config.option.markexpr = 'integration'
+        config.option.maxfail = 1
 
 
 def pytest_addoption(parser):

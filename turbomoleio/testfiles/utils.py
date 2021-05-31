@@ -718,7 +718,13 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
                 else:
                     with open(dryrun_fpath, 'r') as f:
                         alldiffs = json.load(f)
-                alldiffs.append(((fname_itest, funct_itest, line_itest), dryrun_differences))
+                diff_identifier = (fname_itest, funct_itest, coord_filename, control_reference_filename, line_itest)
+                if diff_identifier in [tuple(did) for did, d in alldiffs]:
+                    raise RuntimeError('Difference already in list. This might be that you are running the dry-run '
+                                       'mode a second time. You should delete the dry-run file ("dryrun_itest.json") '
+                                       'or specify a different one with the --dryrun-fpath=DRYRUN_FPATH option '
+                                       'in pytest.')
+                alldiffs.append((diff_identifier, dryrun_differences))
                 with open(dryrun_fpath, 'w') as f:
                     json.dump(alldiffs, f)
 
