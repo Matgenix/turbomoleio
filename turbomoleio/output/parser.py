@@ -1775,7 +1775,7 @@ class Parser:
 
         def get_single_data(line):
             s = line.split()
-            converged = "yes" is s[-3]
+            converged = "yes" == s[-3]
             return {"value": convert_float(s[-2]), "thr": convert_float(s[-1]), "conv": converged}
 
         data = dict(energy_change=None,
