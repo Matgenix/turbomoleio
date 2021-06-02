@@ -387,9 +387,22 @@ def compare_differences(actual, desired, rtol=1e-7, atol=0, current_level=None):
 
         return differences
 
+    if isinstance(desired, str):
+        if not isinstance(actual, str):
+            _update_differences(differences, current_level, REF_STRING_TEST_OTHER,
+                                message=f'Reference object is a {type(desired)}, '
+                                        f'tested object is a {type(actual)}')
+            return differences
+
+        if desired != actual:
+            _update_differences(differences, current_level, STRINGS_DIFFER,
+                                message=f' - Reference string: {desired}\n'
+                                        f' - Test string: {actual}\n')
+        return differences
+
     if isinstance(desired, numbers.Number):
         if not isinstance(actual, numbers.Number):
-            _update_differences(differences, current_level, REF_STRING_TEST_OTHER,
+            _update_differences(differences, current_level, REF_NUMBER_TEST_OTHER,
                                 message=f'Reference object is a number ({type(desired)}), '
                                         f'tested object is not a number ({type(actual)})')
             return differences
@@ -398,12 +411,6 @@ def compare_differences(actual, desired, rtol=1e-7, atol=0, current_level=None):
             _update_differences(differences, current_level, NUMBERS_DIFFER,
                                 message=f' - Reference number: {desired}\n'
                                         f' - Test number: {actual}\n')
-        return differences
-
-    if isinstance(actual, numbers.Number) and not isinstance(desired, numbers.Number):
-        _update_differences(differences, current_level, TEST_NUMBER_REF_OTHER,
-                            message=f'Reference object is a {type(desired)}, '
-                                    f'tested object is a number ({type(actual)})')
         return differences
 
     actual_np, desired_np = np.asanyarray(actual), np.asanyarray(desired)
@@ -445,17 +452,10 @@ def compare_differences(actual, desired, rtol=1e-7, atol=0, current_level=None):
             # TODO: decide here if we test whether there is a shuffling of the items ?
         return differences
 
-    if isinstance(desired, str):
-        if not isinstance(actual, str):
-            _update_differences(differences, current_level, REF_STRING_TEST_OTHER,
-                                message=f'Reference object is a {type(desired)}, '
-                                        f'tested object is a {type(actual)}')
-            return differences
-
-        if desired != actual:
-            _update_differences(differences, current_level, STRINGS_DIFFER,
-                                message=f' - Reference string: {desired}\n'
-                                        f' - Test string: {actual}\n')
+    if isinstance(actual, numbers.Number) and not isinstance(desired, numbers.Number):
+        _update_differences(differences, current_level, TEST_NUMBER_REF_OTHER,
+                            message=f'Reference object is a {type(desired)}, '
+                                    f'tested object is a number ({type(actual)})')
         return differences
 
     if isinstance(actual, str) and not isinstance(desired, str):
@@ -586,12 +586,6 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
     opt_tol = ItestConfig.tol
 
     dryrun_differences = []
-    if opt_dryrun:
-        frames = inspect.getouterframes(inspect.currentframe())
-        test_frame = frames[1]
-        fname_itest = test_frame.filename.split('/turbomoleio/')[-1].strip()
-        funct_itest = test_frame.function
-        line_itest = test_frame.lineno
 
     with temp_dir(ItestConfig.delete_tmp_dir) as tmp_dir:
         # get the coord file (for the structure defined in the string)
@@ -713,6 +707,11 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
 
         if opt_dryrun:
             if dryrun_differences:
+                frames = inspect.getouterframes(inspect.currentframe())
+                test_frame = frames[1]
+                fname_itest = test_frame.filename.split('/turbomoleio/')[-1].strip()
+                funct_itest = test_frame.function
+                line_itest = test_frame.lineno
                 if not os.path.exists(dryrun_fpath):
                     alldiffs = []
                 else:

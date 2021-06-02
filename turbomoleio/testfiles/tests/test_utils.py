@@ -29,6 +29,10 @@ from turbomoleio.testfiles.utils import ItestError, temp_dir, touch_file, get_tf
 from turbomoleio.testfiles.utils import assert_MSONable, assert_almost_equal, compare_differences
 from turbomoleio.testfiles.utils import REF_DICT_TEST_OTHER, DICT_DIFFERENT_KEYS, REF_SEQUENCE_TEST_OTHER
 from turbomoleio.testfiles.utils import SEQUENCE_DIFFERENT_SIZES, NUMBERS_DIFFER, STRINGS_DIFFER, ARRAYS_DIFFER
+from turbomoleio.testfiles.utils import REF_STRING_TEST_OTHER, REF_NUMBER_TEST_OTHER
+from turbomoleio.testfiles.utils import TEST_NUMBER_REF_OTHER, TEST_STRING_REF_OTHER
+from turbomoleio.testfiles.utils import OBJECTS_DIFFER
+from pymatgen.core.structure import Molecule
 
 
 class MSONableExample(MSONable):
@@ -191,3 +195,51 @@ class TestFunctions(object):
         diffs = compare_differences([1, {'a': 0.5, 'b': np.array([0.5, 0.9, 1.2])}],
                                     [1, {'a': 0.5, 'b': np.array([0.5, 0.9, 1.21])}], rtol=0.01)
         assert len(diffs) == 0
+
+        diffs = compare_differences([1, {'a': 0.5, 'b': Molecule(species=['H', 'H'],
+                                                                 coords=[[-0.5, 0.0, 0.0], [0.5, 0.0, 0.0]])}],
+                                    [1, {'a': 0.5, 'b': Molecule(species=['H', 'H'],
+                                                                 coords=[[-0.6, 0.0, 0.0], [0.6, 0.0, 0.0]])}])
+        assert len(diffs) == 1
+        assert diffs[0][0] == [('root', "<class 'list'>"), (1, "<class 'dict'>"),
+                               ('b', "<class 'pymatgen.core.structure.Molecule'>")]
+        assert diffs[0][1].startswith(f'>>>{OBJECTS_DIFFER}<<<')
+
+        diffs = compare_differences([1, {'a': 0.5, 'b': Molecule(species=['H', 'H'],
+                                                                 coords=[[-0.5, 0.0, 0.0], [0.5, 0.0, 0.0]])}],
+                                    [1, {'a': 0.5, 'b': Molecule(species=['H', 'H'],
+                                                                 coords=[[-0.5, 0.0, 0.0], [0.5, 0.0, 0.0]])}])
+        assert len(diffs) == 0
+
+        diffs = compare_differences([1, Molecule(species=['H', 'H'],
+                                                 coords=[[-0.5, 0.0, 0.0], [0.5, 0.0, 0.0]])],
+                                    [1])
+        assert len(diffs) == 1
+        assert diffs[0][0] == [('root', "<class 'list'>")]
+        assert diffs[0][1].startswith(f'>>>{SEQUENCE_DIFFERENT_SIZES}<<<')
+
+        diffs = compare_differences({'hi': 3},
+                                    {'hi': 'titi'})
+        assert len(diffs) == 1
+        assert diffs[0][0] == [('root', "<class 'dict'>"), ('hi', "<class 'str'>")]
+        assert diffs[0][1].startswith(f'>>>{REF_STRING_TEST_OTHER}<<<')
+
+        diffs = compare_differences({'hi': 'titi'},
+                                    {'hi': 3})
+        assert len(diffs) == 1
+        assert diffs[0][0] == [('root', "<class 'dict'>"), ('hi', "<class 'int'>")]
+        assert diffs[0][1].startswith(f'>>>{REF_NUMBER_TEST_OTHER}<<<')
+
+        diffs = compare_differences({'hi': 'titi'},
+                                    {'hi': Molecule(species=['H', 'H'],
+                                                    coords=[[-0.5, 0.0, 0.0], [0.5, 0.0, 0.0]])})
+        assert len(diffs) == 1
+        assert diffs[0][0] == [('root', "<class 'dict'>"), ('hi', "<class 'pymatgen.core.structure.Molecule'>")]
+        assert diffs[0][1].startswith(f'>>>{TEST_STRING_REF_OTHER}<<<')
+
+        diffs = compare_differences({'hi': 3.5},
+                                    {'hi': Molecule(species=['H', 'H'],
+                                                    coords=[[-0.5, 0.0, 0.0], [0.5, 0.0, 0.0]])})
+        assert len(diffs) == 1
+        assert diffs[0][0] == [('root', "<class 'dict'>"), ('hi', "<class 'pymatgen.core.structure.Molecule'>")]
+        assert diffs[0][1].startswith(f'>>>{TEST_NUMBER_REF_OTHER}<<<')
