@@ -181,3 +181,9 @@ class TestFunctions(object):
                                     [1, {'a': 0.5, 'b': 10.1}],
                                     rtol=0.02)
         assert len(diffs) == 0
+
+        diffs = compare_differences([1, {'a': 0.5, 'b': np.array([0.5, 0.9, 1.2])}],
+                                    [1, {'a': 0.5, 'b': np.array([0.5, 0.9, 1.21])}])
+        assert len(diffs) == 1
+        assert diffs[0][0] == [('root', "<class 'list'>"), (1, "<class 'dict'>"), ('b', "<class 'numpy.ndarray'>")]
+        assert diffs[0][1].startswith(f'>>>{ARRAYS_DIFFER}<<<')
