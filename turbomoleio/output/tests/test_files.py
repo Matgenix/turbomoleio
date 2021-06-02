@@ -43,6 +43,7 @@ files_list = [("dscf", "h2o_std"), ("dscf", "h2o_uhf"), ("dscf", "nh3_cosmo_ferm
               ("escf", "Al6_columns"), ("escf", "h2o_ridft_cosmo"), ("escf", "h2o_ridft_rpat"),
               ("egrad", "h2o_sym"), ("egrad", "h3cbr_nosym"), ("aoforce", "aceton_full"),
               ("aoforce", "h2_numforce"), ("jobex", "h2o_dscf"), ("jobex", "no3_ridft"),
+              ("jobex", "h2o_dscf_unconv1"), ("jobex", "h2o_dscf_unconv2"),
               ("escf_only", "h2o_ridft_cosmo")]
 
 
