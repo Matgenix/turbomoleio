@@ -27,6 +27,7 @@ import subprocess
 import shlex
 import shutil
 import json
+import inspect
 import pytest
 import numbers
 import numpy as np
@@ -298,6 +299,181 @@ def assert_almost_equal(actual, desired, rtol=1e-7, atol=0, ignored_values=None,
             raise
 
 
+REF_DICT_TEST_OTHER = 'REF_DICT_TEST_OTHER'
+REF_SEQUENCE_TEST_OTHER = 'REF_SEQUENCE_TEST_OTHER'
+REF_STRING_TEST_OTHER = 'REF_STRING_TEST_OTHER'
+REF_NUMBER_TEST_OTHER = 'REF_NUMBER_TEST_OTHER'
+TEST_NUMBER_REF_OTHER = 'TEST_NUMBER_REF_OTHER'
+TEST_STRING_REF_OTHER = 'TEST_STRING_REF_OTHER'
+DICT_DIFFERENT_KEYS = 'DICT_DIFFERENT_KEYS'
+SEQUENCE_DIFFERENT_SIZES = 'SEQUENCE_DIFFERENT_SIZES'
+NUMBERS_DIFFER = 'NUMBERS_DIFFER'
+ARRAYS_DIFFER = 'ARRAYS_DIFFER'
+STRINGS_DIFFER = 'STRINGS_DIFFER'
+OBJECTS_DIFFER = 'OBJECTS_DIFFER'
+DIFFERENCE_TYPES = [REF_DICT_TEST_OTHER, REF_SEQUENCE_TEST_OTHER,
+                    REF_STRING_TEST_OTHER, REF_NUMBER_TEST_OTHER,
+                    TEST_NUMBER_REF_OTHER, TEST_STRING_REF_OTHER, DICT_DIFFERENT_KEYS,
+                    SEQUENCE_DIFFERENT_SIZES,
+                    NUMBERS_DIFFER, ARRAYS_DIFFER, STRINGS_DIFFER, OBJECTS_DIFFER]
+
+
+def _update_differences(differences, level, difference_type, message=None):
+    if difference_type not in DIFFERENCE_TYPES:
+        raise ValueError(f'Difference type "{difference_type}" is not valid')
+    msg = f'>>>{difference_type}<<<'
+    if message is not None:
+        msg += f'\n{message}'
+    all_levels = [tuple(item[0]) for item in differences]
+    level_t = tuple(level)
+    if level_t in all_levels:
+        raise RuntimeError('Should not be reached here')
+    differences.append((level, msg))
+
+
+# TODO: We should think about how to test eigenvectors, reduced_masses etc ...
+ignored_dryrun_itest_parsed_keys = ["start_time", "end_time", "wall_time", "cpu_time", "construction_timings",
+                                    "host", "version", "build", "eigenvectors", "reduced_masses", "electric_dipole",
+                                    "magnetic_dipole", "electric_quadrupole",
+                                    "@version"]
+
+
+def compare_differences(actual, desired, rtol=1e-7, atol=0, current_level=None):
+    """
+    Function to list all differences between test object and reference objects to within some tolerance.
+
+    Args:
+        actual: the object to check.
+        desired : the expected object.
+        rtol (float): relative tolerance.
+        atol (float): absolute tolerance.
+        current_level: current_level in a nested comparison.
+
+    Raises:
+        AssertionError: if actual and desired are not equal.
+    """
+    __tracebackhide__ = True  # Hide traceback for py.test
+    differences = []
+    if current_level is None:
+        current_level = [('root', str(type(desired)))]
+    else:
+        current_level = list(current_level)
+
+    if isinstance(desired, dict):
+        if not isinstance(actual, dict):
+            _update_differences(differences, current_level, REF_DICT_TEST_OTHER,
+                                message=f'Reference object is a {dict}, '
+                                        f'tested object is a {type(actual)}')
+            return differences
+        if set(actual) != set(desired):
+            _update_differences(differences, current_level, DICT_DIFFERENT_KEYS,
+                                message=f'Keys in reference dict are different from keys in tested dict:\n'
+                                        f' - Reference keys: {sorted(desired.keys())}\n'
+                                        f' - Test keys: {sorted(actual.keys())}\n'
+                                        f' - Keys in reference but not in test: '
+                                        f'{sorted(set(desired).difference(set(actual)))}\n'
+                                        f' - Keys in test but not in reference: '
+                                        f'{sorted(set(actual).difference(set(desired)))}')
+
+        common_keys = sorted(set(desired).intersection(set(actual)))
+        for k in common_keys:
+            if k in ignored_dryrun_itest_parsed_keys:
+                continue
+            lvl = list(current_level)
+            lvl.append((k, str(type(desired[k]))))
+            differences.extend(compare_differences(actual=actual[k], desired=desired[k],
+                                                   rtol=rtol, atol=atol,
+                                                   current_level=lvl))
+
+        return differences
+
+    if isinstance(desired, str):
+        if not isinstance(actual, str):
+            _update_differences(differences, current_level, REF_STRING_TEST_OTHER,
+                                message=f'Reference object is a {type(desired)}, '
+                                        f'tested object is a {type(actual)}')
+            return differences
+
+        if desired != actual:
+            _update_differences(differences, current_level, STRINGS_DIFFER,
+                                message=f' - Reference string: {desired}\n'
+                                        f' - Test string: {actual}\n')
+        return differences
+
+    if isinstance(desired, numbers.Number):
+        if not isinstance(actual, numbers.Number):
+            _update_differences(differences, current_level, REF_NUMBER_TEST_OTHER,
+                                message=f'Reference object is a number ({type(desired)}), '
+                                        f'tested object is not a number ({type(actual)})')
+            return differences
+
+        if not np.isclose(actual, desired, rtol=rtol, atol=atol):
+            _update_differences(differences, current_level, NUMBERS_DIFFER,
+                                message=f' - Reference number: {desired}\n'
+                                        f' - Test number: {actual}\n')
+        return differences
+
+    actual_np, desired_np = np.asanyarray(actual), np.asanyarray(desired)
+    if issubclass(actual_np.dtype.type, numbers.Number) and issubclass(desired_np.dtype.type, numbers.Number):
+        if actual_np.shape != desired_np.shape:
+            _update_differences(differences, current_level, ARRAYS_DIFFER,
+                                message=f'Reference and test arrays do not have the same shape\n'
+                                        f' - Shape of reference array: {desired_np.shape}\n'
+                                        f' - Shape of test array: {actual_np.shape}')
+            return differences
+        if not np.allclose(actual_np, desired_np, rtol=rtol, atol=atol):
+            _update_differences(differences, current_level, ARRAYS_DIFFER,
+                                message=f'Reference and test arrays are not equal to tolerance '
+                                        f'rtol={rtol}, atol={atol}\n'
+                                        f' - Reference array: {desired}\n'
+                                        f' - Test array: {actual}')
+        return differences
+
+    if isinstance(desired, (list, tuple)):
+        if not isinstance(actual, (list, tuple)):
+            _update_differences(differences, current_level, REF_SEQUENCE_TEST_OTHER,
+                                message=f'Reference object is a {type(desired)}, '
+                                        f'tested object is a {type(actual)}')
+            return differences
+        if len(actual) != len(desired):
+            _update_differences(differences, current_level, SEQUENCE_DIFFERENT_SIZES,
+                                message=f'Number of items in reference list or tuple is {len(desired)},'
+                                        f'number of items in tested list or tuple is {len(actual)}')
+            #TODO: decide here if we test whether the first N are the same ? or if one is a subset of the other ?
+            # In any case, we should give more information of what is in there
+            return differences
+
+        for i, ref in enumerate(desired):
+            lvl = list(current_level)
+            lvl.append((i, str(type(ref))))
+            differences.extend(compare_differences(actual=actual[i], desired=ref,
+                                                   rtol=rtol, atol=atol,
+                                                   current_level=lvl))
+            # TODO: decide here if we test whether there is a shuffling of the items ?
+        return differences
+
+    if isinstance(actual, numbers.Number) and not isinstance(desired, numbers.Number):
+        _update_differences(differences, current_level, TEST_NUMBER_REF_OTHER,
+                            message=f'Reference object is a {type(desired)}, '
+                                    f'tested object is a number ({type(actual)})')
+        return differences
+
+    if isinstance(actual, str) and not isinstance(desired, str):
+        _update_differences(differences, current_level, TEST_STRING_REF_OTHER,
+                            message=f'Reference object is a {type(desired)}, '
+                                    f'tested object is a {type(actual)}')
+        return differences
+
+    # If the reference and tested objects are not a dict, list, tuple, str, number or array of numbers,
+    # compare the objects directly
+    if actual != desired:
+        _update_differences(differences, current_level, OBJECTS_DIFFER,
+                            message=f'Reference and test objects are not equal.')
+        return differences
+
+    return differences
+
+
 def has_matplotlib():
     """
     True if matplotlib is installed.
@@ -358,6 +534,8 @@ class ItestConfig:
     """
     define_timeout = 10
     generate_ref = False
+    dryrun = False
+    dryrun_fpath = 'dryrun_itest.json'
     tol = 1e-4
     delete_tmp_dir = True
 
@@ -403,7 +581,11 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
 
     opt_define_timeout = ItestConfig.define_timeout
     opt_generate_ref = ItestConfig.generate_ref
+    opt_dryrun = ItestConfig.dryrun
+    dryrun_fpath = ItestConfig.dryrun_fpath
     opt_tol = ItestConfig.tol
+
+    dryrun_differences = []
 
     with temp_dir(ItestConfig.delete_tmp_dir) as tmp_dir:
         # get the coord file (for the structure defined in the string)
@@ -430,9 +612,12 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
         current_control = Control.from_file("control")
         compare_control = current_control.compare(ref_control, tol=opt_tol)
         # print the output of Control.compare if the compare fails
-        assert compare_control is None, compare_control
+        if opt_dryrun and compare_control is not None:
+            dryrun_differences.append(('control', compare_control))
+        else:
+            assert compare_control is None, compare_control
 
-        for executable, exec_args, out_parser in zip(executables, arguments, file_classes):
+        for iexec, (executable, exec_args, out_parser) in enumerate(zip(executables, arguments, file_classes)):
             cmd = [executable]
             if exec_args:
                 cmd += shlex.split(exec_args)
@@ -457,7 +642,12 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
                     if opt_generate_ref:
                         dumpfn(out, out_ref_path)
                     out_ref = loadfn(out_ref_path, cls=None)
-                    assert_almost_equal(out, out_ref, atol=opt_tol, ignored_values=ignored_itest_parsed_keys)
+                    if opt_dryrun:
+                        diffs = compare_differences(out, out_ref, atol=opt_tol)
+                        if diffs:
+                            dryrun_differences.append((f'{executable} ({iexec})', diffs))
+                    else:
+                        assert_almost_equal(out, out_ref, atol=opt_tol, ignored_values=ignored_itest_parsed_keys)
 
                 c = Control.from_file("control")
                 e = c.energy
@@ -467,8 +657,16 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
                     if opt_generate_ref:
                         dumpfn(e, e_ref_path)
                     e_ref = loadfn(e_ref_path)
-                    np.testing.assert_allclose(e.scf, e_ref.scf, atol=opt_tol)
-                    np.testing.assert_allclose(e.total, e_ref.total, atol=opt_tol)
+                    if opt_dryrun:
+                        diffs = compare_differences(e.scf, e_ref.scf, atol=opt_tol)
+                        if diffs:
+                            dryrun_differences.append((f'{executable} ({iexec}) Energy.scf', diffs))
+                        diffs = compare_differences(e.total, e_ref.total, atol=opt_tol)
+                        if diffs:
+                            dryrun_differences.append((f'{executable} ({iexec}) Energy.total', diffs))
+                    else:
+                        np.testing.assert_allclose(e.scf, e_ref.scf, atol=opt_tol)
+                        np.testing.assert_allclose(e.total, e_ref.total, atol=opt_tol)
 
                 g = c.gradient
                 if g is not None:
@@ -477,14 +675,24 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
                     if opt_generate_ref:
                         dumpfn(g, g_ref_path)
                     g_ref = loadfn(g_ref_path)
-                    np.testing.assert_allclose(g.gradients, g_ref.gradients, atol=opt_tol)
+                    if opt_dryrun:
+                        diffs = compare_differences(g.gradients, g_ref.gradients, atol=opt_tol)
+                        if diffs:
+                            dryrun_differences.append((f'{executable} ({iexec}) Gradient', diffs))
+                    else:
+                        np.testing.assert_allclose(g.gradients, g_ref.gradients, atol=opt_tol)
 
                 # check that the output from eiger and our parser give the same results
                 states = States.from_file()
                 eiger_runner = EigerRunner()
                 eiger_runner.run()
                 eiger_out = eiger_runner.get_eiger_output()
-                assert eiger_out.compare_states(states) is None
+                eiger_comp = eiger_out.compare_states(states)
+                if opt_dryrun:
+                    if eiger_comp is not None:
+                        dryrun_differences.append((f'{executable} ({iexec}) Eiger comparison', diffs))
+                else:
+                    assert eiger_comp is None
 
                 with open("{}_stdout".format(executable), "w") as f:
                     f.write(program_std_out)
@@ -496,5 +704,27 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
                     f.write(program_std_err)
 
                 raise
+
+        if opt_dryrun:
+            if dryrun_differences:
+                frames = inspect.getouterframes(inspect.currentframe())
+                test_frame = frames[1]
+                fname_itest = test_frame.filename.split('/turbomoleio/')[-1].strip()
+                funct_itest = test_frame.function
+                line_itest = test_frame.lineno
+                if not os.path.exists(dryrun_fpath):
+                    alldiffs = []
+                else:
+                    with open(dryrun_fpath, 'r') as f:
+                        alldiffs = json.load(f)
+                diff_identifier = (fname_itest, funct_itest, coord_filename, control_reference_filename, line_itest)
+                if diff_identifier in [tuple(did) for did, d in alldiffs]:
+                    raise RuntimeError('Difference already in list. This might be that you are running the dry-run '
+                                       'mode a second time. You should delete the dry-run file ("dryrun_itest.json") '
+                                       'or specify a different one with the --dryrun-fpath=DRYRUN_FPATH option '
+                                       'in pytest.')
+                alldiffs.append((diff_identifier, dryrun_differences))
+                with open(dryrun_fpath, 'w') as f:
+                    json.dump(alldiffs, f)
 
         return True

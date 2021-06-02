@@ -261,13 +261,17 @@ class Parser:
         # In this case turbomole version and build will be set to None.
         # For example it may be:
         # escf (node001) : TURBOMOLE rev. compiled 1 Jul 2018 at 20:38:15
-        r_version = r"V([\d\.]+)\s+\(([\s\d]+)\)"
+        r_version = r'V([\d\.]+\d)\s+.*'
+        r_build = r'V[\d\.]+\d\s+\((.*)\)'
         match_version = re.search(r_version, match.group(3).strip())
+        match_build = re.search(r_build, match.group(3).strip())
         if match_version:
             tm_version = match_version.group(1).strip()
-            tm_build = match_version.group(2).strip()
         else:
             tm_version = None
+        if match_build:
+            tm_build = match_build.group(1).strip() or None  # When the build info inside the parenthesis is empty
+        else:
             tm_build = None
 
         d = dict(executable=match.group(1),
