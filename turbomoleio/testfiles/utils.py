@@ -41,6 +41,7 @@ from turbomoleio.core.control import Control
 
 
 TESTDIR = os.path.split(__file__)[0]
+TM_VERSIONS = ['TM_v7.3']
 
 
 class ItestError(BaseException):

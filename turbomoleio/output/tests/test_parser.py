@@ -33,6 +33,7 @@ import json
 
 from turbomoleio.output.parser import Parser, convert_float, convert_int, convert_time_string
 from turbomoleio.testfiles.utils import assert_almost_equal, temp_dir
+from turbomoleio.testfiles.utils import TM_VERSIONS
 
 
 files_list = [("dscf", "h2o_std"), ("dscf", "h2o_uhf"), ("dscf", "nh3_cosmo_fermi"),
@@ -56,10 +57,10 @@ parser_methods = ["all_done", "header", "centers", "coordinates", "basis", "symm
 
 
 @pytest.fixture(scope="function", params=files_list, ids=[os.path.join(*f) for f in files_list])
-def parser_and_dict(request, testdir):
+def parser_and_dict(request, testdir, tm_version):
     directory = request.param[0]
     name = request.param[1]
-    path = os.path.join(testdir, "outputs", directory, name)
+    path = os.path.join(testdir, "outputs", tm_version, directory, name)
     parser = Parser.from_file(path+".log")
     with open(path+".json") as f:
         d = json.load(f)
@@ -74,6 +75,7 @@ def method(request):
 
 class TestParser:
 
+    @pytest.mark.parametrize("tm_version", TM_VERSIONS)
     def test_properties(self, parser_and_dict, method):
         parser, desired = parser_and_dict
 
@@ -87,21 +89,21 @@ class TestParser:
         assert_almost_equal(parsed_data, desired[method], rtol=1e-4,
                             ignored_values=["start_time", "end_time", "@version"])
 
-    def test_get_split_jobex_parsers(self, testdir):
-        path = os.path.join(testdir, "outputs", "jobex", "h2o_dscf_job.last")
+    @pytest.mark.parametrize("tm_version", TM_VERSIONS)
+    def test_get_split_jobex_parsers(self, testdir, tm_version):
+        path = os.path.join(testdir, "outputs", tm_version, "jobex", "h2o_dscf_job.last")
         p = Parser.from_file(path)
         jp = p.get_split_jobex_parsers()
         assert jp.exec_en == "dscf"
         assert jp.exec_grad == "grad"
         assert jp.exec_relax == "statpt"
 
-        path = os.path.join(testdir, "outputs", "jobex", "no3_ridft_job.last")
+        path = os.path.join(testdir, "outputs", tm_version, "jobex", "no3_ridft_job.last")
         p = Parser.from_file(path)
         jp = p.get_split_jobex_parsers()
         assert jp.exec_en == "ridft"
         assert jp.exec_grad == "rdgrad"
         assert jp.exec_relax == "statpt"
-
 
     def test_grep_line(self):
         string = """some text

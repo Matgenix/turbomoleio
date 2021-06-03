@@ -32,6 +32,7 @@ import json
 
 from turbomoleio.output.files import exec_to_out_obj, JobexOutput, EscfOnlyOutput
 from turbomoleio.testfiles.utils import assert_almost_equal
+from turbomoleio.testfiles.utils import TM_VERSIONS
 
 
 files_list = [("dscf", "h2o_std"), ("dscf", "h2o_uhf"), ("dscf", "nh3_cosmo_fermi"),
@@ -47,14 +48,14 @@ files_list = [("dscf", "h2o_std"), ("dscf", "h2o_uhf"), ("dscf", "nh3_cosmo_ferm
 
 
 @pytest.fixture(scope="function", params=files_list, ids=[os.path.join(*f) for f in files_list])
-def cls_dict_path(request, testdir):
+def cls_dict_path(request, testdir, tm_version):
     ref_name = request.param[0]
     if ref_name == "escf_only":
         directory = "escf"
     else:
         directory = ref_name
     name = request.param[1]
-    path = os.path.join(testdir, "outputs", directory, name)
+    path = os.path.join(testdir, "outputs", tm_version, directory, name)
 
     if ref_name == "escf_only":
         json_path = path + "_outfile_escf_only.json"
@@ -75,6 +76,7 @@ def cls_dict_path(request, testdir):
 
 class TestParser:
 
+    @pytest.mark.parametrize("tm_version", TM_VERSIONS)
     def test_properties(self, cls_dict_path):
         output_cls, desired, path = cls_dict_path
 
