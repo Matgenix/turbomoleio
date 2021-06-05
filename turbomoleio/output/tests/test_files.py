@@ -58,9 +58,9 @@ def cls_dict_path(request, testdir, tm_version):
     path = os.path.join(testdir, "outputs", tm_version, directory, name)
 
     if ref_name == "escf_only":
-        json_path = path + "_outfile_escf_only.json"
+        json_path = os.path.join(path, "ref_escf_output.json")
     else:
-        json_path = path + "_outfile.json"
+        json_path = os.path.join(path, "ref_output.json")
 
     with open(json_path) as f:
         d = json.load(f)
@@ -69,7 +69,12 @@ def cls_dict_path(request, testdir, tm_version):
     exec_dict["jobex"] = JobexOutput
     exec_dict["escf_only"] = EscfOnlyOutput
 
-    file_path = path + ".log" if ref_name != "jobex" else path + "_job.last"
+    # file_path = path + ".log" if ref_name != "jobex" else path + "_job.last"
+    file_path = os.path.join(
+        path, f"{directory}.log"
+    ) if ref_name != "jobex" else os.path.join(
+        path, "job.last"
+    )
 
     return exec_dict[ref_name], d, file_path
 

@@ -61,8 +61,8 @@ def parser_and_dict(request, testdir, tm_version):
     directory = request.param[0]
     name = request.param[1]
     path = os.path.join(testdir, "outputs", tm_version, directory, name)
-    parser = Parser.from_file(path+".log")
-    with open(path+".json") as f:
+    parser = Parser.from_file(os.path.join(path, f"{directory}.log"))
+    with open(os.path.join(path, "ref_parser.json")) as f:
         d = json.load(f)
 
     return parser, d
@@ -91,14 +91,14 @@ class TestParser:
 
     @pytest.mark.parametrize("tm_version", TM_VERSIONS)
     def test_get_split_jobex_parsers(self, testdir, tm_version):
-        path = os.path.join(testdir, "outputs", tm_version, "jobex", "h2o_dscf_job.last")
+        path = os.path.join(testdir, "outputs", tm_version, "jobex", "h2o_dscf", "job.last")
         p = Parser.from_file(path)
         jp = p.get_split_jobex_parsers()
         assert jp.exec_en == "dscf"
         assert jp.exec_grad == "grad"
         assert jp.exec_relax == "statpt"
 
-        path = os.path.join(testdir, "outputs", tm_version, "jobex", "no3_ridft_job.last")
+        path = os.path.join(testdir, "outputs", tm_version, "jobex", "no3_ridft", "job.last")
         p = Parser.from_file(path)
         jp = p.get_split_jobex_parsers()
         assert jp.exec_en == "ridft"
