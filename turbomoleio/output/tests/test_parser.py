@@ -34,17 +34,16 @@ import json
 from turbomoleio.output.parser import Parser, convert_float, convert_int, convert_time_string
 from turbomoleio.testfiles.utils import assert_almost_equal, temp_dir
 from turbomoleio.testfiles.utils import TM_VERSIONS
+from turbomoleio.testfiles.utils import OUTPUTS_BASENAMES
 
 
-files_list = [("dscf", "h2o_std"), ("dscf", "h2o_uhf"), ("dscf", "nh3_cosmo_fermi"),
-              ("dscf", "nh3_dftd1"), ("dscf", "aceton_dftd3_tzvp"),("ridft", "h2o_dftd2_marij"),
-              ("ridft", "h2o_dftd3-bj_not_conv"), ("ridft", "nh3_rijk_xcfun_m06"),
-              ("ridft", "b28_many_irreps"), ("grad", "h2o_std"), ("rdgrad", "h2o_dftd3-bj"),
-              ("relax", "h2o_internal"), ("relax", "h2o_cartesian"), ("relax", "no_version_header"),
-              ("statpt", "h3cbr_internal"), ("statpt", "aceton_cartesian"),
-              ("escf", "Al6_columns"), ("escf", "h2o_ridft_cosmo"), ("escf", "h2o_ridft_rpat"),
-              ("egrad", "h2o_sym"), ("egrad", "h3cbr_nosym"), ("aoforce", "aceton_full"),
-              ("aoforce", "h2_numforce")]
+excluded_execs = ['jobex']
+files_list = [
+    (tm_exec, test_name)
+    for tm_exec, exec_tests in OUTPUTS_BASENAMES.items()
+    if tm_exec not in excluded_execs
+    for test_name in exec_tests
+]
 
 
 parser_methods = ["all_done", "header", "centers", "coordinates", "basis", "symmetry",

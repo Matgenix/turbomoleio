@@ -42,6 +42,16 @@ from turbomoleio.core.control import Control
 
 TESTDIR = os.path.split(__file__)[0]
 TM_VERSIONS = ['TM_v7.3']
+OUTPUTS_BASENAMES = {'aoforce': ['aceton_full', 'h2_numforce'],
+                     'dscf': ['h2o_uhf', 'nh3_dftd1', 'aceton_dftd3_tzvp', 'nh3_cosmo_fermi', 'h2o_std'],
+                     'egrad': ['h2o_sym', 'h3cbr_nosym'],
+                     'escf': ['h2o_ridft_cosmo', 'h2o_ridft_rpat', 'Al6_columns'],
+                     'grad': ['h2o_std'],
+                     'jobex': ['no3_ridft', 'h2o_dscf'],
+                     'rdgrad': ['h2o_dftd3-bj'],
+                     'relax': ['h2o_cartesian', 'h2o_internal', 'no_version_header'],
+                     'ridft': ['h2o_dftd3-bj_not_conv', 'b28_many_irreps', 'h2o_dftd2_marij', 'nh3_rijk_xcfun_m06'],
+                     'statpt': ['aceton_cartesian', 'h3cbr_internal']}
 
 
 class ItestError(BaseException):
