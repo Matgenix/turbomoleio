@@ -32,12 +32,18 @@ import pytest
 import numbers
 import numpy as np
 from contextlib import contextmanager
-from monty.os import cd
+from monty.os import cd, makedirs_p
 from monty.json import MSONable, MontyDecoder
 from monty.serialization import dumpfn, loadfn
 from turbomoleio.input.define import DefineRunner
+from turbomoleio.input.utils import get_define_template
 from turbomoleio.output.states import EigerRunner, States
+from turbomoleio.output.files import JobexOutput, EscfOnlyOutput
 from turbomoleio.core.control import Control
+from turbomoleio.core.control import adg, cdg
+from turbomoleio.core.control import cpc
+from turbomoleio.output.files import exec_to_out_obj
+from turbomoleio.output.parser import Parser
 
 
 TESTDIR = os.path.split(__file__)[0]
@@ -45,13 +51,20 @@ TM_VERSIONS = ['TM_v7.3']
 OUTPUTS_BASENAMES = {'aoforce': ['aceton_full', 'h2_numforce'],
                      'dscf': ['h2o_uhf', 'nh3_dftd1', 'aceton_dftd3_tzvp', 'nh3_cosmo_fermi', 'h2o_std'],
                      'egrad': ['h2o_sym', 'h3cbr_nosym'],
-                     'escf': ['h2o_ridft_cosmo', 'h2o_ridft_rpat', 'Al6_columns'],
+                     'escf': ['no3_ridft_cosmo', 'h2o_ridft_rpat', 'Al6_columns'],
                      'grad': ['h2o_std'],
                      'jobex': ['no3_ridft', 'h2o_dscf'],
                      'rdgrad': ['h2o_dftd3-bj'],
                      'relax': ['h2o_cartesian', 'h2o_internal', 'no_version_header'],
                      'ridft': ['h2o_dftd3-bj_not_conv', 'b28_many_irreps', 'h2o_dftd2_marij', 'nh3_rijk_xcfun_m06'],
                      'statpt': ['aceton_cartesian', 'h3cbr_internal']}
+PARSER_METHODS = ["all_done", "header", "centers", "coordinates", "basis", "symmetry",
+                  "cosmo_header", "density_functional_data", "rij_info", "dftd", "pre_scf_run",
+                  "scf_iterations", "scf_energies", "cosmo_results", "electrostatic_moments",
+                  "timings", "s2", "is_uhf", "fermi", "integral", "pre_escf_run", "escf_iterations",
+                  "escf_gs_total_en", "escf_excitations", "rdgrad_memory", "gradient", "egrad_excited_state",
+                  "statpt_info", "relax_info", "relax_gradient_values", "relax_conv_info",
+                  "aoforce_numerical_integration", "aoforce_analysis"]
 
 
 class ItestError(BaseException):
@@ -739,3 +752,66 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
                     json.dump(alldiffs, f)
 
         return True
+
+
+def generate_control_for_test(test_definition):
+    if test_definition['define']['template']:
+        dp = get_define_template(test_definition['define']['template'])
+    else:
+        dp = {}
+    if test_definition['define']['parameters']:
+        dp.update(test_definition['define']['parameters'])
+    datagroups = test_definition.get('datagroups')
+    add_datagroups = None
+    change_datagroups = None
+    if datagroups:
+        add_datagroups = test_definition['datagroups'].get('add')
+        change_datagroups = test_definition['datagroups'].get('change')
+    dr = DefineRunner(dp)
+    dr.run_full()
+    if add_datagroups:
+        for dg, val in add_datagroups.items():
+            adg(dg, val)
+    if change_datagroups:
+        for dg, val in change_datagroups.items():
+            cdg(dg, val)
+
+
+def generate_reference_out_parser_files(log_fpath):
+    """
+    Helper function to generate the reference files for the test of the files objects.
+    Allows to target only specific files.
+
+    Args:
+        log_fpath (list): Path to the logfile.
+    """
+    fname = os.path.split(log_fpath)[1]
+    if fname == 'job.last':
+        tm_exec = 'jobex'
+    else:
+        tm_exec = os.path.splitext(fname)[0]
+
+    if tm_exec == 'jobex':
+        out = JobexOutput.from_file(log_fpath)
+    elif tm_exec == 'escf':
+        out = exec_to_out_obj['escf'].from_file(log_fpath)
+        out_escf_only = EscfOnlyOutput.from_file(log_fpath)
+        dumpfn(out_escf_only, 'ref_escf_output.json', indent=2)
+    else:
+        out = exec_to_out_obj[tm_exec].from_file(log_fpath)
+    dumpfn(out, 'ref_output.json', indent=2)
+
+    parser = Parser.from_file(log_fpath)
+    parsed_data = {}
+    for m in PARSER_METHODS:
+        data = getattr(parser, m)
+        parsed_data[m] = data
+
+    dumpfn(parsed_data, 'ref_parser.json', indent=2)
+
+
+def generate_reference_output(test_definition,
+                              ):
+    tm_execs = test_definition['commands']
+    for tm_exec in tm_execs:
+        os.system(f'{tm_exec} > {tm_exec}.log')

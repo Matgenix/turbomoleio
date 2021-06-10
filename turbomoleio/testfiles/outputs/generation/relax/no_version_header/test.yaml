@@ -1,0 +1,7 @@
+# Define parameters are taken
+#  - from a template
+#  - from the explicit parameters
+#  - from a template and explicit parameters overriding those in the template
+# This test is with a specific version of relax that has no version header
+# We only keep this test as reference but do not regenerate it for new Turbomole versions
+disable: True

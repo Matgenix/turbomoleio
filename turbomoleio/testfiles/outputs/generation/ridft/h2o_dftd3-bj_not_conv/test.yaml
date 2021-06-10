@@ -1,0 +1,19 @@
+# Define parameters are taken
+#  - from a template
+#  - from the explicit parameters
+#  - from a template and explicit parameters overriding those in the template
+define:
+  template: "ridft"
+  parameters:
+    scfiterlimit: 3
+
+# Data groups to add to or change in the control file after running define
+datagroups:
+  add:
+    disp3: 'bj'
+  change:
+    scfconv: '8'
+
+# List of TM commands to be run
+commands:
+  - ridft
