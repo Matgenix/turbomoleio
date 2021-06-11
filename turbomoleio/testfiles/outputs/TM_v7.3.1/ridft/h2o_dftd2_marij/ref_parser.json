@@ -1,0 +1,207 @@
+{
+  "all_done": true,
+  "header": {
+    "executable": "ridft",
+    "host": "localhost.localdomain",
+    "tm_version": "7.3.1",
+    "tm_build": null,
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2021-06-10 14:04:29.563000"
+    }
+  },
+  "centers": {
+    "center_of_mass": [
+      -0.0,
+      0.0,
+      -0.60378908
+    ],
+    "center_of_charge": [
+      0.0,
+      0.0,
+      -0.50790525
+    ]
+  },
+  "coordinates": {
+    "coords": [
+      [
+        0.0,
+        0.0,
+        -0.72557892
+      ],
+      [
+        1.41713421,
+        0.0,
+        0.36278946
+      ],
+      [
+        -1.41713421,
+        0.0,
+        0.36278946
+      ]
+    ],
+    "species": [
+      "o",
+      "h",
+      "h"
+    ],
+    "charges": [
+      8.0,
+      1.0,
+      1.0
+    ],
+    "isotopes": [
+      0,
+      0,
+      0
+    ]
+  },
+  "basis": {
+    "basis_per_specie": {
+      "o": "def-SV(P)",
+      "h": "def-SV(P)"
+    },
+    "aux_basis_per_specie": {
+      "o": "def-SV(P)",
+      "h": "def-SV(P)"
+    },
+    "number_scf_basis_func": 18,
+    "number_scf_aux_basis_func": 47
+  },
+  "symmetry": {
+    "symbol": "c1",
+    "n_reps": 1,
+    "reps": [
+      "a"
+    ]
+  },
+  "cosmo_header": null,
+  "density_functional_data": {
+    "functional_msg": "B-P86 functional\n exchange:    LDA + Becke (B88)\n correlation: LDA (VWN) + Perdew (P86)",
+    "functional_name": "b-p",
+    "functional_type": "GGA",
+    "xcfun": null,
+    "spherical_gridsize": 3,
+    "gridpoints": 302
+  },
+  "rij_info": {
+    "marij": true,
+    "rij_memory": 1,
+    "rik": false,
+    "ricore": 500
+  },
+  "dftd": {
+    "correction": "D2",
+    "en_corr": -3.4691e-05
+  },
+  "pre_scf_run": {
+    "diis": true,
+    "diis_error_vect": "FDS-SDF",
+    "conv_tot_en": 1e-06,
+    "conv_one_e_en": 0.001,
+    "virtual_orbital_shift_on": true,
+    "virtual_orbital_shift_limit": 0.1,
+    "orbital_characterization": "expanded",
+    "restart_file": "mos",
+    "n_occupied_orbitals": 5
+  },
+  "scf_iterations": {
+    "energies": [
+      -76.143984807101,
+      -76.300235800052,
+      -76.332350109023,
+      -76.341235341778,
+      -76.342491816817,
+      -76.342721151603,
+      -76.342755221853,
+      -76.342761648418,
+      -76.343040568073
+    ],
+    "first_index": 1,
+    "n_steps": 9,
+    "dampings": [
+      0.7,
+      0.65,
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8,
+      0.85,
+      0.9
+    ],
+    "converged": true
+  },
+  "scf_energies": {
+    "total_energy": -76.34304056807,
+    "kinetic_energy": 75.98608554045,
+    "potential_energy": -152.32912610852,
+    "virial_theorem": 1.99532432786,
+    "wavefunction_norm": 1.0
+  },
+  "cosmo_results": null,
+  "electrostatic_moments": {
+    "unrestricted_electrons": null,
+    "charge": -0.0,
+    "dipole": {
+      "norm": 0.8338,
+      "moment": [
+        -0.0,
+        -0.0,
+        0.833812
+      ]
+    },
+    "quadrupole": {
+      "trace": -13.841724000000001,
+      "anisotropy": 2.06409,
+      "moment": [
+        [
+          -3.238529,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -5.264134,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -5.339063
+        ]
+      ]
+    }
+  },
+  "timings": {
+    "cpu_time": 0.07,
+    "wall_time": 0.07,
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2021-06-10 14:04:29.630000"
+    }
+  },
+  "s2": null,
+  "is_uhf": false,
+  "fermi": null,
+  "integral": {
+    "integral_neglect_threshold": 1.8e-09,
+    "thize": 1e-05,
+    "thime": 5
+  },
+  "pre_escf_run": null,
+  "escf_iterations": null,
+  "escf_gs_total_en": null,
+  "escf_excitations": null,
+  "rdgrad_memory": null,
+  "gradient": null,
+  "egrad_excited_state": null,
+  "statpt_info": null,
+  "relax_info": null,
+  "relax_gradient_values": null,
+  "relax_conv_info": null,
+  "aoforce_numerical_integration": null,
+  "aoforce_analysis": null
+}

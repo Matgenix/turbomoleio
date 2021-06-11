@@ -35,14 +35,17 @@ from turbomoleio.testfiles.utils import TESTDIR
 from turbomoleio.core.utils import get_tm_version
 from turbomoleio.testfiles.utils import generate_control_for_test
 from turbomoleio.testfiles.utils import generate_reference_output
+from turbomoleio.testfiles.utils import generate_reference_out_parser_files
 from turbomoleio.input.utils import get_define_template
 from turbomoleio.input.define import DefineRunner
 from turbomoleio.core.control import cpc
 from turbomoleio.core.control import Control
 from turbomoleio.output.files import exec_to_out_obj
+from turbomoleio.output.files import EscfOnlyOutput
 from turbomoleio.output.files import JobexOutput
 from turbomoleio.testfiles.utils import compare_differences
 from monty.os import cd, makedirs_p
+from monty.serialization import dumpfn
 import shutil
 
 
@@ -59,9 +62,13 @@ def get_args(parser):
     group.add_argument("--test", help="Run specific test.", nargs='+')
     parser.add_argument("--dryrun", help="Perform a dry run of the tests."
                                          "A diff file is generated based on the last TM version",
-                        action="store_true", default=True)
+                        action="store_true", default=False)
+    parser.add_argument("--dryrun_fname", help="Name of the file with the differences",
+                        type=str, default="differences.json")
     parser.add_argument("--compare_to", help="Version directory to compare to when executing in dryrun mode.",
                         type=str, default=None)
+    parser.add_argument("--print_diffs", help="Whether to print the differences to stdout.",
+                        action="store_true", default=False)
     parser.add_argument("--generate_control", help="Whether to regenerate the control file.",
                         action="store_true", default=False)
     parser.add_argument("--only_control", help="Whether to regenerate the control file.",
@@ -148,6 +155,7 @@ def get_version_dir(args):
 
 
 def get_coord(test_definition, rundir, gendir):
+    """Copy the coord file to the run directory of the test"""
     if 'coord' in test_definition:
         coord_fpath = os.path.join(gendir, test_definition['coord'])
     else:
@@ -182,14 +190,17 @@ def main():
             raise RuntimeError(f'No test.yaml file for test {tm_exec}/{test_name}')
         deftest = loadfn(deftest_fpath)
         if deftest.get('disable', False):
-            print(f'Generation of outputs for test {tm_exec}/{test_name} is disabled')
+            print(f'!Generation of outputs for test {tm_exec}/{test_name} is disabled')
             continue
+
+        print(f'Generation of outputs for test {tm_exec}/{test_name}')
 
         # Create run directory for test and copy coord file
         makedirs_p(test_run_dir)
         get_coord(test_definition=deftest, rundir=test_run_dir, gendir=gen_test_dir)
 
         with cd(test_run_dir):
+            all_diffs = {}
             if args.generate_control:
                 if deftest['define'] is None:
                     raise ValueError('Cannot generate control file from define parameters (control file is fixed).')
@@ -203,9 +214,12 @@ def main():
                     test_control = Control.from_file(os.path.join(test_run_dir, 'control'))
                     control_diffs = test_control.compare(ref_control, return_all_diffs=True)
                     if control_diffs:
-                        print('There are differences in the control files generated:')
+                        msg = 'There are differences in the control files generated:\n'
                         for idiff, diff in enumerate(control_diffs, start=1):
-                            print(f'#{idiff} {diff}')
+                            msg += f'#{idiff} {diff}\n'
+                        if args.print_diffs:
+                            print(msg)
+                        all_diffs['control'] = control_diffs
             else:
                 if deftest['define'] and deftest['define']['template']:
                     dp = get_define_template('ridft')
@@ -221,148 +235,42 @@ def main():
             if not args.only_control:
                 generate_reference_output(test_definition=deftest)
 
-                if dryrun:
-                    ref_fpath = os.path.join(ref_test_dir, 'ref_output.json')
-                    ref_out = loadfn(ref_fpath, cls=None)
-                    out_cls = exec_to_out_obj[tm_exec]
-                    if tm_exec == 'jobex':
-                        log_fpath = os.path.join(test_run_dir, 'job.last')
-                    else:
-                        log_fpath = os.path.join(test_run_dir, f'{tm_exec}.log')
-                    gen_out = out_cls.from_file(log_fpath).as_dict()
+                if tm_exec == 'jobex':
+                    log_fpath = os.path.join(test_run_dir, 'job.last')
+                else:
+                    log_fpath = os.path.join(test_run_dir, f'{tm_exec}.log')
 
-                    diffs = compare_differences(gen_out, ref_out, rtol=args.rtol, atol=args.atol)
-                    if diffs:
-                        print('There are differences in the parsed output file objects:')
-                        for idiff, diff in enumerate(diffs, start=1):
+                ref_fpath = os.path.join(ref_test_dir, 'ref_output.json')
+                ref_out = loadfn(ref_fpath, cls=None)
+                out_cls = exec_to_out_obj[tm_exec]
+
+                gen_out = out_cls.from_file(log_fpath).as_dict()
+
+                out_diffs = compare_differences(gen_out, ref_out, rtol=args.rtol, atol=args.atol)
+                if out_diffs:
+                    print('There are differences in the parsed output file objects:')
+                    for idiff, diff in enumerate(out_diffs, start=1):
+                        print(f'#{idiff} {diff[0]}\n  {diff[1]}')
+                    if dryrun:
+                        all_diffs[tm_exec] = out_diffs
+                if tm_exec == 'escf':
+                    ref_out_escf_only_fpath = os.path.join(ref_test_dir, 'ref_escf_output.json')
+                    ref_out_escf_only = loadfn(ref_out_escf_only_fpath, cls=None)
+                    gen_out_escf_only = EscfOnlyOutput.from_file(log_fpath).as_dict()
+                    out_escf_only_diffs = compare_differences(gen_out_escf_only, ref_out_escf_only, rtol=args.rtol, atol=args.atol)
+                    if out_escf_only_diffs:
+                        print('There are differences in the parsed escf-only output file objects:')
+                        for idiff, diff in enumerate(out_escf_only_diffs, start=1):
                             print(f'#{idiff} {diff[0]}\n  {diff[1]}')
+                        if dryrun:
+                            all_diffs['escf_only'] = out_escf_only_diffs
+
+                if not dryrun:
+                    generate_reference_out_parser_files(log_fpath, outdir=test_dir)
+
+            if dryrun:
+                dumpfn(all_diffs, os.path.join(test_dir, args.dryrun_fname), indent=2)
 
 
 if __name__ == "__main__":
     sys.exit(main())
-
-
-
-# from turbomoleio.core.utils import get_tm_version
-# import os
-# import sys
-# from turbomoleio.testfiles.utils import OUTPUTS_BASENAMES
-# from turbomoleio.testfiles.utils import generate_reference_output
-# from monty.serialization import loadfn
-# from turbomoleio.output.files import exec_to_out_obj
-# from turbomoleio.output.files import JobexOutput
-# from turbomoleio.testfiles.utils import TM_VERSIONS
-# from turbomoleio.testfiles.utils import compare_differences
-# # from turbomoleio.output.tests.test_files import generate_files as generate_files_refs
-# # from turbomoleio.output.tests.test_parser import generate_files as generate_parser_refs
-# import shutil
-# import argparse
-#
-#
-# # parser = argparse.ArgumentParser()
-# # parser.parse_args()
-# # parser.add_argument("--all", help="Run generation for all tests.",
-# #                     action="store_true", default=True)
-# # parser.add_argument("--dryrun", help="Perform a dry run of the tests."
-# #                                      "A diff file is generated based on the last TM version",
-# #                     action="store_true", default=True)
-#
-#
-# tm_version = get_tm_version()
-# print(f'Turbomole version {tm_version} detected')
-# version_dir = input(f'Enter name of generated version directory (default: <TM_v{tm_version}>): ')
-# if not version_dir:
-#     version_dir = f'TM_v{tm_version}'
-#
-# print(f'Version directory will be <{version_dir}>.\n'
-#       f'New reference output files will be generated in <testfiles/outputs/{version_dir}>.')
-#
-# outputs_path = os.path.join('outputs', version_dir)
-# # if os.path.exists(outputs_path):
-# #     print(f'The {outputs_path} already exists.\n'
-# #           f'Either remove or change name of generated version directory.')
-# #     exit()
-#
-# while True:
-#     test = input('Which output files would you like to generate ?\n'
-#                  ' - Enter <a> to generate all\n'
-#                  ' - Enter <l> to list the output files\n'
-#                  ' - Enter index of the output file to generate\n'
-#                  ' - Enter <q> to quit\n')
-#     if test == 'l':
-#         print('Output files:')
-#         for ioutput, (dirname, filebase) in enumerate(OUTPUTS_FILES_LIST):
-#             print(f'#{ioutput} {dirname} : {filebase}')
-#         continue
-#     if test == 'q':
-#         exit()
-#     if test == 'a':
-#         files = OUTPUTS_FILES_LIST
-#         break
-#     else:
-#         try:
-#             idx = int(test)
-#         except ValueError:
-#             print('Wrong key')
-#             continue
-#         files = [OUTPUTS_FILES_LIST[idx]]
-#         break
-#
-#
-# test = input(f'If you want to compare to previous outputs,\n'
-#              f' - Enter <l> to compare with last outputs ({TM_VERSIONS[-1]})\n'
-#              f' - Enter <n> if you do not want to compare\n')
-#
-# compare = test != 'n'
-#
-#
-# for dirname, filebase in files:
-#     refgendir = os.path.join('outputs', 'generation', dirname)
-#     gendir = os.path.join(outputs_path, dirname)
-#     rundir = os.path.join(gendir, f'run_{filebase}')
-#     coord_fpath = os.path.join(refgendir, f'{filebase}.coord')
-#     if not os.path.exists(coord_fpath):
-#         continue
-#     dp_dg_fpath = os.path.join(refgendir, f'{filebase}_dp_dg.json')
-#     if not os.path.exists(dp_dg_fpath):
-#         continue
-#     tm_execs_fpath = os.path.join(refgendir, f'{filebase}_tm_execs.json')
-#     if not os.path.exists(tm_execs_fpath):
-#         continue
-#     control_fpath = os.path.join(refgendir, f'{filebase}.control')
-#     if os.path.exists(control_fpath):
-#         control_file = control_fpath
-#     else:
-#         control_file = None
-#     dp_dg = loadfn(dp_dg_fpath)
-#     dp = dp_dg['dp']
-#     adg = dp_dg['adg']
-#     cdg = dp_dg['cdg']
-#     tm_execs = loadfn(tm_execs_fpath)
-#     generate_reference_output(coord_file=coord_fpath, dp=dp,
-#                               tm_execs=tm_execs,
-#                               rundir=rundir,
-#                               control_file=control_file,
-#                               add_datagroups=adg, change_datagroups=cdg,
-#                               )
-#
-#     if compare:
-#         comparedir = os.path.join('outputs', TM_VERSIONS[-1], dirname)
-#         ref_fpath = os.path.join(comparedir, f'{filebase}_outfile.json')
-#         ref_out = loadfn(ref_fpath, cls=None)
-#         out_cls = exec_to_out_obj[tm_execs[-1]]
-#         log_fpath = os.path.join(rundir, f'{tm_execs[-1]}.log')
-#         gen_out = out_cls.from_file(log_fpath).as_dict()
-#         diffs = compare_differences(gen_out, ref_out)
-#
-#         for diff, diffdescr in diffs:
-#             print(diff)
-#             print(diffdescr)
-#
-#         new_log_fpath = os.path.join(gendir, f'{filebase}.log')
-#         copy = input(f'Enter <y> to copy <{log_fpath}> to <{new_log_fpath}> : ')
-#         if copy == 'y':
-#             shutil.copy(log_fpath, new_log_fpath)
-#     # print(file)
-
-

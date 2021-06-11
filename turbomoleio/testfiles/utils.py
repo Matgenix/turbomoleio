@@ -41,13 +41,12 @@ from turbomoleio.output.states import EigerRunner, States
 from turbomoleio.output.files import JobexOutput, EscfOnlyOutput
 from turbomoleio.core.control import Control
 from turbomoleio.core.control import adg, cdg
-from turbomoleio.core.control import cpc
 from turbomoleio.output.files import exec_to_out_obj
 from turbomoleio.output.parser import Parser
 
 
 TESTDIR = os.path.split(__file__)[0]
-TM_VERSIONS = ['TM_v7.3']
+TM_VERSIONS = ['TM_v7.3', 'TM_v7.3.1']
 OUTPUTS_BASENAMES = {'aoforce': ['aceton_full', 'h2_numforce'],
                      'dscf': ['h2o_uhf', 'nh3_dftd1', 'aceton_dftd3_tzvp', 'nh3_cosmo_fermi', 'h2o_std'],
                      'egrad': ['h2o_sym', 'h3cbr_nosym'],
@@ -755,6 +754,15 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
 
 
 def generate_control_for_test(test_definition):
+    """
+    Regenerates control from the definition of the test.
+
+    Args:
+        test_definition: Dictionary with the definition of the test
+
+    Returns:
+        None
+    """
     if test_definition['define']['template']:
         dp = get_define_template(test_definition['define']['template'])
     else:
@@ -777,14 +785,17 @@ def generate_control_for_test(test_definition):
             cdg(dg, val)
 
 
-def generate_reference_out_parser_files(log_fpath):
+def generate_reference_out_parser_files(log_fpath, outdir=None):
     """
-    Helper function to generate the reference files for the test of the files objects.
-    Allows to target only specific files.
+    Helper function to generate the reference files for the test of the files and parser objects
+    for a given log file.
 
     Args:
-        log_fpath (list): Path to the logfile.
+        log_fpath (str): Path to the logfile.
+        outdir (str): Directory to output reference File and Parser_methods objects.
     """
+    if outdir is None:
+        outdir = '.'
     fname = os.path.split(log_fpath)[1]
     if fname == 'job.last':
         tm_exec = 'jobex'
@@ -796,10 +807,10 @@ def generate_reference_out_parser_files(log_fpath):
     elif tm_exec == 'escf':
         out = exec_to_out_obj['escf'].from_file(log_fpath)
         out_escf_only = EscfOnlyOutput.from_file(log_fpath)
-        dumpfn(out_escf_only, 'ref_escf_output.json', indent=2)
+        dumpfn(out_escf_only, os.path.join(outdir, 'ref_escf_output.json'), indent=2)
     else:
         out = exec_to_out_obj[tm_exec].from_file(log_fpath)
-    dumpfn(out, 'ref_output.json', indent=2)
+    dumpfn(out, os.path.join(outdir, 'ref_output.json'), indent=2)
 
     parser = Parser.from_file(log_fpath)
     parsed_data = {}
@@ -807,11 +818,20 @@ def generate_reference_out_parser_files(log_fpath):
         data = getattr(parser, m)
         parsed_data[m] = data
 
-    dumpfn(parsed_data, 'ref_parser.json', indent=2)
+    dumpfn(parsed_data, os.path.join(outdir, 'ref_parser.json'), indent=2)
+    shutil.copy(log_fpath, outdir)
 
 
 def generate_reference_output(test_definition,
                               ):
+    """
+    Executes the list of Turbomole commands in the definition of the test
+    Args:
+        test_definition: Dictionary with the definition of the test
+
+    Returns:
+        None
+    """
     tm_execs = test_definition['commands']
     for tm_exec in tm_execs:
         os.system(f'{tm_exec} > {tm_exec}.log')

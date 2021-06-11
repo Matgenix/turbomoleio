@@ -1,0 +1,66 @@
+{
+  "@module": "turbomoleio.output.files",
+  "@class": "GradOutput",
+  "@version": "1.0.0",
+  "gradients": [
+    [
+      6.61528e-14,
+      -1.294503e-13,
+      0.0414766
+    ],
+    [
+      -0.02702505,
+      8.410679e-14,
+      -0.02072169
+    ],
+    [
+      0.02702505,
+      -5.273362e-14,
+      -0.02072169
+    ]
+  ],
+  "dielectric": [
+    [
+      -0.076596,
+      0.0,
+      -0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      -0.0,
+      0.0,
+      -0.04513
+    ]
+  ],
+  "run": {
+    "@module": "turbomoleio.output.data",
+    "@class": "RunData",
+    "@version": "1.0.0",
+    "host": "localhost.localdomain",
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2021-06-10 14:04:27.446000"
+    },
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2021-06-10 14:04:27.487000"
+    },
+    "cpu_time": 0.05,
+    "wall_time": 0.05
+  },
+  "tm": {
+    "@module": "turbomoleio.output.data",
+    "@class": "TurbomoleData",
+    "@version": "1.0.0",
+    "version": "7.3.1",
+    "build": null,
+    "executable": "rdgrad"
+  },
+  "memory": 1
+}

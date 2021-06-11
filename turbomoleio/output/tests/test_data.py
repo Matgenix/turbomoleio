@@ -55,9 +55,8 @@ def test_ScfIterationData(testdir, tm_version):
         assert sid.plot_energies(show=False)
 
 
-@pytest.mark.parametrize("tm_version", TM_VERSIONS)
-def test_AoforceVibrationalData(testdir, tm_version):
-    path = os.path.join(testdir, "outputs", tm_version, "aoforce", "aceton_full", "aoforce.log")
+def test_AoforceVibrationalData(testdir):
+    path = os.path.join(testdir, "outputs", "TM_v7.3", "aoforce", "aceton_full", "aoforce.log")
     avd = AoforceVibrationalData.from_file(path)
 
     assert avd.n_negative_freqs(tol=0.1) == 1

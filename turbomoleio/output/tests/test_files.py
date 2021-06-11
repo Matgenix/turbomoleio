@@ -37,7 +37,14 @@ from turbomoleio.testfiles.utils import TM_VERSIONS
 from turbomoleio.testfiles.utils import OUTPUTS_BASENAMES
 
 
-files_list = [(tm_exec, test_name) for tm_exec, exec_tests in OUTPUTS_BASENAMES.items() for test_name in exec_tests]
+excluded_tests = [('relax', 'no_version_header'),
+                  ('aoforce', 'h2_numforce')]
+files_list = [
+    (tm_exec, test_name)
+    for tm_exec, exec_tests in OUTPUTS_BASENAMES.items()
+    for test_name in exec_tests
+    if (tm_exec, test_name) not in excluded_tests
+]
 
 
 @pytest.fixture(scope="function", params=files_list, ids=[os.path.join(*f) for f in files_list])
@@ -80,6 +87,22 @@ class TestParser:
             # just strings in the json file.
             assert_almost_equal(parsed_data, desired, rtol=1e-4,
                                 ignored_values=["start_time", "end_time", "@version"])
+
+    def test_relax_no_version_header(self, testdir):
+        path = os.path.join(testdir, "outputs", 'TM_v7.3', 'relax', 'no_version_header')
+        parsed_data = exec_to_out_obj['relax'].from_file(os.path.join(path, 'relax.log')).as_dict()
+        with open(os.path.join(path, "ref_output.json")) as f:
+            ref_output = json.load(f)
+        assert_almost_equal(parsed_data, ref_output, rtol=1e-4,
+                            ignored_values=["start_time", "end_time", "@version"])
+
+    def test_aoforce_h2_numforce(self, testdir):
+        path = os.path.join(testdir, "outputs", 'TM_v7.3', 'aoforce', 'h2_numforce')
+        parsed_data = exec_to_out_obj['aoforce'].from_file(os.path.join(path, 'aoforce.log')).as_dict()
+        with open(os.path.join(path, "ref_output.json")) as f:
+            ref_output = json.load(f)
+        assert_almost_equal(parsed_data, ref_output, rtol=1e-4,
+                            ignored_values=["start_time", "end_time", "@version"])
 
 
 def generate_files(files=None, overwrite=False):

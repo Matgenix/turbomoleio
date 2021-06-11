@@ -38,11 +38,14 @@ from turbomoleio.testfiles.utils import OUTPUTS_BASENAMES
 
 
 excluded_execs = ['jobex']
+excluded_tests = [('relax', 'no_version_header'),
+                  ('aoforce', 'h2_numforce')]
 files_list = [
     (tm_exec, test_name)
     for tm_exec, exec_tests in OUTPUTS_BASENAMES.items()
     if tm_exec not in excluded_execs
     for test_name in exec_tests
+    if (tm_exec, test_name) not in excluded_tests
 ]
 
 
@@ -86,6 +89,36 @@ class TestParser:
         # ignore date values since in the dictionary they are datetime, while
         # just strings in the json file.
         assert_almost_equal(parsed_data, desired[method], rtol=1e-4,
+                            ignored_values=["start_time", "end_time", "@version"])
+
+    def test_no_version_header(self, testdir, method):
+        path = os.path.join(testdir, "outputs", 'TM_v7.3', 'relax', 'no_version_header')
+        parser = Parser.from_file(os.path.join(path, "relax.log"))
+        with open(os.path.join(path, "ref_parser.json")) as f:
+            ref_parser = json.load(f)
+        if method not in ref_parser:
+            pytest.skip("Method {} is not present in the dictionary".format(method))
+
+        parsed_data = getattr(parser, method)
+
+        # ignore date values since in the dictionary they are datetime, while
+        # just strings in the json file.
+        assert_almost_equal(parsed_data, ref_parser[method], rtol=1e-4,
+                            ignored_values=["start_time", "end_time", "@version"])
+
+    def test_aoforce_numforce(self, testdir, method):
+        path = os.path.join(testdir, "outputs", 'TM_v7.3', 'aoforce', 'h2_numforce')
+        parser = Parser.from_file(os.path.join(path, "aoforce.log"))
+        with open(os.path.join(path, "ref_parser.json")) as f:
+            ref_parser = json.load(f)
+        if method not in ref_parser:
+            pytest.skip("Method {} is not present in the dictionary".format(method))
+
+        parsed_data = getattr(parser, method)
+
+        # ignore date values since in the dictionary they are datetime, while
+        # just strings in the json file.
+        assert_almost_equal(parsed_data, ref_parser[method], rtol=1e-4,
                             ignored_values=["start_time", "end_time", "@version"])
 
     @pytest.mark.parametrize("tm_version", TM_VERSIONS)
