@@ -748,7 +748,7 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
                                        'in pytest.')
                 alldiffs.append((diff_identifier, dryrun_differences))
                 with open(dryrun_fpath, 'w') as f:
-                    json.dump(alldiffs, f)
+                    json.dump(alldiffs, f, indent=2)
 
         return True
 
