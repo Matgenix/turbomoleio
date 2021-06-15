@@ -62,6 +62,7 @@ def pytest_configure(config):
         os.path.split(__file__)[0],
         dryrun_fpath
     )
+    ItestConfig.dryrun_use_ref_control = config.getoption("--dryrun-use-reference-control")
     ItestConfig.tol = config.getoption("--itest-tol")
     ItestConfig.delete_tmp_dir = not config.getoption("--keep-tmpdir")
     # When running in dry mode, only the integration tests should be run and
@@ -86,6 +87,10 @@ def pytest_addoption(parser):
     parser.addoption("--dryrun-itest", action="store_true", default=False,
                      help="The files generated during the integration tests will be compared against "
                           "reference files. A list of all differences will be provided in a file.")
+
+    parser.addoption("--dryrun-use-reference-control", action="store_true", default=False,
+                     help="Use the reference control file for integration tests instead of the one generated using "
+                          "define. The control file is still generated and compared.")
 
     parser.addoption("--dryrun-fpath", default=DRYRUN_FPATH, type=str,
                      help="Filepath for the results of the differences of the dryrun.")

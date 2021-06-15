@@ -561,6 +561,7 @@ class ItestConfig:
     dryrun_fpath = 'dryrun_itest.json'
     tol = 1e-4
     delete_tmp_dir = True
+    dryrun_use_ref_control = False
 
 
 ignored_itest_parsed_keys = ["start_time", "end_time", "wall_time", "cpu_time", "construction_timings",
@@ -634,6 +635,9 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
 
         current_control = Control.from_file("control")
         compare_control = current_control.compare(ref_control, tol=opt_tol)
+        if ItestConfig.dryrun_use_ref_control:
+            shutil.copy("control", "control_generated")
+            shutil.copy(get_control_integration(control_reference_filename), "control")
         # print the output of Control.compare if the compare fails
         if opt_dryrun and compare_control is not None:
             dryrun_differences.append(('control', compare_control))
