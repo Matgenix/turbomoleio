@@ -332,17 +332,17 @@
       "max_displ": {
         "value": 0.0001428,
         "thr": 0.001,
-        "conv": true
+        "conv": false
       },
       "rms_grad": {
         "value": 1.38e-05,
         "thr": 0.0005,
-        "conv": true
+        "conv": false
       },
       "max_grad": {
         "value": 1.95e-05,
         "thr": 0.001,
-        "conv": true
+        "conv": false
       }
     },
     "run": {

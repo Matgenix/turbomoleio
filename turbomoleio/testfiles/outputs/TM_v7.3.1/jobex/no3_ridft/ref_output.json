@@ -373,27 +373,27 @@
       "energy_change": {
         "value": 8e-07,
         "thr": 1e-06,
-        "conv": false
+        "conv": true
       },
       "rms_displ": {
         "value": 0.0002521,
         "thr": 0.0005,
-        "conv": false
+        "conv": true
       },
       "max_displ": {
         "value": 0.0002521,
         "thr": 0.001,
-        "conv": false
+        "conv": true
       },
       "rms_grad": {
         "value": 0.0001536,
         "thr": 0.0005,
-        "conv": false
+        "conv": true
       },
       "max_grad": {
         "value": 0.0001536,
         "thr": 0.001,
-        "conv": false
+        "conv": true
       }
     },
     "run": {

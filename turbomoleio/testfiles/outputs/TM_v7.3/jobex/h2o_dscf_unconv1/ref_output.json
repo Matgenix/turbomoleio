@@ -322,12 +322,12 @@
       "energy_change": {
         "value": 1e-07,
         "thr": 1e-06,
-        "conv": true
+        "conv": false
       },
       "rms_displ": {
         "value": 0.000101,
         "thr": 0.0005,
-        "conv": true
+        "conv": false
       },
       "max_displ": {
         "value": 0.0001428,

@@ -38,7 +38,10 @@ from turbomoleio.testfiles.utils import OUTPUTS_BASENAMES
 
 
 excluded_tests = [('relax', 'no_version_header'),
-                  ('aoforce', 'h2_numforce')]
+                  ('aoforce', 'h2_numforce'),
+                  ('jobex', 'h2o_dscf_unconv1'),
+                  ('jobex', 'h2o_dscf_unconv2'),
+                  ]
 files_list = [
     (tm_exec, test_name)
     for tm_exec, exec_tests in OUTPUTS_BASENAMES.items()
@@ -99,6 +102,22 @@ class TestParser:
     def test_aoforce_h2_numforce(self, testdir):
         path = os.path.join(testdir, "outputs", 'TM_v7.3', 'aoforce', 'h2_numforce')
         parsed_data = exec_to_out_obj['aoforce'].from_file(os.path.join(path, 'aoforce.log')).as_dict()
+        with open(os.path.join(path, "ref_output.json")) as f:
+            ref_output = json.load(f)
+        assert_almost_equal(parsed_data, ref_output, rtol=1e-4,
+                            ignored_values=["start_time", "end_time", "@version"])
+
+    def test_jobex_h2_dscf_unconv1(self, testdir):
+        path = os.path.join(testdir, "outputs", 'TM_v7.3', 'jobex', 'h2o_dscf_unconv1')
+        parsed_data = JobexOutput.from_file(os.path.join(path, 'job.last')).as_dict()
+        with open(os.path.join(path, "ref_output.json")) as f:
+            ref_output = json.load(f)
+        assert_almost_equal(parsed_data, ref_output, rtol=1e-4,
+                            ignored_values=["start_time", "end_time", "@version"])
+
+    def test_jobex_h2_dscf_unconv2(self, testdir):
+        path = os.path.join(testdir, "outputs", 'TM_v7.3', 'jobex', 'h2o_dscf_unconv2')
+        parsed_data = JobexOutput.from_file(os.path.join(path, 'job.last')).as_dict()
         with open(os.path.join(path, "ref_output.json")) as f:
             ref_output = json.load(f)
         assert_almost_equal(parsed_data, ref_output, rtol=1e-4,
