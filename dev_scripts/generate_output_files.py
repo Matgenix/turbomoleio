@@ -65,22 +65,26 @@ def get_args(parser):
                                       "or the name of the executable and the name of the test "
                                       "(e.g. \"aoforce h2_numforce\"), "
                                       "in which case the specific test is performed.", nargs='+')
-    parser.add_argument("--dryrun", help="Perform a dry run of the tests."
-                                         "A diff file is generated based on the last TM version",
+    parser.add_argument("--dryrun", help="Perform a dry run of the tests (default is to generate the files). "
+                                         "A diff file is generated based on the last TM version.",
                         action="store_true", default=False)
-    parser.add_argument("--dryrun_fname", help="Name of the file with the differences",
+    parser.add_argument("--dryrun_fname", help="Name of the file with the differences.",
                         type=str, default="differences.json")
     parser.add_argument("--compare_to", help="Version directory to compare to when executing in dryrun mode.",
                         type=str, default=None)
-    parser.add_argument("--keep_rundirs", help="Whether to keep the run directories used for the generation.",
+    parser.add_argument("--keep_rundirs", help="Whether to keep the run directories used for the generation "
+                                               "(default is: do not keep the run directories).",
                         action="store_true", default=False)
     parser.add_argument("--print_diffs", help="Whether to print the differences to stdout.",
                         action="store_true", default=False)
-    parser.add_argument("--generate_control", help="Whether to regenerate the control file.",
+    parser.add_argument("--generate_control", help="Whether to regenerate the control file "
+                                                   "(default is: do not regenerate the control file).",
                         action="store_true", default=False)
-    parser.add_argument("--only_control", help="Whether to regenerate the control file.",
+    parser.add_argument("--only_control", help="Whether to only regenerate the control file and not the output files "
+                                               "(default is to regenerate both the control and the output files).",
                         action="store_true", default=False)
-    parser.add_argument("--force", help="Overwrite existing files if any.",
+    parser.add_argument("--force", help="Overwrite existing files if any (default is: "
+                                        "do not overwrite existing files).",
                         action="store_true", default=False)
     parser.add_argument("--version_dir", help="Specify version directory name for generated files.",
                         type=str, default=None)
@@ -219,10 +223,10 @@ def main():
                     test_control = Control.from_file(os.path.join(test_run_dir, 'control'))
                     control_diffs = test_control.compare(ref_control, return_all_diffs=True)
                     if control_diffs:
-                        msg = 'There are differences in the control files generated:\n'
-                        for idiff, diff in enumerate(control_diffs, start=1):
-                            msg += f'#{idiff} {diff}\n'
                         if args.print_diffs:
+                            msg = 'There are differences in the control files generated:\n'
+                            for idiff, diff in enumerate(control_diffs, start=1):
+                                msg += f'#{idiff} {diff}\n'
                             print(msg)
                         all_diffs['control'] = control_diffs
             else:
@@ -253,20 +257,23 @@ def main():
 
                 out_diffs = compare_differences(gen_out, ref_out, rtol=args.rtol, atol=args.atol)
                 if out_diffs:
-                    print('There are differences in the parsed output file objects:')
-                    for idiff, diff in enumerate(out_diffs, start=1):
-                        print(f'#{idiff} {diff[0]}\n  {diff[1]}')
+                    if args.print_diffs:
+                        print('There are differences in the parsed output file objects:')
+                        for idiff, diff in enumerate(out_diffs, start=1):
+                            print(f'#{idiff} {diff[0]}\n  {diff[1]}')
                     if dryrun:
                         all_diffs[tm_exec] = out_diffs
                 if tm_exec == 'escf':
                     ref_out_escf_only_fpath = os.path.join(ref_test_dir, 'ref_escf_output.json')
                     ref_out_escf_only = loadfn(ref_out_escf_only_fpath, cls=None)
                     gen_out_escf_only = EscfOnlyOutput.from_file(log_fpath).as_dict()
-                    out_escf_only_diffs = compare_differences(gen_out_escf_only, ref_out_escf_only, rtol=args.rtol, atol=args.atol)
+                    out_escf_only_diffs = compare_differences(gen_out_escf_only, ref_out_escf_only,
+                                                              rtol=args.rtol, atol=args.atol)
                     if out_escf_only_diffs:
-                        print('There are differences in the parsed escf-only output file objects:')
-                        for idiff, diff in enumerate(out_escf_only_diffs, start=1):
-                            print(f'#{idiff} {diff[0]}\n  {diff[1]}')
+                        if args.print_diffs:
+                            print('There are differences in the parsed escf-only output file objects:')
+                            for idiff, diff in enumerate(out_escf_only_diffs, start=1):
+                                print(f'#{idiff} {diff[0]}\n  {diff[1]}')
                         if dryrun:
                             all_diffs['escf_only'] = out_escf_only_diffs
 
