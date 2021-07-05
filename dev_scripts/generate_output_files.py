@@ -57,9 +57,14 @@ def get_args(parser):
     parser.add_argument("--list", help="Print list of all tests.",
                         action="store_true", default=False)
     group = parser.add_mutually_exclusive_group()
-    group.add_argument("--all", help="Run generation for all tests.",
-                       action="store_true", default=True)
-    group.add_argument("--test", help="Run specific test.", nargs='+')
+    group.add_argument("--test", help="Run specific test. "
+                                      "Can either be the name of a given executable (e.g. \"aoforce\"), "
+                                      "in which case all tests related to aoforce are performed, "
+                                      "or the name of a specific test (e.g. \"h2o_std\"), "
+                                      "in which case all the tests with this name are performed, "
+                                      "or the name of the executable and the name of the test "
+                                      "(e.g. \"aoforce h2_numforce\"), "
+                                      "in which case the specific test is performed.", nargs='+')
     parser.add_argument("--dryrun", help="Perform a dry run of the tests."
                                          "A diff file is generated based on the last TM version",
                         action="store_true", default=False)
@@ -67,6 +72,8 @@ def get_args(parser):
                         type=str, default="differences.json")
     parser.add_argument("--compare_to", help="Version directory to compare to when executing in dryrun mode.",
                         type=str, default=None)
+    parser.add_argument("--keep_rundirs", help="Whether to keep the run directories used for the generation.",
+                        action="store_true", default=False)
     parser.add_argument("--print_diffs", help="Whether to print the differences to stdout.",
                         action="store_true", default=False)
     parser.add_argument("--generate_control", help="Whether to regenerate the control file.",
@@ -97,7 +104,6 @@ def get_tests_list(args, parser):
     """Get the list of tests to be performed."""
     tests_list = []
     if args.test:
-        args.all = False
         if len(args.test) == 1:
             name = args.test[0]
             if name in OUTPUTS_BASENAMES:
@@ -119,15 +125,14 @@ def get_tests_list(args, parser):
             parser.error(
                 f'argument --test accepts either 1 or 2 values ({len(args.test)} given).'
             )
-    elif args.all:
+    else:
         tests_list = [
             (tm_exec, test) for tm_exec, tests in OUTPUTS_BASENAMES.items()
             for test in tests
         ]
-    else:
-        raise RuntimeError('No test given')
+
     if not tests_list:
-        parser.error('No test found, check script options (--all and --test) and list of tests (--list)')
+        parser.error('No test found, check script options (--test) and list of tests (--list)')
     return tests_list
 
 
@@ -270,6 +275,9 @@ def main():
 
             if dryrun:
                 dumpfn(all_diffs, os.path.join(test_dir, args.dryrun_fname), indent=2)
+
+        if not args.keep_rundirs:
+            shutil.rmtree(test_run_dir)
 
 
 if __name__ == "__main__":
