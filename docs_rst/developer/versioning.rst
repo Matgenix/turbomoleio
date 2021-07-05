@@ -20,6 +20,8 @@
     along with turbomoleio (see ~turbomoleio/COPYING). If not,
     see <https://www.gnu.org/licenses/>.
 
+.. _developer_versioning:
+
 ==========
 Versioning
 ==========

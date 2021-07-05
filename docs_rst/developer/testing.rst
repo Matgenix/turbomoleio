@@ -111,6 +111,12 @@ a very high coverage rate, of the code, where by coverage we intend the fraction
 code that are executed by at least one test. As of version 1.0.0 the global coverage of the unit
 tests alone is 99% and developers should aim at keeping this value as high as possible.
 
+The unit-testing for the output files is performed for multiple versions of Turbomole. The reference
+files for these tests are stored in the `turbomoleio/testfiles/outputs` folder for each Turbomole version,
+e.g. `turbomoleio/testfiles/outputs/TM_v7.3.1`. Additionnally, a `turbomoleio/testfiles/outputs/generation`
+folder contains the necessary information to generate new output files for a new Turbomole version using
+a specific development script (see :ref:`developer_utest_output`).
+
 
 Integration tests
 =================
@@ -246,6 +252,48 @@ might be needed for your unit and integration tests. Modifying existing files is
 If it cannot be avoided (e.g. for the update to a new TURBOMOLE version) you should at least
 check that all the tests relying on the files that you plan to modify will keep working as expected.
 
+Tests for output parsing
+------------------------
+
+In order to create a new unit test for output parsing, you should:
+
+1. Create a test directory in the `~turbomoleio/testfiles/outputs/generation` directory.
+
+The test directory should be in the executable directory (i.e. the directory with the same name as the
+Turbomole executable being tested). The executable directory should be created if it is not yet there. The
+name of the test directory itself should be descriptive of the test. For example,
+if you create a test for an ridft output, using benzene and a specific exchange correlation functional,
+you could create a directory `~turbomoleio/testfiles/outputs/generation/ridft/benzene_myxc`. This
+test-specific generation folder is referenced hereafter as the TESTGEN folder. The executable under testing
+is referenced hereafter as TESTEXEC and the name of the test is referenced hereafter as TESTNAME.
+An excerpt of the directory tree structure of the entire generation folder is shown hereafter::
+
+    generation
+        ├── aoforce
+        │   ├── aceton_full
+        │   └── h2_numforce
+        └── dscf
+            ├── aceton_dftd3_tzvp
+            ├── h2o_std
+            ├── h2o_uhf
+            ├── nh3_cosmo_fermi
+            └── nh3_dftd1
+
+2. Add the test to the OUTPUTS_BASENAMES variable in `~turbomoleio/testfiles/utils.py`.
+
+3. Place the coord file of the molecule/system in the TESTGEN folder.
+
+4. Create a test.yaml file in the TESTGEN folder.
+
+This test.yaml file should contain the relevant information to automatically generate the control file
+and run the Turbomole executable or possibly a series of Turbomole executables (in case the tested
+executable cannot be run without a prior calculation). Look at other test.yaml files to see how this file
+is structured.
+
+5. Generate the reference files using the `generate_output_files.py` development script:
+
+    python generate_output_files.py --test TESTEXEC TESTNAME --generate_control
+
 Turbomole version change
 ------------------------
 
@@ -281,7 +329,18 @@ and apply the following list of actions.
 
 2. Output parsing
     2.1 Go in ~turbomoleio/dev_scripts and run `python generate_output_files.py --dryrun`.
+    A `differences.json` file is created in each test directory with the list of differences with
+    respect to the previous Turbomole version. By default, the old control file is used for this dry run.
 
+    2.2 Inspect the differences found in 2.1. If the differences are reasonable, generate the new
+    reference files for the new Turbomole version by running `python generate_output_files.py
+    --generate_control`. By default, the directory for the new Turbomole version is "TM_vX.Y.Z".
+
+    2.3 Update the list of supported Turbomole versions for the output parsing in
+    ~turbomoleio/testfiles/utils.py by appending "TM_vX.Y.Z" to the list.
+
+3. Change the minor version of turbomoleio for the new Turbomole version as described
+in :ref:`developer_versioning`.
 
 Integration tests
 ^^^^^^^^^^^^^^^^^
@@ -319,6 +378,8 @@ are then regenerated using:
 Note that this will override all the previous reference files and should be performed
 with care (first checking the differences as described above) !
 
+.. _developer_utest_output:
+
 Unit-tests for output parsing
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -330,3 +391,10 @@ been implemented to facilitate the generation of the new output files and refere
 serialized file objects. This script is located in:
 
     ~turbomoleio/dev_scripts/generate_output_files.py
+
+Run the script using "--help" to get a list of the options available for this script.
+
+It is important to know that the script can be run either in dry mode or in generation mode. In
+dry mode, a `differences.json` file is generated with all the differences in the test found
+between the current Turbomole version and the control and output files of the previous Turbomole
+version.

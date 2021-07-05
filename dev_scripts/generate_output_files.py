@@ -95,6 +95,8 @@ def get_args(parser):
     args = parser.parse_args()
     if args.only_control and not args.generate_control:
         parser.error(f'"only_control" parameter can only be True if "generate_control" is True.')
+    if args.compare_to is not None and not args.dryrun:
+        parser.error(f'"compare_to" can only be used in dry run mode.')
     return args
 
 
@@ -173,6 +175,19 @@ def get_coord(test_definition, rundir, gendir):
     shutil.copy(coord_fpath, os.path.join(rundir, 'coord'))
 
 
+def generate_mos(deftest, test_run_dir, gen_test_dir):
+    if deftest['define'] and deftest['define']['template']:
+        dp = get_define_template('ridft')
+    else:
+        dp = {}
+    if deftest['define'] and deftest['define']['parameters']:
+        dp.update(deftest['define']['parameters'])
+    print('Copying control file and related files')
+    cpc(test_run_dir, force_overwrite=False, control_dir=gen_test_dir)
+    dr = DefineRunner(dp)
+    dr.run_generate_mo_files()
+
+
 exec_to_out_obj = dict(exec_to_out_obj)
 exec_to_out_obj['jobex'] = JobexOutput
 
@@ -210,38 +225,49 @@ def main():
 
         with cd(test_run_dir):
             all_diffs = {}
+            # Generate the control file
             if args.generate_control:
-                if deftest['define'] is None:
-                    raise ValueError('Cannot generate control file from define parameters (control file is fixed).')
-                generate_control_for_test(test_definition=deftest)
-                if dryrun:
-                    ref_control_fpath = os.path.join(
-                        gen_test_dir, deftest['control']
-                        if 'control' in deftest else 'control'
-                    )
-                    ref_control = Control.from_file(ref_control_fpath)
-                    test_control = Control.from_file(os.path.join(test_run_dir, 'control'))
-                    control_diffs = test_control.compare(ref_control, return_all_diffs=True)
-                    if control_diffs:
-                        if args.print_diffs:
-                            msg = 'There are differences in the control files generated:\n'
-                            for idiff, diff in enumerate(control_diffs, start=1):
-                                msg += f'#{idiff} {diff}\n'
-                            print(msg)
-                        all_diffs['control'] = control_diffs
-            else:
-                if deftest['define'] and deftest['define']['template']:
-                    dp = get_define_template('ridft')
+                # Some tests use a fixed control file
+                if deftest.get('fixed_control', False):
+                    generate_mos(deftest, test_run_dir, gen_test_dir)
+                elif deftest.get('define', None) is None:
+                    raise ValueError('No define template and/or parameters provided for reference test generation.')
                 else:
-                    dp = {}
-                if deftest['define'] and deftest['define']['parameters']:
-                    dp.update(deftest['define']['parameters'])
-                print('Copying control file and related files')
-                cpc(test_run_dir, force_overwrite=False, control_dir=gen_test_dir)
-                dr = DefineRunner(dp)
-                dr.run_generate_mo_files()
+                    generate_control_for_test(test_definition=deftest)
+                    if dryrun:
+                        ref_control_fpath = os.path.join(
+                            gen_test_dir, deftest['control']
+                            if 'control' in deftest else 'control'
+                        )
+                        ref_control = Control.from_file(ref_control_fpath)
+                        test_control = Control.from_file(os.path.join(test_run_dir, 'control'))
+                        control_diffs = test_control.compare(ref_control, return_all_diffs=True)
+                        if control_diffs:
+                            if args.print_diffs:
+                                msg = 'There are differences in the control files generated:\n'
+                                for idiff, diff in enumerate(control_diffs, start=1):
+                                    msg += f'#{idiff} {diff}\n'
+                                print(msg)
+                            all_diffs['control'] = control_diffs
+            # Copy the control file
+            else:
+                generate_mos(deftest, test_run_dir, gen_test_dir)
 
+            # Run the Turbomole executables
             if not args.only_control:
+                if not dryrun:
+                    # Keep a copy of the coord, control and basis files of the previous Turbomole reference folder
+                    if args.compare_to is None:
+                        prev_gen_control_dir = os.path.join(gen_test_dir, TM_VERSIONS[-1])
+                    else:
+                        prev_gen_control_dir = os.path.join(gen_test_dir, args.compare_to)
+                    makedirs_p(prev_gen_control_dir)
+                    cpc(prev_gen_control_dir, control_dir=gen_test_dir)
+                    # Copy the coord, control and basis files of the current Turbomole version to the
+                    # generation directory
+                    for fname in ['control', 'coord', 'basis', 'auxbasis']:
+                        if os.path.exists(fname):
+                            shutil.copy(fname, gen_test_dir)
                 generate_reference_output(test_definition=deftest)
 
                 if tm_exec == 'jobex':
