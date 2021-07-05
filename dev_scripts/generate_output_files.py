@@ -182,7 +182,6 @@ def generate_mos(deftest, test_run_dir, gen_test_dir):
         dp = {}
     if deftest['define'] and deftest['define']['parameters']:
         dp.update(deftest['define']['parameters'])
-    print('Copying control file and related files')
     cpc(test_run_dir, force_overwrite=False, control_dir=gen_test_dir)
     dr = DefineRunner(dp)
     dr.run_generate_mo_files()

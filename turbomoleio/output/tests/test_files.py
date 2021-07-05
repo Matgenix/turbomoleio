@@ -77,7 +77,7 @@ def cls_dict_path(request, testdir, tm_version):
     return output_clses, ref_dicts, fpaths
 
 
-class TestParser:
+class TestFiles:
 
     @pytest.mark.parametrize("tm_version", TM_VERSIONS)
     def test_properties(self, cls_dict_path):
