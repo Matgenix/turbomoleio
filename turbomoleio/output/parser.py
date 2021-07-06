@@ -37,6 +37,7 @@ float_number_re = r"[+-]?[0-9]*[.]?[0-9]+"
 float_number_d_re = r"[+-]?[0-9]*[.]?[0-9]+D[+-]\d{2}"
 float_number_e_re = r"[+-]?[0-9]*[.]?[0-9]+E[+-]\d{2}"
 float_number_all_re = r"[+-]?[0-9]*[.]?[0-9]+([ED][+-]\d{2})*"
+float_number_all_re2 = r"[+-]?[0-9]*[.]?[0-9]+(?:[ED][+-]\d{2})?"
 irrep_re_group = r"\w'\""
 
 
@@ -2067,6 +2068,31 @@ class Parser:
         data = dict(rotational=rot, vibrational=vib)
 
         return data
+
+    @lazy_property
+    def mp2_results(self):
+        """
+        MP2 results.
+
+        Returns:
+            dict with "energy", "".
+        """
+
+        r = r"\*{62,62}\s+\*\s+\*\s+\*<{10,10}\s+"
+        r += r"GROUND\s+STATE\s+FIRST-ORDER\s+PROPERTIES"
+        r += r"\s+>{11,11}\*\s+\*\s+\*\s+\*{62,62}\s+"
+        r += r"-{48,48}\s+Method\s+:\s+MP2\s+Total\s+Energy\s+:\s+("
+        r += float_number_all_re2
+        r += r")\s+"
+        m = re.findall(r, string=string)
+        if len(m) == 0:
+            return None
+        elif len(m) == 1:
+            energy = convert_float(m[0])
+        else:
+            raise RuntimeError("Error parsing the MP2 results. Multiple occurrences of MP2 results found.")
+
+        return dict(energy=energy)
 
     def get_split_jobex_parsers(self):
         """
