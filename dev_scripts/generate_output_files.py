@@ -240,7 +240,10 @@ def main():
                         gen_test_dir, deftest['control']
                         if 'control' in deftest else 'control'
                     )
-                    ref_control = Control.from_file(ref_control_fpath)
+                    if os.path.exists(ref_control_fpath):
+                        ref_control = Control.from_file(ref_control_fpath)
+                    else:
+                        ref_control = Control.empty()
                     test_control = Control.from_file(os.path.join(test_run_dir, 'control'))
                     control_diffs = test_control.compare(ref_control, return_all_diffs=True)
                     if control_diffs:
