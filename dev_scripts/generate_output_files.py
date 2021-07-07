@@ -28,7 +28,6 @@ Script to generate reference output files for a new TM version and check differe
 import argparse
 import os
 import sys
-from turbomoleio.testfiles.utils import OUTPUTS_BASENAMES
 from turbomoleio.testfiles.utils import TM_VERSIONS
 from monty.serialization import loadfn
 from turbomoleio.testfiles.utils import TESTDIR
@@ -50,6 +49,7 @@ import shutil
 
 
 gen_dir = os.path.join(TESTDIR, 'outputs', 'generation')
+OUTPUTS_BASENAMES = loadfn(os.path.join(gen_dir, 'tests_config.yaml'))['testlist']
 
 
 def get_args(parser):

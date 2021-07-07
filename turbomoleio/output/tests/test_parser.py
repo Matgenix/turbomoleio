@@ -34,18 +34,15 @@ import json
 from turbomoleio.output.parser import Parser, convert_float, convert_int, convert_time_string
 from turbomoleio.testfiles.utils import assert_almost_equal, temp_dir
 from turbomoleio.testfiles.utils import TM_VERSIONS
-from turbomoleio.testfiles.utils import OUTPUTS_BASENAMES
-
+from turbomoleio.testfiles.utils import TESTS_CONFIGS_TM_VERSIONS
 
 excluded_execs = ['jobex']
-excluded_tests = [('relax', 'no_version_header'),
-                  ('aoforce', 'h2_numforce')]
 files_list = [
-    (tm_exec, test_name)
-    for tm_exec, exec_tests in OUTPUTS_BASENAMES.items()
+    (tm_version, tm_exec, test_name)
+    for tm_version in TM_VERSIONS
+    for tm_exec, exec_tests in TESTS_CONFIGS_TM_VERSIONS[tm_version]['testlist'].items()
     if tm_exec not in excluded_execs
     for test_name in exec_tests
-    if (tm_exec, test_name) not in excluded_tests
 ]
 
 
@@ -59,11 +56,12 @@ parser_methods = ["all_done", "header", "centers", "coordinates", "basis", "symm
 
 
 @pytest.fixture(scope="function", params=files_list, ids=[os.path.join(*f) for f in files_list])
-def parser_and_dict(request, testdir, tm_version):
-    directory = request.param[0]
-    name = request.param[1]
-    path = os.path.join(testdir, "outputs", tm_version, directory, name)
-    parser = Parser.from_file(os.path.join(path, f"{directory}.log"))
+def parser_and_dict(request, testdir):
+    tm_version = request.param[0]
+    tm_exec = request.param[1]
+    test_name = request.param[2]
+    path = os.path.join(testdir, "outputs", tm_version, tm_exec, test_name)
+    parser = Parser.from_file(os.path.join(path, f"{tm_exec}.log"))
     with open(os.path.join(path, "ref_parser.json")) as f:
         d = json.load(f)
 
@@ -77,7 +75,6 @@ def method(request):
 
 class TestParser:
 
-    @pytest.mark.parametrize("tm_version", TM_VERSIONS)
     def test_properties(self, parser_and_dict, method):
         parser, desired = parser_and_dict
 
@@ -89,36 +86,6 @@ class TestParser:
         # ignore date values since in the dictionary they are datetime, while
         # just strings in the json file.
         assert_almost_equal(parsed_data, desired[method], rtol=1e-4,
-                            ignored_values=["start_time", "end_time", "@version"])
-
-    def test_no_version_header(self, testdir, method):
-        path = os.path.join(testdir, "outputs", 'TM_v7.3', 'relax', 'no_version_header')
-        parser = Parser.from_file(os.path.join(path, "relax.log"))
-        with open(os.path.join(path, "ref_parser.json")) as f:
-            ref_parser = json.load(f)
-        if method not in ref_parser:
-            pytest.skip("Method {} is not present in the dictionary".format(method))
-
-        parsed_data = getattr(parser, method)
-
-        # ignore date values since in the dictionary they are datetime, while
-        # just strings in the json file.
-        assert_almost_equal(parsed_data, ref_parser[method], rtol=1e-4,
-                            ignored_values=["start_time", "end_time", "@version"])
-
-    def test_aoforce_numforce(self, testdir, method):
-        path = os.path.join(testdir, "outputs", 'TM_v7.3', 'aoforce', 'h2_numforce')
-        parser = Parser.from_file(os.path.join(path, "aoforce.log"))
-        with open(os.path.join(path, "ref_parser.json")) as f:
-            ref_parser = json.load(f)
-        if method not in ref_parser:
-            pytest.skip("Method {} is not present in the dictionary".format(method))
-
-        parsed_data = getattr(parser, method)
-
-        # ignore date values since in the dictionary they are datetime, while
-        # just strings in the json file.
-        assert_almost_equal(parsed_data, ref_parser[method], rtol=1e-4,
                             ignored_values=["start_time", "end_time", "@version"])
 
     @pytest.mark.parametrize("tm_version", TM_VERSIONS)

@@ -34,26 +34,22 @@ from monty.serialization import loadfn
 from turbomoleio.output.files import exec_to_out_obj, JobexOutput, EscfOnlyOutput, EscfOutput
 from turbomoleio.testfiles.utils import assert_almost_equal
 from turbomoleio.testfiles.utils import TM_VERSIONS
-from turbomoleio.testfiles.utils import OUTPUTS_BASENAMES
+from turbomoleio.testfiles.utils import TESTS_CONFIGS_TM_VERSIONS
 
 
-excluded_tests = [('relax', 'no_version_header'),
-                  ('aoforce', 'h2_numforce'),
-                  ('jobex', 'h2o_dscf_unconv1'),
-                  ('jobex', 'h2o_dscf_unconv2'),
-                  ]
 files_list = [
-    (tm_exec, test_name)
-    for tm_exec, exec_tests in OUTPUTS_BASENAMES.items()
+    (tm_version, tm_exec, test_name)
+    for tm_version in TM_VERSIONS
+    for tm_exec, exec_tests in TESTS_CONFIGS_TM_VERSIONS[tm_version]['testlist'].items()
     for test_name in exec_tests
-    if (tm_exec, test_name) not in excluded_tests
 ]
 
 
 @pytest.fixture(scope="function", params=files_list, ids=[os.path.join(*f) for f in files_list])
-def cls_dict_path(request, testdir, tm_version):
-    tm_exec = request.param[0]
-    test_name = request.param[1]
+def cls_dict_path(request, testdir):
+    tm_version = request.param[0]
+    tm_exec = request.param[1]
+    test_name = request.param[2]
     path = os.path.join(testdir, "outputs", tm_version, tm_exec, test_name)
     output_clses = []
     ref_dicts = []
@@ -79,7 +75,6 @@ def cls_dict_path(request, testdir, tm_version):
 
 class TestFiles:
 
-    @pytest.mark.parametrize("tm_version", TM_VERSIONS)
     def test_properties(self, cls_dict_path):
         output_clses, desired_list, paths_list = cls_dict_path
 
@@ -90,38 +85,6 @@ class TestFiles:
             # just strings in the json file.
             assert_almost_equal(parsed_data, desired, rtol=1e-4,
                                 ignored_values=["start_time", "end_time", "@version"])
-
-    def test_relax_no_version_header(self, testdir):
-        path = os.path.join(testdir, "outputs", 'TM_v7.3', 'relax', 'no_version_header')
-        parsed_data = exec_to_out_obj['relax'].from_file(os.path.join(path, 'relax.log')).as_dict()
-        with open(os.path.join(path, "ref_output.json")) as f:
-            ref_output = json.load(f)
-        assert_almost_equal(parsed_data, ref_output, rtol=1e-4,
-                            ignored_values=["start_time", "end_time", "@version"])
-
-    def test_aoforce_h2_numforce(self, testdir):
-        path = os.path.join(testdir, "outputs", 'TM_v7.3', 'aoforce', 'h2_numforce')
-        parsed_data = exec_to_out_obj['aoforce'].from_file(os.path.join(path, 'aoforce.log')).as_dict()
-        with open(os.path.join(path, "ref_output.json")) as f:
-            ref_output = json.load(f)
-        assert_almost_equal(parsed_data, ref_output, rtol=1e-4,
-                            ignored_values=["start_time", "end_time", "@version"])
-
-    def test_jobex_h2_dscf_unconv1(self, testdir):
-        path = os.path.join(testdir, "outputs", 'TM_v7.3', 'jobex', 'h2o_dscf_unconv1')
-        parsed_data = JobexOutput.from_file(os.path.join(path, 'job.last')).as_dict()
-        with open(os.path.join(path, "ref_output.json")) as f:
-            ref_output = json.load(f)
-        assert_almost_equal(parsed_data, ref_output, rtol=1e-4,
-                            ignored_values=["start_time", "end_time", "@version"])
-
-    def test_jobex_h2_dscf_unconv2(self, testdir):
-        path = os.path.join(testdir, "outputs", 'TM_v7.3', 'jobex', 'h2o_dscf_unconv2')
-        parsed_data = JobexOutput.from_file(os.path.join(path, 'job.last')).as_dict()
-        with open(os.path.join(path, "ref_output.json")) as f:
-            ref_output = json.load(f)
-        assert_almost_equal(parsed_data, ref_output, rtol=1e-4,
-                            ignored_values=["start_time", "end_time", "@version"])
 
 
 def generate_files(files=None, overwrite=False):
