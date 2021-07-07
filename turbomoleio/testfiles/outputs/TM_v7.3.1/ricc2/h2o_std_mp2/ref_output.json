@@ -16,14 +16,14 @@
     "start_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-07-07 10:46:48.223000"
+      "string": "2021-07-07 11:41:44.223000"
     },
     "end_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-07-07 10:46:48.321000"
+      "string": "2021-07-07 11:41:44.317000"
     },
-    "cpu_time": 0.1,
+    "cpu_time": 0.09,
     "wall_time": 0.1
   },
   "tm": {
