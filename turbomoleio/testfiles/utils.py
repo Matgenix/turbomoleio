@@ -832,6 +832,12 @@ def generate_reference_output(test_definition,
     Returns:
         None
     """
-    tm_execs = test_definition['commands']
-    for tm_exec in tm_execs:
-        os.system(f'{tm_exec} > {tm_exec}.log 2> {tm_exec}.err')
+    cmds = test_definition['commands']
+    for cmd in cmds:
+        cmd_split = cmd.split()
+        tm_exec = cmd_split[0]
+        options = ''
+        if len(cmd_split) > 1:
+            options = ' '.join(cmd_split[1:])
+            options = f' {options}'
+        os.system(f'{tm_exec}{options} > {tm_exec}.log 2> {tm_exec}.err')

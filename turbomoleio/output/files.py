@@ -460,6 +460,44 @@ class Ricc2Output(BaseData):
         return cls(mp2=mp2, run=run, tm=tm)
 
 
+class MP2Output(BaseData):
+    """
+    Object containing the data of the output of an MP2 calculation, i.e. mpgrad, ricc2 (with proper MP2 options),
+    or pnoccsd (with proper MP2 options).
+
+    Note: Parsing of PNO-based MP2 calculations (i.e. performed with the pnoccsd program) is not (yet) supported.
+    """
+    def __init__(self, energy, run, tm):
+        """
+        Args:
+            energy (float): MP2 energy.
+            run (RunData): information about calculation running (e.g. timings, ...)
+            tm (TurbomoleData): information about the turbomole used for the calculation.
+        """
+        self.energy = energy
+        self.run = run
+        self.tm = tm
+
+    @classmethod
+    def from_parser(cls, parser):
+        """
+        Generates an instance of MP2Output from a parser based on the stdout
+        of a Turbomole executable.
+
+        Args:
+            parser (Parser): the parser to be used to extract the data.
+
+        Returns:
+            MP2Output.
+        """
+        mp2_data = MP2Data.from_parser(parser)
+        energy = mp2_data.energy if mp2_data else None
+        run = RunData.from_parser(parser)
+        tm = TurbomoleData.from_parser(parser)
+
+        return cls(energy=energy, run=run, tm=tm)
+
+
 class JobexOutput(BaseData):
     """
     Object containing the data of the output of the last step of a jobex calculation.
@@ -523,5 +561,7 @@ exec_to_out_obj = {
     "statpt": StatptOutput,
     "aoforce": AoforceOutput,
     "force": AoforceOutput, # because when executed aoforce has the name "force" in the header.
+    "mpgrad": MP2Output,
     "ricc2": Ricc2Output,
+    "rimp2": MP2Output,
 }

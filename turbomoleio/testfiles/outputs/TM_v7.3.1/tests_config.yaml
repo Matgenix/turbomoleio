@@ -19,6 +19,8 @@ testlist:
   jobex:
     - no3_ridft
     - h2o_dscf
+  mpgrad:
+    - h2o_std_mp2
   rdgrad:
     - h2o_dftd3-bj
   relax:
@@ -31,6 +33,8 @@ testlist:
     - b28_many_irreps
     - h2o_dftd2_marij
     - nh3_rijk_xcfun_m06
+  rimp2:
+    - h2o_std_mp2
   statpt:
     - aceton_cartesian
     - h3cbr_internal
