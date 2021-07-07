@@ -265,10 +265,10 @@ def main():
                         prev_gen_control_dir = os.path.join(gen_test_dir, TM_VERSIONS[-1])
                     else:
                         prev_gen_control_dir = os.path.join(gen_test_dir, args.compare_to)
-                    makedirs_p(prev_gen_control_dir)
                     if os.path.exists(os.path.join(gen_test_dir, 'control')):
                         # This is to back up the control, coord and basis files used for the previous version
                         # Not performed for a completely new test
+                        makedirs_p(prev_gen_control_dir)
                         cpc(prev_gen_control_dir, control_dir=gen_test_dir)
                     # Copy the coord, control and basis files of the current Turbomole version to the
                     # generation directory
@@ -283,7 +283,11 @@ def main():
                     log_fpath = os.path.join(test_run_dir, f'{tm_exec}.log')
 
                 ref_fpath = os.path.join(ref_test_dir, 'ref_output.json')
-                ref_out = loadfn(ref_fpath, cls=None)
+                if os.path.exists(ref_fpath):
+                    ref_out = loadfn(ref_fpath, cls=None)
+                else:
+                    # When creating a new test, the reference object does not exist yet
+                    ref_out = None
                 out_cls = exec_to_out_obj[tm_exec]
 
                 gen_out = out_cls.from_file(log_fpath).as_dict()
@@ -298,7 +302,11 @@ def main():
                         all_diffs[tm_exec] = out_diffs
                 if tm_exec == 'escf':
                     ref_out_escf_only_fpath = os.path.join(ref_test_dir, 'ref_escf_output.json')
-                    ref_out_escf_only = loadfn(ref_out_escf_only_fpath, cls=None)
+                    if os.path.exists(ref_out_escf_only_fpath):
+                        ref_out_escf_only = loadfn(ref_out_escf_only_fpath, cls=None)
+                    else:
+                        # When creating a new test, the reference object does not exist yet
+                        ref_out_escf_only = None
                     gen_out_escf_only = EscfOnlyOutput.from_file(log_fpath).as_dict()
                     out_escf_only_diffs = compare_differences(gen_out_escf_only, ref_out_escf_only,
                                                               rtol=args.rtol, atol=args.atol)
