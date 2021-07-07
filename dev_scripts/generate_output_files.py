@@ -266,7 +266,10 @@ def main():
                     else:
                         prev_gen_control_dir = os.path.join(gen_test_dir, args.compare_to)
                     makedirs_p(prev_gen_control_dir)
-                    cpc(prev_gen_control_dir, control_dir=gen_test_dir)
+                    if os.path.exists(os.path.join(gen_test_dir, 'control')):
+                        # This is to back up the control, coord and basis files used for the previous version
+                        # Not performed for a completely new test
+                        cpc(prev_gen_control_dir, control_dir=gen_test_dir)
                     # Copy the coord, control and basis files of the current Turbomole version to the
                     # generation directory
                     for fname in ['control', 'coord', 'basis', 'auxbasis']:
