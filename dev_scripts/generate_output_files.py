@@ -151,8 +151,8 @@ def get_version_dir(args):
         version_dir = f'TM_v{tm_version}'
     vdir = os.path.join(TESTDIR, 'outputs', version_dir)
     if not args.force and os.path.exists(vdir):
-        print('Directory exists. Use --force to overwrite.')
-        exit()
+        print('Directory exists. If generation of existing tests is performed, code will exit. '
+              'Use --force to overwrite.')
     print(f'Version directory will be <{version_dir}>.\n'
           f'New reference output files will be generated in <testfiles/outputs/{version_dir}>.')
     if args.compare_to is None:
@@ -205,6 +205,9 @@ def main():
 
     for tm_exec, test_name in tests_list:
         test_dir = os.path.join(version_dir, tm_exec, test_name)
+        if not args.force and os.path.exists(test_dir):
+            print('Test directory exists. Use --force to overwrite.')
+            exit()
         test_run_dir = os.path.join(test_dir, 'run')
         ref_test_dir = os.path.join(ref_version_dir, tm_exec, test_name)
         gen_test_dir = os.path.join(gen_dir, tm_exec, test_name)
