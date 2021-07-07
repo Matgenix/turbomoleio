@@ -33,6 +33,7 @@ import json
 
 from turbomoleio.output.parser import Parser, convert_float, convert_int, convert_time_string
 from turbomoleio.testfiles.utils import assert_almost_equal, temp_dir
+from turbomoleio.testfiles.utils import PARSER_METHODS
 from turbomoleio.testfiles.utils import TM_VERSIONS
 from turbomoleio.testfiles.utils import TESTS_CONFIGS_TM_VERSIONS
 
@@ -44,15 +45,6 @@ files_list = [
     if tm_exec not in excluded_execs
     for test_name in exec_tests
 ]
-
-
-parser_methods = ["all_done", "header", "centers", "coordinates", "basis", "symmetry",
-                  "cosmo_header", "density_functional_data", "rij_info", "dftd", "pre_scf_run",
-                  "scf_iterations", "scf_energies", "cosmo_results", "electrostatic_moments",
-                  "timings", "s2", "is_uhf", "fermi", "integral", "pre_escf_run", "escf_iterations",
-                  "escf_gs_total_en", "escf_excitations", "rdgrad_memory", "gradient", "egrad_excited_state",
-                  "statpt_info", "relax_info", "relax_gradient_values", "relax_conv_info",
-                  "aoforce_numerical_integration", "aoforce_analysis"]
 
 
 @pytest.fixture(scope="function", params=files_list, ids=[os.path.join(*f) for f in files_list])
@@ -68,7 +60,7 @@ def parser_and_dict(request, testdir):
     return parser, d
 
 
-@pytest.fixture(scope="function", params=parser_methods)
+@pytest.fixture(scope="function", params=PARSER_METHODS)
 def method(request):
     return request.param
 
@@ -162,12 +154,12 @@ def generate_files(files=None, methods=None, overwrite=False):
             like the one in "files_list". Only the json for the files in this list
             will be generated. If None "files_list" will be used.
         methods (list): list of string with the methods of Parser for which the
-            reference data will be generated. If None "parser_methods" will be used.
+            reference data will be generated. If None "PARSER_METHODS" will be used.
         overwrite (bool): if False, in case a method has already its reference value
             in the json file it will not be changed. If True it will be overwritten.
     """
     if methods is None:
-        methods = parser_methods
+        methods = PARSER_METHODS
     if files is None:
         files = files_list
 
