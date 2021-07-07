@@ -1,0 +1,150 @@
+{
+  "all_done": true,
+  "header": {
+    "executable": "ricc2",
+    "host": "fedora",
+    "tm_version": "7.3.1",
+    "tm_build": null,
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2021-07-07 10:46:48.223000"
+    }
+  },
+  "centers": {
+    "center_of_mass": [
+      -0.0,
+      0.0,
+      -0.60378908
+    ],
+    "center_of_charge": [
+      0.0,
+      0.0,
+      -0.50790525
+    ]
+  },
+  "coordinates": {
+    "coords": [
+      [
+        0.0,
+        0.0,
+        -0.72557892
+      ],
+      [
+        1.41713421,
+        0.0,
+        0.36278946
+      ],
+      [
+        -1.41713421,
+        0.0,
+        0.36278946
+      ]
+    ],
+    "species": [
+      "o",
+      "h",
+      "h"
+    ],
+    "charges": [
+      8.0,
+      1.0,
+      1.0
+    ],
+    "isotopes": [
+      0,
+      0,
+      0
+    ]
+  },
+  "basis": {
+    "basis_per_specie": {
+      "o": "def-SV(P)",
+      "h": "def-SV(P)"
+    },
+    "aux_basis_per_specie": {},
+    "number_scf_basis_func": 18,
+    "number_scf_aux_basis_func": null
+  },
+  "symmetry": {
+    "symbol": "c1",
+    "n_reps": 1,
+    "reps": [
+      "a"
+    ]
+  },
+  "cosmo_header": null,
+  "density_functional_data": null,
+  "rij_info": null,
+  "dftd": null,
+  "pre_scf_run": null,
+  "scf_iterations": null,
+  "scf_energies": null,
+  "cosmo_results": null,
+  "electrostatic_moments": null,
+  "timings": {
+    "cpu_time": 0.1,
+    "wall_time": 0.1,
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2021-07-07 10:46:48.321000"
+    }
+  },
+  "s2": null,
+  "is_uhf": false,
+  "fermi": null,
+  "integral": {
+    "integral_neglect_threshold": 1e-08,
+    "thize": 1e-05,
+    "thime": 5
+  },
+  "pre_escf_run": null,
+  "escf_iterations": null,
+  "escf_gs_total_en": null,
+  "escf_excitations": null,
+  "rdgrad_memory": null,
+  "gradient": {
+    "gradients": [
+      [
+        -1.107826e-14,
+        -3.980547e-14,
+        0.02753525
+      ],
+      [
+        -0.02103091,
+        1.831634e-14,
+        -0.01376763
+      ],
+      [
+        0.02103091,
+        2.423875e-14,
+        -0.01376763
+      ]
+    ],
+    "dielectric": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  "egrad_excited_state": null,
+  "statpt_info": null,
+  "relax_info": null,
+  "relax_gradient_values": null,
+  "relax_conv_info": null,
+  "aoforce_numerical_integration": null,
+  "aoforce_analysis": null
+}

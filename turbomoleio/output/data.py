@@ -1418,3 +1418,34 @@ class AoforceVibrationalData(BaseData):
         """
         f_arr = np.array(self.frequencies)
         return np.count_nonzero(np.logical_and(-np.abs(tol) <= f_arr, f_arr <= np.abs(tol)))
+
+
+class MP2Data(BaseData):
+    """
+    MP2 data object.
+    """
+
+    def __init__(self, energy=None):
+        """
+        Args:
+            energy (float): MP2 energy.
+        """
+        self.energy = energy
+
+    @classmethod
+    def from_parser(cls, parser):
+        """
+        Generates an instance of MP2Data from a parser based on the stdout
+        of a Turbomole executable. Returns None if no data could be parsed.
+
+        Args:
+            parser (Parser): the parser to be used to extract the data.
+
+        Returns:
+            MP2Data.
+        """
+        data = parser.mp2_results
+        if not data or "energy" not in data:
+            return None
+
+        return cls(**data)

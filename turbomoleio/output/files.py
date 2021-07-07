@@ -25,6 +25,7 @@ from turbomoleio.output.data import DFTData, ScfData, ScfEnergiesData, Electrost
 from turbomoleio.output.data import SmearingData, EscfData, AoforceNumericalIntegrationData, AoforceRotationalData
 from turbomoleio.output.data import AoforceVibrationalData, RelaxConvergenceData, RelaxData, RelaxGradientsData
 from turbomoleio.output.data import StatptData, SymmetryData
+from turbomoleio.output.data import MP2Data
 
 
 class ScfOutput(BaseData):
@@ -425,6 +426,40 @@ class AoforceOutput(BaseData):
         return cls(numerical_integration=ni, rotational=rot, vibrational=vib, run=run, tm=tm)
 
 
+class Ricc2Output(BaseData):
+    """
+    Object containing the data of the output of a ricc2 calculation.
+    """
+    def __init__(self, mp2, run, tm):
+        """
+        Args:
+            mp2 (MP2Data): MP2 results.
+            run (RunData): information about calculation running (e.g. timings, ...)
+            tm (TurbomoleData): information about the turbomole used for the calculation.
+        """
+        self.mp2 = mp2
+        self.run = run
+        self.tm = tm
+
+    @classmethod
+    def from_parser(cls, parser):
+        """
+        Generates an instance of Ricc2Output from a parser based on the stdout
+        of a Turbomole executable.
+
+        Args:
+            parser (Parser): the parser to be used to extract the data.
+
+        Returns:
+            Ricc2Output.
+        """
+        mp2 = MP2Data.from_parser(parser)
+        run = RunData.from_parser(parser)
+        tm = TurbomoleData.from_parser(parser)
+
+        return cls(mp2=mp2, run=run, tm=tm)
+
+
 class JobexOutput(BaseData):
     """
     Object containing the data of the output of the last step of a jobex calculation.
@@ -488,4 +523,5 @@ exec_to_out_obj = {
     "statpt": StatptOutput,
     "aoforce": AoforceOutput,
     "force": AoforceOutput, # because when executed aoforce has the name "force" in the header.
+    "ricc2": Ricc2Output,
 }

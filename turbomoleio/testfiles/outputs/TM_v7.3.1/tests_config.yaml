@@ -24,6 +24,8 @@ testlist:
   relax:
     - h2o_cartesian
     - h2o_internal
+  ricc2:
+    - h2o_std_mp2
   ridft:
     - h2o_dftd3-bj_not_conv
     - b28_many_irreps

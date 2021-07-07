@@ -2075,7 +2075,7 @@ class Parser:
         MP2 results.
 
         Returns:
-            dict with "energy", "".
+            dict with "energy".
         """
 
         r = r"\*{62,62}\s+\*\s+\*\s+\*<{10,10}\s+"
@@ -2084,7 +2084,7 @@ class Parser:
         r += r"-{48,48}\s+Method\s+:\s+MP2\s+Total\s+Energy\s+:\s+("
         r += float_number_all_re2
         r += r")\s+"
-        m = re.findall(r, string=string)
+        m = re.findall(r, string=self.string)
         if len(m) == 0:
             return None
         elif len(m) == 1:
