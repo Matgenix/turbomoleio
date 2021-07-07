@@ -177,7 +177,7 @@ def get_coord(test_definition, rundir, gendir):
 
 def generate_mos(deftest, test_run_dir, gen_test_dir):
     if deftest['define'] and deftest['define']['template']:
-        dp = get_define_template('ridft')
+        dp = get_define_template(deftest['define']['template'])
     else:
         dp = {}
     if deftest['define'] and deftest['define']['parameters']:
@@ -233,21 +233,20 @@ def main():
                     raise ValueError('No define template and/or parameters provided for reference test generation.')
                 else:
                     generate_control_for_test(test_definition=deftest)
-                    if dryrun:
-                        ref_control_fpath = os.path.join(
-                            gen_test_dir, deftest['control']
-                            if 'control' in deftest else 'control'
-                        )
-                        ref_control = Control.from_file(ref_control_fpath)
-                        test_control = Control.from_file(os.path.join(test_run_dir, 'control'))
-                        control_diffs = test_control.compare(ref_control, return_all_diffs=True)
-                        if control_diffs:
-                            if args.print_diffs:
-                                msg = 'There are differences in the control files generated:\n'
-                                for idiff, diff in enumerate(control_diffs, start=1):
-                                    msg += f'#{idiff} {diff}\n'
-                                print(msg)
-                            all_diffs['control'] = control_diffs
+                    ref_control_fpath = os.path.join(
+                        gen_test_dir, deftest['control']
+                        if 'control' in deftest else 'control'
+                    )
+                    ref_control = Control.from_file(ref_control_fpath)
+                    test_control = Control.from_file(os.path.join(test_run_dir, 'control'))
+                    control_diffs = test_control.compare(ref_control, return_all_diffs=True)
+                    if control_diffs:
+                        if args.print_diffs:
+                            msg = 'There are differences in the control files generated:\n'
+                            for idiff, diff in enumerate(control_diffs, start=1):
+                                msg += f'#{idiff} {diff}\n'
+                            print(msg)
+                        all_diffs['control'] = control_diffs
             # Copy the control file
             else:
                 generate_mos(deftest, test_run_dir, gen_test_dir)

@@ -223,8 +223,8 @@ class DefineRunner:
 
     def run_full(self):
         """
-        Runs define going thorugh all the menus using the parameters. If The jobs reaches the end
-        without exceptions being raised it will check if the job eneded normally or abnormally.
+        Runs define going through all the menus using the parameters. If The jobs reaches the end
+        without exceptions being raised it will check if the job ended normally or abnormally.
 
         Returns:
             bool: True if define ended normally otherwise abnormally.
@@ -1329,7 +1329,6 @@ class DefineRunner:
         c = Control.from_file("control")
         c.set_disp(self.parameters.get("disp", None))
         c.to_file("control")
-
 
     def dump_command_file(self, filepath="define_commands"):
         """

@@ -28,7 +28,6 @@ import shlex
 import shutil
 import json
 import inspect
-import pytest
 import numbers
 import numpy as np
 from contextlib import contextmanager
@@ -36,6 +35,7 @@ from monty.os import cd, makedirs_p
 from monty.json import MSONable, MontyDecoder
 from monty.serialization import dumpfn, loadfn
 from turbomoleio.input.define import DefineRunner
+from turbomoleio.input.define import DefineError
 from turbomoleio.input.utils import get_define_template
 from turbomoleio.output.states import EigerRunner, States
 from turbomoleio.output.files import JobexOutput, EscfOnlyOutput
@@ -771,10 +771,12 @@ def generate_control_for_test(test_definition):
     add_datagroups = None
     change_datagroups = None
     if datagroups:
-        add_datagroups = test_definition['datagroups'].get('add')
-        change_datagroups = test_definition['datagroups'].get('change')
+        add_datagroups = test_definition.get('datagroups', {}).get('add', None)
+        change_datagroups = test_definition.get('datagroups', {}).get('change', None)
     dr = DefineRunner(dp)
-    dr.run_full()
+    run_full_ok = dr.run_full()
+    if not run_full_ok:
+        raise DefineError('Generation of control file with the DefineRunner failed.')
     if add_datagroups:
         for dg, val in add_datagroups.items():
             adg(dg, val)
