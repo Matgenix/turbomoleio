@@ -2074,6 +2074,19 @@ class Parser:
         return data
 
     @lazy_property
+    def mp2_data(self):
+        """
+        MP2 data: information of MP2 calculation.
+
+        Returns:
+            dict with "energy_only".
+        """
+
+        # TODO: implement or mpgrad and rimp2/ricc2
+
+        return None
+
+    @lazy_property
     def mp2_results(self):
         """
         MP2 results.

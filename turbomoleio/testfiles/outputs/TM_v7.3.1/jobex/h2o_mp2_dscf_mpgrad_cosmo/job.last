@@ -1,12 +1,12 @@
 
-OPTIMIZATION CYCLE 5
-Thu  8 Jul 15:55:22 CEST 2021
+OPTIMIZATION CYCLE 6
+Thu  8 Jul 15:56:23 CEST 2021
 
  statpt (fedora) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-07-08 15:55:22.072 
+    2021-07-08 15:56:23.304 
 
 
 
@@ -31,12 +31,12 @@ Thu  8 Jul 15:55:22 CEST 2021
               +--------------------------------------------------+
 
                     atomic coordinates            atom    charge  isotop
-          0.00000000    0.00000000   -0.74138490    o      8.000     0
-          1.45624155    0.00000000    0.37069245    h      1.000     0
-         -1.45624155    0.00000000    0.37069245    h      1.000     0
+          0.00000000    0.00000000   -0.75294145    o      8.000     0
+          1.44904222    0.00000000    0.37647072    h      1.000     0
+         -1.44904222    0.00000000    0.37647072    h      1.000     0
  
-       center of nuclear mass  :    0.00000000    0.00000000   -0.61694200
-       center of nuclear charge:    0.00000000    0.00000000   -0.51896943
+       center of nuclear mass  :   -0.00000000    0.00000000   -0.62655876
+       center of nuclear charge:    0.00000000    0.00000000   -0.52705901
   Keyword $statpt not found - using default options
  
         ***************  Stationary point options ******************
@@ -66,45 +66,44 @@ Thu  8 Jul 15:55:22 CEST 2021
 
   *************************************************************************
    ATOM                      CARTESIAN COORDINATES
-    1 o       0.00000000000000      0.00000000000000     -0.74138490104618
-    2 h       1.45624155332427      0.00000000000000      0.37069245052309
-    3 h      -1.45624155332427      0.00000000000000      0.37069245052309
+    1 o       0.00000000000000      0.00000000000000     -0.75294144807056
+    2 h       1.44904222456886      0.00000000000000      0.37647072403528
+    3 h      -1.44904222456886      0.00000000000000      0.37647072403528
   *************************************************************************
    ATOM                      CARTESIAN GRADIENTS  
-    1 o       0.00000000000000      0.00000000000000     -0.00002403335245
-    2 h       0.00006903708533      0.00000000000000      0.00001201664383
-    3 h      -0.00006903708533      0.00000000000000      0.00001201664383
+    1 o       0.00000000000000      0.00000000000000     -0.00002496207575
+    2 h       0.00001843699470      0.00000000000000      0.00001248100964
+    3 h      -0.00001843699470      0.00000000000000      0.00001248100964
   *************************************************************************
 
-  norm of actual CARTESIAN gradient:  1.01974E-04
-  norm of actual INTERNAL  gradient:  1.06026E-04
+  norm of actual CARTESIAN gradient:  4.01809E-05
+  norm of actual INTERNAL  gradient:  3.15349E-05
 
-  ENERGY =     -76.1286484093 a.u.; # of cycle =    5
+  ENERGY =     -76.1422446727 a.u.; # of cycle =    6
 
   Approximate Hessian read from $hessapprox data section
 
   Hessian updated according to BFGS formula
   Number of zero Hessian eigenvalues:   0
-  FIRST criterion done:    574055666832848.                          2
+  FIRST criterion done:    183310102979179.                          2
   Number of structures for GDIIS interpolation:    2
-  GDIIS step:     0.000323
+  GDIIS step:     0.000060
 
   Transforming internal coordinate displacements to Cartesian space
-      Iteration   1 residual norm     3.231657E-04
-      Iteration   2 residual norm     3.252301E-08
-      Iteration   3 residual norm     4.965068E-16
+      Iteration   1 residual norm     5.998542E-05
+      Iteration   2 residual norm     2.151989E-10
       Transformation converged
-      Residual norm:    4.965068E-16 after    3 iterations
+      Residual norm:    2.151989E-10 after    2 iterations
 
       ****************************************************************** 
                           CONVERGENCE INFORMATION
 
                                Converged?     Value      Criterion
-             Energy change         yes      0.0000002   0.0000010
-             RMS of displacement   yes      0.0002285   0.0005000
-             RMS of gradient       yes      0.0000750   0.0005000
-             MAX displacement      yes      0.0003032   0.0010000
-             MAX gradient          yes      0.0000879   0.0010000
+             Energy change         yes      0.0000000   0.0000010
+             RMS of displacement   yes      0.0000424   0.0005000
+             RMS of gradient       yes      0.0000223   0.0005000
+             MAX displacement      yes      0.0000593   0.0010000
+             MAX gradient          yes      0.0000314   0.0010000
       ****************************************************************** 
 
 
@@ -116,7 +115,7 @@ Thu  8 Jul 15:55:22 CEST 2021
    ****  statpt : all done  ****
 
 
-    2021-07-08 15:55:22.078 
+    2021-07-08 15:56:23.310 
 
 fine, there is no data group "$actual step"
 next step = dscf
@@ -132,7 +131,7 @@ next step = dscf
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-07-08 15:55:22.095 
+    2021-07-08 15:56:23.328 
 
 
 
@@ -178,15 +177,15 @@ next step = dscf
               +--------------------------------------------------+
 
                     atomic coordinates            atom    charge  isotop
-          0.00000000    0.00000000   -0.74150002    o      8.000     0
-          1.45601007    0.00000000    0.37075001    h      1.000     0
-         -1.45601007    0.00000000    0.37075001    h      1.000     0
+          0.00000000    0.00000000   -0.75292880    o      8.000     0
+          1.44900390    0.00000000    0.37646440    h      1.000     0
+         -1.44900390    0.00000000    0.37646440    h      1.000     0
  
-       center of nuclear mass  :    0.00000000    0.00000000   -0.61703779
-       center of nuclear charge:    0.00000000    0.00000000   -0.51905001
+       center of nuclear mass  :   -0.00000000    0.00000000   -0.62654823
+       center of nuclear charge:    0.00000000    0.00000000   -0.52705016
 
    *************************************************************************
-   jobex_mp2_dscf_mpgrad                                                    
+   jobex_mp2_dscf_mpgrad_cosmo                                              
    *************************************************************************
 
 
@@ -248,9 +247,28 @@ next step = dscf
  automatic virtual orbital shift switched on 
       shift if e(lumo)-e(homo) < 0.10000000    
 
+ ==============================================================================
+                      COSMO switched on
+ ==============================================================================
+ COSMO stati: segments per atom: H   32 other atoms   92
+ COSMO statistics: nps    136 npspher:     92
+ COSMO surface:
+   number of segments:  136
+   area (bohr**2):      153.922244
+   volume (bohr**3):    172.807910
+ COSMO: check number of disjunct cavities:
+
+       ... OK contiguous cavity found
+   sym. distinct segments:   89
+   sym. dist. seg. on spheres:   76
+   min. distance between points:      0.321087
+   max. symmetrization distance error:      0.000031
+
+ Surface grid was constructed by projection of gridpoints of symmetry distict atoms.
+ This may lead to differences compared to C1 results.
 
           ------------------------
-          nuclear repulsion energy  :   9.07593405851    
+          nuclear repulsion energy  :   9.05417921732    
           ------------------------
 
 
@@ -281,61 +299,62 @@ next step = dscf
 
  DSCF restart information will be dumped onto file mos
 
+COSMO: using sym. in pot. calc.
  
                                               current damping :  0.300
  ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     RMS[dD(SAO)]   TOL
-   1  -75.937703474357    -122.75599772     37.742360185    0.000D+00 0.175D-09
-          max. resid. norm for Fia-block=  4.993D-05 for orbital      3a1        
-          max. resid. fock norm         =  1.490D-04 for orbital      8a1        
-          Delta Eig. =     0.0030606304 eV 
+   1  -75.951261600295    -122.80240818     37.796967366    0.000D+00 0.175D-09
+                          Ediel =    -0.015375174628
+          max. resid. norm for Fia-block=  1.192D-05 for orbital      2a1        
+          max. resid. fock norm         =  1.658D-05 for orbital      4b1        
+          Delta Eig. =     0.0006112348 eV 
+COSMO: using sym. in pot. calc.
  
                                               current damping :  0.300
  ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     RMS[dD(SAO)]   TOL
-   2  -75.937703478569    -122.75611900     37.742481460    0.127D-04 0.111D-09
-          Norm of current diis error: 0.47902E-04
-          max. resid. norm for Fia-block=  1.957D-05 for orbital      3a1        
-          max. resid. fock norm         =  3.632D-05 for orbital      8a1        
-          Delta Eig. =     0.0009239988 eV 
+   2  -75.951261600628    -122.80249271     37.797051891    0.326D-05 0.111D-09
+                          Ediel =    -0.015375248564
+          Norm of current diis error: 0.12071E-04
+          max. resid. norm for Fia-block=  4.185D-06 for orbital      2a1        
+          max. resid. fock norm         =  5.939D-06 for orbital      3b1        
+          Delta Eig. =     0.0003587260 eV 
+COSMO: using sym. in pot. calc.
  
                                               current damping :  0.350
  ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     RMS[dD(SAO)]   TOL
-   3  -75.937703479155    -122.75608311     37.742445571    0.575D-05 0.859D-10
-          Norm of current diis error: 0.16654E-04
-          max. resid. norm for Fia-block=  7.344D-06 for orbital      3a1        
-          max. resid. fock norm         =  8.676D-06 for orbital      8a1        
-          Delta Eig. =     0.0001824302 eV 
- 
-                                              current damping :  0.400
- ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     RMS[dD(SAO)]   TOL
-   4  -75.937703479446    -122.75610093     37.742463392    0.206D-05 0.782D-10
-          Norm of current diis error: 0.57569E-05
-          max. resid. norm for Fia-block=  2.977D-06 for orbital      3a1        
-          max. resid. fock norm         =  3.045D-06 for orbital      5a1        
-          Delta Eig. =     0.0000573750 eV 
+   3  -75.951261600663    -122.80247451     37.797033694    0.142D-05 0.912D-10
+                          Ediel =    -0.015375227270
+          Norm of current diis error: 0.54407E-05
+          max. resid. norm for Fia-block=  1.587D-06 for orbital      2a1        
+          max. resid. fock norm         =  1.709D-06 for orbital      7a1        
+          Delta Eig. =     0.0000467089 eV 
+COSMO: using sym. in pot. calc.
 
  ENERGY & DENSITY CONVERGED !
 
  
-                                              current damping :  0.450
+                                              current damping :  0.400
  ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     RMS[dD(SAO)]   TOL
-   5  -75.937703479580    -122.75609782     37.742460284    0.801D-06 0.721D-10
-          max. resid. norm for Fia-block=  9.218D-07 for orbital      3a1        
-          max. resid. fock norm         =  9.221D-07 for orbital      3a1        
+   4  -75.951261600544    -122.80248040     37.797039585    0.488D-06 0.808D-10
+                          Ediel =    -0.015375276251
+          max. resid. norm for Fia-block=  5.638D-07 for orbital      3a1        
+          max. resid. fock norm         =  5.813D-07 for orbital      3a1        
+COSMO: using sym. in pot. calc.
 
- convergence criteria satisfied after     5 iterations
+ convergence criteria satisfied after     4 iterations
 
 
    *************************************************************************
-   jobex_mp2_dscf_mpgrad                                                    
+   jobex_mp2_dscf_mpgrad_cosmo                                              
    *************************************************************************
 
 
                   ------------------------------------------ 
-                 |  total energy      =    -75.93770347958  |
+                 |  total energy      =    -75.95126160054  |
                   ------------------------------------------ 
-                 :  kinetic energy    =     75.83518869155  :
-                 :  potential energy  =   -151.77289217113  :
-                 :  virial theorem    =      1.99865001464  :
+                 :  kinetic energy    =     75.80146509740  :
+                 :  potential energy  =   -151.75272669794  :
+                 :  virial theorem    =      1.99802772857  :
                  :  wavefunction norm =      1.00000000000  :
                   .......................................... 
 
@@ -343,28 +362,64 @@ next step = dscf
  orbitals $scfmo  will be written to file mos
 
     irrep                  1a1         2a1         3a1         4a1         5a1  
- eigenvalues H        -20.54478    -1.31776    -0.56735     0.17142     0.91194
-            eV        -559.0562    -35.8583    -15.4385      4.6647     24.8153
+ eigenvalues H        -20.54330    -1.31452    -0.57504     0.19299     0.92871
+            eV        -559.0160    -35.7701    -15.6479      5.2515     25.2716
  occupation              2.0000      2.0000      2.0000 
 
     irrep                  6a1         7a1         8a1         9a1  
- eigenvalues H          1.20751     1.43715     2.92721     3.30300
-            eV          32.8581     39.1072     79.6541     89.8798
+ eigenvalues H          1.18855     1.44934     2.92240     3.29877
+            eV          32.3424     39.4389     79.5231     89.7647
 
     irrep                  1a2  
- eigenvalues H          2.93976
-            eV          79.9955
+ eigenvalues H          2.93831
+            eV          79.9560
 
     irrep                  1b1         2b1         3b1         4b1         5b1  
- eigenvalues H         -0.70466     0.25191     0.80238     1.38265     3.46160
-            eV         -19.1750      6.8547     21.8340     37.6242     94.1958
+ eigenvalues H         -0.69675     0.27563     0.79939     1.37834     3.45702
+            eV         -18.9596      7.5003     21.7526     37.5067     94.0711
  occupation              2.0000 
 
     irrep                  1b2         2b2         3b2  
- eigenvalues H         -0.50104     1.19873     2.96776
-            eV         -13.6342     32.6194     80.7574
+ eigenvalues H         -0.50427     1.19161     2.96322
+            eV         -13.7220     32.4256     80.6338
  occupation              2.0000 
  
+ ==============================================================================
+                                  COSMO RESULTS
+ ==============================================================================
+  PARAMETER:
+    nppa:      1082
+    nspa:        92
+    nsph:        32
+    nps:        136
+    npspher:     92
+    disex:   10.0000    
+    disex2:  3538.50    
+    rsolv [A]: 1.3000
+    routf:     0.8500
+    phsran:    0.0    
+    ampran:   0.10E-04
+    cavity:  closed
+    epsilon: infinity
+    refind:     1.300
+    fepsi:      1.0000000
+  CAVITY VOLUME/AREA [a.u.]:
+    surface: V1.0, A matrix: V1.0
+    area:   153.92
+    volume:   172.81
+  SCREENING CHARGE:
+    cosmo      :  -0.003999
+    correction :   0.003573
+    total      :  -0.000426
+  ENERGIES [a.u.]:
+    Total energy            =     -75.9512616005439
+    Total energy + OC corr. =      -75.9514202103
+    Dielectric energy       =       -0.0153752763
+    Diel. energy + OC corr. =       -0.0155338860
+  ELEMENT RADIUS [A]: ATOM LIST
+    o  1.72: 1
+    h  1.30: 2,3
+ ==============================================================================
  
  
  
@@ -386,36 +441,36 @@ next step = dscf
  ------------------------------------------------------------------------------
    x       0.000000      -0.000000      -0.000000
    y       0.000000       0.000000       0.000000
-   z      -5.190500       6.085389       0.894889
+   z      -5.270502       6.291173       1.020672
  
-   | dipole moment | =     0.8949 a.u. =     2.2746 debye 
+   | dipole moment | =     1.0207 a.u. =     2.5943 debye 
  
  ------------------------------------------------------------------------------
                      quadrupole moment
  ------------------------------------------------------------------------------
-  xx       4.239931      -7.336858      -3.096927
-  yy       0.000000      -5.330498      -5.330498
-  zz       4.673489     -10.093274      -5.419784
-  xy       0.000000       0.000000       0.000000
-  xz       0.000000       0.000000       0.000000
+  xx       4.199225      -7.191980      -2.992756
+  yy       0.000000      -5.354257      -5.354257
+  zz       4.818665     -10.331588      -5.512923
+  xy       0.000000      -0.000000      -0.000000
+  xz      -0.000000      -0.000000      -0.000000
   yz       0.000000      -0.000000      -0.000000
  
-     1/3  trace=      -4.615736
-     anisotropy=       2.279526
+     1/3  trace=      -4.619979
+     anisotropy=       2.444699
  
  ==============================================================================
  
 
 
     ------------------------------------------------------------------------
-         total  cpu-time :   0.03 seconds
-         total wall-time :   0.03 seconds
+         total  cpu-time :   0.05 seconds
+         total wall-time :   0.05 seconds
     ------------------------------------------------------------------------
 
    ****  dscf : all done  ****
 
 
-    2021-07-08 15:55:22.116 
+    2021-07-08 15:56:23.370 
 
 fine, there is no data group "$actual step"
 next step = mpgrad
@@ -431,7 +486,7 @@ next step = mpgrad
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-07-08 15:55:22.134 
+    2021-07-08 15:56:23.387 
 
 
 
@@ -456,12 +511,12 @@ next step = mpgrad
               +--------------------------------------------------+
 
                     atomic coordinates            atom    charge  isotop
-          0.00000000    0.00000000   -0.74150002    o      8.000     0
-          1.45601007    0.00000000    0.37075001    h      1.000     0
-         -1.45601007    0.00000000    0.37075001    h      1.000     0
+          0.00000000    0.00000000   -0.75292880    o      8.000     0
+          1.44900390    0.00000000    0.37646440    h      1.000     0
+         -1.44900390    0.00000000    0.37646440    h      1.000     0
  
-       center of nuclear mass  :    0.00000000    0.00000000   -0.61703779
-       center of nuclear charge:    0.00000000    0.00000000   -0.51905001
+       center of nuclear mass  :   -0.00000000    0.00000000   -0.62654823
+       center of nuclear charge:    0.00000000    0.00000000   -0.52705016
 
               +--------------------------------------------------+
               |               basis set information              |
@@ -605,29 +660,29 @@ next step = mpgrad
             ---------------------------------------------
                 [ i   j ]      norm[ T2(ij) ]
             ---------------------------------------------
-                  4   3       0.09184720749586
-                  5   3       0.08866271023690
-                  5   4       0.08790890758232
-                  4   4       0.07307968468827
-                  3   3       0.06648960006228
+                  4   3       0.09141205195409
+                  5   3       0.08855438475154
+                  5   4       0.08816052438166
+                  4   4       0.07250624051451
+                  3   3       0.06569448711094
  
 
             Largest T2 amplitudes 
             ---------------------------------------------
                 [ i   j   a   b ]          T2(ij,ab)
             ---------------------------------------------
-                  5   3   8  17       0.06062971029104
-                  5   4  15  17       0.04855084887616
-                  5   5  17  17       0.04719781310503
-                  5   4  13  17       0.04431949878986
-                  4   3   8  15       0.04202704060358
+                  5   3   8  17       0.06088055175544
+                  5   4  15  17       0.04965291200147
+                  5   5  17  17       0.04743759445438
+                  5   4  13  17       0.04405285940589
+                  4   3   8  15       0.04301558299792
  
 
              *****************************************************
              *                                                   *
-             *      SCF-energy   :     -75.93770347957999        *
-             *      MP2-energy   :      -0.19094493726414        *
-             *      total        :     -76.12864841684413        *
+             *      SCF-energy   :     -75.95126160053999        *
+             *      MP2-energy   :      -0.19098307255238        *
+             *      total        :     -76.14224467309238        *
              *                                                   *
              *     (MP2-energy evaluated from T2 amplitudes)     *
              *                                                   *
@@ -635,12 +690,75 @@ next step = mpgrad
 
  
 ---------------------------------------------------------------------------
- trace of occupied-occupied block of relaxed density :   -0.095683629348218
- trace of virtual-virtual   block of relaxed density :    0.095683629348218
+ trace of occupied-occupied block of relaxed density :   -0.094941924479233
+ trace of virtual-virtual   block of relaxed density :    0.094941924479233
 ---------------------------------------------------------------------------
+ ==============================================================================
+                      COSMO switched on
+ ==============================================================================
+ COSMO stati: segments per atom: H   32 other atoms   92
+ COSMO statistics: nps    136 npspher:     92
+ COSMO surface:
+   number of segments:  136
+   area (bohr**2):      153.922244
+   volume (bohr**3):    172.807910
+ COSMO: check number of disjunct cavities:
+
+       ... OK contiguous cavity found
+   sym. distinct segments:   89
+   sym. dist. seg. on spheres:   76
+   min. distance between points:      0.321087
+   max. symmetrization distance error:      0.000031
+
+ Surface grid was constructed by projection of gridpoints of symmetry distict atoms.
+ This may lead to differences compared to C1 results.
+            ======================================================
+                      COSMO settings in RICC2
+                   --------------------------
+             Solvent charges are equilibrated for ground state
+             COSMO linear response (LR) contribution included
+             Outlying Charge Correction (OCC) is performed
+             Using epsilon          =    -1.000
+             Using refractive index =     1.300
+            ======================================================
+        IMPORTANT NOTICE: The calculation of the solvent contributions will
+         need the relaxed densities in general. Therefore the actual COSMO
+         energies will be output only at the end of the run. Any energies
+         or excitation energies quoted before that are only intermediate
+         quantities and should be ignored unless you know what you are doing!
+
+ ==============================================================================
+                                  COSMO SETTINGS
+ ==============================================================================
+  PARAMETER:
+    nppa:      1082
+    nspa:        92
+    nsph:        32
+    nps:        136
+    npspher:     92
+    disex:   10.0000    
+    disex2:  3538.50    
+    rsolv [A]: 1.3000
+    routf:     0.8500
+    phsran:    0.0    
+    ampran:   0.10E-04
+    cavity:  closed
+    epsilon: infinity
+    refind:     1.300
+    fepsi:      1.0000000
+  CAVITY VOLUME/AREA [a.u.]:
+    surface: V1.0, A matrix: V1.0
+    area:   153.92
+    volume:   172.81
+  ELEMENT RADIUS [A]: ATOM LIST
+    o  1.72: 1
+    h  1.30: 2,3
+ ==============================================================================
+ COSMO: cphf update in wdens   0
+COSMO: using sym. in pot. calc.
 
 ------------------------------------------------------------
- cpu needed for calculation of 2e-fock term     0.00 sec.
+ cpu needed for calculation of 2e-fock term     0.02 sec.
 ------------------------------------------------------------
 
           -------------------------------------------------
@@ -649,31 +767,94 @@ next step = mpgrad
 
    Requested convergence is     0.1000000000E-11  RMS 
 
-    iteration :   1    convergence :     0.4300491749E-03
-    iteration :   2    convergence :     0.6233704580E-04
-    iteration :   3    convergence :     0.4717662708E-06
-    iteration :   4    convergence :     0.9244216995E-08
-    iteration :   5    convergence :     0.4215409878E-09
-    iteration :   6    convergence :     0.2812134523E-11
-    iteration :   7    convergence :     0.2023284610E-13
+COSMO: using sym. in pot. calc.
+    iteration :   1    convergence :     0.4259681883E-03
+COSMO: using sym. in pot. calc.
+    iteration :   2    convergence :     0.4334379419E-04
+COSMO: using sym. in pot. calc.
+    iteration :   3    convergence :     0.3654474507E-06
+COSMO: using sym. in pot. calc.
+    iteration :   4    convergence :     0.5771646202E-08
+COSMO: using sym. in pot. calc.
+    iteration :   5    convergence :     0.1996771206E-09
+COSMO: using sym. in pot. calc.
+    iteration :   6    convergence :     0.2018838618E-11
+COSMO: using sym. in pot. calc.
+    iteration :   7    convergence :     0.3131985564E-13
 
  *** the iterative expansion of z(ai) converged after   7 iterations ***
 ----------------------------------------------------------------------
- cpu needed for solving the linear equation for z-vector     0.00 sec.
+ cpu needed for solving the linear equation for z-vector     0.01 sec.
 ----------------------------------------------------------------------
+ COSMO: cphf update in wdens   1
+COSMO: using sym. in pot. calc.
 
 ------------------------------------------------------------
  cpu needed for calculation of 2e-fock term     0.00 sec.
 ------------------------------------------------------------
+COSMO: using sym. in pot. calc.
+COSMO: using sym. in pot. calc.
+ COSMO: write data to file cosmo_transfer.tmp
+COSMO: using sym. in pot. calc.
+ ==============================================================================
+                              MP2 COSMO RESULTS
+ ==============================================================================
+  PARAMETER:
+    nppa:      1082
+    nspa:        92
+    nsph:        32
+    nps:        136
+    npspher:     92
+    disex:   10.0000    
+    disex2:  3538.50    
+    rsolv [A]: 1.3000
+    routf:     0.8500
+    phsran:    0.0    
+    ampran:   0.10E-04
+    cavity:  closed
+    epsilon: infinity
+    refind:     1.300
+    fepsi:      1.0000000
+  CAVITY VOLUME/AREA [a.u.]:
+    surface: V1.0, A matrix: V1.0
+    area:   153.92
+    volume:   172.81
+  MP2 SCREENING CHARGE:
+    cosmo      :  -0.004459
+    correction :   0.004032
+    total      :  -0.000427
+  ELEMENT RADIUS [A]: ATOM LIST
+    o  1.72: 1
+    h  1.30: 2,3
+ ==============================================================================
+  Energy contributions:
+   SCF energy (incl. COSMO)                               -75.9512616005
+       dielectric energy(charges from SCF step):           -0.0153752763
+         outlying charge correction (OCC):                 -0.0001586098
+   correlation energy:                                     -0.1909830726
+       direct COSMO contribution (through F):               0.0002237276
+
+  Total energies:
+   MP2-PTE energy (w/o OCC) :                             -76.1422446731
+   MP2-PTE energy (with OCC):                             -76.1424032829
+   MP2-PTED0 energy (w/o OCC):     -76.1422478690
+   MP2-PTED0 energy (with OCC):    -76.1423732832
+ ==============================================================================
 
  2e-integral 1st. derivatives will be neglected if expon. factor < 0.100000E-06
  outer boundary for 2e-integral derivative neglection is 0.500000E-07
 
 
- cpu to increment the 2e-gradient                           0.00 s
+ cpu to increment the 2e-gradient                           0.01 s
+ ==============================================================================
+                      COSMO switched on
+ ==============================================================================
+
+ ... calculate  PTE-COSMO contributions to 1e grad.
 
  1e-integral 1st. derivatives will be neglected if expon. factor < 0.100000E-10
 
+COSMO: already initialized
 ---------------------------------------------------------------------------
  cpu needed for calculation of the 1-electron contributions    0.00 sec.
 ---------------------------------------------------------------------------
@@ -687,21 +868,21 @@ next step = mpgrad
           ------------------------------------------------
 
   ATOM      1 o           2 h           3 h 
-dE/dx  0.0000000D+00  0.1151210D-04 -0.1151210D-04
+dE/dx  0.0000000D+00  0.7119061D-06 -0.7119061D-06
 dE/dy  0.0000000D+00  0.0000000D+00  0.0000000D+00
-dE/dz -0.1027997D-04  0.5139951D-05  0.5139951D-05
+dE/dz -0.1669097D-05  0.8345201D-06  0.8345201D-06
  
- resulting FORCE  (fx,fy,fz) = (0.000D+00,0.000D+00,-.653D-10)
+ resulting FORCE  (fx,fy,fz) = (0.000D+00,0.000D+00,-.571D-10)
  resulting MOMENT (mx,my,mz) = (0.000D+00,0.000D+00,0.000D+00)
 
 
- exx =       0.000034 eyy =       0.000000 ezz =       0.000011
+ exx =       0.000002 eyy =       0.000000 ezz =       0.000002
  eyz =       0.000000 exz =       0.000000 exy =       0.000000
 
 
  **********************************************************************
-  |maximum component of gradient| : 0.11512102E-04  (atom  2 h )       
-   gradient norm                  : 0.20580887E-04
+  |maximum component of gradient| : 0.16690974E-05  (atom  1 o )       
+   gradient norm                  : 0.22786739E-05
  **********************************************************************
    ***  cartesian gradients written onto <gradient>  ***
  
@@ -718,48 +899,48 @@ dE/dz -0.1027997D-04  0.5139951D-05  0.5139951D-05
  ------------------------------------------------------------------------------
                           charge      
  ------------------------------------------------------------------------------
-          10.000000     -10.000000       0.000000      -0.000000       0.000000
+          10.000000     -10.000000       0.000000       0.000000       0.000000
  
  ------------------------------------------------------------------------------
                        dipole moment  
  ------------------------------------------------------------------------------
-   x       0.000000      -0.000000      -0.000000      -0.000000      -0.000000
+   x       0.000000      -0.000000      -0.000000       0.000000      -0.000000
    y       0.000000       0.000000       0.000000       0.000000       0.000000
-   z      -5.190500       6.085389       0.894889      -0.009564       0.885324
+   z      -5.270502       6.291173       1.020672      -0.010348       1.010324
  
-   | dipole moment | =     0.8853 a.u. =     2.2503 debye 
+   | dipole moment | =     1.0103 a.u. =     2.5680 debye 
  
  ------------------------------------------------------------------------------
                      quadrupole moment
  ------------------------------------------------------------------------------
-  xx       4.239931      -7.336858      -3.096927      -0.069559      -3.166486
-  yy       0.000000      -5.330498      -5.330498      -0.049562      -5.380059
-  zz       4.673489     -10.093274      -5.419784      -0.041065      -5.460849
+  xx       4.199225      -7.191980      -2.992756      -0.066514      -3.059270
+  yy       0.000000      -5.354257      -5.354257      -0.043301      -5.397558
+  zz       4.818665     -10.331588      -5.512923      -0.036371      -5.549295
   xy       0.000000       0.000000       0.000000      -0.000000      -0.000000
-  xz       0.000000      -0.000000       0.000000       0.000000       0.000000
+  xz      -0.000000      -0.000000      -0.000000      -0.000000      -0.000000
   yz       0.000000      -0.000000      -0.000000      -0.000000      -0.000000
  
-     1/3  trace=      -4.669131
-     anisotropy=       2.255054
+     1/3  trace=      -4.668708
+     anisotropy=       2.417730
  
  ==============================================================================
  
 
 
     ------------------------------------------------------------------------
-         total  cpu-time :   0.04 seconds
-         total wall-time :   0.04 seconds
+         total  cpu-time :   0.07 seconds
+         total wall-time :   0.07 seconds
     ------------------------------------------------------------------------
 
    ****  mpgrad : all done  ****
 
 
-    2021-07-08 15:55:22.165 
+    2021-07-08 15:56:23.449 
 
 fine, there is no data group "$actual step"
 next step = relax
- energy change  : actual value =  -0.2302E-06 threshold =   0.1000E-05
- geom. gradient : actual value =   0.8791E-04 threshold =   0.1000E-02
+ energy change  : actual value =   0.2210E-07 threshold =   0.1000E-05
+ geom. gradient : actual value =   0.3142E-04 threshold =   0.1000E-02
 
-CONVERGENCY CRITERIA FULFILLED IN CYCLE 5
+CONVERGENCY CRITERIA FULFILLED IN CYCLE 6
 

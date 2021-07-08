@@ -8,7 +8,7 @@
     "start_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-07-07 14:47:13.129000"
+      "string": "2021-07-08 15:36:00.481000"
     }
   },
   "centers": {
@@ -88,7 +88,7 @@
     "end_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-07-07 14:47:13.140000"
+      "string": "2021-07-08 15:36:00.492000"
     }
   },
   "s2": null,

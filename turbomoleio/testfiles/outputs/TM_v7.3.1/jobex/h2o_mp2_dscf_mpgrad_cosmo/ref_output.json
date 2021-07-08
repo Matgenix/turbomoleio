@@ -16,20 +16,18 @@
         "@class": "ScfIterationData",
         "@version": "1.0.0",
         "energies": [
-          -75.937703474357,
-          -75.937703478569,
-          -75.937703479155,
-          -75.937703479446,
-          -75.93770347958
+          -75.951261600295,
+          -75.951261600628,
+          -75.951261600663,
+          -75.951261600544
         ],
         "first_index": 1,
-        "n_steps": 5,
+        "n_steps": 4,
         "dampings": [
           0.3,
           0.3,
           0.35,
-          0.4,
-          0.45
+          0.4
         ],
         "converged": true
       },
@@ -47,10 +45,10 @@
       "@module": "turbomoleio.output.data",
       "@class": "ScfEnergiesData",
       "@version": "1.0.0",
-      "total_energy": -75.93770347958,
-      "kinetic_energy": 75.83518869155,
-      "potential_energy": -151.77289217113,
-      "virial_theorem": 1.99865001464,
+      "total_energy": -75.95126160054,
+      "kinetic_energy": 75.8014650974,
+      "potential_energy": -151.75272669794,
+      "virial_theorem": 1.99802772857,
       "wavefunction_norm": 1.0
     },
     "electrostatic": {
@@ -62,42 +60,42 @@
       "dipole_vector": [
         -0.0,
         0.0,
-        0.894889
+        1.020672
       ],
-      "dipole_norm": 0.8949,
+      "dipole_norm": 1.0207,
       "quadrupole_tensor": [
         [
-          -3.096927,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          -5.330498,
+          -2.992756,
+          -0.0,
           -0.0
         ],
         [
-          0.0,
           -0.0,
-          -5.419784
+          -5.354257,
+          -0.0
+        ],
+        [
+          -0.0,
+          -0.0,
+          -5.512923
         ]
       ],
-      "quadrupole_trace": -13.847208,
-      "quadrupole_anisotropy": 2.279526
+      "quadrupole_trace": -13.859936999999999,
+      "quadrupole_anisotropy": 2.444699
     },
     "geometry": {
       "@module": "turbomoleio.output.data",
       "@class": "GeometryData",
       "@version": "1.0.0",
       "center_of_mass": [
+        -0.0,
         0.0,
-        0.0,
-        -0.61703779
+        -0.62654823
       ],
       "center_of_charge": [
         0.0,
         0.0,
-        -0.51905001
+        -0.52705016
       ],
       "molecule": {
         "@module": "pymatgen.core.structure",
@@ -116,7 +114,7 @@
             "xyz": [
               0.0,
               0.0,
-              -0.3923849124681187
+              -0.39843276239254266
             ],
             "properties": {}
           },
@@ -129,9 +127,9 @@
               }
             ],
             "xyz": [
-              0.7704873478892817,
+              0.7667798423895694,
               0.0,
-              0.19619245623405934
+              0.19921638119627133
             ],
             "properties": {}
           },
@@ -144,9 +142,9 @@
               }
             ],
             "xyz": [
-              -0.7704873478892817,
+              -0.7667798423895694,
               0.0,
-              0.19619245623405934
+              0.19921638119627133
             ],
             "properties": {}
           }
@@ -173,15 +171,15 @@
       "start_time": {
         "@module": "datetime",
         "@class": "datetime",
-        "string": "2021-07-08 15:55:22.095000"
+        "string": "2021-07-08 15:56:23.328000"
       },
       "end_time": {
         "@module": "datetime",
         "@class": "datetime",
-        "string": "2021-07-08 15:55:22.116000"
+        "string": "2021-07-08 15:56:23.370000"
       },
-      "cpu_time": 0.03,
-      "wall_time": 0.03
+      "cpu_time": 0.05,
+      "wall_time": 0.05
     },
     "tm": {
       "@module": "turbomoleio.output.data",
@@ -191,7 +189,58 @@
       "build": null,
       "executable": "dscf"
     },
-    "cosmo": null,
+    "cosmo": {
+      "@module": "turbomoleio.output.data",
+      "@class": "CosmoData",
+      "@version": "1.0.0",
+      "info": {
+        "area": 153.922244,
+        "volume": 172.80791
+      },
+      "parameters": {
+        "nppa": 1082,
+        "nspa": 92,
+        "nsph": 32,
+        "nps": 136,
+        "npspher": 92,
+        "disex": 10.0,
+        "disex2": 3538.5,
+        "rsolv": 1.3,
+        "routf": 0.85,
+        "phsran": 0.0,
+        "ampran": 1e-05,
+        "cavity": "closed",
+        "epsilon": "infinity",
+        "refind": 1.3,
+        "fepsi": 1.0
+      },
+      "screening_charge": {
+        "cosmo": -0.003999,
+        "correction": 0.003573,
+        "total": -0.000426
+      },
+      "energies": {
+        "total_energy": -75.9512616005439,
+        "total_energy_oc_corr": -75.9514202103,
+        "dielectric_energy": -0.0153752763,
+        "dielectric_energy_oc_corr": -0.015533886
+      },
+      "element_radius": {
+        "O": {
+          "radius": 1.72,
+          "sites": [
+            1
+          ]
+        },
+        "H": {
+          "radius": 1.3,
+          "sites": [
+            2,
+            3
+          ]
+        }
+      }
+    },
     "spin": {
       "@module": "turbomoleio.output.data",
       "@class": "SpinData",
@@ -227,20 +276,20 @@
     "@class": "MP2Output",
     "@version": "1.0.0",
     "info": null,
-    "energy": -76.12864841684413,
+    "energy": -76.14224467309238,
     "geometry": {
       "@module": "turbomoleio.output.data",
       "@class": "GeometryData",
       "@version": "1.0.0",
       "center_of_mass": [
+        -0.0,
         0.0,
-        0.0,
-        -0.61703779
+        -0.62654823
       ],
       "center_of_charge": [
         0.0,
         0.0,
-        -0.51905001
+        -0.52705016
       ],
       "molecule": {
         "@module": "pymatgen.core.structure",
@@ -259,7 +308,7 @@
             "xyz": [
               0.0,
               0.0,
-              -0.3923849124681187
+              -0.39843276239254266
             ],
             "properties": {}
           },
@@ -272,9 +321,9 @@
               }
             ],
             "xyz": [
-              0.7704873478892817,
+              0.7667798423895694,
               0.0,
-              0.19619245623405934
+              0.19921638119627133
             ],
             "properties": {}
           },
@@ -287,9 +336,9 @@
               }
             ],
             "xyz": [
-              -0.7704873478892817,
+              -0.7667798423895694,
               0.0,
-              0.19619245623405934
+              0.19921638119627133
             ],
             "properties": {}
           }
@@ -321,7 +370,19 @@
         "b2"
       ]
     },
-    "cosmo": null,
+    "cosmo": {
+      "@module": "turbomoleio.output.data",
+      "@class": "CosmoData",
+      "@version": "1.0.0",
+      "info": {
+        "area": 153.922244,
+        "volume": 172.80791
+      },
+      "parameters": null,
+      "screening_charge": null,
+      "energies": null,
+      "element_radius": null
+    },
     "run": {
       "@module": "turbomoleio.output.data",
       "@class": "RunData",
@@ -330,15 +391,15 @@
       "start_time": {
         "@module": "datetime",
         "@class": "datetime",
-        "string": "2021-07-08 15:55:22.134000"
+        "string": "2021-07-08 15:56:23.387000"
       },
       "end_time": {
         "@module": "datetime",
         "@class": "datetime",
-        "string": "2021-07-08 15:55:22.165000"
+        "string": "2021-07-08 15:56:23.449000"
       },
-      "cpu_time": 0.04,
-      "wall_time": 0.04
+      "cpu_time": 0.07,
+      "wall_time": 0.07
     },
     "tm": {
       "@module": "turbomoleio.output.data",
@@ -375,8 +436,8 @@
       "@module": "turbomoleio.output.data",
       "@class": "RelaxGradientsData",
       "@version": "1.0.0",
-      "norm_cartesian": 0.000101974,
-      "norm_internal": 0.000106026,
+      "norm_cartesian": 4.01809e-05,
+      "norm_internal": 3.15349e-05,
       "max_internal": null
     },
     "convergence": {
@@ -384,27 +445,27 @@
       "@class": "RelaxConvergenceData",
       "@version": "1.0.0",
       "energy_change": {
-        "value": 2e-07,
+        "value": 0.0,
         "thr": 1e-06,
         "conv": true
       },
       "rms_displ": {
-        "value": 0.0002285,
+        "value": 4.24e-05,
         "thr": 0.0005,
         "conv": true
       },
       "max_displ": {
-        "value": 0.0003032,
+        "value": 5.93e-05,
         "thr": 0.001,
         "conv": true
       },
       "rms_grad": {
-        "value": 7.5e-05,
+        "value": 2.23e-05,
         "thr": 0.0005,
         "conv": true
       },
       "max_grad": {
-        "value": 8.79e-05,
+        "value": 3.14e-05,
         "thr": 0.001,
         "conv": true
       }
@@ -417,12 +478,12 @@
       "start_time": {
         "@module": "datetime",
         "@class": "datetime",
-        "string": "2021-07-08 15:55:22.072000"
+        "string": "2021-07-08 15:56:23.304000"
       },
       "end_time": {
         "@module": "datetime",
         "@class": "datetime",
-        "string": "2021-07-08 15:55:22.078000"
+        "string": "2021-07-08 15:56:23.310000"
       },
       "cpu_time": 0.01,
       "wall_time": 0.01

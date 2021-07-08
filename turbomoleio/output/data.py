@@ -1426,15 +1426,15 @@ class AoforceVibrationalData(BaseData):
 
 class MP2Data(BaseData):
     """
-    MP2 data object.
+    MP2 data object containing parameters used to run the MP2 calculation.
     """
 
-    def __init__(self, energy=None):
+    def __init__(self, energy_only=None):
         """
         Args:
-            energy (float): MP2 energy.
+            energy_only (bool): whether this is an energy-only MP2 calculation.
         """
-        self.energy = energy
+        self.energy_only = energy_only
 
     @classmethod
     def from_parser(cls, parser):
@@ -1447,6 +1447,37 @@ class MP2Data(BaseData):
 
         Returns:
             MP2Data.
+        """
+        data = parser.mp2_data
+        if not data:
+            return None
+
+        return cls(**data)
+
+
+class MP2Results(BaseData):
+    """
+    MP2 results object.
+    """
+
+    def __init__(self, energy=None):
+        """
+        Args:
+            energy (float): MP2 energy.
+        """
+        self.energy = energy
+
+    @classmethod
+    def from_parser(cls, parser):
+        """
+        Generates an instance of MP2Results from a parser based on the stdout
+        of a Turbomole executable. Returns None if no data could be parsed.
+
+        Args:
+            parser (Parser): the parser to be used to extract the data.
+
+        Returns:
+            MP2Results.
         """
         data = parser.mp2_results
         if not data or "energy" not in data:

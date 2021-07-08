@@ -189,12 +189,12 @@
       "start_time": {
         "@module": "datetime",
         "@class": "datetime",
-        "string": "2021-07-08 10:22:51.002000"
+        "string": "2021-07-08 15:53:21.289000"
       },
       "end_time": {
         "@module": "datetime",
         "@class": "datetime",
-        "string": "2021-07-08 10:22:51.029000"
+        "string": "2021-07-08 15:53:21.316000"
       },
       "cpu_time": 0.03,
       "wall_time": 0.03
@@ -241,7 +241,7 @@
     "@version": "1.0.0",
     "mp2": {
       "@module": "turbomoleio.output.data",
-      "@class": "MP2Data",
+      "@class": "MP2Results",
       "@version": "1.0.0",
       "energy": -76.1263574831
     },
@@ -253,14 +253,14 @@
       "start_time": {
         "@module": "datetime",
         "@class": "datetime",
-        "string": "2021-07-08 10:22:51.047000"
+        "string": "2021-07-08 15:53:21.334000"
       },
       "end_time": {
         "@module": "datetime",
         "@class": "datetime",
-        "string": "2021-07-08 10:22:51.137000"
+        "string": "2021-07-08 15:53:21.426000"
       },
-      "cpu_time": 0.09,
+      "cpu_time": 0.1,
       "wall_time": 0.1
     },
     "tm": {
@@ -340,12 +340,12 @@
       "start_time": {
         "@module": "datetime",
         "@class": "datetime",
-        "string": "2021-07-08 10:22:50.981000"
+        "string": "2021-07-08 15:53:21.267000"
       },
       "end_time": {
         "@module": "datetime",
         "@class": "datetime",
-        "string": "2021-07-08 10:22:50.985000"
+        "string": "2021-07-08 15:53:21.271000"
       },
       "cpu_time": 0.01,
       "wall_time": 0.01

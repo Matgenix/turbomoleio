@@ -1,14 +1,14 @@
 {
   "all_done": true,
   "header": {
-    "executable": "ricc2",
+    "executable": "mpgrad",
     "host": "fedora",
     "tm_version": "7.3.1",
     "tm_build": null,
     "start_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-07-08 15:57:34.296000"
+      "string": "2021-07-08 15:36:00.726000"
     }
   },
   "centers": {
@@ -81,24 +81,52 @@
   "scf_iterations": null,
   "scf_energies": null,
   "cosmo_results": null,
-  "electrostatic_moments": null,
+  "electrostatic_moments": {
+    "unrestricted_electrons": null,
+    "charge": -0.0,
+    "dipole": {
+      "norm": 0.8817,
+      "moment": [
+        -0.0,
+        0.0,
+        0.881658
+      ]
+    },
+    "quadrupole": {
+      "trace": -13.97946,
+      "anisotropy": 2.175996,
+      "moment": [
+        [
+          -3.209951,
+          -0.0,
+          -0.0
+        ],
+        [
+          -0.0,
+          -5.343175,
+          -0.0
+        ],
+        [
+          -0.0,
+          -0.0,
+          -5.426335
+        ]
+      ]
+    }
+  },
   "timings": {
-    "cpu_time": 0.09,
-    "wall_time": 0.1,
+    "cpu_time": 0.04,
+    "wall_time": 0.05,
     "end_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-07-08 15:57:34.386000"
+      "string": "2021-07-08 15:36:00.765000"
     }
   },
   "s2": null,
   "is_uhf": false,
   "fermi": null,
-  "integral": {
-    "integral_neglect_threshold": 1e-08,
-    "thize": 1e-05,
-    "thime": 5
-  },
+  "integral": null,
   "pre_escf_run": null,
   "escf_iterations": null,
   "escf_gs_total_en": null,
@@ -107,36 +135,36 @@
   "gradient": {
     "gradients": [
       [
-        -1.107826e-14,
-        -3.980547e-14,
-        0.02753525
+        -1.509903e-14,
+        9.668488e-14,
+        0.02743353
       ],
       [
-        -0.02103091,
-        1.831634e-14,
-        -0.01376763
+        -0.02101973,
+        -4.717313e-14,
+        -0.01371676
       ],
       [
-        0.02103091,
-        2.423875e-14,
-        -0.01376763
+        0.02101973,
+        -4.676275e-14,
+        -0.01371676
       ]
     ],
     "dielectric": [
       [
-        0.0,
-        0.0,
+        -0.059576,
+        -0.0,
         0.0
       ],
       [
+        -0.0,
         0.0,
-        0.0,
-        0.0
+        -0.0
       ],
       [
         0.0,
-        0.0,
-        0.0
+        -0.0,
+        -0.029858
       ]
     ]
   },
@@ -148,6 +176,6 @@
   "aoforce_numerical_integration": null,
   "aoforce_analysis": null,
   "mp2_results": {
-    "energy": -76.1252418682
+    "energy": -76.12753617782002
   }
 }

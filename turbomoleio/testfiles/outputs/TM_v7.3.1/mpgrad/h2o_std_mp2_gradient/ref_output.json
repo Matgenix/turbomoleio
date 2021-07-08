@@ -3,7 +3,7 @@
   "@class": "MP2Output",
   "@version": "1.0.0",
   "info": null,
-  "energy": -76.1252418682,
+  "energy": -76.12753617782002,
   "geometry": {
     "@module": "turbomoleio.output.data",
     "@class": "GeometryData",
@@ -103,15 +103,15 @@
     "start_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-07-08 15:57:34.296000"
+      "string": "2021-07-08 15:36:00.726000"
     },
     "end_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-07-08 15:57:34.386000"
+      "string": "2021-07-08 15:36:00.765000"
     },
-    "cpu_time": 0.09,
-    "wall_time": 0.1
+    "cpu_time": 0.04,
+    "wall_time": 0.05
   },
   "tm": {
     "@module": "turbomoleio.output.data",
@@ -119,6 +119,6 @@
     "@version": "1.0.0",
     "version": "7.3.1",
     "build": null,
-    "executable": "ricc2"
+    "executable": "mpgrad"
   }
 }

@@ -24,8 +24,10 @@ testlist:
     - h2o_dscf_unconv1
     - h2o_dscf_unconv2
     - h2o_mp2_dscf_mpgrad
+    - h2o_mp2_dscf_mpgrad_cosmo
   mpgrad:
     - h2o_std_mp2
+    - h2o_std_mp2_gradient
   rdgrad:
     - h2o_dftd3-bj
   relax:
