@@ -83,6 +83,10 @@ def get_args(parser):
     parser.add_argument("--only_control", help="Whether to only regenerate the control file and not the output files "
                                                "(default is to regenerate both the control and the output files).",
                         action="store_true", default=False)
+    parser.add_argument("--no_gen_control_update",
+                        help="Do not update and backup coord, control and "
+                             "other related files in the generation folder.",
+                        action="store_true", default=False)
     parser.add_argument("--force", help="Overwrite existing files if any (default is: "
                                         "do not overwrite existing files).",
                         action="store_true", default=False)
@@ -165,6 +169,22 @@ def get_version_dir(args):
     return vdir, ref_version_dir
 
 
+def get_paths_and_deftest(args, version_dir, ref_version_dir, tm_exec, test_name):
+    """Set up the directories and get the deftest config for the test tm_exec/test_name."""
+    test_dir = os.path.join(version_dir, tm_exec, test_name)
+    if not args.force and os.path.exists(test_dir):
+        print('Test directory exists. Use --force to overwrite.')
+        exit()
+    test_run_dir = os.path.join(test_dir, 'run')
+    ref_test_dir = os.path.join(ref_version_dir, tm_exec, test_name)
+    gen_test_dir = os.path.join(gen_dir, tm_exec, test_name)
+    deftest_fpath = os.path.join(gen_test_dir, "test.yaml")
+    if not os.path.isfile(deftest_fpath):
+        raise RuntimeError(f'No test.yaml file for test {tm_exec}/{test_name}')
+    deftest = loadfn(deftest_fpath)
+    return test_dir, test_run_dir, ref_test_dir, gen_test_dir, deftest
+
+
 def get_coord(test_definition, rundir, gendir):
     """Copy the coord file to the run directory of the test"""
     if 'coord' in test_definition:
@@ -204,17 +224,10 @@ def main():
     version_dir, ref_version_dir = get_version_dir(args)
 
     for tm_exec, test_name in tests_list:
-        test_dir = os.path.join(version_dir, tm_exec, test_name)
-        if not args.force and os.path.exists(test_dir):
-            print('Test directory exists. Use --force to overwrite.')
-            exit()
-        test_run_dir = os.path.join(test_dir, 'run')
-        ref_test_dir = os.path.join(ref_version_dir, tm_exec, test_name)
-        gen_test_dir = os.path.join(gen_dir, tm_exec, test_name)
-        deftest_fpath = os.path.join(gen_test_dir, "test.yaml")
-        if not os.path.isfile(deftest_fpath):
-            raise RuntimeError(f'No test.yaml file for test {tm_exec}/{test_name}')
-        deftest = loadfn(deftest_fpath)
+        # Set up test directories and get deftest configuration
+        test_dir, test_run_dir, ref_test_dir, gen_test_dir, deftest = get_paths_and_deftest(
+            args, version_dir, ref_version_dir, tm_exec, test_name
+        )
         if deftest.get('disable', False):
             print(f'!Generation of outputs for test {tm_exec}/{test_name} is disabled')
             continue
@@ -265,16 +278,17 @@ def main():
                         prev_gen_control_dir = os.path.join(gen_test_dir, TM_VERSIONS[-1])
                     else:
                         prev_gen_control_dir = os.path.join(gen_test_dir, args.compare_to)
-                    if os.path.exists(os.path.join(gen_test_dir, 'control')):
-                        # This is to back up the control, coord and basis files used for the previous version
-                        # Not performed for a completely new test
-                        makedirs_p(prev_gen_control_dir)
-                        cpc(prev_gen_control_dir, control_dir=gen_test_dir)
-                    # Copy the coord, control and basis files of the current Turbomole version to the
-                    # generation directory
-                    for fname in ['control', 'coord', 'basis', 'auxbasis']:
-                        if os.path.exists(fname):
-                            shutil.copy(fname, gen_test_dir)
+                    if not args.no_gen_control_update:
+                        if os.path.exists(os.path.join(gen_test_dir, 'control')):
+                            # This is to back up the control, coord and basis files used for the previous version
+                            # Not performed for a completely new test
+                            makedirs_p(prev_gen_control_dir)
+                            cpc(prev_gen_control_dir, control_dir=gen_test_dir)
+                        # Copy the coord, control and basis files of the current Turbomole version to the
+                        # generation directory
+                        for fname in ['control', 'coord', 'basis', 'auxbasis']:
+                            if os.path.exists(fname):
+                                shutil.copy(fname, gen_test_dir)
                 generate_reference_output(test_definition=deftest)
 
                 if tm_exec == 'jobex':
