@@ -50,6 +50,8 @@ import shutil
 
 gen_dir = os.path.join(TESTDIR, 'outputs', 'generation')
 OUTPUTS_BASENAMES = loadfn(os.path.join(gen_dir, 'tests_config.yaml'))['testlist']
+exec_to_out_obj = dict(exec_to_out_obj)
+exec_to_out_obj['jobex'] = JobexOutput
 
 
 def get_args(parser):
@@ -235,7 +237,8 @@ def generate_control(print_diffs, deftest, gen_test_dir, test_run_dir, all_diffs
         gen_test_dir: Generation test directory (where information about generation is stored).
         test_run_dir: Run test directory (where Turbomole is run before output files are compared and then
             copied to the test directory).
-        all_diffs: Dictionary containing the differences for this test.
+        all_diffs: Dictionary containing the differences for this test. Will be updated if differences are found
+            between the new and the reference control files.
     """
     # Some tests use a fixed control file
     if deftest.get('fixed_control', False):
@@ -270,7 +273,7 @@ def get_coord(test_definition, rundir, gendir):
     Args:
         test_definition: Configuration of the test
         rundir: Directory where the test is run.
-        gendir:Directory where the generation information is stored.
+        gendir: Directory where the generation information is stored.
     """
     if 'coord' in test_definition:
         coord_fpath = os.path.join(gendir, test_definition['coord'])
@@ -278,6 +281,38 @@ def get_coord(test_definition, rundir, gendir):
         coord_fpath = os.path.join(gendir, 'coord')
 
     shutil.copy(coord_fpath, os.path.join(rundir, 'coord'))
+
+
+def cpc_backup_previous_control(gen_test_dir, compare_to, no_gen_control_update):
+    """
+    Back up the coord, control and basis files of the previous Turbomole reference folder and copy the new
+    ones to the generation folder.
+
+    Note:
+        This should be called from the corresponding test run directory.
+
+    Args:
+        gen_test_dir: Generation test directory where to copy the new coord, control and basis files.
+        compare_to: Reference version for which a backup is needed. If None, the previous version directory is used.
+        no_gen_control_update: Whether to actually copy the new coord, control and basis files to the generation
+            directory.
+    """
+    # Keep a copy of the coord, control and basis files of the previous Turbomole reference folder
+    if compare_to is None:
+        prev_gen_control_dir = os.path.join(gen_test_dir, TM_VERSIONS[-1])
+    else:
+        prev_gen_control_dir = os.path.join(gen_test_dir, compare_to)
+    if not no_gen_control_update:
+        if os.path.exists(os.path.join(gen_test_dir, 'control')):
+            # This is to back up the control, coord and basis files used for the previous version
+            # Not performed for a completely new test
+            makedirs_p(prev_gen_control_dir)
+            cpc(prev_gen_control_dir, control_dir=gen_test_dir)
+        # Copy the coord, control and basis files of the current Turbomole version to the
+        # generation directory
+        for fname in ['control', 'coord', 'basis', 'auxbasis']:
+            if os.path.exists(fname):
+                shutil.copy(fname, gen_test_dir)
 
 
 def generate_mos(deftest, test_run_dir, gen_test_dir):
@@ -308,8 +343,57 @@ def generate_mos(deftest, test_run_dir, gen_test_dir):
     dr.run_generate_mo_files()
 
 
-exec_to_out_obj = dict(exec_to_out_obj)
-exec_to_out_obj['jobex'] = JobexOutput
+def get_log_fpath(test_run_dir, tm_exec):
+    """Get the absolute path of the log file.
+
+    Args:
+        test_run_dir: Absolute path to the run test directory.
+        tm_exec: Turbomole executable being tested.
+
+    Returns:
+        Absolute path to the log file of the run.
+    """
+    if tm_exec == 'jobex':
+        return os.path.join(test_run_dir, 'job.last')
+    else:
+        return os.path.join(test_run_dir, f'{tm_exec}.log')
+
+
+def compare_to_reference_files(log_fpath, ref_test_dir, out_cls, rtol, atol, print_diffs, all_diffs,
+                               dryrun, tm_exec, ref_fname='ref_output.json'):
+    """
+    Compare the generated log file with the reference one.
+
+    Args:
+        log_fpath: Absolute path to the generated log file.
+        ref_test_dir: Absolute path of the reference test directory.
+        out_cls: Output object used to parse the log file.
+        rtol: relative tolerance.
+        atol: absolute tolerance.
+        print_diffs: Whether to print the differences found.
+        all_diffs: Dictionary containing the differences for this test. Will be updated if differences are found
+            between the new and the reference log files.
+        dryrun: Whether to store the differences in all_diffs to be dumped at the end.
+        tm_exec: Turbomole executable being tested.
+        ref_fname: Filename of the json-serialized reference output object.
+    """
+    ref_fpath = os.path.join(ref_test_dir, ref_fname)
+    if os.path.exists(ref_fpath):
+        ref_out = loadfn(ref_fpath, cls=None)
+    else:
+        # When creating a new test, the reference object does not exist yet
+        ref_out = None
+
+    gen_out = out_cls.from_file(log_fpath).as_dict()
+
+    out_diffs = compare_differences(gen_out, ref_out, rtol=rtol, atol=atol)
+    if out_diffs:
+        if print_diffs:
+            print(f'There are differences in the parsed {out_cls.__name__} output file objects:')
+            for idiff, diff in enumerate(out_diffs, start=1):
+                print(f'#{idiff} {diff[0]}\n  {diff[1]}')
+        if dryrun:
+            all_diffs[tm_exec] = out_diffs
 
 
 def main():
@@ -351,71 +435,33 @@ def main():
             # Run the Turbomole executables
             if not args.only_control:
                 if not dryrun:
-                    # Keep a copy of the coord, control and basis files of the previous Turbomole reference folder
-                    if args.compare_to is None:
-                        prev_gen_control_dir = os.path.join(gen_test_dir, TM_VERSIONS[-1])
-                    else:
-                        prev_gen_control_dir = os.path.join(gen_test_dir, args.compare_to)
-                    if not args.no_gen_control_update:
-                        if os.path.exists(os.path.join(gen_test_dir, 'control')):
-                            # This is to back up the control, coord and basis files used for the previous version
-                            # Not performed for a completely new test
-                            makedirs_p(prev_gen_control_dir)
-                            cpc(prev_gen_control_dir, control_dir=gen_test_dir)
-                        # Copy the coord, control and basis files of the current Turbomole version to the
-                        # generation directory
-                        for fname in ['control', 'coord', 'basis', 'auxbasis']:
-                            if os.path.exists(fname):
-                                shutil.copy(fname, gen_test_dir)
+                    # Backup the previous coord, control and basis files and copy the new ones to the generation test
+                    # directory
+                    cpc_backup_previous_control(gen_test_dir, args.compare_to, args.no_gen_control_update)
+
+                # Run Turbomole and get the new log files.
                 generate_reference_output(test_definition=deftest)
 
-                if tm_exec == 'jobex':
-                    log_fpath = os.path.join(test_run_dir, 'job.last')
-                else:
-                    log_fpath = os.path.join(test_run_dir, f'{tm_exec}.log')
-
-                ref_fpath = os.path.join(ref_test_dir, 'ref_output.json')
-                if os.path.exists(ref_fpath):
-                    ref_out = loadfn(ref_fpath, cls=None)
-                else:
-                    # When creating a new test, the reference object does not exist yet
-                    ref_out = None
+                # Compare the generated log files with the references
+                log_fpath = get_log_fpath(test_run_dir, tm_exec)
                 out_cls = exec_to_out_obj[tm_exec]
-
-                gen_out = out_cls.from_file(log_fpath).as_dict()
-
-                out_diffs = compare_differences(gen_out, ref_out, rtol=args.rtol, atol=args.atol)
-                if out_diffs:
-                    if args.print_diffs:
-                        print('There are differences in the parsed output file objects:')
-                        for idiff, diff in enumerate(out_diffs, start=1):
-                            print(f'#{idiff} {diff[0]}\n  {diff[1]}')
-                    if dryrun:
-                        all_diffs[tm_exec] = out_diffs
+                compare_to_reference_files(log_fpath, ref_test_dir, out_cls, args.rtol, args.atol,
+                                           args.print_diffs, all_diffs,
+                                           dryrun, tm_exec, ref_fname='ref_output.json')
                 if tm_exec == 'escf':
-                    ref_out_escf_only_fpath = os.path.join(ref_test_dir, 'ref_escf_output.json')
-                    if os.path.exists(ref_out_escf_only_fpath):
-                        ref_out_escf_only = loadfn(ref_out_escf_only_fpath, cls=None)
-                    else:
-                        # When creating a new test, the reference object does not exist yet
-                        ref_out_escf_only = None
-                    gen_out_escf_only = EscfOnlyOutput.from_file(log_fpath).as_dict()
-                    out_escf_only_diffs = compare_differences(gen_out_escf_only, ref_out_escf_only,
-                                                              rtol=args.rtol, atol=args.atol)
-                    if out_escf_only_diffs:
-                        if args.print_diffs:
-                            print('There are differences in the parsed escf-only output file objects:')
-                            for idiff, diff in enumerate(out_escf_only_diffs, start=1):
-                                print(f'#{idiff} {diff[0]}\n  {diff[1]}')
-                        if dryrun:
-                            all_diffs['escf_only'] = out_escf_only_diffs
+                    compare_to_reference_files(log_fpath, ref_test_dir, EscfOnlyOutput, args.rtol, args.atol,
+                                               args.print_diffs, all_diffs,
+                                               dryrun, tm_exec, ref_fname='ref_escf_output.json')
 
+                # Generate the new json-serialized reference output and parser objects
                 if not dryrun:
                     generate_reference_out_parser_files(log_fpath, outdir=test_dir)
 
+            # Dump the file containing the differences found for this test
             if dryrun:
                 dumpfn(all_diffs, os.path.join(test_dir, args.dryrun_fname), indent=2)
 
+        # Remove the run directories
         if not args.keep_rundirs:
             shutil.rmtree(test_run_dir)
 
