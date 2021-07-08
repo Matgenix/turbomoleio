@@ -53,7 +53,14 @@ OUTPUTS_BASENAMES = loadfn(os.path.join(gen_dir, 'tests_config.yaml'))['testlist
 
 
 def get_args(parser):
-    """Get arguments for script."""
+    """Get arguments for script.
+
+    Args:
+        parser: ArgumentParser object.
+
+    Returns:
+        Namespace with all the arguments from the parser.
+    """
     parser.add_argument("--list", help="Print list of all tests.",
                         action="store_true", default=False)
     group = parser.add_mutually_exclusive_group()
@@ -110,12 +117,20 @@ def print_tests():
         print(tm_exec, test_names)
 
 
-def get_tests_list(args, parser):
-    """Get the list of tests to be performed."""
+def get_tests_list(test, parser):
+    """Get the list of tests to be performed.
+
+    Args:
+        test: String identifying the test or None. If None, all tests are returned.
+        parser: ArgumentParser object. Used to signal a parser error.
+
+    Returns:
+        list: List of the tests to be performed.
+    """
     tests_list = []
-    if args.test:
-        if len(args.test) == 1:
-            name = args.test[0]
+    if test:
+        if len(test) == 1:
+            name = test[0]
             if name in OUTPUTS_BASENAMES:
                 tests_list = [(name, test) for test in OUTPUTS_BASENAMES[name]]
             else:
@@ -124,8 +139,8 @@ def get_tests_list(args, parser):
                     for tm_exec, tests in OUTPUTS_BASENAMES.items()
                     for test in tests if name == test
                 ]
-        elif len(args.test) == 2:
-            tm_exec, tname = args.test
+        elif len(test) == 2:
+            tm_exec, tname = test
             if tm_exec not in OUTPUTS_BASENAMES:
                 parser.error(f'TM exec "{tm_exec}" not found.')
             if tname not in OUTPUTS_BASENAMES[tm_exec]:
@@ -133,7 +148,7 @@ def get_tests_list(args, parser):
             tests_list = [(tm_exec, tname)]
         else:
             parser.error(
-                f'argument --test accepts either 1 or 2 values ({len(args.test)} given).'
+                f'argument --test accepts either 1 or 2 values ({len(test)} given).'
             )
     else:
         tests_list = [
@@ -146,33 +161,57 @@ def get_tests_list(args, parser):
     return tests_list
 
 
-def get_version_dir(args):
-    """Get the version directory"""
+def get_version_dir(version_dir, force, compare_to):
+    """Get the version directories: current version used and reference version.
+
+    Args:
+        version_dir: Explicitly defined directory for the tests. Default directory is set up if it is None.
+        force: Whether to force overwriting of existing test directories.
+        compare_to: To which version directory the current generated tests should be compared. Default is None, i.e.
+            compare to the previous version.
+
+    Returns:
+        tuple: Directory for the tests with the current version and directory of the reference version.
+    """
     tm_version = get_tm_version()
     print(f'Turbomole version {tm_version} detected')
-    version_dir = args.version_dir
     if not version_dir:
         version_dir = f'TM_v{tm_version}'
     vdir = os.path.join(TESTDIR, 'outputs', version_dir)
-    if not args.force and os.path.exists(vdir):
+    if not force and os.path.exists(vdir):
         print('Directory exists. If generation of existing tests is performed, code will exit. '
               'Use --force to overwrite.')
     print(f'Version directory will be <{version_dir}>.\n'
           f'New reference output files will be generated in <testfiles/outputs/{version_dir}>.')
-    if args.compare_to is None:
+    if compare_to is None:
         ref_version_dir = os.path.join(TESTDIR, 'outputs', TM_VERSIONS[-1])
     else:
-        ref_version_dir = os.path.join(TESTDIR, 'outputs', args.compare_to)
+        ref_version_dir = os.path.join(TESTDIR, 'outputs', compare_to)
     if not os.path.exists(ref_version_dir):
         print('Reference version directory does not exist')
         exit()
     return vdir, ref_version_dir
 
 
-def get_paths_and_deftest(args, version_dir, ref_version_dir, tm_exec, test_name):
-    """Set up the directories and get the deftest config for the test tm_exec/test_name."""
+def get_paths_and_deftest(force, version_dir, ref_version_dir, tm_exec, test_name):
+    """Set up the directories and get the deftest config for the test tm_exec/test_name.
+
+    Args:
+        force: Whether to force overwriting of existing test directories.
+        version_dir: Absolute path of the current version directory.
+        ref_version_dir: Absolute path of the reference version directory.
+        tm_exec: String identifying the Turbomole executable being tested.
+        test_name: String identifying the name of the test.
+
+    Returns:
+        tuple: Absolute path of the test directory (where new reference files should be copied),
+            of the run directory (where Turbomole is run before output files are compared and then
+            copied to the test directory), of the reference test directory (where reference files
+            are stored), of the generation test directory (where information about generation is
+            stored), and configuration of the test as dictionary.
+    """
     test_dir = os.path.join(version_dir, tm_exec, test_name)
-    if not args.force and os.path.exists(test_dir):
+    if not force and os.path.exists(test_dir):
         print('Test directory exists. Use --force to overwrite.')
         exit()
     test_run_dir = os.path.join(test_dir, 'run')
@@ -185,7 +224,19 @@ def get_paths_and_deftest(args, version_dir, ref_version_dir, tm_exec, test_name
     return test_dir, test_run_dir, ref_test_dir, gen_test_dir, deftest
 
 
-def generate_control(args, deftest, gen_test_dir, test_run_dir, all_diffs):
+def generate_control(print_diffs, deftest, gen_test_dir, test_run_dir, all_diffs):
+    """
+    Generate the control file and related files and compare the generated control file with the reference
+    control file from the generation directory.
+
+    Args:
+        print_diffs: Whether to print the differences between the generated and reference control files.
+        deftest: Configuration of the test specifying how to run define (i.e. which define template/parameters to use).
+        gen_test_dir: Generation test directory (where information about generation is stored).
+        test_run_dir: Run test directory (where Turbomole is run before output files are compared and then
+            copied to the test directory).
+        all_diffs: Dictionary containing the differences for this test.
+    """
     # Some tests use a fixed control file
     if deftest.get('fixed_control', False):
         generate_mos(deftest, test_run_dir, gen_test_dir)
@@ -204,7 +255,7 @@ def generate_control(args, deftest, gen_test_dir, test_run_dir, all_diffs):
         test_control = Control.from_file(os.path.join(test_run_dir, 'control'))
         control_diffs = test_control.compare(ref_control, return_all_diffs=True)
         if control_diffs:
-            if args.print_diffs:
+            if print_diffs:
                 msg = 'There are differences in the control files generated:\n'
                 for idiff, diff in enumerate(control_diffs, start=1):
                     msg += f'#{idiff} {diff}\n'
@@ -213,7 +264,14 @@ def generate_control(args, deftest, gen_test_dir, test_run_dir, all_diffs):
 
 
 def get_coord(test_definition, rundir, gendir):
-    """Copy the coord file to the run directory of the test"""
+    """
+    Copy the coord file to the run directory of the test
+
+    Args:
+        test_definition: Configuration of the test
+        rundir: Directory where the test is run.
+        gendir:Directory where the generation information is stored.
+    """
     if 'coord' in test_definition:
         coord_fpath = os.path.join(gendir, test_definition['coord'])
     else:
@@ -223,6 +281,22 @@ def get_coord(test_definition, rundir, gendir):
 
 
 def generate_mos(deftest, test_run_dir, gen_test_dir):
+    """
+    Generate initial MO files (mos or alpha/beta).
+
+    This uses the existing control and related files in the generation directory of the test.
+    First a "cpc" (copy control) is performed from gen_test_dir to test_run_dir, the run
+    directory for the test.
+
+    Args:
+        deftest: Configuration of the test.
+        test_run_dir: Directory where the test is run.
+        gen_test_dir: Directory where the generation information is stored. The control and related files
+            are also stored in this directory.
+
+    Returns:
+        None
+    """
     if deftest['define'] and deftest['define']['template']:
         dp = get_define_template(deftest['define']['template'])
     else:
@@ -246,14 +320,14 @@ def main():
     if args.list:
         return print_tests()
 
-    tests_list = get_tests_list(args, parser)
+    tests_list = get_tests_list(args.test, parser)
     dryrun = args.dryrun
-    version_dir, ref_version_dir = get_version_dir(args)
+    version_dir, ref_version_dir = get_version_dir(args.version_dir, args.force, args.compare_to)
 
     for tm_exec, test_name in tests_list:
         # Set up test directories and get deftest configuration
         test_dir, test_run_dir, ref_test_dir, gen_test_dir, deftest = get_paths_and_deftest(
-            args, version_dir, ref_version_dir, tm_exec, test_name
+            args.force, version_dir, ref_version_dir, tm_exec, test_name
         )
         if deftest.get('disable', False):
             print(f'!Generation of outputs for test {tm_exec}/{test_name} is disabled')
@@ -269,7 +343,7 @@ def main():
             all_diffs = {}
             # Generate the control file
             if args.generate_control:
-                generate_control(args, deftest, gen_test_dir, test_run_dir, all_diffs)
+                generate_control(args.print_diffs, deftest, gen_test_dir, test_run_dir, all_diffs)
             # Copy the control file and generate the initial mos
             else:
                 generate_mos(deftest, test_run_dir, gen_test_dir)
