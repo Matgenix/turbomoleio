@@ -185,6 +185,33 @@ def get_paths_and_deftest(args, version_dir, ref_version_dir, tm_exec, test_name
     return test_dir, test_run_dir, ref_test_dir, gen_test_dir, deftest
 
 
+def generate_control(args, deftest, gen_test_dir, test_run_dir, all_diffs):
+    # Some tests use a fixed control file
+    if deftest.get('fixed_control', False):
+        generate_mos(deftest, test_run_dir, gen_test_dir)
+    elif deftest.get('define', None) is None:
+        raise ValueError('No define template and/or parameters provided for reference test generation.')
+    else:
+        generate_control_for_test(test_definition=deftest)
+        ref_control_fpath = os.path.join(
+            gen_test_dir, deftest['control']
+            if 'control' in deftest else 'control'
+        )
+        if os.path.exists(ref_control_fpath):
+            ref_control = Control.from_file(ref_control_fpath)
+        else:
+            ref_control = Control.empty()
+        test_control = Control.from_file(os.path.join(test_run_dir, 'control'))
+        control_diffs = test_control.compare(ref_control, return_all_diffs=True)
+        if control_diffs:
+            if args.print_diffs:
+                msg = 'There are differences in the control files generated:\n'
+                for idiff, diff in enumerate(control_diffs, start=1):
+                    msg += f'#{idiff} {diff}\n'
+                print(msg)
+            all_diffs['control'] = control_diffs
+
+
 def get_coord(test_definition, rundir, gendir):
     """Copy the coord file to the run directory of the test"""
     if 'coord' in test_definition:
@@ -242,31 +269,8 @@ def main():
             all_diffs = {}
             # Generate the control file
             if args.generate_control:
-                # Some tests use a fixed control file
-                if deftest.get('fixed_control', False):
-                    generate_mos(deftest, test_run_dir, gen_test_dir)
-                elif deftest.get('define', None) is None:
-                    raise ValueError('No define template and/or parameters provided for reference test generation.')
-                else:
-                    generate_control_for_test(test_definition=deftest)
-                    ref_control_fpath = os.path.join(
-                        gen_test_dir, deftest['control']
-                        if 'control' in deftest else 'control'
-                    )
-                    if os.path.exists(ref_control_fpath):
-                        ref_control = Control.from_file(ref_control_fpath)
-                    else:
-                        ref_control = Control.empty()
-                    test_control = Control.from_file(os.path.join(test_run_dir, 'control'))
-                    control_diffs = test_control.compare(ref_control, return_all_diffs=True)
-                    if control_diffs:
-                        if args.print_diffs:
-                            msg = 'There are differences in the control files generated:\n'
-                            for idiff, diff in enumerate(control_diffs, start=1):
-                                msg += f'#{idiff} {diff}\n'
-                            print(msg)
-                        all_diffs['control'] = control_diffs
-            # Copy the control file
+                generate_control(args, deftest, gen_test_dir, test_run_dir, all_diffs)
+            # Copy the control file and generate the initial mos
             else:
                 generate_mos(deftest, test_run_dir, gen_test_dir)
 
