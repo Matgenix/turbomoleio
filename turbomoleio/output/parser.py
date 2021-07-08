@@ -225,8 +225,12 @@ class Parser:
             an instance of Parser.
         """
 
-        with open(filepath) as f:
-            string = f.read()
+        try:
+            with open(filepath, 'r') as f:
+                string = f.read()
+        except UnicodeDecodeError:
+            with open(filepath, 'r', errors='ignore') as f:
+                string = f.read()
 
         if check_all_done and string.rfind("all done") < 0:
             raise ValueError("The string does not contain data for a completed calculation")

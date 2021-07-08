@@ -19,6 +19,7 @@ testlist:
     - h2o_std
   jobex:
     - no3_ridft
+    - h2o_mp2_ridft_rimp2
     - h2o_dscf
     - h2o_dscf_unconv1
     - h2o_dscf_unconv2

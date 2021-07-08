@@ -19,6 +19,7 @@ testlist:
   jobex:
     - no3_ridft
     - h2o_dscf
+    - h2o_mp2_ridft_rimp2
     - h2o_mp2_dscf_mpgrad
   mpgrad:
     - h2o_std_mp2

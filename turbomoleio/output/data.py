@@ -52,8 +52,12 @@ class BaseData(MSONable, abc.ABC):
         Returns:
             An instance of the class.
         """
-        with open(filepath) as f:
-            return cls.from_string(f.read())
+        try:
+            with open(filepath, 'r') as f:
+                return cls.from_string(f.read())
+        except UnicodeDecodeError:
+            with open(filepath, 'r', errors='ignore') as f:
+                return cls.from_string(f.read())
 
     @classmethod
     def from_string(cls, string):
