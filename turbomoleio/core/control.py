@@ -122,7 +122,7 @@ class Energy(MSONable):
     @property
     def n_steps(self):
         """
-        The number of steps present
+        The number of steps present.
         """
         return len(self.scf)
 
@@ -235,28 +235,28 @@ class Gradient(MSONable):
     @property
     def norms(self):
         """
-        Total norm of the gradients for each step
+        Total norm of the gradients for each step.
         """
         return np.linalg.norm(self.gradients, axis=(1,2))
 
     @property
     def max_gradients(self):
         """
-        Norms of the largest gradients for each step
+        Norms of the largest gradients for each step.
         """
         return np.max(np.linalg.norm(self.gradients, axis=(2)), axis=1)
 
     @property
     def n_steps(self):
         """
-        The number of steps present
+        The number of steps present.
         """
         return len(self.gradients)
 
     @property
     def last_grad_norm(self):
         """
-        The value of the last gradient norm
+        The value of the last gradient norm.
         None if no steps presents.
         """
         if self.n_steps == 0:
@@ -476,7 +476,7 @@ class Shells(MSONable):
         Generates an instance of Shell from a JSON serialized representation.
 
         Args:
-            d (dict): the dictionary with the data to inizialize Shells
+            d (dict): the dictionary with the data to initialize Shells
 
         Returns:
              A Shells instance
@@ -528,7 +528,7 @@ class Control(DataGroups):
     def add_cosmo(self, epsilon=None, nppa=None, nspa=None, disex=None, rsolv=None, routf=None, cavity=None,
                   use_old_amat=None):
         """
-        Adds the $cosmo datagroup to the control, using the keyworkds to set the cosmo options.
+        Adds the $cosmo datagroup to the control, using the keywords to set the cosmo options.
         If None all the options will not be written to the control file.
 
         Args:
@@ -574,7 +574,7 @@ class Control(DataGroups):
     def from_metric(cls, metric):
         """
         Generates a new Control containing the value of the metric in $redund_inp
-        and an empty $coord
+        and an empty $coord.
 
         Args:
             metric (int): the value of the metric
@@ -789,7 +789,7 @@ class Control(DataGroups):
         Creates the destination folder if not already existing.
 
         Args:
-            dest_dir (str): path to the destionation folder.
+            dest_dir (str): path to the destination folder.
             force_overwrite (bool): if True files already present in the
                 destination folder will be overwritten.
         """
@@ -950,7 +950,7 @@ def mdgo(data_group, options, filepath="control", backup_file=None):
 
     If the datagroup is not present will be created with the specified options.
 
-    If the entire data group should be modifed it would be safer to use
+    If the entire data group should be modified it would be safer to use
     change_data_group.
 
     Args:
