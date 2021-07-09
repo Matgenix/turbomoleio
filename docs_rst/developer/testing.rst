@@ -55,7 +55,7 @@ and the tests should be executed using the ``pytest`` command. For a reference o
 can refer to the `pytest documentation <https://docs.pytest.org>`_. To get the coverage of the
 tests you also need to install the **pytest-cov** package.
 
-Summing up, aside from the standard dependencies in BASFflows, the easiest way to prepare your environment
+Summing up, aside from the standard dependencies in turbomoleio, the easiest way to prepare your environment
 to run the tests is to run
 
 .. code-block:: bash
