@@ -128,13 +128,13 @@ class DefineRunner:
     def _expect(self, pattern, timeout=-1, action=None):
         """
         Runs self.define.expect with the options provided.
-        Handles the timeout and eof expections, logs and raises them as specific define exceptions.
+        Handles the timeout and eof exceptions, logs and raises them as specific define exceptions.
 
         Args:
             pattern: the pattern given to pexpect.expect(). See pexpect documentations for more details.
             timeout (int): number of second that should be waited before raising the TIMEOUT exception.
-                The default (-1) keeps the timeout value set in spwan.
-            action (str): a string describing the action that is being perfomed. Will be used for logging and
+                The default (-1) keeps the timeout value set in spawn.
+            action (str): a string describing the action that is being performed. Will be used for logging and
                 tracing of errors.
 
         Returns:
