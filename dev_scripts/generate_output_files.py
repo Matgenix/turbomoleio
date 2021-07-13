@@ -406,7 +406,7 @@ def compare_to_reference_files(log_fpath, ref_test_dirpath, out_cls, rtol, atol,
     out_diffs = compare_differences(gen_out_dict, ref_out, rtol=rtol, atol=atol)
     if out_diffs:
         if print_diffs:
-            print(f'There are differences in the parsed {out_cls.__name__} output file objects:')
+            print(f'There are differences in the parsed {outurbomoleio/testfiles/utils.pyt_cls.__name__} output file objects:')
             for idiff, diff in enumerate(out_diffs, start=1):
                 print(f'#{idiff} {diff[0]}\n  {diff[1]}')
         all_diffs[f'{tm_exec}_{out_cls.__name__}'] = out_diffs
@@ -548,6 +548,8 @@ def main():
 
     version_dirpath, ref_version_dirpath = get_version_dir(args.version_dir, args.force, args.compare_to)
 
+    all_tests_diffs = {}
+
     for tm_exec, test_name in tests_list:
         # Set up test directories and get deftest configuration
         test_dirpath, test_run_dirpath, ref_test_dirpath, gen_test_dirpath, deftest = get_paths_and_deftest(
@@ -596,13 +598,20 @@ def main():
                         dumpfn(ref_dict, os.path.join(test_dirpath, fname), indent=2)
                     shutil.copy(log_fpath, test_dirpath)
 
-            # Dump the file containing the differences found for this test
-            if dryrun:
-                dumpfn(all_diffs, os.path.join(test_dirpath, args.dryrun_fname), indent=2)
-
         # Remove the run directories
         if not args.keep_rundirs:
             shutil.rmtree(test_run_dirpath)
+
+        # Add the differences found in this test to the full list (dictionary) of differences
+        if tm_exec not in all_tests_diffs:
+            all_tests_diffs[tm_exec] = {}
+        if test_name in all_tests_diffs[tm_exec]:
+            raise RuntimeError('Test already in the list of differences')
+        all_tests_diffs[tm_exec][test_name] = all_diffs
+
+    # Dump the file containing the differences found in the tests
+    if dryrun:
+        dumpfn(all_tests_diffs, os.path.join(version_dirpath, args.dryrun_fname), indent=2)
 
 
 if __name__ == "__main__":
