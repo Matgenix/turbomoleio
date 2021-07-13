@@ -834,4 +834,4 @@ def generate_reference_output(test_definition,
     """
     tm_execs = test_definition['commands']
     for tm_exec in tm_execs:
-        os.system(f'{tm_exec} > {tm_exec}.log')
+        os.system(f'{tm_exec} > {tm_exec}.log 2> {tm_exec}.err')
