@@ -1,0 +1,231 @@
+
+ relax (localhost.localdomain) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
+ Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
+
+
+    2021-06-10 14:04:27.959 
+
+
+
+                           this is  R E L A X 
+
+
+             conversion cartesian <---> internal coordinates
+          coordinate and force constant update in optimizations
+
+           by heinz schiffer, hans horn, christoph koelmel,
+          marco haeser, michael ehrig, and reinhart ahlrichs
+
+                          quantum chemistry group
+                          universitaet  karlsruhe
+                                  germany
+
+
+
+   *************************************************************************
+   ridft                                                                    
+   *************************************************************************
+
+
+
+------------------------------------------------------------------------
+ $optimize
+
+ optimization will be performed with respect to
+ - INTERNAL coordinates
+
+------------------------------------------------------------------------
+ $coordinateupdate
+
+ upper limit for coordinate changes =   0.3000    
+ interpolation/extrapolation has been enabled
+ display optimization statistics for the last   5 cycles
+
+ ------------------------------------------------------------------------------
+
+     relaxation of NUCLEAR COORDINATES in delocalized coordinates
+
+ ------------------------------------------------------------------------------
+
+
+  max. nb. of iterations for internal --> cartesian  :   25
+  convergence criterion for internal coordinates     :  0.10E-06
+
+  number of optimization cycles                         :    1
+  coordinate update delimiter                           :  0.30000
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ NOTE that the hessian will NOT be updated since
+ - no update method has been specified
+ - #(available geoms) =   1 is smaller than mingeo =   3
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+  method for the update of the Hessian-matrix           :    0 (no update)
+
+  number of previous coordinate sets available          :    1
+    lower threshold for eigenvalues of the Hessian      :  0.00500
+    reset value                                         :  0.00500
+    upper threshold for eigenvalues of the Hessian      :    3.0000
+ 
+reading data block $redundant from file<coord>
+ NUMBER OF ATOMS:                     3
+ DEGREES OF FREEDOM:                     2
+ INTERNAL COORDINATES:                     2
+
+   ATOM               CARTESIAN COORDINATES
+    1 o       0.00000000000000      0.00000000000000     -0.72557892405437
+    2 h       1.41713420892173      0.00000000000000      0.36278946202719
+    3 h      -1.41713420892173      0.00000000000000      0.36278946202719
+
+    ---------------------------------------------------------------------
+
+    SYMMETRY HANDLING
+
+ symmetry group of the molecule :   c2v
+
+ the group has the following generators :
+   c2(z)
+   mirror plane sigma(xz)
+
+    4 symmetry operations found
+
+    ---------------------------------------------------------------------
+
+    PROCESS AND ANALYZE INPUT INFORMATION ...
+
+
+ total number of atoms                :    3
+ number of SYMMETRY INDEPENDENT atoms :    2
+
+
+ NUMBER OF SYMMETRY RESTRICTED DEGREES OF FREEDOM :    3
+   CONSTITUTED BY    1  DEGREES OF TRANSLATIONAL MOTIONS
+                     0             ROTATIONAL
+                     2             INTERNAL
+
+
+    ---------------------------------------------------------------------
+ reading data block $redundant from file <coord>
+ rredun: nuclear degrees of freedom                     2
+ rredun: number of frozen coordinates                     0
+
+   ATOM               CARTESIAN GRADIENTS
+    1 o       0.00000000000000      0.00000000000000      0.04134173359546
+    2 h      -0.02705094211382      0.00000000000000     -0.02065428957628
+    3 h       0.02705094211382      0.00000000000000     -0.02065428957628
+
+  cartesian forces do not vanish : sum(F) =     0.00003315
+  x-component=  0.00000000 y-component=  0.00000000 z-component=  0.00003315
+     Optint: norm of internal gradient       0.04814176
+
+        DELOCALIZED INTERNAL COORDINATES and GRADIENTS :
+
+     (ENERGY is     -76.3427618513 a.u.; cycle index is   1)
+ (b) : internal coordinate value (normalized)
+ (b) : gradient with respect to normalized coordinate (a)
+
+                                             (a)          (b)
+delocalized internal coordinate            2.5269805  -0.04814150
+delocalized internal coordinate            1.8317405  -0.00015583
+
+  norm of actual CARTESIAN gradient : .63450E-01
+  norm of actual  INTERNAL gradient : .48142E-01
+
+  maximum norm of actual  INTERNAL gradient : .48142E-01
+
+
+ force constant matrix will be initialized using
+  default DIAGONAL elements
+
+
+ input hessian will NOT be updated !
+
+------------------------------------------------------------------------
+
+  PROVIDING UPDATED COORDINATES by QUASI-NEWTON STEP ... 
+
+------------------------------------------------------------------------
+
+  predicted ENERGY CHANGE :   -2.31767 mHartree
+  (note that only an approximate hessian is used)
+
+  NORM OF COORDINATE CHANGE IS    0.09629
+
+
+    geometry change & new internal coordinates :
+delocalized internal coordinate             0.0962830072    2.6232634622
+delocalized internal coordinate             0.0007791423    1.8325196641
+
+  **** convergence reached within     2 iterations ****
+
+  Updated coordinates will be transformed into principal axis system
+
+            *******************************************
+   ATOM      NEW CARTESIAN COORDINATES
+
+    1 o       0.00000000000000      0.00000000000000     -0.12636613439115
+    2 h       1.47156989594440      0.00000000000000      1.00289806768942
+    3 h      -1.47156989594440      0.00000000000000      1.00289806768942
+
+            cartesian coordinates written on $coord
+            *******************************************
+ rredun: nuclear degrees of freedom                     2
+ rredun: number of frozen coordinates                     0
+
+
+  ---------------------------------------------------------------------
+  ridft                                                                        
+  Optimization statistics for    1 cycles
+  ---------------------------------------------------------------------
+
+   delocalized internal coordinate no.      1
+
+    cycle       value              gradient
+                  (a)                (b)
+       1       2.52698045       -0.04814150
+       2       2.62326346
+
+   delocalized internal coordinate no.      2
+
+    cycle       value              gradient
+                  (a)                (b)
+       1       1.83174052       -0.00015583
+       2       1.83251966
+
+  NOTES :
+          (a) value of delocalized internal coordinate
+          (b) gradient with respect to delocalized coordinate (a)
+
+
+   Norm of cartesian and internal gradient vectors :
+       cycle        cartesian norm     internal norm     maximum norm (*)
+         1            .63450E-01        .48142E-01        .48142E-01
+
+ (*) maximum component of internal gradient
+
+   Energy statistics (Hartree) :
+       1      -76.342761851
+
+ $forceinit flag ' on ' will be switched off !
+
+
+      ****************************************************************** 
+                          CONVERGENCE INFORMATION
+
+                               Converged?     Value      Criterion
+             Energy change         no      76.3427619   0.0000010
+             MAX geom. grad.       no       0.0481415   0.0010000
+      ****************************************************************** 
+
+
+    ------------------------------------------------------------------------
+         total  cpu-time :   0.01 seconds
+         total wall-time :   0.01 seconds
+    ------------------------------------------------------------------------
+
+   ****  relax : all done  ****
+
+
+    2021-06-10 14:04:27.966 
+

@@ -1,0 +1,20 @@
+# Define parameters are taken
+#  - from a template
+#  - from the explicit parameters
+#  - from a template and explicit parameters overriding those in the template
+define:
+  template: "ridft"
+  parameters:
+    desy: True
+    ired: True
+
+# Data groups to add to or change in the control file after running define
+#datagroups:
+#  add:
+#    fermi: "tmstrt=500 tmend=50 tmfac=0.9 hlcrt=0.2"
+
+# List of TM commands to be run
+commands:
+  - ridft
+  - rdgrad
+  - statpt

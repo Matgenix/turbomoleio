@@ -1,0 +1,132 @@
+
+ statpt (localhost.localdomain) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
+ Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
+
+
+    2021-06-10 14:04:35.312 
+
+
+
+                           this is S T A T P T   
+
+
+                     hessian and coordinate update for
+                          stationary point search 
+
+                     by barbara unterreiner, marek sierka,
+                           and reinhart ahlrichs
+
+                          quantum chemistry group
+                          universitaet  karlsruhe
+                                  germany
+
+
+
+
+              +--------------------------------------------------+
+              | Atomic coordinate, charge and isotop information |
+              +--------------------------------------------------+
+
+                    atomic coordinates            atom    charge  isotop
+          0.04340035   -2.43303953    0.00000000    o      8.000     0
+          2.40289845    1.33092842    0.00000000    c      6.000     0
+         -2.44869437    1.25914649    0.00000000    c      6.000     0
+         -0.00810063   -0.18289217    0.00000000    c      6.000     0
+          2.09020694    3.35088178    0.00000000    h      1.000     0
+         -4.02779836   -0.02916167    0.00000000    h      1.000     0
+          3.51545227    0.83515949    1.64389798    h      1.000     0
+          3.51545227    0.83515949   -1.64389798    h      1.000     0
+         -2.56998075    2.47145950    1.64993688    h      1.000     0
+         -2.56998075    2.47145950   -1.64993688    h      1.000     0
+ 
+       center of nuclear mass  :   -0.00000000    0.00000000    0.00000000
+       center of nuclear charge:   -0.00071328    0.15355432    0.00000000
+  Keyword $statpt not found - using default options
+ 
+        ***************  Stationary point options ******************
+        ************************************************************
+           Maximum allowed trust radius:           3.000000E-01
+           Minimum allowed trust radius:           1.000000E-03
+           Initial trust radius:                   1.500000E-01
+           GDIIS used if gradient norm <           1.000000E-02
+           Number of previous steps for GDIIS:       5
+           Hessian update method:                  BFGS
+                        *** Convergence criteria ***                
+           Threshold for energy change:            1.000000E-06
+           Threshold for max displacement element: 1.000000E-03
+           Threshold for max gradient element :    1.000000E-03
+           Threshold for RMS of displacement:      5.000000E-04
+           Threshold for RMS of gradient:          5.000000E-04
+        ************************************************************
+ 
+
+ keyword $statp missing in file <control>
+
+  Keyword $statpt not found - using default options
+
+ keyword $optinfo  missing in file <control>
+
+  *************************************************************************
+   ATOM                      CARTESIAN COORDINATES
+    1 o       0.04340035000000     -2.43303953000000      0.00000000000000
+    2 c       2.40289845000000      1.33092842000000      0.00000000000000
+    3 c      -2.44869437000000      1.25914649000000      0.00000000000000
+    4 c      -0.00810063000000     -0.18289217000000      0.00000000000000
+    5 h       2.09020694000000      3.35088178000000      0.00000000000000
+    6 h      -4.02779836000000     -0.02916167000000      0.00000000000000
+    7 h       3.51545227000000      0.83515949000000      1.64389798000000
+    8 h       3.51545227000000      0.83515949000000     -1.64389798000000
+    9 h      -2.56998075000000      2.47145950000000      1.64993688000000
+   10 h      -2.56998075000000      2.47145950000000     -1.64993688000000
+  *************************************************************************
+   ATOM                      CARTESIAN GRADIENTS  
+    1 o      -0.00164589594010      0.05510491132935     -0.00000000002214
+    2 c       0.00682802102568     -0.00227833059282      0.00000000002414
+    3 c      -0.00452848879378      0.00109205993315      0.00000000002220
+    4 c       0.00135128681059     -0.03417693444306     -0.00000000000697
+    5 h       0.00225597598766     -0.01964561826283     -0.00000000001064
+    6 h       0.01590935175216      0.01371642198525     -0.00000000000818
+    7 h      -0.01089136841635      0.00546274524279     -0.01580972152949
+    8 h      -0.01089136841526      0.00546274524319      0.01580972152936
+    9 h       0.00080934059096     -0.01236724906378     -0.01485647131656
+   10 h       0.00080934059119     -0.01236724906526      0.01485647131770
+  *************************************************************************
+
+  norm of actual CARTESIAN gradient:  8.16113E-02
+
+  ENERGY =    -192.9994511333 a.u.; # of cycle =    1
+
+
+ keyword $hessapprox missing in file <control>
+
+
+  USING DIAGONAL INITIAL HESSIAN
+  Diagonal elements set to:    0.50000
+  Number of zero Hessian eigenvalues:   6
+
+  Results of the TRO shift search
+  Final shift: -4.40755E-02 residual -3.05311E-16
+  Final step radius: 1.50000E-01
+
+      ****************************************************************** 
+                          CONVERGENCE INFORMATION
+
+                               Converged?     Value      Criterion
+             Energy change         no     192.9994511   0.0000010
+             RMS of displacement   no       0.0273861   0.0005000
+             RMS of gradient       no       0.0149001   0.0005000
+             MAX displacement      no       0.1012810   0.0010000
+             MAX gradient          no       0.0551049   0.0010000
+      ****************************************************************** 
+
+
+    ------------------------------------------------------------------------
+         total  cpu-time :   0.01 seconds
+         total wall-time :   0.01 seconds
+    ------------------------------------------------------------------------
+
+   ****  statpt : all done  ****
+
+
+    2021-06-10 14:04:35.317 
+

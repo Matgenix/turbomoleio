@@ -725,7 +725,7 @@ class DataGroups(MSONable):
         return self._get_subfile_fname(self.sdg(data_group, show_from_subfile=False),
                                        raise_if_regular_and_subfile=raise_if_regular_and_subfile)
 
-    def compare(self, datagroups, tol=None, ignored_dg=None):
+    def compare(self, datagroups, tol=None, ignored_dg=None, return_all_diffs=False):
         """
         Compares the current object with another DataGroups. Aside from the datagroups
         that should be ignored, (define in the ignored_dg argument), the two should contain
@@ -751,12 +751,17 @@ class DataGroups(MSONable):
                 It is expected to be the name of the datagroup, thus starting with a "$".
                 If the "$" symbol is not present will be added before trying to match the
                 datagroup to skip.
+            return_all_diffs (bool): If True, a list of all differences is returned. If False
+                (default), a string describing the first source of difference found is returned.
 
         Returns:
-            None if the results match or a string describing a source of difference otherwise.
+            None if the results match or a string describing a source of difference otherwise
+                (if return_all_diffs is False) or a list of all differences (if return_all_diffs
+                is True).
         """
 
         dg_other_list = list(datagroups.dg_list)
+        diffs = []
 
         if ignored_dg:
             # add the initial $ to each datagroup if not already present
@@ -771,12 +776,22 @@ class DataGroups(MSONable):
                     dg_other_list.pop(i)
                     break
             else:
-                return "Datagroup does not match to any of the references: {}".format(dg1)
+                msg = "Datagroup does not match to any of the references: {}".format(dg1)
+                if return_all_diffs:
+                    diffs.append(msg)
+                else:
+                    return msg
 
         # check that all the remaining datagroups in the second control belong to the ignore list
         for dg2 in dg_other_list:
             if not ignored_dg or not any(dg2.startswith(dg) for dg in ignored_dg):
-                return "Datagroup in the reference does not match to any of the current " \
-                       "control: {}".format(dg2)
+                msg = "Datagroup in the reference does not match to any of the current " \
+                      "control: {}".format(dg2)
+                if return_all_diffs:
+                    diffs.append(msg)
+                else:
+                    return msg
 
+        if return_all_diffs:
+            return diffs if len(diffs) > 0 else None
         return None

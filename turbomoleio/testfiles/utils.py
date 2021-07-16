@@ -28,19 +28,36 @@ import shlex
 import shutil
 import json
 import inspect
-import pytest
 import numbers
 import numpy as np
 from contextlib import contextmanager
-from monty.os import cd
+from monty.os import cd, makedirs_p
 from monty.json import MSONable, MontyDecoder
 from monty.serialization import dumpfn, loadfn
 from turbomoleio.input.define import DefineRunner
+from turbomoleio.input.define import DefineError
+from turbomoleio.input.utils import get_define_template
 from turbomoleio.output.states import EigerRunner, States
+from turbomoleio.output.files import JobexOutput, EscfOnlyOutput
 from turbomoleio.core.control import Control
+from turbomoleio.core.control import adg, cdg
+from turbomoleio.output.files import exec_to_out_obj
+from turbomoleio.output.parser import Parser
 
 
 TESTDIR = os.path.split(__file__)[0]
+TM_VERSIONS = ['TM_v7.3', 'TM_v7.3.1']
+TESTS_CONFIGS_TM_VERSIONS = {
+    tmv: loadfn(os.path.join(TESTDIR, 'outputs', tmv, 'tests_config.yaml'))
+    for tmv in TM_VERSIONS
+}
+PARSER_METHODS = ["all_done", "header", "centers", "coordinates", "basis", "symmetry",
+                  "cosmo_header", "density_functional_data", "rij_info", "dftd", "pre_scf_run",
+                  "scf_iterations", "scf_energies", "cosmo_results", "electrostatic_moments",
+                  "timings", "s2", "is_uhf", "fermi", "integral", "pre_escf_run", "escf_iterations",
+                  "escf_gs_total_en", "escf_excitations", "rdgrad_memory", "gradient", "egrad_excited_state",
+                  "statpt_info", "relax_info", "relax_gradient_values", "relax_conv_info",
+                  "aoforce_numerical_integration", "aoforce_analysis"]
 
 
 class ItestError(BaseException):
@@ -538,6 +555,7 @@ class ItestConfig:
     dryrun_fpath = 'dryrun_itest.json'
     tol = 1e-4
     delete_tmp_dir = True
+    dryrun_use_ref_control = False
 
 
 ignored_itest_parsed_keys = ["start_time", "end_time", "wall_time", "cpu_time", "construction_timings",
@@ -611,6 +629,9 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
 
         current_control = Control.from_file("control")
         compare_control = current_control.compare(ref_control, tol=opt_tol)
+        if ItestConfig.dryrun_use_ref_control:
+            shutil.copy("control", "control_generated")
+            shutil.copy(get_control_integration(control_reference_filename), "control")
         # print the output of Control.compare if the compare fails
         if opt_dryrun and compare_control is not None:
             dryrun_differences.append(('control', compare_control))
@@ -725,6 +746,92 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
                                        'in pytest.')
                 alldiffs.append((diff_identifier, dryrun_differences))
                 with open(dryrun_fpath, 'w') as f:
-                    json.dump(alldiffs, f)
+                    json.dump(alldiffs, f, indent=2)
 
         return True
+
+
+def generate_control_for_test(test_definition):
+    """
+    Regenerates control from the definition of the test.
+
+    Args:
+        test_definition: Dictionary with the definition of the test
+
+    Returns:
+        None
+    """
+    if test_definition['define']['template']:
+        dp = get_define_template(test_definition['define']['template'])
+    else:
+        dp = {}
+    if test_definition['define']['parameters']:
+        dp.update(test_definition['define']['parameters'])
+    datagroups = test_definition.get('datagroups')
+    add_datagroups = None
+    change_datagroups = None
+    if datagroups:
+        add_datagroups = test_definition.get('datagroups', {}).get('add', None)
+        change_datagroups = test_definition.get('datagroups', {}).get('change', None)
+    dr = DefineRunner(dp)
+    run_full_ok = dr.run_full()
+    if not run_full_ok:
+        raise DefineError('Generation of control file with the DefineRunner failed.')
+    if add_datagroups:
+        for dg, val in add_datagroups.items():
+            adg(dg, val)
+    if change_datagroups:
+        for dg, val in change_datagroups.items():
+            cdg(dg, val)
+
+
+def generate_reference_out_parser_files(log_fpath, outdir=None):
+    """
+    Helper function to generate the reference files for the test of the files and parser objects
+    for a given log file.
+
+    Args:
+        log_fpath (str): Path to the logfile.
+        outdir (str): Directory to output reference File and Parser_methods objects.
+    """
+    if outdir is None:
+        outdir = '.'
+    fname = os.path.split(log_fpath)[1]
+    if fname == 'job.last':
+        tm_exec = 'jobex'
+    else:
+        tm_exec = os.path.splitext(fname)[0]
+
+    if tm_exec == 'jobex':
+        out = JobexOutput.from_file(log_fpath)
+    elif tm_exec == 'escf':
+        out = exec_to_out_obj['escf'].from_file(log_fpath)
+        out_escf_only = EscfOnlyOutput.from_file(log_fpath)
+        dumpfn(out_escf_only, os.path.join(outdir, 'ref_escf_output.json'), indent=2)
+    else:
+        out = exec_to_out_obj[tm_exec].from_file(log_fpath)
+    dumpfn(out, os.path.join(outdir, 'ref_output.json'), indent=2)
+
+    parser = Parser.from_file(log_fpath)
+    parsed_data = {}
+    for m in PARSER_METHODS:
+        data = getattr(parser, m)
+        parsed_data[m] = data
+
+    dumpfn(parsed_data, os.path.join(outdir, 'ref_parser.json'), indent=2)
+    shutil.copy(log_fpath, outdir)
+
+
+def generate_reference_output(test_definition,
+                              ):
+    """
+    Executes the list of Turbomole commands in the definition of the test
+    Args:
+        test_definition: Dictionary with the definition of the test
+
+    Returns:
+        None
+    """
+    tm_execs = test_definition['commands']
+    for tm_exec in tm_execs:
+        os.system(f'{tm_exec} > {tm_exec}.log 2> {tm_exec}.err')

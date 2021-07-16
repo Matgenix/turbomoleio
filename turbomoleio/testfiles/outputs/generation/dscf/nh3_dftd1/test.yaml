@@ -1,0 +1,17 @@
+# Define parameters are taken
+#  - from a template
+#  - from the explicit parameters
+#  - from a template and explicit parameters overriding those in the template
+define:
+  template: "dscf"
+  parameters:
+    desy: True
+
+# Data groups to add to or change in the control file after running define
+datagroups:
+  add:
+    olddisp: ""
+
+# List of TM commands to be run
+commands:
+  - dscf

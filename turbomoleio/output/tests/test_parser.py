@@ -33,41 +33,34 @@ import json
 
 from turbomoleio.output.parser import Parser, convert_float, convert_int, convert_time_string
 from turbomoleio.testfiles.utils import assert_almost_equal, temp_dir
+from turbomoleio.testfiles.utils import PARSER_METHODS
+from turbomoleio.testfiles.utils import TM_VERSIONS
+from turbomoleio.testfiles.utils import TESTS_CONFIGS_TM_VERSIONS
 
-
-files_list = [("dscf", "h2o_std"), ("dscf", "h2o_uhf"), ("dscf", "nh3_cosmo_fermi"),
-              ("dscf", "nh3_dftd1"), ("dscf", "aceton_dftd3_tzvp"),("ridft", "h2o_dftd2_marij"),
-              ("ridft", "h2o_dftd3-bj_not_conv"), ("ridft", "nh3_rijk_xcfun_m06"),
-              ("ridft", "b28_many_irreps"), ("grad", "h2o_std"), ("rdgrad", "h2o_dftd3-bj"),
-              ("relax", "h2o_internal"), ("relax", "h2o_cartesian"), ("relax", "no_version_header"),
-              ("statpt", "h3cbr_internal"), ("statpt", "aceton_cartesian"),
-              ("escf", "Al6_columns"), ("escf", "h2o_ridft_cosmo"), ("escf", "h2o_ridft_rpat"),
-              ("egrad", "h2o_sym"), ("egrad", "h3cbr_nosym"), ("aoforce", "aceton_full"),
-              ("aoforce", "h2_numforce")]
-
-
-parser_methods = ["all_done", "header", "centers", "coordinates", "basis", "symmetry",
-                  "cosmo_header", "density_functional_data", "rij_info", "dftd", "pre_scf_run",
-                  "scf_iterations", "scf_energies", "cosmo_results", "electrostatic_moments",
-                  "timings", "s2", "is_uhf", "fermi", "integral", "pre_escf_run", "escf_iterations",
-                  "escf_gs_total_en", "escf_excitations", "rdgrad_memory", "gradient", "egrad_excited_state",
-                  "statpt_info", "relax_info", "relax_gradient_values", "relax_conv_info",
-                  "aoforce_numerical_integration", "aoforce_analysis"]
+excluded_execs = ['jobex']
+files_list = [
+    (tm_version, tm_exec, test_name)
+    for tm_version in TM_VERSIONS
+    for tm_exec, exec_tests in TESTS_CONFIGS_TM_VERSIONS[tm_version]['testlist'].items()
+    if tm_exec not in excluded_execs
+    for test_name in exec_tests
+]
 
 
 @pytest.fixture(scope="function", params=files_list, ids=[os.path.join(*f) for f in files_list])
 def parser_and_dict(request, testdir):
-    directory = request.param[0]
-    name = request.param[1]
-    path = os.path.join(testdir, "outputs", directory, name)
-    parser = Parser.from_file(path+".log")
-    with open(path+".json") as f:
+    tm_version = request.param[0]
+    tm_exec = request.param[1]
+    test_name = request.param[2]
+    path = os.path.join(testdir, "outputs", tm_version, tm_exec, test_name)
+    parser = Parser.from_file(os.path.join(path, f"{tm_exec}.log"))
+    with open(os.path.join(path, "ref_parser.json")) as f:
         d = json.load(f)
 
     return parser, d
 
 
-@pytest.fixture(scope="function", params=parser_methods)
+@pytest.fixture(scope="function", params=PARSER_METHODS)
 def method(request):
     return request.param
 
@@ -87,21 +80,21 @@ class TestParser:
         assert_almost_equal(parsed_data, desired[method], rtol=1e-4,
                             ignored_values=["start_time", "end_time", "@version"])
 
-    def test_get_split_jobex_parsers(self, testdir):
-        path = os.path.join(testdir, "outputs", "jobex", "h2o_dscf_job.last")
+    @pytest.mark.parametrize("tm_version", TM_VERSIONS)
+    def test_get_split_jobex_parsers(self, testdir, tm_version):
+        path = os.path.join(testdir, "outputs", tm_version, "jobex", "h2o_dscf", "job.last")
         p = Parser.from_file(path)
         jp = p.get_split_jobex_parsers()
         assert jp.exec_en == "dscf"
         assert jp.exec_grad == "grad"
         assert jp.exec_relax == "statpt"
 
-        path = os.path.join(testdir, "outputs", "jobex", "no3_ridft_job.last")
+        path = os.path.join(testdir, "outputs", tm_version, "jobex", "no3_ridft", "job.last")
         p = Parser.from_file(path)
         jp = p.get_split_jobex_parsers()
         assert jp.exec_en == "ridft"
         assert jp.exec_grad == "rdgrad"
         assert jp.exec_relax == "statpt"
-
 
     def test_grep_line(self):
         string = """some text
@@ -161,12 +154,12 @@ def generate_files(files=None, methods=None, overwrite=False):
             like the one in "files_list". Only the json for the files in this list
             will be generated. If None "files_list" will be used.
         methods (list): list of string with the methods of Parser for which the
-            reference data will be generated. If None "parser_methods" will be used.
+            reference data will be generated. If None "PARSER_METHODS" will be used.
         overwrite (bool): if False, in case a method has already its reference value
             in the json file it will not be changed. If True it will be overwritten.
     """
     if methods is None:
-        methods = parser_methods
+        methods = PARSER_METHODS
     if files is None:
         files = files_list
 
