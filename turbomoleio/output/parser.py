@@ -37,6 +37,7 @@ float_number_re = r"[+-]?[0-9]*[.]?[0-9]+"
 float_number_d_re = r"[+-]?[0-9]*[.]?[0-9]+D[+-]\d{2}"
 float_number_e_re = r"[+-]?[0-9]*[.]?[0-9]+E[+-]\d{2}"
 float_number_all_re = r"[+-]?[0-9]*[.]?[0-9]+([ED][+-]\d{2})*"
+float_number_all_re2 = r"[+-]?[0-9]*[.]?[0-9]+(?:[ED][+-]\d{2})?"
 irrep_re_group = r"\w'\""
 
 
@@ -224,8 +225,12 @@ class Parser:
             an instance of Parser.
         """
 
-        with open(filepath) as f:
-            string = f.read()
+        try:
+            with open(filepath, 'r') as f:
+                string = f.read()
+        except UnicodeDecodeError:
+            with open(filepath, 'r', errors='ignore') as f:
+                string = f.read()
 
         if check_all_done and string.rfind("all done") < 0:
             raise ValueError("The string does not contain data for a completed calculation")
@@ -2067,6 +2072,59 @@ class Parser:
         data = dict(rotational=rot, vibrational=vib)
 
         return data
+
+    @lazy_property
+    def mp2_data(self):
+        """
+        MP2 data: information of MP2 calculation.
+
+        Returns:
+            dict with "energy_only".
+        """
+
+        # TODO: implement or mpgrad and rimp2/ricc2
+
+        return None
+
+    @lazy_property
+    def mp2_results(self):
+        """
+        MP2 results.
+
+        Returns:
+            dict with "energy".
+        """
+
+        energy = None
+        # Try to parse from rimp2/ricc2 programs
+        r = r"\*{62,62}\s+\*\s+\*\s+\*<{10,10}\s+"
+        r += r"GROUND\s+STATE\s+FIRST-ORDER\s+PROPERTIES"
+        r += r"\s+>{11,11}\*\s+\*\s+\*\s+\*{62,62}\s+"
+        r += r"-{48,48}\s+Method\s+:\s+MP2\s+Total\s+Energy\s+:\s+("
+        r += float_number_all_re2
+        r += r")\s+"
+        m = re.findall(r, string=self.string)
+        if len(m) == 1:
+            energy = convert_float(m[0])
+        elif len(m) > 1:
+            raise RuntimeError("Error parsing the MP2 results. Multiple occurrences of MP2 results found.")
+
+        # Try to parse from mpgrad program
+        r = r"\*{53,53}\s+\*\s+\*\s+\*\s+"
+        r += r"SCF-energy\s+:\s+(" + float_number_all_re2 + r")\s+\*\s+\*\s+"
+        r += r"MP2-energy\s+:\s+(" + float_number_all_re2 + r")\s+\*\s+\*\s+"
+        r += r"total\s+:\s+(" + float_number_all_re2 + r")\s+\*\s+\*\s+"
+        r += r"\*\s+\*\s+\(MP2-energy\s+evaluated\s+from\s+T2\s+amplitudes\)\s+\*\s+\*\s+\*\s+\*{53,53}"
+        m = re.findall(r, string=self.string)
+        if len(m) == 1:
+            if energy is not None:
+                raise RuntimeError("Error parsing the MP2 results. "
+                                   "Found MP2 results from both mpgrad- and rimp2/ricc2-like calculations.")
+            energy = convert_float(m[0][2])
+        elif len(m) > 1:
+            raise RuntimeError("Error parsing the MP2 results. Multiple occurrences of MP2 results found.")
+
+        return dict(energy=energy)
 
     def get_split_jobex_parsers(self):
         """

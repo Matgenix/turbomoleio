@@ -57,7 +57,7 @@ PARSER_METHODS = ["all_done", "header", "centers", "coordinates", "basis", "symm
                   "timings", "s2", "is_uhf", "fermi", "integral", "pre_escf_run", "escf_iterations",
                   "escf_gs_total_en", "escf_excitations", "rdgrad_memory", "gradient", "egrad_excited_state",
                   "statpt_info", "relax_info", "relax_gradient_values", "relax_conv_info",
-                  "aoforce_numerical_integration", "aoforce_analysis"]
+                  "aoforce_numerical_integration", "aoforce_analysis", "mp2_results"]
 
 
 class ItestError(BaseException):
@@ -832,6 +832,12 @@ def generate_reference_output(test_definition,
     Returns:
         None
     """
-    tm_execs = test_definition['commands']
-    for tm_exec in tm_execs:
-        os.system(f'{tm_exec} > {tm_exec}.log 2> {tm_exec}.err')
+    cmds = test_definition['commands']
+    for cmd in cmds:
+        cmd_split = cmd.split()
+        tm_exec = cmd_split[0]
+        options = ''
+        if len(cmd_split) > 1:
+            options = ' '.join(cmd_split[1:])
+            options = f' {options}'
+        os.system(f'{tm_exec}{options} > {tm_exec}.log 2> {tm_exec}.err')
