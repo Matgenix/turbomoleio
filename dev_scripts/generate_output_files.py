@@ -512,6 +512,7 @@ def update_json_files(dryrun, rtol, atol, print_diffs):
     for tm_version in TM_VERSIONS:
         vdir_path = os.path.join(TESTDIR, 'outputs', tm_version)
         vdir_testlist = loadfn(os.path.join(vdir_path, 'tests_config.yaml'))['testlist']
+        version_all_diffs = {}
         for tm_exec, testnames in vdir_testlist.items():
             for test_name in testnames:
                 all_diffs = {}
@@ -523,13 +524,20 @@ def update_json_files(dryrun, rtol, atol, print_diffs):
                     rtol, atol, print_diffs, all_diffs, tm_exec
                 )
 
-                # Dump the new json-serialized reference output and parser objects or the
-                # differences found (in dryrun mode)
-                if dryrun:
-                    dumpfn(all_diffs, os.path.join(test_dirpath, 'parsing_update_differences.json'), indent=2)
-                else:
+                # Dump the new json-serialized reference output and parser objects
+                if not dryrun:
                     for fname, ref_dict in outputs_parser_dicts.items():
                         dumpfn(ref_dict, os.path.join(test_dirpath, fname), indent=2)
+                # Add the differences found in this test to the full list (dictionary) of differences in this version
+                if tm_exec not in version_all_diffs:
+                    version_all_diffs[tm_exec] = {}
+                if test_name in version_all_diffs[tm_exec]:
+                    raise RuntimeError('Test already in the list of differences')
+                version_all_diffs[tm_exec][test_name] = all_diffs
+
+        # Dump the file containing the differences found in the tests for this version
+        if dryrun:
+            dumpfn(version_all_diffs, os.path.join(vdir_path, 'parsing_update_differences.json'), indent=2)
 
 
 def main():
