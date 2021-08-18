@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>turbomoleio.core.datagroups &mdash; turbomoleio 1.0.0 documentation</title>
+  <title>turbomoleio.core.datagroups &mdash; turbomoleio 1.0.1 documentation</title>
   
 
   
@@ -32,6 +32,7 @@
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -61,7 +62,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -86,7 +87,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">User guide</span></p>
+              <p><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../datagroups.html">The data group files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../coord.html">The coord file</a></li>
@@ -94,15 +95,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../output_parsing.html">Outputs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../appendix.html">Appendix</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer guide</span></p>
+<p><span class="caption-text">Developer guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/introduction.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/parsing_logs.html">Output logs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/definerunner.html">Define runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/testing.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/versioning.html">Versioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/versioning.html#backward-compatibility">Backward-compatibility</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Additional information</span></p>
+<p><span class="caption-text">Additional information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
@@ -900,7 +902,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_subfile_fname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sdg</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">show_from_subfile</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
                                        <span class="n">raise_if_regular_and_subfile</span><span class="o">=</span><span class="n">raise_if_regular_and_subfile</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DataGroups.compare"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.compare">[docs]</a>    <span class="k">def</span> <span class="nf">compare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datagroups</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignored_dg</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="DataGroups.compare"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.compare">[docs]</a>    <span class="k">def</span> <span class="nf">compare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datagroups</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignored_dg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_all_diffs</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compares the current object with another DataGroups. Aside from the datagroups</span>
 <span class="sd">        that should be ignored, (define in the ignored_dg argument), the two should contain</span>
@@ -926,12 +928,17 @@
 <span class="sd">                It is expected to be the name of the datagroup, thus starting with a &quot;$&quot;.</span>
 <span class="sd">                If the &quot;$&quot; symbol is not present will be added before trying to match the</span>
 <span class="sd">                datagroup to skip.</span>
+<span class="sd">            return_all_diffs (bool): If True, a list of all differences is returned. If False</span>
+<span class="sd">                (default), a string describing the first source of difference found is returned.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            None if the results match or a string describing a source of difference otherwise.</span>
+<span class="sd">            None if the results match or a string describing a source of difference otherwise</span>
+<span class="sd">                (if return_all_diffs is False) or a list of all differences (if return_all_diffs</span>
+<span class="sd">                is True).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">dg_other_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">datagroups</span><span class="o">.</span><span class="n">dg_list</span><span class="p">)</span>
+        <span class="n">diffs</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">if</span> <span class="n">ignored_dg</span><span class="p">:</span>
             <span class="c1"># add the initial $ to each datagroup if not already present</span>
@@ -946,14 +953,24 @@
                     <span class="n">dg_other_list</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
                     <span class="k">break</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="s2">&quot;Datagroup does not match to any of the references: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dg1</span><span class="p">)</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Datagroup does not match to any of the references: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dg1</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">return_all_diffs</span><span class="p">:</span>
+                    <span class="n">diffs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">msg</span>
 
         <span class="c1"># check that all the remaining datagroups in the second control belong to the ignore list</span>
         <span class="k">for</span> <span class="n">dg2</span> <span class="ow">in</span> <span class="n">dg_other_list</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">ignored_dg</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">dg2</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">dg</span><span class="p">)</span> <span class="k">for</span> <span class="n">dg</span> <span class="ow">in</span> <span class="n">ignored_dg</span><span class="p">):</span>
-                <span class="k">return</span> <span class="s2">&quot;Datagroup in the reference does not match to any of the current &quot;</span> \
-                       <span class="s2">&quot;control: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dg2</span><span class="p">)</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Datagroup in the reference does not match to any of the current &quot;</span> \
+                      <span class="s2">&quot;control: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dg2</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">return_all_diffs</span><span class="p">:</span>
+                    <span class="n">diffs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">msg</span>
 
+        <span class="k">if</span> <span class="n">return_all_diffs</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">diffs</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">diffs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="kc">None</span></div></div>
 </pre></div>
 

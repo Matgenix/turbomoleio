@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>turbomoleio.output.tests.test_parser &mdash; turbomoleio 1.0.0 documentation</title>
+  <title>turbomoleio.output.tests.test_parser &mdash; turbomoleio 1.0.1 documentation</title>
   
 
   
@@ -32,6 +32,7 @@
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
 
@@ -61,7 +62,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -86,7 +87,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">User guide</span></p>
+              <p><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../datagroups.html">The data group files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../coord.html">The coord file</a></li>
@@ -94,15 +95,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../output_parsing.html">Outputs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../appendix.html">Appendix</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer guide</span></p>
+<p><span class="caption-text">Developer guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer/introduction.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer/parsing_logs.html">Output logs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer/definerunner.html">Define runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer/testing.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer/versioning.html">Versioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer/versioning.html#backward-compatibility">Backward-compatibility</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Additional information</span></p>
+<p><span class="caption-text">Additional information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
@@ -208,41 +210,34 @@
 
 <span class="kn">from</span> <span class="nn">turbomoleio.output.parser</span> <span class="kn">import</span> <span class="n">Parser</span><span class="p">,</span> <span class="n">convert_float</span><span class="p">,</span> <span class="n">convert_int</span><span class="p">,</span> <span class="n">convert_time_string</span>
 <span class="kn">from</span> <span class="nn">turbomoleio.testfiles.utils</span> <span class="kn">import</span> <span class="n">assert_almost_equal</span><span class="p">,</span> <span class="n">temp_dir</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.testfiles.utils</span> <span class="kn">import</span> <span class="n">PARSER_METHODS</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.testfiles.utils</span> <span class="kn">import</span> <span class="n">TM_VERSIONS</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.testfiles.utils</span> <span class="kn">import</span> <span class="n">TESTS_CONFIGS_TM_VERSIONS</span>
 
-
-<span class="n">files_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;dscf&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_std&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;dscf&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_uhf&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;dscf&quot;</span><span class="p">,</span> <span class="s2">&quot;nh3_cosmo_fermi&quot;</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">&quot;dscf&quot;</span><span class="p">,</span> <span class="s2">&quot;nh3_dftd1&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;dscf&quot;</span><span class="p">,</span> <span class="s2">&quot;aceton_dftd3_tzvp&quot;</span><span class="p">),(</span><span class="s2">&quot;ridft&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_dftd2_marij&quot;</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">&quot;ridft&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_dftd3-bj_not_conv&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;ridft&quot;</span><span class="p">,</span> <span class="s2">&quot;nh3_rijk_xcfun_m06&quot;</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">&quot;ridft&quot;</span><span class="p">,</span> <span class="s2">&quot;b28_many_irreps&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;grad&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_std&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;rdgrad&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_dftd3-bj&quot;</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">&quot;relax&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_internal&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;relax&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_cartesian&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;relax&quot;</span><span class="p">,</span> <span class="s2">&quot;no_version_header&quot;</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">&quot;statpt&quot;</span><span class="p">,</span> <span class="s2">&quot;h3cbr_internal&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;statpt&quot;</span><span class="p">,</span> <span class="s2">&quot;aceton_cartesian&quot;</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">&quot;escf&quot;</span><span class="p">,</span> <span class="s2">&quot;Al6_columns&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;escf&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_ridft_cosmo&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;escf&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_ridft_rpat&quot;</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">&quot;egrad&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_sym&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;egrad&quot;</span><span class="p">,</span> <span class="s2">&quot;h3cbr_nosym&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;aoforce&quot;</span><span class="p">,</span> <span class="s2">&quot;aceton_full&quot;</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">&quot;aoforce&quot;</span><span class="p">,</span> <span class="s2">&quot;h2_numforce&quot;</span><span class="p">)]</span>
-
-
-<span class="n">parser_methods</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;all_done&quot;</span><span class="p">,</span> <span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="s2">&quot;centers&quot;</span><span class="p">,</span> <span class="s2">&quot;coordinates&quot;</span><span class="p">,</span> <span class="s2">&quot;basis&quot;</span><span class="p">,</span> <span class="s2">&quot;symmetry&quot;</span><span class="p">,</span>
-                  <span class="s2">&quot;cosmo_header&quot;</span><span class="p">,</span> <span class="s2">&quot;density_functional_data&quot;</span><span class="p">,</span> <span class="s2">&quot;rij_info&quot;</span><span class="p">,</span> <span class="s2">&quot;dftd&quot;</span><span class="p">,</span> <span class="s2">&quot;pre_scf_run&quot;</span><span class="p">,</span>
-                  <span class="s2">&quot;scf_iterations&quot;</span><span class="p">,</span> <span class="s2">&quot;scf_energies&quot;</span><span class="p">,</span> <span class="s2">&quot;cosmo_results&quot;</span><span class="p">,</span> <span class="s2">&quot;electrostatic_moments&quot;</span><span class="p">,</span>
-                  <span class="s2">&quot;timings&quot;</span><span class="p">,</span> <span class="s2">&quot;s2&quot;</span><span class="p">,</span> <span class="s2">&quot;is_uhf&quot;</span><span class="p">,</span> <span class="s2">&quot;fermi&quot;</span><span class="p">,</span> <span class="s2">&quot;integral&quot;</span><span class="p">,</span> <span class="s2">&quot;pre_escf_run&quot;</span><span class="p">,</span> <span class="s2">&quot;escf_iterations&quot;</span><span class="p">,</span>
-                  <span class="s2">&quot;escf_gs_total_en&quot;</span><span class="p">,</span> <span class="s2">&quot;escf_excitations&quot;</span><span class="p">,</span> <span class="s2">&quot;rdgrad_memory&quot;</span><span class="p">,</span> <span class="s2">&quot;gradient&quot;</span><span class="p">,</span> <span class="s2">&quot;egrad_excited_state&quot;</span><span class="p">,</span>
-                  <span class="s2">&quot;statpt_info&quot;</span><span class="p">,</span> <span class="s2">&quot;relax_info&quot;</span><span class="p">,</span> <span class="s2">&quot;relax_gradient_values&quot;</span><span class="p">,</span> <span class="s2">&quot;relax_conv_info&quot;</span><span class="p">,</span>
-                  <span class="s2">&quot;aoforce_numerical_integration&quot;</span><span class="p">,</span> <span class="s2">&quot;aoforce_analysis&quot;</span><span class="p">]</span>
+<span class="n">excluded_execs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;jobex&#39;</span><span class="p">]</span>
+<span class="n">files_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="n">tm_version</span><span class="p">,</span> <span class="n">tm_exec</span><span class="p">,</span> <span class="n">test_name</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">tm_version</span> <span class="ow">in</span> <span class="n">TM_VERSIONS</span>
+    <span class="k">for</span> <span class="n">tm_exec</span><span class="p">,</span> <span class="n">exec_tests</span> <span class="ow">in</span> <span class="n">TESTS_CONFIGS_TM_VERSIONS</span><span class="p">[</span><span class="n">tm_version</span><span class="p">][</span><span class="s1">&#39;testlist&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">tm_exec</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">excluded_execs</span>
+    <span class="k">for</span> <span class="n">test_name</span> <span class="ow">in</span> <span class="n">exec_tests</span>
+<span class="p">]</span>
 
 
 <div class="viewcode-block" id="parser_and_dict"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.parser_and_dict">[docs]</a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">files_list</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files_list</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">parser_and_dict</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">testdir</span><span class="p">):</span>
-    <span class="n">directory</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">param</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">param</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">testdir</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">Parser</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="s2">&quot;.log&quot;</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="s2">&quot;.json&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">tm_version</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">param</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">tm_exec</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">param</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">test_name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">param</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">testdir</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="n">tm_version</span><span class="p">,</span> <span class="n">tm_exec</span><span class="p">,</span> <span class="n">test_name</span><span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">Parser</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tm_exec</span><span class="si">}</span><span class="s2">.log&quot;</span><span class="p">))</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;ref_parser.json&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">parser</span><span class="p">,</span> <span class="n">d</span></div>
 
 
-<div class="viewcode-block" id="method"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.method">[docs]</a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">parser_methods</span><span class="p">)</span>
+<div class="viewcode-block" id="method"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.method">[docs]</a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">PARSER_METHODS</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">request</span><span class="o">.</span><span class="n">param</span></div>
 
@@ -262,21 +257,21 @@
         <span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">,</span> <span class="n">desired</span><span class="p">[</span><span class="n">method</span><span class="p">],</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
                             <span class="n">ignored_values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;start_time&quot;</span><span class="p">,</span> <span class="s2">&quot;end_time&quot;</span><span class="p">,</span> <span class="s2">&quot;@version&quot;</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="TestParser.test_get_split_jobex_parsers"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.TestParser.test_get_split_jobex_parsers">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_split_jobex_parsers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">testdir</span><span class="p">):</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">testdir</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="s2">&quot;jobex&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_dscf_job.last&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="TestParser.test_get_split_jobex_parsers"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.TestParser.test_get_split_jobex_parsers">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;tm_version&quot;</span><span class="p">,</span> <span class="n">TM_VERSIONS</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_get_split_jobex_parsers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">testdir</span><span class="p">,</span> <span class="n">tm_version</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">testdir</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="n">tm_version</span><span class="p">,</span> <span class="s2">&quot;jobex&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_dscf&quot;</span><span class="p">,</span> <span class="s2">&quot;job.last&quot;</span><span class="p">)</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">Parser</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="n">jp</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get_split_jobex_parsers</span><span class="p">()</span>
         <span class="k">assert</span> <span class="n">jp</span><span class="o">.</span><span class="n">exec_en</span> <span class="o">==</span> <span class="s2">&quot;dscf&quot;</span>
         <span class="k">assert</span> <span class="n">jp</span><span class="o">.</span><span class="n">exec_grad</span> <span class="o">==</span> <span class="s2">&quot;grad&quot;</span>
         <span class="k">assert</span> <span class="n">jp</span><span class="o">.</span><span class="n">exec_relax</span> <span class="o">==</span> <span class="s2">&quot;statpt&quot;</span>
 
-        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">testdir</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="s2">&quot;jobex&quot;</span><span class="p">,</span> <span class="s2">&quot;no3_ridft_job.last&quot;</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">testdir</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="n">tm_version</span><span class="p">,</span> <span class="s2">&quot;jobex&quot;</span><span class="p">,</span> <span class="s2">&quot;no3_ridft&quot;</span><span class="p">,</span> <span class="s2">&quot;job.last&quot;</span><span class="p">)</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">Parser</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="n">jp</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get_split_jobex_parsers</span><span class="p">()</span>
         <span class="k">assert</span> <span class="n">jp</span><span class="o">.</span><span class="n">exec_en</span> <span class="o">==</span> <span class="s2">&quot;ridft&quot;</span>
         <span class="k">assert</span> <span class="n">jp</span><span class="o">.</span><span class="n">exec_grad</span> <span class="o">==</span> <span class="s2">&quot;rdgrad&quot;</span>
         <span class="k">assert</span> <span class="n">jp</span><span class="o">.</span><span class="n">exec_relax</span> <span class="o">==</span> <span class="s2">&quot;statpt&quot;</span></div>
-
 
 <div class="viewcode-block" id="TestParser.test_grep_line"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.TestParser.test_grep_line">[docs]</a>    <span class="k">def</span> <span class="nf">test_grep_line</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;some text</span>
@@ -336,12 +331,12 @@
 <span class="sd">            like the one in &quot;files_list&quot;. Only the json for the files in this list</span>
 <span class="sd">            will be generated. If None &quot;files_list&quot; will be used.</span>
 <span class="sd">        methods (list): list of string with the methods of Parser for which the</span>
-<span class="sd">            reference data will be generated. If None &quot;parser_methods&quot; will be used.</span>
+<span class="sd">            reference data will be generated. If None &quot;PARSER_METHODS&quot; will be used.</span>
 <span class="sd">        overwrite (bool): if False, in case a method has already its reference value</span>
 <span class="sd">            in the json file it will not be changed. If True it will be overwritten.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">methods</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">methods</span> <span class="o">=</span> <span class="n">parser_methods</span>
+        <span class="n">methods</span> <span class="o">=</span> <span class="n">PARSER_METHODS</span>
     <span class="k">if</span> <span class="n">files</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">files</span> <span class="o">=</span> <span class="n">files_list</span>
 

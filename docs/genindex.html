@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Index &mdash; turbomoleio 1.0.0 documentation</title>
+  <title>Index &mdash; turbomoleio 1.0.1 documentation</title>
   
 
   
@@ -32,6 +32,7 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -61,7 +62,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -86,7 +87,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">User guide</span></p>
+              <p><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="datagroups.html">The data group files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="coord.html">The coord file</a></li>
@@ -94,15 +95,16 @@
 <li class="toctree-l1"><a class="reference internal" href="output_parsing.html">Outputs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer guide</span></p>
+<p><span class="caption-text">Developer guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="developer/introduction.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer/parsing_logs.html">Output logs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer/definerunner.html">Define runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer/testing.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer/versioning.html">Versioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/versioning.html#backward-compatibility">Backward-compatibility</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Additional information</span></p>
+<p><span class="caption-text">Additional information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
@@ -302,6 +304,8 @@
 </li>
       <li><a href="api/turbomoleio.core.html#turbomoleio.core.datagroups.compare_datagroup_string">compare_datagroup_string() (in module turbomoleio.core.datagroups)</a>
 </li>
+      <li><a href="api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.compare_differences">compare_differences() (in module turbomoleio.testfiles.utils)</a>
+</li>
       <li><a href="api/turbomoleio.output.html#turbomoleio.output.states.EigerOutput.compare_states">compare_states() (turbomoleio.output.states.EigerOutput method)</a>
 </li>
       <li><a href="api/turbomoleio.core.html#turbomoleio.core.molecule.BondAngle.compute_value">compute_value() (turbomoleio.core.molecule.BondAngle method)</a>
@@ -326,10 +330,10 @@
 </li>
       <li><a href="api/turbomoleio.output.html#turbomoleio.output.parser.convert_float">convert_float() (in module turbomoleio.output.parser)</a>
 </li>
-      <li><a href="api/turbomoleio.output.html#turbomoleio.output.parser.convert_int">convert_int() (in module turbomoleio.output.parser)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/turbomoleio.output.html#turbomoleio.output.parser.convert_int">convert_int() (in module turbomoleio.output.parser)</a>
+</li>
       <li><a href="api/turbomoleio.output.html#turbomoleio.output.parser.convert_time_string">convert_time_string() (in module turbomoleio.output.parser)</a>
 </li>
       <li><a href="api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.coord_lines">coord_lines() (turbomoleio.core.molecule.MoleculeSystem method)</a>
@@ -396,6 +400,8 @@
 </li>
       <li><a href="api/turbomoleio.input.html#turbomoleio.input.utils.define_parameters_validator">define_parameters_validator (in module turbomoleio.input.utils)</a>
 </li>
+      <li><a href="api/turbomoleio.core.html#turbomoleio.core.utils.define_quit">define_quit() (in module turbomoleio.core.utils)</a>
+</li>
       <li><a href="api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.ItestConfig.define_timeout">define_timeout (turbomoleio.testfiles.utils.ItestConfig attribute)</a>
 </li>
       <li><a href="api/turbomoleio.input.html#turbomoleio.input.define.DefineError">DefineError</a>
@@ -408,10 +414,10 @@
 </li>
       <li><a href="api/turbomoleio.input.html#turbomoleio.input.define.DefineRunner">DefineRunner (class in turbomoleio.input.define)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.ItestConfig.delete_tmp_dir">delete_tmp_dir (turbomoleio.testfiles.utils.ItestConfig attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/turbomoleio.core.html#turbomoleio.core.control.Energy.delta_e">delta_e() (turbomoleio.core.control.Energy property)</a>
 </li>
       <li><a href="api/turbomoleio.output.html#turbomoleio.output.parser.Parser.density_functional_data">density_functional_data() (turbomoleio.output.parser.Parser method)</a>
@@ -427,6 +433,12 @@
       <li><a href="api/turbomoleio.core.html#turbomoleio.core.molecule.Distance">Distance (class in turbomoleio.core.molecule)</a>
 </li>
       <li><a href="api/turbomoleio.input.tests.html#turbomoleio.input.tests.test_define.dr_data">dr_data() (in module turbomoleio.input.tests.test_define)</a>
+</li>
+      <li><a href="api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.ItestConfig.dryrun">dryrun (turbomoleio.testfiles.utils.ItestConfig attribute)</a>
+</li>
+      <li><a href="api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.ItestConfig.dryrun_fpath">dryrun_fpath (turbomoleio.testfiles.utils.ItestConfig attribute)</a>
+</li>
+      <li><a href="api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.ItestConfig.dryrun_use_ref_control">dryrun_use_ref_control (turbomoleio.testfiles.utils.ItestConfig attribute)</a>
 </li>
       <li><a href="api/turbomoleio.input.html#turbomoleio.input.define.DefineRunner.dump_command_file">dump_command_file() (turbomoleio.input.define.DefineRunner method)</a>
 </li>
@@ -547,6 +559,10 @@
 </li>
         <li><a href="api/turbomoleio.output.html#turbomoleio.output.data.IntegralData.from_parser">(turbomoleio.output.data.IntegralData class method)</a>
 </li>
+        <li><a href="api/turbomoleio.output.html#turbomoleio.output.data.MP2Data.from_parser">(turbomoleio.output.data.MP2Data class method)</a>
+</li>
+        <li><a href="api/turbomoleio.output.html#turbomoleio.output.data.MP2Results.from_parser">(turbomoleio.output.data.MP2Results class method)</a>
+</li>
         <li><a href="api/turbomoleio.output.html#turbomoleio.output.data.RelaxConvergenceData.from_parser">(turbomoleio.output.data.RelaxConvergenceData class method)</a>
 </li>
         <li><a href="api/turbomoleio.output.html#turbomoleio.output.data.RelaxData.from_parser">(turbomoleio.output.data.RelaxData class method)</a>
@@ -585,7 +601,11 @@
 </li>
         <li><a href="api/turbomoleio.output.html#turbomoleio.output.files.JobexOutput.from_parser">(turbomoleio.output.files.JobexOutput class method)</a>
 </li>
+        <li><a href="api/turbomoleio.output.html#turbomoleio.output.files.MP2Output.from_parser">(turbomoleio.output.files.MP2Output class method)</a>
+</li>
         <li><a href="api/turbomoleio.output.html#turbomoleio.output.files.RelaxOutput.from_parser">(turbomoleio.output.files.RelaxOutput class method)</a>
+</li>
+        <li><a href="api/turbomoleio.output.html#turbomoleio.output.files.Ricc2Output.from_parser">(turbomoleio.output.files.Ricc2Output class method)</a>
 </li>
         <li><a href="api/turbomoleio.output.html#turbomoleio.output.files.ScfOutput.from_parser">(turbomoleio.output.files.ScfOutput class method)</a>
 </li>
@@ -620,6 +640,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/turbomoleio.output.html#turbomoleio.output.states.States.gap">gap() (turbomoleio.output.states.States property)</a>
 </li>
+      <li><a href="api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.generate_control_for_test">generate_control_for_test() (in module turbomoleio.testfiles.utils)</a>
+</li>
       <li><a href="api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_files.generate_files">generate_files() (in module turbomoleio.output.tests.test_files)</a>
 
       <ul>
@@ -629,6 +651,10 @@
       <li><a href="api/turbomoleio.output.html#turbomoleio.output.states.States.generate_lowest_filled_states">generate_lowest_filled_states() (turbomoleio.output.states.States method)</a>
 </li>
       <li><a href="api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.ItestConfig.generate_ref">generate_ref (turbomoleio.testfiles.utils.ItestConfig attribute)</a>
+</li>
+      <li><a href="api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.generate_reference_out_parser_files">generate_reference_out_parser_files() (in module turbomoleio.testfiles.utils)</a>
+</li>
+      <li><a href="api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.generate_reference_output">generate_reference_output() (in module turbomoleio.testfiles.utils)</a>
 </li>
       <li><a href="api/turbomoleio.output.html#turbomoleio.output.data.GeometryData">GeometryData (class in turbomoleio.output.data)</a>
 </li>
@@ -648,10 +674,10 @@
 </li>
       <li><a href="api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.get_int_def_inconsistencies">get_int_def_inconsistencies() (turbomoleio.core.molecule.MoleculeSystem method)</a>
 </li>
-      <li><a href="api/turbomoleio.core.html#turbomoleio.core.molecule.get_mol_and_indices_frozen">get_mol_and_indices_frozen() (in module turbomoleio.core.molecule)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/turbomoleio.core.html#turbomoleio.core.molecule.get_mol_and_indices_frozen">get_mol_and_indices_frozen() (in module turbomoleio.core.molecule)</a>
+</li>
       <li><a href="api/turbomoleio.output.html#turbomoleio.output.states.get_mos_energies">get_mos_energies() (in module turbomoleio.output.states)</a>
 </li>
       <li><a href="api/turbomoleio.core.html#turbomoleio.core.control.Control.get_shells">get_shells() (turbomoleio.core.control.Control method)</a>
@@ -669,6 +695,8 @@
       <li><a href="api/turbomoleio.core.html#turbomoleio.core.control.Control.get_subfiles_list">get_subfiles_list() (turbomoleio.core.control.Control method)</a>
 </li>
       <li><a href="api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.get_tfp">get_tfp() (in module turbomoleio.testfiles.utils)</a>
+</li>
+      <li><a href="api/turbomoleio.core.html#turbomoleio.core.utils.get_tm_version">get_tm_version() (in module turbomoleio.core.utils)</a>
 </li>
       <li><a href="api/turbomoleio.output.html#turbomoleio.output.parser.Parser.get_value">get_value() (turbomoleio.output.parser.Parser method)</a>
 </li>
@@ -838,6 +866,10 @@
 </li>
         <li><a href="api/turbomoleio.core.tests.html#module-turbomoleio.core.tests.test_molecule">turbomoleio.core.tests.test_molecule</a>
 </li>
+        <li><a href="api/turbomoleio.core.tests.html#module-turbomoleio.core.tests.test_utils">turbomoleio.core.tests.test_utils</a>
+</li>
+        <li><a href="api/turbomoleio.core.html#module-turbomoleio.core.utils">turbomoleio.core.utils</a>
+</li>
         <li><a href="api/turbomoleio.input.html#module-turbomoleio.input">turbomoleio.input</a>
 </li>
         <li><a href="api/turbomoleio.input.html#module-turbomoleio.input.define">turbomoleio.input.define</a>
@@ -880,6 +912,16 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem">MoleculeSystem (class in turbomoleio.core.molecule)</a>
+</li>
+      <li><a href="api/turbomoleio.output.html#turbomoleio.output.parser.Parser.mp2_data">mp2_data() (turbomoleio.output.parser.Parser method)</a>
+</li>
+      <li><a href="api/turbomoleio.output.html#turbomoleio.output.parser.Parser.mp2_results">mp2_results() (turbomoleio.output.parser.Parser method)</a>
+</li>
+      <li><a href="api/turbomoleio.output.html#turbomoleio.output.data.MP2Data">MP2Data (class in turbomoleio.output.data)</a>
+</li>
+      <li><a href="api/turbomoleio.output.html#turbomoleio.output.files.MP2Output">MP2Output (class in turbomoleio.output.files)</a>
+</li>
+      <li><a href="api/turbomoleio.output.html#turbomoleio.output.data.MP2Results">MP2Results (class in turbomoleio.output.data)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1004,6 +1046,8 @@
       <li><a href="api/turbomoleio.core.html#turbomoleio.core.control.Control.remove_last_energy">remove_last_energy() (turbomoleio.core.control.Control method)</a>
 </li>
       <li><a href="api/turbomoleio.core.html#turbomoleio.core.control.Control.remove_last_gradient">remove_last_gradient() (turbomoleio.core.control.Control method)</a>
+</li>
+      <li><a href="api/turbomoleio.output.html#turbomoleio.output.files.Ricc2Output">Ricc2Output (class in turbomoleio.output.files)</a>
 </li>
       <li><a href="api/turbomoleio.output.html#turbomoleio.output.data.RiData">RiData (class in turbomoleio.output.data)</a>
 </li>
@@ -1349,7 +1393,7 @@
 </li>
       <li><a href="api/turbomoleio.input.tests.html#turbomoleio.input.tests.test_define.TestDefineRunner.test_postprocess">test_postprocess() (turbomoleio.input.tests.test_define.TestDefineRunner method)</a>
 </li>
-      <li><a href="api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_files.TestParser.test_properties">test_properties() (turbomoleio.output.tests.test_files.TestParser method)</a>
+      <li><a href="api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_files.TestFiles.test_properties">test_properties() (turbomoleio.output.tests.test_files.TestFiles method)</a>
 
       <ul>
         <li><a href="api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.TestParser.test_properties">(turbomoleio.output.tests.test_parser.TestParser method)</a>
@@ -1371,8 +1415,6 @@
 </li>
       <li><a href="api/turbomoleio.input.tests.html#turbomoleio.input.tests.test_define.TestDefineRunner.test_run_full_1">test_run_full_1() (turbomoleio.input.tests.test_define.TestDefineRunner method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/turbomoleio.input.tests.html#turbomoleio.input.tests.test_define.TestDefineRunner.test_run_full_2">test_run_full_2() (turbomoleio.input.tests.test_define.TestDefineRunner method)</a>
 </li>
       <li><a href="api/turbomoleio.input.tests.html#turbomoleio.input.tests.test_define.TestDefineRunner.test_run_generate_mo_files">test_run_generate_mo_files() (turbomoleio.input.tests.test_define.TestDefineRunner method)</a>
@@ -1381,6 +1423,8 @@
 </li>
       <li><a href="api/turbomoleio.input.tests.html#turbomoleio.input.tests.test_define.TestDefineRunner.test_run_update_internal_coords">test_run_update_internal_coords() (turbomoleio.input.tests.test_define.TestDefineRunner method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/turbomoleio.input.tests.html#turbomoleio.input.tests.test_define.TestDefineRunner.test_run_update_internal_coords_error">test_run_update_internal_coords_error() (turbomoleio.input.tests.test_define.TestDefineRunner method)</a>
 </li>
       <li><a href="api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_data.test_ScfIterationData">test_ScfIterationData() (in module turbomoleio.output.tests.test_data)</a>
@@ -1465,6 +1509,14 @@
         <li><a href="api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_control.TestShells.test_uhf">(turbomoleio.core.tests.test_control.TestShells method)</a>
 </li>
       </ul></li>
+      <li><a href="api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_utils.TestGetVersion.test_V72">test_V72() (turbomoleio.core.tests.test_utils.TestGetVersion method)</a>
+</li>
+      <li><a href="api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_utils.TestGetVersion.test_V731">test_V731() (turbomoleio.core.tests.test_utils.TestGetVersion method)</a>
+</li>
+      <li><a href="api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_utils.TestGetVersion.test_V741">test_V741() (turbomoleio.core.tests.test_utils.TestGetVersion method)</a>
+</li>
+      <li><a href="api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_utils.TestGetVersion.test_V751">test_V751() (turbomoleio.core.tests.test_utils.TestGetVersion method)</a>
+</li>
       <li><a href="api/turbomoleio.input.tests.html#turbomoleio.input.tests.test_utils.test_validate_parameters">test_validate_parameters() (in module turbomoleio.input.tests.test_utils)</a>
 </li>
       <li><a href="api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_control.TestControl">TestControl (class in turbomoleio.core.tests.test_control)</a>
@@ -1477,7 +1529,11 @@
 </li>
       <li><a href="api/turbomoleio.input.tests.html#turbomoleio.input.tests.test_define.TestExceptions">TestExceptions (class in turbomoleio.input.tests.test_define)</a>
 </li>
+      <li><a href="api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_files.TestFiles">TestFiles (class in turbomoleio.output.tests.test_files)</a>
+</li>
       <li><a href="api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.TestFunctions">TestFunctions (class in turbomoleio.output.tests.test_parser)</a>
+</li>
+      <li><a href="api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_utils.TestGetVersion">TestGetVersion (class in turbomoleio.core.tests.test_utils)</a>
 </li>
       <li><a href="api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_control.TestGradient">TestGradient (class in turbomoleio.core.tests.test_control)</a>
 </li>
@@ -1485,12 +1541,8 @@
 </li>
       <li><a href="api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_molecule.TestMoleculeSystem">TestMoleculeSystem (class in turbomoleio.core.tests.test_molecule)</a>
 </li>
-      <li><a href="api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_files.TestParser">TestParser (class in turbomoleio.output.tests.test_files)</a>
-
-      <ul>
-        <li><a href="api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.TestParser">(class in turbomoleio.output.tests.test_parser)</a>
+      <li><a href="api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.TestParser">TestParser (class in turbomoleio.output.tests.test_parser)</a>
 </li>
-      </ul></li>
       <li><a href="api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_control.TestShells">TestShells (class in turbomoleio.core.tests.test_control)</a>
 </li>
       <li><a href="api/turbomoleio.output.html#turbomoleio.output.parser.Parser.timings">timings() (turbomoleio.output.parser.Parser method)</a>
@@ -1593,6 +1645,20 @@
 
       <ul>
         <li><a href="api/turbomoleio.core.tests.html#module-turbomoleio.core.tests.test_molecule">module</a>
+</li>
+      </ul></li>
+      <li>
+    turbomoleio.core.tests.test_utils
+
+      <ul>
+        <li><a href="api/turbomoleio.core.tests.html#module-turbomoleio.core.tests.test_utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    turbomoleio.core.utils
+
+      <ul>
+        <li><a href="api/turbomoleio.core.html#module-turbomoleio.core.utils">module</a>
 </li>
       </ul></li>
       <li>

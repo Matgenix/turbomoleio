@@ -4,10 +4,11 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>turbomoleio.core package &mdash; turbomoleio 1.0.0 documentation</title>
+  <title>turbomoleio.core package &mdash; turbomoleio 1.0.1 documentation</title>
   
 
   
@@ -32,6 +33,7 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -63,7 +65,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -88,7 +90,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">User guide</span></p>
+              <p><span class="caption-text">User guide</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../datagroups.html">The data group files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../coord.html">The coord file</a></li>
@@ -106,15 +108,16 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Developer guide</span></p>
+<p><span class="caption-text">Developer guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../developer/introduction.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developer/parsing_logs.html">Output logs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developer/definerunner.html">Define runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developer/testing.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developer/versioning.html">Versioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/versioning.html#backward-compatibility">Backward-compatibility</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Additional information</span></p>
+<p><span class="caption-text">Additional information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -192,9 +195,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="turbomoleio-core-package">
+  <section id="turbomoleio-core-package">
 <h1>turbomoleio.core package<a class="headerlink" href="#turbomoleio-core-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="subpackages">
+<section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
@@ -203,16 +206,17 @@
 <li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.tests.html#module-turbomoleio.core.tests.test_control">turbomoleio.core.tests.test_control module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.tests.html#module-turbomoleio.core.tests.test_datagroups">turbomoleio.core.tests.test_datagroups module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.tests.html#module-turbomoleio.core.tests.test_molecule">turbomoleio.core.tests.test_molecule module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.tests.html#module-turbomoleio.core.tests.test_utils">turbomoleio.core.tests.test_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.tests.html#module-turbomoleio.core.tests">Module contents</a></li>
 </ul>
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="submodules">
+</section>
+<section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-turbomoleio.core.control">
+</section>
+<section id="module-turbomoleio.core.control">
 <span id="turbomoleio-core-control-module"></span><h2>turbomoleio.core.control module<a class="headerlink" href="#module-turbomoleio.core.control" title="Permalink to this headline">¶</a></h2>
 <p>This module contains the object and functions to interact directly with a
 control file. Based on the DataGroups class.</p>
@@ -239,7 +243,7 @@ Usually read from file.</p></li>
 <dl class="py method">
 <dt id="turbomoleio.core.control.Control.add_cosmo">
 <code class="sig-name descname">add_cosmo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">nppa</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">nspa</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">disex</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">rsolv</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">routf</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cavity</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">use_old_amat</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Control.add_cosmo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#turbomoleio.core.control.Control.add_cosmo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds the $cosmo datagroup to the control, using the keyworkds to set the cosmo options.
+<dd><p>Adds the $cosmo datagroup to the control, using the keywords to set the cosmo options.
 If None all the options will not be written to the control file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -270,7 +274,7 @@ Creates the destination folder if not already existing.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dest_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – path to the destionation folder.</p></li>
+<li><p><strong>dest_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – path to the destination folder.</p></li>
 <li><p><strong>force_overwrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – if True files already present in the
 destination folder will be overwritten.</p></li>
 </ul>
@@ -301,7 +305,7 @@ should be read, default is “control”.</p>
 <dt id="turbomoleio.core.control.Control.from_metric">
 <em class="property">classmethod </em><code class="sig-name descname">from_metric</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">metric</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Control.from_metric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#turbomoleio.core.control.Control.from_metric" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates a new Control containing the value of the metric in $redund_inp
-and an empty $coord</p>
+and an empty $coord.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>metric</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the value of the metric</p>
@@ -511,7 +515,7 @@ should be read, default is “energy”.</p>
 <dl class="py method">
 <dt id="turbomoleio.core.control.Energy.n_steps">
 <em class="property">property </em><code class="sig-name descname">n_steps</code><a class="headerlink" href="#turbomoleio.core.control.Energy.n_steps" title="Permalink to this definition">¶</a></dt>
-<dd><p>The number of steps present</p>
+<dd><p>The number of steps present.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -623,26 +627,26 @@ None if no steps presents.</p>
 <dl class="py method">
 <dt id="turbomoleio.core.control.Gradient.last_grad_norm">
 <em class="property">property </em><code class="sig-name descname">last_grad_norm</code><a class="headerlink" href="#turbomoleio.core.control.Gradient.last_grad_norm" title="Permalink to this definition">¶</a></dt>
-<dd><p>The value of the last gradient norm
+<dd><p>The value of the last gradient norm.
 None if no steps presents.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="turbomoleio.core.control.Gradient.max_gradients">
 <em class="property">property </em><code class="sig-name descname">max_gradients</code><a class="headerlink" href="#turbomoleio.core.control.Gradient.max_gradients" title="Permalink to this definition">¶</a></dt>
-<dd><p>Norms of the largest gradients for each step</p>
+<dd><p>Norms of the largest gradients for each step.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="turbomoleio.core.control.Gradient.n_steps">
 <em class="property">property </em><code class="sig-name descname">n_steps</code><a class="headerlink" href="#turbomoleio.core.control.Gradient.n_steps" title="Permalink to this definition">¶</a></dt>
-<dd><p>The number of steps present</p>
+<dd><p>The number of steps present.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="turbomoleio.core.control.Gradient.norms">
 <em class="property">property </em><code class="sig-name descname">norms</code><a class="headerlink" href="#turbomoleio.core.control.Gradient.norms" title="Permalink to this definition">¶</a></dt>
-<dd><p>Total norm of the gradients for each step</p>
+<dd><p>Total norm of the gradients for each step.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -733,7 +737,7 @@ states for each.</p></li>
 <dd><p>Generates an instance of Shell from a JSON serialized representation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>d</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – the dictionary with the data to inizialize Shells</p>
+<dd class="field-odd"><p><strong>d</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – the dictionary with the data to initialize Shells</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A Shells instance</p>
@@ -927,7 +931,7 @@ attempt is made here to identify the suitable format for the option.
 It is responsibility of the caller to specify the line for the option
 in the correct format.</p>
 <p>If the datagroup is not present will be created with the specified options.</p>
-<p>If the entire data group should be modifed it would be safer to use
+<p>If the entire data group should be modified it would be safer to use
 change_data_group.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1015,8 +1019,8 @@ data_group or the option are not present in the list.</p></li>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-turbomoleio.core.datagroups">
+</section>
+<section id="module-turbomoleio.core.datagroups">
 <span id="turbomoleio-core-datagroups-module"></span><h2>turbomoleio.core.datagroups module<a class="headerlink" href="#module-turbomoleio.core.datagroups" title="Permalink to this headline">¶</a></h2>
 <p>Utility module for the “data group” model of TurboMole.</p>
 <p>This module contains utility functions to parse, manipulate and write files
@@ -1149,7 +1153,7 @@ data_group value.</p></li>
 
 <dl class="py method">
 <dt id="turbomoleio.core.datagroups.DataGroups.compare">
-<code class="sig-name descname">compare</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">datagroups</span></em>, <em class="sig-param"><span class="n">tol</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ignored_dg</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#DataGroups.compare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.compare" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">compare</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">datagroups</span></em>, <em class="sig-param"><span class="n">tol</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ignored_dg</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">return_all_diffs</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#DataGroups.compare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.compare" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compares the current object with another DataGroups. Aside from the datagroups
 that should be ignored, (define in the ignored_dg argument), the two should contain
 the same amount of elements in dg_list and each one from the current object
@@ -1173,10 +1177,17 @@ even the number should match as strings.</p></li>
 It is expected to be the name of the datagroup, thus starting with a “$”.
 If the “$” symbol is not present will be added before trying to match the
 datagroup to skip.</p></li>
+<li><p><strong>return_all_diffs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – If True, a list of all differences is returned. If False
+(default), a string describing the first source of difference found is returned.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>None if the results match or a string describing a source of difference otherwise.</p>
+<dd class="field-even"><p><dl class="simple">
+<dt>None if the results match or a string describing a source of difference otherwise</dt><dd><p>(if return_all_diffs is False) or a list of all differences (if return_all_diffs
+is True).</p>
+</dd>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1695,8 +1706,8 @@ None in which case all five types of comments will be removed.</p></li>
 </div>
 </dd></dl>
 
-</div>
-<div class="section" id="module-turbomoleio.core.molecule">
+</section>
+<section id="module-turbomoleio.core.molecule">
 <span id="turbomoleio-core-molecule-module"></span><h2>turbomoleio.core.molecule module<a class="headerlink" href="#module-turbomoleio.core.molecule" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="turbomoleio.core.molecule.BondAngle">
@@ -2496,15 +2507,33 @@ frozen_indices: a set with the indices of the frozen atoms.</p>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-turbomoleio.core.symmetry">
+</section>
+<section id="module-turbomoleio.core.symmetry">
 <span id="turbomoleio-core-symmetry-module"></span><h2>turbomoleio.core.symmetry module<a class="headerlink" href="#module-turbomoleio.core.symmetry" title="Permalink to this headline">¶</a></h2>
 <p>Module for functionalities related to symmetries of the molecule.</p>
-</div>
-<div class="section" id="module-turbomoleio.core">
+</section>
+<section id="module-turbomoleio.core.utils">
+<span id="turbomoleio-core-utils-module"></span><h2>turbomoleio.core.utils module<a class="headerlink" href="#module-turbomoleio.core.utils" title="Permalink to this headline">¶</a></h2>
+<p>Module containing miscellaneous utilities</p>
+<dl class="py function">
+<dt id="turbomoleio.core.utils.define_quit">
+<code class="sig-prename descclassname">turbomoleio.core.utils.</code><code class="sig-name descname">define_quit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/utils.html#define_quit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#turbomoleio.core.utils.define_quit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs define but directly quits by sending “qq” interactively.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="turbomoleio.core.utils.get_tm_version">
+<code class="sig-prename descclassname">turbomoleio.core.utils.</code><code class="sig-name descname">get_tm_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/utils.html#get_tm_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#turbomoleio.core.utils.get_tm_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the turbomole version currently in use.</p>
+<p>This basically runs a define and exits at the very beginning and extracts
+the version from the header of the output.</p>
+</dd></dl>
+
+</section>
+<section id="module-turbomoleio.core">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-turbomoleio.core" title="Permalink to this headline">¶</a></h2>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
