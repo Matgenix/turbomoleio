@@ -329,8 +329,9 @@ and apply the following list of actions.
 
 2. Output parsing
     2.1 Go in ~turbomoleio/dev_scripts and run `python generate_output_files.py --dryrun`.
-    A `differences.json` file is created in each test directory with the list of differences with
-    respect to the previous Turbomole version. By default, the old control file is used for this dry run.
+    A `parsing_update_differences.json` file is created in the new test version directory with the list of
+    differences for each output parsing test with respect to the previous Turbomole version. By default,
+    the old control file is used for this dry run.
 
     2.2 Inspect the differences found in 2.1. If the differences are reasonable, generate the new
     reference files for the new Turbomole version by running `python generate_output_files.py
@@ -395,6 +396,6 @@ serialized file objects. This script is located in:
 Run the script using "--help" to get a list of the options available for this script.
 
 It is important to know that the script can be run either in dry mode or in generation mode. In
-dry mode, a `differences.json` file is generated with all the differences in the test found
+dry mode, a `parsing_update_differences.json` file is generated with all the differences found in the tests
 between the current Turbomole version and the control and output files of the previous Turbomole
 version.
