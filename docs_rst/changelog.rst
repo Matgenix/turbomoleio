@@ -24,7 +24,7 @@
 Changelog
 =========
 
-Release 1.0.1 (Jul XX, 2021)
+Release 1.0.1 (Aug 18, 2021)
 ============================
 
 Features added
