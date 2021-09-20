@@ -1,9 +1,9 @@
 
- statpt (localhost.localdomain) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
+ statpt (fedora) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-06-10 14:04:35.625 
+    2021-09-20 09:39:46.848 
 
 
 
@@ -58,6 +58,18 @@
  keyword $statp missing in file <control>
 
   Keyword $statpt not found - using default options
+  actual coordinates :
+         0.000000000000         0.000000000000        -0.346533712216
+         0.972122845728         1.683766160000        -0.981426278523
+         0.972122845728        -1.683766160000        -0.981426278523
+        -1.944245691457         0.000000000000        -0.981426278523
+         0.000000000000         0.000000000000         3.290812547784
+  actual gradients :
+         0.000000000000         0.000000000000        -0.007009944414
+        -0.007778500324        -0.013472757768         0.006234404100
+        -0.007778500324         0.013472757768         0.006234404100
+         0.015557000648         0.000000000000         0.006234404100
+        -0.000000000000         0.000000000000        -0.011704138652
      Number of symmetry restricted degrees of freedom:     4
      Constituted by:     1 translational degrees of freedom
                          0 rotational degrees of freedom
@@ -122,5 +134,5 @@
    ****  statpt : all done  ****
 
 
-    2021-06-10 14:04:35.631 
+    2021-09-20 09:39:46.854 
 

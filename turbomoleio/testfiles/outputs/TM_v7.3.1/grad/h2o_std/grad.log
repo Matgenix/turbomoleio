@@ -1,10 +1,10 @@
  operating system is UNIX !
 
- grad (localhost.localdomain) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
+ grad (fedora) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-06-10 14:04:24.126 
+    2021-09-20 09:39:31.609 
 
 
 
@@ -108,8 +108,8 @@
  orbital characterization : scfconv=6
  time elapsed for calculating density matrices :   0.000 sec
 
-  grad preliminaries : cpu elapsed         0.010 s
-                       wall                0.009 s
+  grad preliminaries : cpu elapsed         0.008 s
+                       wall                0.008 s
   
            ------------------
            density functional
@@ -219,12 +219,12 @@ dE/dz  0.4134174D-01 -0.2065429D-01 -0.2065429D-01
 
 
     ------------------------------------------------------------------------
-         total  cpu-time :   0.03 seconds
-         total wall-time :   0.03 seconds
+         total  cpu-time :   0.02 seconds
+         total wall-time :   0.02 seconds
     ------------------------------------------------------------------------
 
    ****  grad : all done  ****
 
 
-    2021-06-10 14:04:24.145 
+    2021-09-20 09:39:31.625 
 

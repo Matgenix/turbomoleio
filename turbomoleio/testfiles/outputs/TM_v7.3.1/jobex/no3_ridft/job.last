@@ -1,19 +1,19 @@
 
 OPTIMIZATION CYCLE 4
-Thu 10 Jun 14:04:25 CEST 2021
+Mon 20 Sep 09:39:32 CEST 2021
 
  WARNING : length of argument string 
-/run/media/waroquiers/2A089C5C089C28B91/Users/waroquiers/TURBOMOLE_EXECUTABLES/turbolinux731/TURBOMOLE//bin/em64t-unknown-linux-gnu
+/home/davidwaroquiers/Softwares/Turbomole/evaluation_license/turbolinux731/bin/em64t-unknown-linux-gnu
  exceeds   80 characters 
  argument will be ignored!
 
  operating system is UNIX !
 
- rdgrad (localhost.localdomain) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
+ rdgrad (fedora) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-06-10 14:04:25.451 
+    2021-09-20 09:39:32.569 
 
 
  UHF modus switched on !
@@ -222,23 +222,23 @@ dE/dz  0.0000000D+00  0.0000000D+00  0.0000000D+00  0.0000000D+00
 
 
     ------------------------------------------------------------------------
-         total  cpu-time :   0.06 seconds
-         total wall-time :   0.06 seconds
+         total  cpu-time :   0.05 seconds
+         total wall-time :   0.05 seconds
     ------------------------------------------------------------------------
 
    ****  rdgrad : all done  ****
 
 
-    2021-06-10 14:04:25.508 
+    2021-09-20 09:39:32.613 
 
 fine, there is no data group "$actual step"
 next step = relax
 
- statpt (localhost.localdomain) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
+ statpt (fedora) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-06-10 14:04:25.555 
+    2021-09-20 09:39:32.634 
 
 
 
@@ -350,23 +350,23 @@ next step = relax
    ****  statpt : all done  ****
 
 
-    2021-06-10 14:04:25.560 
+    2021-09-20 09:39:32.639 
 
 fine, there is no data group "$actual step"
 next step = ridft
 
  WARNING : length of argument string 
-/run/media/waroquiers/2A089C5C089C28B91/Users/waroquiers/TURBOMOLE_EXECUTABLES/turbolinux731/TURBOMOLE//bin/em64t-unknown-linux-gnu
+/home/davidwaroquiers/Softwares/Turbomole/evaluation_license/turbolinux731/bin/em64t-unknown-linux-gnu
  exceeds   80 characters 
  argument will be ignored!
 
  operating system is UNIX !
 
- ridft (localhost.localdomain) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
+ ridft (fedora) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-06-10 14:04:25.596 
+    2021-09-20 09:39:32.657 
 
 
 
@@ -852,14 +852,14 @@ next step = ridft
 
 
     ------------------------------------------------------------------------
-         total  cpu-time :   0.07 seconds
-         total wall-time :   0.07 seconds
+         total  cpu-time :   0.06 seconds
+         total wall-time :   0.06 seconds
     ------------------------------------------------------------------------
 
    ****  ridft : all done  ****
 
 
-    2021-06-10 14:04:25.658 
+    2021-09-20 09:39:32.709 
 
 fine, there is no data group "$actual step"
 next step = rdgrad

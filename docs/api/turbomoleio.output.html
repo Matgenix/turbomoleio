@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>turbomoleio.output package &mdash; turbomoleio 1.0.1 documentation</title>
+  <title>turbomoleio.output package &mdash; turbomoleio 1.1.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0.1
+                1.1.0
               </div>
             
           
@@ -1637,7 +1637,7 @@ for them.</p>
 
 <dl class="py class">
 <dt id="turbomoleio.output.files.MP2Output">
-<em class="property">class </em><code class="sig-prename descclassname">turbomoleio.output.files.</code><code class="sig-name descname">MP2Output</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">info</span></em>, <em class="sig-param"><span class="n">energy</span></em>, <em class="sig-param"><span class="n">geometry</span></em>, <em class="sig-param"><span class="n">basis</span></em>, <em class="sig-param"><span class="n">symmetry</span></em>, <em class="sig-param"><span class="n">cosmo</span></em>, <em class="sig-param"><span class="n">run</span></em>, <em class="sig-param"><span class="n">tm</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/output/files.html#MP2Output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#turbomoleio.output.files.MP2Output" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">turbomoleio.output.files.</code><code class="sig-name descname">MP2Output</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">info</span></em>, <em class="sig-param"><span class="n">results</span></em>, <em class="sig-param"><span class="n">geometry</span></em>, <em class="sig-param"><span class="n">basis</span></em>, <em class="sig-param"><span class="n">symmetry</span></em>, <em class="sig-param"><span class="n">cosmo</span></em>, <em class="sig-param"><span class="n">run</span></em>, <em class="sig-param"><span class="n">tm</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/output/files.html#MP2Output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#turbomoleio.output.files.MP2Output" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#turbomoleio.output.data.BaseData" title="turbomoleio.output.data.BaseData"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.output.data.BaseData</span></code></a></p>
 <p>Object containing the data of the output of an MP2 calculation, i.e. mpgrad, ricc2 (with proper MP2 options),
 or pnoccsd (with proper MP2 options).</p>
@@ -1646,7 +1646,7 @@ or pnoccsd (with proper MP2 options).</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>info</strong> (<a class="reference internal" href="#turbomoleio.output.data.MP2Data" title="turbomoleio.output.data.MP2Data"><em>MP2Data</em></a>) – Information about MP2 calculation.</p></li>
-<li><p><strong>energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – MP2 energy.</p></li>
+<li><p><strong>results</strong> (<a class="reference internal" href="#turbomoleio.output.data.MP2Results" title="turbomoleio.output.data.MP2Results"><em>MP2Results</em></a>) – Results of an MP2 calculation.</p></li>
 <li><p><strong>geometry</strong> (<a class="reference internal" href="#turbomoleio.output.data.GeometryData" title="turbomoleio.output.data.GeometryData"><em>GeometryData</em></a>) – the geometry of the system.</p></li>
 <li><p><strong>basis</strong> (<a class="reference internal" href="#turbomoleio.output.data.BasisData" title="turbomoleio.output.data.BasisData"><em>BasisData</em></a>) – the basis used for the calculation.</p></li>
 <li><p><strong>symmetry</strong> (<a class="reference internal" href="#turbomoleio.output.data.SymmetryData" title="turbomoleio.output.data.SymmetryData"><em>SymmetryData</em></a>) – information about the symmetry of the molecule.</p></li>

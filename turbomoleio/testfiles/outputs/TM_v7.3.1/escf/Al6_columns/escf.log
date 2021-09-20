@@ -1,10 +1,10 @@
  operating system is UNIX !
 
- escf (localhost.localdomain) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
+ escf (fedora) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-06-10 14:04:22.903 
+    2021-09-20 09:39:30.507 
 
 
 
@@ -1277,12 +1277,12 @@
 
 
     ------------------------------------------------------------------------
-         total  cpu-time :   1.07 seconds
-         total wall-time :   1.07 seconds
+         total  cpu-time :   0.96 seconds
+         total wall-time :   0.97 seconds
     ------------------------------------------------------------------------
 
    ****  escf : all done  ****
 
 
-    2021-06-10 14:04:23.963 
+    2021-09-20 09:39:31.466 
 

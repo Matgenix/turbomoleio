@@ -13,7 +13,6 @@ $pople   AO
 $basis
 *
 al def-SV(P)
-# al    (10s7p1d) / [4s3p1d]     {5311/511/1}
 *
    5  s
   5887.5727030       .13483347987E-02
@@ -49,12 +48,8 @@ $rundimensions
    nbf(CAO)=114
    nbf(AO)=108
    dim(trafo[SAO<-->AO/CAO])=936
-   rhfshells=2
+   rhfshells=1
 $uhfmo_alpha    scfconv=7   format(4d20.14)
-# uhf orbitals of project :
-#  --->  Al6 trigon priama triplett  <---
-# UHF total energy is    -1454.2486870778 a.u.
-#
      1  a1'    eigenvalue=-.55432879104944D+02   nsaos=13
 -.99521447488544D+000.18696124149125D-010.92088860624442D-02-.41514074956354D-02
 0.47071371029935D-040.38977875224124D-04-.78452944343950D-03-.53082796950598D-03
@@ -432,10 +427,6 @@ $uhfmo_alpha    scfconv=7   format(4d20.14)
 0.64882619382885D+00-.13455102585453D+010.15630242401017D-01-.10275741849085D+00
 0.44586776702222D+000.42236895005163D+00
 $uhfmo_beta    scfconv=7   format(4d20.14)
-# uhf orbitals of project :
-#  --->  Al6 trigon priama triplett  <---
-# UHF total energy is    -1454.2486870778 a.u.
-#
      1  a1'    eigenvalue=-.55432223923433D+02   nsaos=13
 0.99521592104796D+00-.18690382112264D-01-.92037792733589D-020.41490504311908D-02
 -.48078687500803D-04-.37934217956010D-040.78437990442316D-030.52982995211850D-03
@@ -812,7 +803,6 @@ $uhfmo_beta    scfconv=7   format(4d20.14)
 -.16529281164407D+000.43491904276861D+00-.13312319472004D+01-.39727781684242D+00
 0.62997229046178D+00-.13437000535058D+010.25998221272014D-01-.99762681565540D-01
 0.45361577628614D+000.41485206788410D+00
-$uhf
 $alpha shells
  a1'     1-7                                    ( 1 )
  a2'     1                                      ( 1 )
@@ -854,10 +844,10 @@ $coordinateupdate
    interpolate  on
    statistics    5
 $forceupdate
-   ahlrichs numgeo=4  mingeo=3 maxgeo=4 modus=<g|dq> dynamic fail=0.8
+   ahlrichs numgeo=0  mingeo=3 maxgeo=4 modus=<g|dq> dynamic fail=0.8
    threig=0.005  reseig=0.005  thrbig=3.0  scale=1.00  damping=0.0
-$forceinit off
-   diag=0.25
+$forceinit on
+   diag=default
 $energy      SCF               SCFKIN            SCFPOT
      1 -1454.248687078      1449.000479320     -2903.249166398
 $lock off
@@ -914,4 +904,14 @@ $maximum norm of internal gradient =  .51217414E-04
 $scfinstab urpa
 $rpacor 50
 $soes all 1
+$scfmo   file=mos
+$closed shells
+ a1'     1-6                                    ( 2 )
+ a2'     1                                      ( 2 )
+ e'      1-7                                    ( 2 )
+ a1"     1                                      ( 2 )
+ a2"     1-5                                    ( 2 )
+ e"      1-6                                    ( 2 )
+$maxcor    500 MiB  per_core
+$forceapprox    file=forceapprox
 $end

@@ -1,5 +1,3 @@
-$title
-dscf
 $operating system unix
 $symmetry c1
 $user-defined bonds    file=coord
@@ -25,8 +23,6 @@ $rundimensions
    rhfshells=1
    nbf(AO)=20
 $scfmo   file=mos
-$closed shells
- a       1-5                                    ( 2 )
 $scfiterlimit      200
 $thize     0.10000000E-04
 $thime        5
@@ -67,4 +63,8 @@ $last step     define
 $cosmo
 $cosmo_out = out.cosmo
 $fermi tmstrt=500 tmend=50 tmfac=0.9 hlcrt=0.2
+$title
+dscf
+$closed shells
+ a       1-5                                    ( 2 )
 $end

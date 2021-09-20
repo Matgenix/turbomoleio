@@ -2,13 +2,13 @@
   "all_done": true,
   "header": {
     "executable": "grad",
-    "host": "localhost.localdomain",
+    "host": "fedora",
     "tm_version": "7.3.1",
     "tm_build": null,
     "start_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-06-10 14:04:27.081000"
+      "string": "2021-09-20 09:39:35.300000"
     }
   },
   "centers": {
@@ -155,12 +155,12 @@
     }
   },
   "timings": {
-    "cpu_time": 0.03,
-    "wall_time": 0.03,
+    "cpu_time": 0.02,
+    "wall_time": 0.02,
     "end_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-06-10 14:04:27.101000"
+      "string": "2021-09-20 09:39:35.317000"
     }
   },
   "s2": null,
@@ -238,29 +238,32 @@
     "energy_change": {
       "value": 3e-07,
       "thr": 1e-06,
-      "conv": false
+      "conv": true
     },
     "rms_displ": {
       "value": 0.0002575,
       "thr": 0.0005,
-      "conv": false
+      "conv": true
     },
     "rms_grad": {
       "value": 3.57e-05,
       "thr": 0.0005,
-      "conv": false
+      "conv": true
     },
     "max_displ": {
       "value": 0.0003638,
       "thr": 0.001,
-      "conv": false
+      "conv": true
     },
     "max_grad": {
       "value": 4.87e-05,
       "thr": 0.001,
-      "conv": false
+      "conv": true
     }
   },
   "aoforce_numerical_integration": null,
-  "aoforce_analysis": null
+  "aoforce_analysis": null,
+  "mp2_results": {
+    "energy": null
+  }
 }

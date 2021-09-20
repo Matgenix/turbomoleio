@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>turbomoleio.output.files &mdash; turbomoleio 1.0.1 documentation</title>
+  <title>turbomoleio.output.files &mdash; turbomoleio 1.1.0 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                1.0.1
+                1.1.0
               </div>
             
           
@@ -644,11 +644,11 @@
 
 <span class="sd">    Note: Parsing of PNO-based MP2 calculations (i.e. performed with the pnoccsd program) is not (yet) supported.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">geometry</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="n">symmetry</span><span class="p">,</span> <span class="n">cosmo</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">geometry</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span> <span class="n">symmetry</span><span class="p">,</span> <span class="n">cosmo</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            info (MP2Data): Information about MP2 calculation.</span>
-<span class="sd">            energy (float): MP2 energy.</span>
+<span class="sd">            results (MP2Results): Results of an MP2 calculation.</span>
 <span class="sd">            geometry (GeometryData): the geometry of the system.</span>
 <span class="sd">            basis (BasisData): the basis used for the calculation.</span>
 <span class="sd">            symmetry (SymmetryData): information about the symmetry of the molecule.</span>
@@ -657,7 +657,7 @@
 <span class="sd">            tm (TurbomoleData): information about the turbomole used for the calculation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="n">info</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">energy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="n">results</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">geometry</span> <span class="o">=</span> <span class="n">geometry</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis</span> <span class="o">=</span> <span class="n">basis</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">symmetry</span> <span class="o">=</span> <span class="n">symmetry</span>
@@ -678,8 +678,7 @@
 <span class="sd">            MP2Output.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">info</span> <span class="o">=</span> <span class="n">MP2Data</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
-        <span class="n">mp2_data</span> <span class="o">=</span> <span class="n">MP2Results</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
-        <span class="n">energy</span> <span class="o">=</span> <span class="n">mp2_data</span><span class="o">.</span><span class="n">energy</span> <span class="k">if</span> <span class="n">mp2_data</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">MP2Results</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
         <span class="n">run</span> <span class="o">=</span> <span class="n">RunData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
         <span class="n">tm</span> <span class="o">=</span> <span class="n">TurbomoleData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
         <span class="n">geometry</span> <span class="o">=</span> <span class="n">GeometryData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
@@ -688,7 +687,8 @@
         <span class="n">cosmo</span> <span class="o">=</span> <span class="n">CosmoData</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
         <span class="c1"># TODO: fix parsing of Cosmo data in non-scf executables or add a separate parsing</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">info</span><span class="o">=</span><span class="n">info</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="n">energy</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">symmetry</span><span class="o">=</span><span class="n">symmetry</span><span class="p">,</span> <span class="n">cosmo</span><span class="o">=</span><span class="n">cosmo</span><span class="p">,</span> <span class="n">run</span><span class="o">=</span><span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="o">=</span><span class="n">tm</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">info</span><span class="o">=</span><span class="n">info</span><span class="p">,</span> <span class="n">results</span><span class="o">=</span><span class="n">results</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span>
+                   <span class="n">basis</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span> <span class="n">symmetry</span><span class="o">=</span><span class="n">symmetry</span><span class="p">,</span> <span class="n">cosmo</span><span class="o">=</span><span class="n">cosmo</span><span class="p">,</span> <span class="n">run</span><span class="o">=</span><span class="n">run</span><span class="p">,</span> <span class="n">tm</span><span class="o">=</span><span class="n">tm</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="JobexOutput"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.files.JobexOutput">[docs]</a><span class="k">class</span> <span class="nc">JobexOutput</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>

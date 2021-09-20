@@ -8,7 +8,7 @@
     "start_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-07-08 15:36:00.726000"
+      "string": "2021-09-20 09:39:38.844000"
     }
   },
   "centers": {
@@ -116,11 +116,11 @@
   },
   "timings": {
     "cpu_time": 0.04,
-    "wall_time": 0.05,
+    "wall_time": 0.04,
     "end_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-07-08 15:36:00.765000"
+      "string": "2021-09-20 09:39:38.881000"
     }
   },
   "s2": null,

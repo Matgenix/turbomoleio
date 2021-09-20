@@ -1,12 +1,12 @@
 
 OPTIMIZATION CYCLE 7
-Thu  8 Jul 15:53:21 CEST 2021
+Mon 20 Sep 09:39:34 CEST 2021
 
  statpt (fedora) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-07-08 15:53:21.267 
+    2021-09-20 09:39:34.245 
 
 
 
@@ -103,7 +103,7 @@ Thu  8 Jul 15:53:21 CEST 2021
    ****  statpt : all done  ****
 
 
-    2021-07-08 15:53:21.271 
+    2021-09-20 09:39:34.249 
 
 fine, there is no data group "$actual step"
 next step = ridft
@@ -119,7 +119,7 @@ next step = ridft
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-07-08 15:53:21.289 
+    2021-09-20 09:39:34.267 
 
 
 
@@ -492,7 +492,7 @@ next step = ridft
    ****  ridft : all done  ****
 
 
-    2021-07-08 15:53:21.316 
+    2021-09-20 09:39:34.294 
 
 fine, there is no data group "$actual step"
 next step = ricc2
@@ -507,7 +507,7 @@ next step = ricc2
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-07-08 15:53:21.334 
+    2021-09-20 09:39:34.312 
 
  unknown argument: "-l"
  unknown argument: "
@@ -1053,14 +1053,14 @@ dE/dz  0.1680612D-06 -0.8403051D-07 -0.8403051D-07
 
 
     ------------------------------------------------------------------------
-         total  cpu-time :   0.10 seconds
+         total  cpu-time :   0.09 seconds
          total wall-time :   0.10 seconds
     ------------------------------------------------------------------------
 
    ****  ricc2 : all done  ****
 
 
-    2021-07-08 15:53:21.426 
+    2021-09-20 09:39:34.402 
 
 fine, there is no data group "$actual step"
 next step = relax

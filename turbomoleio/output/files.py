@@ -467,11 +467,11 @@ class MP2Output(BaseData):
 
     Note: Parsing of PNO-based MP2 calculations (i.e. performed with the pnoccsd program) is not (yet) supported.
     """
-    def __init__(self, info, energy, geometry, basis, symmetry, cosmo, run, tm):
+    def __init__(self, info, results, geometry, basis, symmetry, cosmo, run, tm):
         """
         Args:
             info (MP2Data): Information about MP2 calculation.
-            energy (float): MP2 energy.
+            results (MP2Results): Results of an MP2 calculation.
             geometry (GeometryData): the geometry of the system.
             basis (BasisData): the basis used for the calculation.
             symmetry (SymmetryData): information about the symmetry of the molecule.
@@ -480,7 +480,7 @@ class MP2Output(BaseData):
             tm (TurbomoleData): information about the turbomole used for the calculation.
         """
         self.info = info
-        self.energy = energy
+        self.results = results
         self.geometry = geometry
         self.basis = basis
         self.symmetry = symmetry
@@ -501,8 +501,7 @@ class MP2Output(BaseData):
             MP2Output.
         """
         info = MP2Data.from_parser(parser)
-        mp2_data = MP2Results.from_parser(parser)
-        energy = mp2_data.energy if mp2_data else None
+        results = MP2Results.from_parser(parser)
         run = RunData.from_parser(parser)
         tm = TurbomoleData.from_parser(parser)
         geometry = GeometryData.from_parser(parser)
@@ -511,7 +510,8 @@ class MP2Output(BaseData):
         cosmo = CosmoData.from_parser(parser)
         # TODO: fix parsing of Cosmo data in non-scf executables or add a separate parsing
 
-        return cls(info=info, energy=energy, geometry=geometry, basis=basis, symmetry=symmetry, cosmo=cosmo, run=run, tm=tm)
+        return cls(info=info, results=results, geometry=geometry,
+                   basis=basis, symmetry=symmetry, cosmo=cosmo, run=run, tm=tm)
 
 
 class JobexOutput(BaseData):

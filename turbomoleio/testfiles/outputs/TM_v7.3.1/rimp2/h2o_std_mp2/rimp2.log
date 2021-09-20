@@ -3,7 +3,7 @@
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-07-08 15:57:34.296 
+    2021-09-20 09:39:44.575 
 
 
 
@@ -189,17 +189,17 @@
    -----------------------------
 
 
-     time in riccmos       cpu:  0.00 sec    wall:  0.00 sec    ratio:  1.3
+     time in riccmos       cpu:  0.00 sec    wall:  0.00 sec    ratio:  1.2
 
      total memory allocated for calculation of (Q|P)**(-1/2) : 1 MiB
 
 
      calculation of (P|Q) ...
-     time in lp2sym        cpu:  0.00 sec    wall:  0.00 sec    ratio:  0.0
+     time in lp2sym        cpu:  0.00 sec    wall:  0.00 sec    ratio:  0.2
 
 
      calculation of the Cholesky decomposition of (P|Q)**(-1) ...
-     time in invmetri      cpu:  0.00 sec    wall:  0.00 sec    ratio:  0.5
+     time in invmetri      cpu:  0.00 sec    wall:  0.00 sec    ratio:  0.0
 
    threshold for RMS(d[D]) in SCF was     :  0.10E-06
    integral neglect threshold             :  0.18E-09
@@ -247,7 +247,7 @@
    ------------------------------------------------------
          1             0.00            0.00    L0     R0  
    ------------------------------------------------------
-     time in cc_1den       cpu:  0.00 sec    wall:  0.00 sec    ratio:  0.9
+     time in cc_1den       cpu:  0.00 sec    wall:  0.00 sec    ratio:  1.2
 
  reading orbital data $scfmo  from file mos
  orbital characterization : scfconv=7
@@ -557,5 +557,5 @@ dE/dz  0.2753525D-01 -0.1376763D-01 -0.1376763D-01
    ****  ricc2 : all done  ****
 
 
-    2021-07-08 15:57:34.386 
+    2021-09-20 09:39:44.664 
 

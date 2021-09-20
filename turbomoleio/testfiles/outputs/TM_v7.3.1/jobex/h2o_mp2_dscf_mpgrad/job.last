@@ -1,12 +1,12 @@
 
 OPTIMIZATION CYCLE 5
-Thu  8 Jul 15:55:22 CEST 2021
+Mon 20 Sep 09:39:36 CEST 2021
 
  statpt (fedora) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-07-08 15:55:22.072 
+    2021-09-20 09:39:36.385 
 
 
 
@@ -59,6 +59,14 @@ Thu  8 Jul 15:55:22 CEST 2021
  keyword $statp missing in file <control>
 
   Keyword $statpt not found - using default options
+  actual coordinates :
+         0.000000000000         0.000000000000        -0.741384901046
+         1.456241553324         0.000000000000         0.370692450523
+        -1.456241553324         0.000000000000         0.370692450523
+  actual gradients :
+         0.000000000000         0.000000000000        -0.000024033352
+         0.000069037085         0.000000000000         0.000012016644
+        -0.000069037085         0.000000000000         0.000012016644
      Number of symmetry restricted degrees of freedom:     3
      Constituted by:     1 translational degrees of freedom
                          0 rotational degrees of freedom
@@ -116,7 +124,7 @@ Thu  8 Jul 15:55:22 CEST 2021
    ****  statpt : all done  ****
 
 
-    2021-07-08 15:55:22.078 
+    2021-09-20 09:39:36.390 
 
 fine, there is no data group "$actual step"
 next step = dscf
@@ -132,7 +140,7 @@ next step = dscf
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-07-08 15:55:22.095 
+    2021-09-20 09:39:36.409 
 
 
 
@@ -415,7 +423,7 @@ next step = dscf
    ****  dscf : all done  ****
 
 
-    2021-07-08 15:55:22.116 
+    2021-09-20 09:39:36.430 
 
 fine, there is no data group "$actual step"
 next step = mpgrad
@@ -431,7 +439,7 @@ next step = mpgrad
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-07-08 15:55:22.134 
+    2021-09-20 09:39:36.447 
 
 
 
@@ -754,7 +762,7 @@ dE/dz -0.1027997D-04  0.5139951D-05  0.5139951D-05
    ****  mpgrad : all done  ****
 
 
-    2021-07-08 15:55:22.165 
+    2021-09-20 09:39:36.478 
 
 fine, there is no data group "$actual step"
 next step = relax

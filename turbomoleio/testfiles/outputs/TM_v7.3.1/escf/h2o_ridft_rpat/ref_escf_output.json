@@ -1,16 +1,16 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "EscfOnlyOutput",
-  "@version": "1.0.0",
+  "@version": "1.1.0",
   "escf": {
     "@module": "turbomoleio.output.data",
     "@class": "EscfData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "calc_type": "RPA TRIPLET-EXCITATION",
     "iterations": {
       "@module": "turbomoleio.output.data",
       "@class": "EscfIterationData",
-      "@version": "1.0.0",
+      "@version": "1.1.0",
       "steps": [
         [
           [
@@ -91,7 +91,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -76.01823457138981,
           "osc_stre": 0.1312905680555112,
           "rot_stre": 0.0,
@@ -151,7 +151,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.79291208587429,
           "osc_stre": 0.174501579830528,
           "rot_stre": 0.0,
@@ -211,7 +211,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.45404366395333,
           "osc_stre": 0.09085652091913432,
           "rot_stre": 0.0,
@@ -301,7 +301,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.41544002669191,
           "osc_stre": 0.00440261879863675,
           "rot_stre": 0.0,
@@ -376,7 +376,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.37035309142242,
           "osc_stre": 0.2839925043090892,
           "rot_stre": 0.0,
@@ -451,7 +451,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.33830220881985,
           "osc_stre": 0.007296856026760765,
           "rot_stre": 0.0,
@@ -511,7 +511,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.2364312029991,
           "osc_stre": 0.05343841624131843,
           "rot_stre": 0.0,
@@ -571,7 +571,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -74.95384941873009,
           "osc_stre": 0.04812355457288864,
           "rot_stre": 0.0,
@@ -631,7 +631,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -74.90839874020315,
           "osc_stre": 0.04406396656326927,
           "rot_stre": 0.0,
@@ -691,7 +691,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -74.84207943012022,
           "osc_stre": 0.009422899864292617,
           "rot_stre": 0.0,
@@ -753,7 +753,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -76.00822895586305,
           "osc_stre": 0.0,
           "rot_stre": 0.0,
@@ -813,7 +813,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.57867329947494,
           "osc_stre": 0.0,
           "rot_stre": 0.0,
@@ -873,7 +873,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.12879389184046,
           "osc_stre": 0.0,
           "rot_stre": 0.0,
@@ -933,7 +933,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.02221734444574,
           "osc_stre": 0.0,
           "rot_stre": 0.0,
@@ -993,7 +993,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -73.5854092437922,
           "osc_stre": 0.0,
           "rot_stre": 0.0,
@@ -1053,7 +1053,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -73.36482754170653,
           "osc_stre": 0.0,
           "rot_stre": 0.0,
@@ -1113,7 +1113,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -73.13420430435423,
           "osc_stre": 0.0,
           "rot_stre": 0.0,
@@ -1173,7 +1173,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -73.0066171281746,
           "osc_stre": 0.0,
           "rot_stre": 0.0,
@@ -1233,7 +1233,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -55.10014212178318,
           "osc_stre": 0.0,
           "rot_stre": 0.0,
@@ -1295,7 +1295,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.9423120954193,
           "osc_stre": 0.2262320143656535,
           "rot_stre": 0.0,
@@ -1355,7 +1355,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.85598351079766,
           "osc_stre": 0.2778011265961403,
           "rot_stre": 0.0,
@@ -1415,7 +1415,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.52604933097604,
           "osc_stre": 0.358158325489796,
           "rot_stre": 0.0,
@@ -1475,7 +1475,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.34552610734235,
           "osc_stre": 0.08414325973329928,
           "rot_stre": 0.0,
@@ -1535,7 +1535,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.2879722402608,
           "osc_stre": 0.2214236354659838,
           "rot_stre": 0.0,
@@ -1595,7 +1595,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.05974215967106,
           "osc_stre": 0.1701375749680543,
           "rot_stre": 0.0,
@@ -1670,7 +1670,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.00048972061654,
           "osc_stre": 0.005613511827378081,
           "rot_stre": 0.0,
@@ -1745,7 +1745,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -74.92062880202133,
           "osc_stre": 0.001382896957359437,
           "rot_stre": 0.0,
@@ -1805,7 +1805,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -74.79144057841313,
           "osc_stre": 0.0311460459813903,
           "rot_stre": 0.0,
@@ -1865,7 +1865,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -74.44746432906607,
           "osc_stre": 0.09313316794767047,
           "rot_stre": 0.0,
@@ -1927,7 +1927,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -76.08891409560046,
           "osc_stre": 0.01444010005368988,
           "rot_stre": 0.0,
@@ -1987,7 +1987,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.49982323083174,
           "osc_stre": 0.1866854136604064,
           "rot_stre": 0.0,
@@ -2047,7 +2047,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.28070939932161,
           "osc_stre": 0.01184729664305881,
           "rot_stre": 0.0,
@@ -2122,7 +2122,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.19063280613172,
           "osc_stre": 1.696050116167542e-05,
           "rot_stre": 0.0,
@@ -2197,7 +2197,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -75.04786725634222,
           "osc_stre": 0.5275224762730616,
           "rot_stre": 0.0,
@@ -2257,7 +2257,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -74.60446348684106,
           "osc_stre": 0.07024410519686482,
           "rot_stre": 0.0,
@@ -2317,7 +2317,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -73.68591633162164,
           "osc_stre": 0.0697715777746968,
           "rot_stre": 0.0,
@@ -2377,7 +2377,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -73.5841530528189,
           "osc_stre": 1.09873281564461,
           "rot_stre": 0.0,
@@ -2437,7 +2437,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -73.43561154470014,
           "osc_stre": 0.3280407002670858,
           "rot_stre": 0.0,
@@ -2497,7 +2497,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -73.338049476837,
           "osc_stre": 0.4465131056332682,
           "rot_stre": 0.0,
@@ -2560,25 +2560,25 @@
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": "1.0.0",
-    "host": "localhost.localdomain",
+    "@version": "1.1.0",
+    "host": "fedora",
     "start_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-06-10 14:04:22.102000"
+      "string": "2021-09-20 09:39:29.752000"
     },
     "end_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-06-10 14:04:22.183000"
+      "string": "2021-09-20 09:39:29.827000"
     },
-    "cpu_time": 0.09,
-    "wall_time": 0.09
+    "cpu_time": 0.08,
+    "wall_time": 0.08
   },
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "version": "7.3.1",
     "build": null,
     "executable": "escf"

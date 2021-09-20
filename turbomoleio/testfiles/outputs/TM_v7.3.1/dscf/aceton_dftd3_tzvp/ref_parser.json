@@ -2,13 +2,13 @@
   "all_done": true,
   "header": {
     "executable": "dscf",
-    "host": "localhost.localdomain",
+    "host": "fedora",
     "tm_version": "7.3.1",
     "tm_build": null,
     "start_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-06-10 14:04:10.359000"
+      "string": "2021-09-20 09:39:19.640000"
     }
   },
   "centers": {
@@ -226,12 +226,12 @@
     }
   },
   "timings": {
-    "cpu_time": 5.7,
-    "wall_time": 5.72,
+    "cpu_time": 4.77,
+    "wall_time": 4.8,
     "end_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-06-10 14:04:16.074000"
+      "string": "2021-09-20 09:39:24.431000"
     }
   },
   "s2": null,
@@ -254,5 +254,8 @@
   "relax_gradient_values": null,
   "relax_conv_info": null,
   "aoforce_numerical_integration": null,
-  "aoforce_analysis": null
+  "aoforce_analysis": null,
+  "mp2_results": {
+    "energy": null
+  }
 }

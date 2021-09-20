@@ -2,13 +2,13 @@
   "all_done": true,
   "header": {
     "executable": "force",
-    "host": "localhost.localdomain",
+    "host": "fedora",
     "tm_version": "7.3.1",
     "tm_build": null,
     "start_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-06-10 14:04:02.546000"
+      "string": "2021-09-20 09:39:12.781000"
     }
   },
   "centers": {
@@ -148,12 +148,12 @@
   "cosmo_results": null,
   "electrostatic_moments": null,
   "timings": {
-    "cpu_time": 7.39,
-    "wall_time": 7.43,
+    "cpu_time": 6.51,
+    "wall_time": 6.53,
     "end_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-06-10 14:04:09.970000"
+      "string": "2021-09-20 09:39:19.307000"
     }
   },
   "s2": null,
@@ -252,18 +252,18 @@
       ],
       [
         " first deriv. of  <mu|nu>\n                               <mu|h|nu>    -> RHS\n              second deriv. of <mu|nu>      -> Hessian\n                               <mu|h|nu>    -> Hessian\n                               nucl. rep.   -> Hessian",
-        0.03,
-        0.03
+        0.02,
+        0.02
       ],
       [
         " second deriv. of 2e energy    -> Hessian\n   treating Coulomb (and exchange) contribution",
-        1.33,
-        1.34
+        1.19,
+        1.19
       ],
       [
         " second deriv. of 2e energy    -> Hessian\n   treating exchange-correlation contribution",
-        1.58,
-        1.6
+        1.37,
+        1.37
       ],
       [
         "",
@@ -282,13 +282,13 @@
       ],
       [
         " G(a,i)[S(k,l)xi]              -> RHS\n              G(i,j)[S(k,l)xi]*S(i,j)chi    -> Hessian",
-        0.8,
-        0.8
+        0.7,
+        0.7
       ],
       [
         " G(mu,nu)[D(kap,lam)]xi",
-        1.14,
-        1.15
+        1.02,
+        1.02
       ],
       [
         " F(a,i)xi                      -> RHS\n              F(i,j)xi*S(i,j)chi            -> Hessian",
@@ -2172,5 +2172,8 @@
         "total": -192.9242282
       }
     }
+  },
+  "mp2_results": {
+    "energy": null
   }
 }
