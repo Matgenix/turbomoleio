@@ -1,5 +1,3 @@
-$title
-ridft_escf
 $operating system unix
 $symmetry c2v
 $redundant    file=coord
@@ -29,10 +27,6 @@ $rundimensions
    rhfshells=1
    nbf(AO)=18
 $scfmo   file=mos
-$closed shells
- a1      1-3                                    ( 2 )
- b1      1                                      ( 2 )
- b2      1                                      ( 2 )
 $scfiterlimit      200
 $thize     0.10000000E-04
 $thime        5
@@ -80,4 +74,10 @@ $ricore      500
 $rij
 $jbas    file=auxbasis
 $last step     define
+$title
+ridft_escf
+$closed shells
+ a1      1-3                                    ( 2 )
+ b1      1                                      ( 2 )
+ b2      1                                      ( 2 )
 $end

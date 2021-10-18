@@ -4,10 +4,11 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Testing &mdash; turbomoleio 1.0.0 documentation</title>
+  <title>Testing &mdash; turbomoleio 1.1.0 documentation</title>
   
 
   
@@ -32,6 +33,7 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -63,7 +65,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
             
           
@@ -88,7 +90,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">User guide</span></p>
+              <p><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../datagroups.html">The data group files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../coord.html">The coord file</a></li>
@@ -96,7 +98,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../output_parsing.html">Outputs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix.html">Appendix</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer guide</span></p>
+<p><span class="caption-text">Developer guide</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parsing_logs.html">Output logs parsing</a></li>
@@ -105,12 +107,22 @@
 <li class="toctree-l2"><a class="reference internal" href="#the-test-suite">The test suite</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#unit-tests">Unit tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#integration-tests">Integration tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#writing-new-tests">Writing new tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#writing-new-tests">Writing new tests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tests-for-output-parsing">Tests for output parsing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#turbomole-version-change">Turbomole version change</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#standard-procedure">Standard procedure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Integration tests</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unit-tests-for-output-parsing">Unit-tests for output parsing</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="versioning.html">Versioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="versioning.html#backward-compatibility">Backward-compatibility</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Additional information</span></p>
+<p><span class="caption-text">Additional information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -182,7 +194,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="testing">
+  <section id="testing">
 <span id="developer-testing"></span><h1>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h1>
 <p>Tests are an essential part of the development process. Their aim is to check that the
 different portions of the code meet their design and behave as intended. Providing an exhaustive
@@ -200,14 +212,14 @@ with the TURBOMOLE executables.</p></li>
 <p>When implementing a new feature you should always implement a series of tests before
 adding it to turbomoleio. It is also important to consider adding new tests when a bug is identified
 and fixed. This will prevent that such a bug will be reintroduced in later developments.</p>
-<div class="section" id="the-test-suite">
+<section id="the-test-suite">
 <span id="developer-test-suite"></span><h2>The test suite<a class="headerlink" href="#the-test-suite" title="Permalink to this headline">¶</a></h2>
 <p>The testing suite is based on <strong>pytest</strong> and makes wide use of its functionalities, like for example
 fixtures, marking and custom command line arguments. The pytest package should thus be installed
 and the tests should be executed using the <code class="docutils literal notranslate"><span class="pre">pytest</span></code> command. For a reference on all its features you
 can refer to the <a class="reference external" href="https://docs.pytest.org">pytest documentation</a>. To get the coverage of the
 tests you also need to install the <strong>pytest-cov</strong> package.</p>
-<p>Summing up, aside from the standard dependencies in BASFflows, the easiest way to prepare your environment
+<p>Summing up, aside from the standard dependencies in turbomoleio, the easiest way to prepare your environment
 to run the tests is to run</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install pytest pytest-cov mongomock
 </pre></div>
@@ -225,8 +237,8 @@ If you wish, you can then run</p>
 <p>to generate an html version of the coverage report. The configurations for the coverage are given
 in the <code class="docutils literal notranslate"><span class="pre">.coveragerc_unit</span></code> and <code class="docutils literal notranslate"><span class="pre">.coveragerc_integration</span></code> files, present in the root folder of
 the project.</p>
-</div>
-<div class="section" id="unit-tests">
+</section>
+<section id="unit-tests">
 <h2>Unit tests<a class="headerlink" href="#unit-tests" title="Permalink to this headline">¶</a></h2>
 <p>As mentioned above, we call unit tests those that test each single component on its own.
 Each module folder in turbomoleio contains a <code class="docutils literal notranslate"><span class="pre">tests</span></code> subfolder where the unit tests for
@@ -254,8 +266,13 @@ verify in detail what happens inside the component under test. For this reason t
 a very high coverage rate, of the code, where by coverage we intend the fraction of the lines of
 code that are executed by at least one test. As of version 1.0.0 the global coverage of the unit
 tests alone is 99% and developers should aim at keeping this value as high as possible.</p>
-</div>
-<div class="section" id="integration-tests">
+<p>The unit-testing for the output files is performed for multiple versions of Turbomole. The reference
+files for these tests are stored in the <cite>turbomoleio/testfiles/outputs</cite> folder for each Turbomole version,
+e.g. <cite>turbomoleio/testfiles/outputs/TM_v7.3.1</cite>. Additionnally, a <cite>turbomoleio/testfiles/outputs/generation</cite>
+folder contains the necessary information to generate new output files for a new Turbomole version using
+a specific development script (see <a class="reference internal" href="#developer-utest-output"><span class="std std-ref">Unit-tests for output parsing</span></a>).</p>
+</section>
+<section id="integration-tests">
 <h2>Integration tests<a class="headerlink" href="#integration-tests" title="Permalink to this headline">¶</a></h2>
 <p>Integration tests aim to verify the integration between the different components and
 in particular with the Turbomole executables. For this reason they are all collected in the
@@ -334,8 +351,8 @@ Lastly for some functions and objects there is little gain in testing their beha
 with an actual TURBOMOLE calculation. For all these reasons the aim for the coverage of the integration
 tests is lower compared to the unit tests. As of version 1.0.0 the integration tests alone cover 89% of
 the turbomoleio source code.</p>
-</div>
-<div class="section" id="writing-new-tests">
+</section>
+<section id="writing-new-tests">
 <h2>Writing new tests<a class="headerlink" href="#writing-new-tests" title="Permalink to this headline">¶</a></h2>
 <p>New contributions to turbomoleio should always come with their set of unit and, if suitable, integration tests.
 The tests that you add should be organized in the same way as the other tests already available,
@@ -370,8 +387,150 @@ test files. These files are stored in the <code class="docutils literal notransl
 might be needed for your unit and integration tests. Modifying existing files is possible, even though discouraged.
 If it cannot be avoided (e.g. for the update to a new TURBOMOLE version) you should at least
 check that all the tests relying on the files that you plan to modify will keep working as expected.</p>
+<section id="tests-for-output-parsing">
+<h3>Tests for output parsing<a class="headerlink" href="#tests-for-output-parsing" title="Permalink to this headline">¶</a></h3>
+<p>In order to create a new unit test for output parsing, you should:</p>
+<ol class="arabic simple">
+<li><p>Create a test directory in the <cite>~turbomoleio/testfiles/outputs/generation</cite> directory.</p></li>
+</ol>
+<p>The test directory should be in the executable directory (i.e. the directory with the same name as the
+Turbomole executable being tested). The executable directory should be created if it is not yet there. The
+name of the test directory itself should be descriptive of the test. For example,
+if you create a test for an ridft output, using benzene and a specific exchange correlation functional,
+you could create a directory <cite>~turbomoleio/testfiles/outputs/generation/ridft/benzene_myxc</cite>. This
+test-specific generation folder is referenced hereafter as the TESTGEN folder. The executable under testing
+is referenced hereafter as TESTEXEC and the name of the test is referenced hereafter as TESTNAME.
+An excerpt of the directory tree structure of the entire generation folder is shown hereafter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>generation
+    ├── aoforce
+    │   ├── aceton_full
+    │   └── h2_numforce
+    └── dscf
+        ├── aceton_dftd3_tzvp
+        ├── h2o_std
+        ├── h2o_uhf
+        ├── nh3_cosmo_fermi
+        └── nh3_dftd1
+</pre></div>
 </div>
-</div>
+<ol class="arabic simple" start="2">
+<li><p>Add the test to the OUTPUTS_BASENAMES variable in <cite>~turbomoleio/testfiles/utils.py</cite>.</p></li>
+<li><p>Place the coord file of the molecule/system in the TESTGEN folder.</p></li>
+<li><p>Create a test.yaml file in the TESTGEN folder.</p></li>
+</ol>
+<p>This test.yaml file should contain the relevant information to automatically generate the control file
+and run the Turbomole executable or possibly a series of Turbomole executables (in case the tested
+executable cannot be run without a prior calculation). Look at other test.yaml files to see how this file
+is structured.</p>
+<ol class="arabic" start="5">
+<li><p>Generate the reference files using the <cite>generate_output_files.py</cite> development script:</p>
+<blockquote>
+<div><p>python generate_output_files.py –test TESTEXEC TESTNAME –generate_control</p>
+</div></blockquote>
+</li>
+</ol>
+</section>
+<section id="turbomole-version-change">
+<h3>Turbomole version change<a class="headerlink" href="#turbomole-version-change" title="Permalink to this headline">¶</a></h3>
+<p>When the version of Turbomole changes, two main things have to be performed.</p>
+<ol class="arabic simple">
+<li><p>Check integration tests and regenerate reference files.</p></li>
+<li><p>Check and generate test output files for the new version (unit-tests for parsing).</p></li>
+</ol>
+<p>The actions to be performed when changing from one Turbomole version to the next one is
+listed below. More details are also provided after the standard procedure.</p>
+<section id="standard-procedure">
+<h4>Standard procedure<a class="headerlink" href="#standard-procedure" title="Permalink to this headline">¶</a></h4>
+<p>The following assumes you change from one version of Turbomole to the next one. For example,
+turbomoleio 1.0.x is fully compatible with Turbomole version 7.3. To change to Turbomole
+version 7.4 (and thus turbomoleio 1.1.0), change your Turbomole distribution to version 7.4
+and apply the following list of actions.</p>
+<ol class="arabic">
+<li><dl>
+<dt>Integration tests</dt><dd><p>1.1 Run <cite>pytest -m “integration”</cite></p>
+<p>1.2 If there are errors (very likely) in 1.1, run <cite>pytest -m “integration” –dryrun-itest</cite>
+to generate a json file containing the differences between the two versions (both at the level
+of the control file and at the level of the generated output files). Very often, the main differences
+are due to different values or options generated by <cite>define</cite> for the control file. You can
+also run the new version of Turbomole with the old control file using <cite>pytest -m “integration”
+–dryrun-itest –dryrun-use-reference-control</cite>. Check carefully whether these differences are
+critical. Take appropriate measures if the differences are critical.</p>
+<p>1.3 If no critical differences are found, generate the new reference control and output files
+using <cite>pytest -m “integration” –generate-itest-ref</cite>.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Output parsing</dt><dd><p>2.1 Go in ~turbomoleio/dev_scripts and run <cite>python generate_output_files.py –dryrun</cite>.
+A <cite>parsing_update_differences.json</cite> file is created in the new test version directory with the list of
+differences for each output parsing test with respect to the previous Turbomole version. By default,
+the old control file is used for this dry run.</p>
+<p>2.2 Inspect the differences found in 2.1. If the differences are reasonable, generate the new
+reference files for the new Turbomole version by running <cite>python generate_output_files.py
+–generate_control</cite>. By default, the directory for the new Turbomole version is “TM_vX.Y.Z”.</p>
+<p>2.3 Update the list of supported Turbomole versions for the output parsing in
+~turbomoleio/testfiles/utils.py by appending “TM_vX.Y.Z” to the list.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>3. Change the minor version of turbomoleio for the new Turbomole version as described
+in <a class="reference internal" href="versioning.html#developer-versioning"><span class="std std-ref">Versioning</span></a>.</p>
+</section>
+<section id="id1">
+<h4>Integration tests<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<p>For the integration tests, the check and generation is performed using the pytest
+infrastructure. The integration tests are run using:</p>
+<blockquote>
+<div><p>pytest -m “integration”</p>
+</div></blockquote>
+<p>This will run the integration tests with the version of Turbomole found in the system.
+Most likely, a series of errors will occur. A “dryrun” execution of the integration
+tests can then be performed to analyze the differences with respect to the previous
+Turbomole version using:</p>
+<blockquote>
+<div><p>pytest -m “integration” –dryrun-itest</p>
+</div></blockquote>
+<p>In that case, a json file containing the differences with respect to the previous
+Turbomole version will be generated. This json file (by default “dryrun_itest.json”)
+contains the differences found in the control file as well as in the output files
+for each integration test. You can change the path and name of this json file with the
+<cite>–dryrun-fpath</cite> option of pytest.</p>
+<p>Most of the time, the main difference arises from different default values generated
+by define in the control file. It can be useful to compare the newest Turbomole version
+with the older one using the previous reference control file using:</p>
+<blockquote>
+<div><p>pytest -m “integration” –dryrun-itest –dryrun-use-reference-control</p>
+</div></blockquote>
+<p>If the differences found using this setup are small, one should in principle safely
+assume that transition can be performed. The reference files for the integration tests
+are then regenerated using:</p>
+<blockquote>
+<div><p>pytest -m “integration” –generate-itest-ref</p>
+</div></blockquote>
+<p>Note that this will override all the previous reference files and should be performed
+with care (first checking the differences as described above) !</p>
+</section>
+<section id="unit-tests-for-output-parsing">
+<span id="developer-utest-output"></span><h4>Unit-tests for output parsing<a class="headerlink" href="#unit-tests-for-output-parsing" title="Permalink to this headline">¶</a></h4>
+<p>In order to keep backward compatibility of the parsing of the outputs of previous
+Turbomole versions, output files and reference serialized objects for the new Turbomole
+version have to be checked and generated. Note that the old output files and
+reference serialized file objects are kept and still tested. A development script has
+been implemented to facilitate the generation of the new output files and reference
+serialized file objects. This script is located in:</p>
+<blockquote>
+<div><p>~turbomoleio/dev_scripts/generate_output_files.py</p>
+</div></blockquote>
+<p>Run the script using “–help” to get a list of the options available for this script.</p>
+<p>It is important to know that the script can be run either in dry mode or in generation mode. In
+dry mode, a <cite>parsing_update_differences.json</cite> file is generated with all the differences found in the tests
+between the current Turbomole version and the control and output files of the previous Turbomole
+version.</p>
+</section>
+</section>
+</section>
+</section>
 
 
            </div>

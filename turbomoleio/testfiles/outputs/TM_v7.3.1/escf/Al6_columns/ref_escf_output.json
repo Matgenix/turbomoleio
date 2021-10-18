@@ -1,16 +1,16 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "EscfOnlyOutput",
-  "@version": "1.0.0",
+  "@version": "1.1.0",
   "escf": {
     "@module": "turbomoleio.output.data",
     "@class": "EscfData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "calc_type": "RPA UHF-EXCITATION",
     "iterations": {
       "@module": "turbomoleio.output.data",
       "@class": "EscfIterationData",
-      "@version": "1.0.0",
+      "@version": "1.1.0",
       "steps": [
         [
           [
@@ -343,7 +343,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -1454.125557872422,
           "osc_stre": 0.0,
           "rot_stre": 0.0,
@@ -405,7 +405,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -1454.127324344177,
           "osc_stre": 0.0,
           "rot_stre": 0.0,
@@ -467,7 +467,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -1454.16465038108,
           "osc_stre": 0.000329316150334143,
           "rot_stre": 0.0,
@@ -562,7 +562,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -1454.13498699486,
           "osc_stre": 0.0,
           "rot_stre": 0.0,
@@ -624,7 +624,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -1454.145293653629,
           "osc_stre": 6.041295494444478e-06,
           "rot_stre": 0.0,
@@ -716,7 +716,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.0.0",
+          "@version": "1.1.0",
           "tot_en": -1454.141269664336,
           "osc_stre": 0.0,
           "rot_stre": 0.0,
@@ -812,25 +812,25 @@
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": "1.0.0",
-    "host": "localhost.localdomain",
+    "@version": "1.1.0",
+    "host": "fedora",
     "start_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-06-10 14:04:22.903000"
+      "string": "2021-09-20 09:39:30.507000"
     },
     "end_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-06-10 14:04:23.963000"
+      "string": "2021-09-20 09:39:31.466000"
     },
-    "cpu_time": 1.07,
-    "wall_time": 1.07
+    "cpu_time": 0.96,
+    "wall_time": 0.97
   },
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "version": "7.3.1",
     "build": null,
     "executable": "escf"

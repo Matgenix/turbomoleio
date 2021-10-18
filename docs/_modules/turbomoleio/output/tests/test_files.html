@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>turbomoleio.output.tests.test_files &mdash; turbomoleio 1.0.0 documentation</title>
+  <title>turbomoleio.output.tests.test_files &mdash; turbomoleio 1.1.0 documentation</title>
   
 
   
@@ -32,6 +32,7 @@
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
 
@@ -61,7 +62,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
             
           
@@ -86,7 +87,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">User guide</span></p>
+              <p><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../datagroups.html">The data group files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../coord.html">The coord file</a></li>
@@ -94,15 +95,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../output_parsing.html">Outputs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../appendix.html">Appendix</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer guide</span></p>
+<p><span class="caption-text">Developer guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer/introduction.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer/parsing_logs.html">Output logs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer/definerunner.html">Define runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer/testing.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer/versioning.html">Versioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer/versioning.html#backward-compatibility">Backward-compatibility</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Additional information</span></p>
+<p><span class="caption-text">Additional information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
@@ -204,61 +206,62 @@
 <span class="kn">import</span> <span class="nn">pytest</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">monty.serialization</span> <span class="kn">import</span> <span class="n">loadfn</span>
 
-<span class="kn">from</span> <span class="nn">turbomoleio.output.files</span> <span class="kn">import</span> <span class="n">exec_to_out_obj</span><span class="p">,</span> <span class="n">JobexOutput</span><span class="p">,</span> <span class="n">EscfOnlyOutput</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.output.files</span> <span class="kn">import</span> <span class="n">exec_to_out_obj</span><span class="p">,</span> <span class="n">JobexOutput</span><span class="p">,</span> <span class="n">EscfOnlyOutput</span><span class="p">,</span> <span class="n">EscfOutput</span>
 <span class="kn">from</span> <span class="nn">turbomoleio.testfiles.utils</span> <span class="kn">import</span> <span class="n">assert_almost_equal</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.testfiles.utils</span> <span class="kn">import</span> <span class="n">TM_VERSIONS</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.testfiles.utils</span> <span class="kn">import</span> <span class="n">TESTS_CONFIGS_TM_VERSIONS</span>
 
 
-<span class="n">files_list</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;dscf&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_std&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;dscf&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_uhf&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;dscf&quot;</span><span class="p">,</span> <span class="s2">&quot;nh3_cosmo_fermi&quot;</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">&quot;dscf&quot;</span><span class="p">,</span> <span class="s2">&quot;nh3_dftd1&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;dscf&quot;</span><span class="p">,</span> <span class="s2">&quot;aceton_dftd3_tzvp&quot;</span><span class="p">),(</span><span class="s2">&quot;ridft&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_dftd2_marij&quot;</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">&quot;ridft&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_dftd3-bj_not_conv&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;ridft&quot;</span><span class="p">,</span> <span class="s2">&quot;nh3_rijk_xcfun_m06&quot;</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">&quot;ridft&quot;</span><span class="p">,</span> <span class="s2">&quot;b28_many_irreps&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;grad&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_std&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;rdgrad&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_dftd3-bj&quot;</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">&quot;relax&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_internal&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;relax&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_cartesian&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;relax&quot;</span><span class="p">,</span> <span class="s2">&quot;no_version_header&quot;</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">&quot;statpt&quot;</span><span class="p">,</span> <span class="s2">&quot;h3cbr_internal&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;statpt&quot;</span><span class="p">,</span> <span class="s2">&quot;aceton_cartesian&quot;</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">&quot;escf&quot;</span><span class="p">,</span> <span class="s2">&quot;Al6_columns&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;escf&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_ridft_cosmo&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;escf&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_ridft_rpat&quot;</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">&quot;egrad&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_sym&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;egrad&quot;</span><span class="p">,</span> <span class="s2">&quot;h3cbr_nosym&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;aoforce&quot;</span><span class="p">,</span> <span class="s2">&quot;aceton_full&quot;</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">&quot;aoforce&quot;</span><span class="p">,</span> <span class="s2">&quot;h2_numforce&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;jobex&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_dscf&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;jobex&quot;</span><span class="p">,</span> <span class="s2">&quot;no3_ridft&quot;</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">&quot;escf_only&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_ridft_cosmo&quot;</span><span class="p">)]</span>
+<span class="n">files_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="n">tm_version</span><span class="p">,</span> <span class="n">tm_exec</span><span class="p">,</span> <span class="n">test_name</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">tm_version</span> <span class="ow">in</span> <span class="n">TM_VERSIONS</span>
+    <span class="k">for</span> <span class="n">tm_exec</span><span class="p">,</span> <span class="n">exec_tests</span> <span class="ow">in</span> <span class="n">TESTS_CONFIGS_TM_VERSIONS</span><span class="p">[</span><span class="n">tm_version</span><span class="p">][</span><span class="s1">&#39;testlist&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">test_name</span> <span class="ow">in</span> <span class="n">exec_tests</span>
+<span class="p">]</span>
 
 
 <div class="viewcode-block" id="cls_dict_path"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_files.cls_dict_path">[docs]</a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">files_list</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files_list</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">cls_dict_path</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">testdir</span><span class="p">):</span>
-    <span class="n">ref_name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">param</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">ref_name</span> <span class="o">==</span> <span class="s2">&quot;escf_only&quot;</span><span class="p">:</span>
-        <span class="n">directory</span> <span class="o">=</span> <span class="s2">&quot;escf&quot;</span>
+    <span class="n">tm_version</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">param</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">tm_exec</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">param</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">test_name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">param</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">testdir</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="n">tm_version</span><span class="p">,</span> <span class="n">tm_exec</span><span class="p">,</span> <span class="n">test_name</span><span class="p">)</span>
+    <span class="n">output_clses</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">ref_dicts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">fpaths</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">tm_exec</span> <span class="o">==</span> <span class="s2">&quot;escf&quot;</span><span class="p">:</span>
+        <span class="n">output_clses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">EscfOnlyOutput</span><span class="p">)</span>
+        <span class="n">ref_dicts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loadfn</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;ref_escf_output.json&quot;</span><span class="p">),</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
+        <span class="n">fpaths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tm_exec</span><span class="si">}</span><span class="s2">.log&quot;</span><span class="p">))</span>
+        <span class="n">output_clses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">EscfOutput</span><span class="p">)</span>
+        <span class="n">ref_dicts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loadfn</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;ref_output.json&quot;</span><span class="p">),</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
+        <span class="n">fpaths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tm_exec</span><span class="si">}</span><span class="s2">.log&quot;</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">tm_exec</span> <span class="o">==</span> <span class="s2">&quot;jobex&quot;</span><span class="p">:</span>
+        <span class="n">output_clses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">JobexOutput</span><span class="p">)</span>
+        <span class="n">ref_dicts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loadfn</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;ref_output.json&quot;</span><span class="p">),</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
+        <span class="n">fpaths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;job.last&quot;</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">directory</span> <span class="o">=</span> <span class="n">ref_name</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">param</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">testdir</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="n">output_clses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">exec_to_out_obj</span><span class="p">[</span><span class="n">tm_exec</span><span class="p">])</span>
+        <span class="n">ref_dicts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loadfn</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;ref_output.json&quot;</span><span class="p">),</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
+        <span class="n">fpaths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tm_exec</span><span class="si">}</span><span class="s2">.log&quot;</span><span class="p">))</span>
 
-    <span class="k">if</span> <span class="n">ref_name</span> <span class="o">==</span> <span class="s2">&quot;escf_only&quot;</span><span class="p">:</span>
-        <span class="n">json_path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;_outfile_escf_only.json&quot;</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">json_path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;_outfile.json&quot;</span>
-
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-
-    <span class="n">exec_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">exec_to_out_obj</span><span class="p">)</span>
-    <span class="n">exec_dict</span><span class="p">[</span><span class="s2">&quot;jobex&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">JobexOutput</span>
-    <span class="n">exec_dict</span><span class="p">[</span><span class="s2">&quot;escf_only&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">EscfOnlyOutput</span>
-
-    <span class="n">file_path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.log&quot;</span> <span class="k">if</span> <span class="n">ref_name</span> <span class="o">!=</span> <span class="s2">&quot;jobex&quot;</span> <span class="k">else</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;_job.last&quot;</span>
-
-    <span class="k">return</span> <span class="n">exec_dict</span><span class="p">[</span><span class="n">ref_name</span><span class="p">],</span> <span class="n">d</span><span class="p">,</span> <span class="n">file_path</span></div>
+    <span class="k">return</span> <span class="n">output_clses</span><span class="p">,</span> <span class="n">ref_dicts</span><span class="p">,</span> <span class="n">fpaths</span></div>
 
 
-<div class="viewcode-block" id="TestParser"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_files.TestParser">[docs]</a><span class="k">class</span> <span class="nc">TestParser</span><span class="p">:</span>
+<div class="viewcode-block" id="TestFiles"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_files.TestFiles">[docs]</a><span class="k">class</span> <span class="nc">TestFiles</span><span class="p">:</span>
 
-<div class="viewcode-block" id="TestParser.test_properties"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_files.TestParser.test_properties">[docs]</a>    <span class="k">def</span> <span class="nf">test_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls_dict_path</span><span class="p">):</span>
-        <span class="n">output_cls</span><span class="p">,</span> <span class="n">desired</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">cls_dict_path</span>
+<div class="viewcode-block" id="TestFiles.test_properties"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_files.TestFiles.test_properties">[docs]</a>    <span class="k">def</span> <span class="nf">test_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls_dict_path</span><span class="p">):</span>
+        <span class="n">output_clses</span><span class="p">,</span> <span class="n">desired_list</span><span class="p">,</span> <span class="n">paths_list</span> <span class="o">=</span> <span class="n">cls_dict_path</span>
 
-        <span class="n">parsed_data</span> <span class="o">=</span> <span class="n">output_cls</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">output_cls</span><span class="p">,</span> <span class="n">desired</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">output_clses</span><span class="p">,</span> <span class="n">desired_list</span><span class="p">,</span> <span class="n">paths_list</span><span class="p">):</span>
+            <span class="n">parsed_data</span> <span class="o">=</span> <span class="n">output_cls</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span>
 
-        <span class="c1"># ignore date values since in the dictionary they are datetime, while</span>
-        <span class="c1"># just strings in the json file.</span>
-        <span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">,</span> <span class="n">desired</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
-                            <span class="n">ignored_values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;start_time&quot;</span><span class="p">,</span> <span class="s2">&quot;end_time&quot;</span><span class="p">,</span> <span class="s2">&quot;@version&quot;</span><span class="p">])</span></div></div>
+            <span class="c1"># ignore date values since in the dictionary they are datetime, while</span>
+            <span class="c1"># just strings in the json file.</span>
+            <span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">,</span> <span class="n">desired</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
+                                <span class="n">ignored_values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;start_time&quot;</span><span class="p">,</span> <span class="s2">&quot;end_time&quot;</span><span class="p">,</span> <span class="s2">&quot;@version&quot;</span><span class="p">])</span></div></div>
 
 
 <div class="viewcode-block" id="generate_files"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_files.generate_files">[docs]</a><span class="k">def</span> <span class="nf">generate_files</span><span class="p">(</span><span class="n">files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>

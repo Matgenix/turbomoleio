@@ -1,0 +1,301 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>turbomoleio.core.tests.test_utils &mdash; turbomoleio 1.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> turbomoleio
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p><span class="caption-text">User guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../datagroups.html">The data group files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../coord.html">The coord file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../definerunner.html">Running define</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../output_parsing.html">Outputs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../appendix.html">Appendix</a></li>
+</ul>
+<p><span class="caption-text">Developer guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer/introduction.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer/parsing_logs.html">Output logs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer/definerunner.html">Define runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer/testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer/versioning.html">Versioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer/versioning.html#backward-compatibility">Backward-compatibility</a></li>
+</ul>
+<p><span class="caption-text">Additional information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bugs.html">Reporting bugs</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">turbomoleio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>turbomoleio.core.tests.test_utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for turbomoleio.core.tests.test_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># The turbomoleio package, a python interface to Turbomole</span>
+<span class="c1"># for preparing inputs, parsing outputs and other related tools.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (C) 2018-2021 BASF SE, Matgenix SRL.</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of turbomoleio.</span>
+<span class="c1">#</span>
+<span class="c1"># Turbomoleio is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># Turbomoleio is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with turbomoleio (see ~turbomoleio/COPYING). If not,</span>
+<span class="c1"># see &lt;https://www.gnu.org/licenses/&gt;.</span>
+
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">mock</span>
+<span class="kn">import</span> <span class="nn">turbomoleio.core.utils</span>
+<span class="kn">from</span> <span class="nn">monty.tempfile</span> <span class="kn">import</span> <span class="n">ScratchDir</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<div class="viewcode-block" id="TestGetVersion"><a class="viewcode-back" href="../../../../api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_utils.TestGetVersion">[docs]</a><span class="k">class</span> <span class="nc">TestGetVersion</span><span class="p">:</span>
+
+<div class="viewcode-block" id="TestGetVersion.test_V72"><a class="viewcode-back" href="../../../../api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_utils.TestGetVersion.test_V72">[docs]</a>    <span class="k">def</span> <span class="nf">test_V72</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">testdir</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">copy_define_log</span><span class="p">():</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">testdir</span><span class="p">,</span> <span class="s2">&quot;define&quot;</span><span class="p">,</span> <span class="s2">&quot;define-qq.log_V7.2&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;define.log&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s2">&quot;turbomoleio.core.utils.define_quit&quot;</span><span class="p">,</span> <span class="n">side_effect</span><span class="o">=</span><span class="n">copy_define_log</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">ScratchDir</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
+                <span class="n">tm_version</span> <span class="o">=</span> <span class="n">turbomoleio</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_tm_version</span><span class="p">()</span>
+                <span class="k">assert</span> <span class="n">tm_version</span> <span class="o">==</span> <span class="s1">&#39;7.2&#39;</span></div>
+
+<div class="viewcode-block" id="TestGetVersion.test_V731"><a class="viewcode-back" href="../../../../api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_utils.TestGetVersion.test_V731">[docs]</a>    <span class="k">def</span> <span class="nf">test_V731</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">testdir</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">copy_define_log</span><span class="p">():</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">testdir</span><span class="p">,</span> <span class="s2">&quot;define&quot;</span><span class="p">,</span> <span class="s2">&quot;define-qq.log_V7.3.1&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;define.log&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s2">&quot;turbomoleio.core.utils.define_quit&quot;</span><span class="p">,</span> <span class="n">side_effect</span><span class="o">=</span><span class="n">copy_define_log</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">ScratchDir</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
+                <span class="n">tm_version</span> <span class="o">=</span> <span class="n">turbomoleio</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_tm_version</span><span class="p">()</span>
+                <span class="k">assert</span> <span class="n">tm_version</span> <span class="o">==</span> <span class="s1">&#39;7.3.1&#39;</span></div>
+
+<div class="viewcode-block" id="TestGetVersion.test_V741"><a class="viewcode-back" href="../../../../api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_utils.TestGetVersion.test_V741">[docs]</a>    <span class="k">def</span> <span class="nf">test_V741</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">testdir</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">copy_define_log</span><span class="p">():</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">testdir</span><span class="p">,</span> <span class="s2">&quot;define&quot;</span><span class="p">,</span> <span class="s2">&quot;define-qq.log_V7.4.1&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;define.log&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s2">&quot;turbomoleio.core.utils.define_quit&quot;</span><span class="p">,</span> <span class="n">side_effect</span><span class="o">=</span><span class="n">copy_define_log</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">ScratchDir</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
+                <span class="n">tm_version</span> <span class="o">=</span> <span class="n">turbomoleio</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_tm_version</span><span class="p">()</span>
+                <span class="k">assert</span> <span class="n">tm_version</span> <span class="o">==</span> <span class="s1">&#39;7.4.1&#39;</span></div>
+
+<div class="viewcode-block" id="TestGetVersion.test_V751"><a class="viewcode-back" href="../../../../api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_utils.TestGetVersion.test_V751">[docs]</a>    <span class="k">def</span> <span class="nf">test_V751</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">testdir</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">copy_define_log</span><span class="p">():</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">testdir</span><span class="p">,</span> <span class="s2">&quot;define&quot;</span><span class="p">,</span> <span class="s2">&quot;define-qq.log_V7.5.1&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;define.log&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s2">&quot;turbomoleio.core.utils.define_quit&quot;</span><span class="p">,</span> <span class="n">side_effect</span><span class="o">=</span><span class="n">copy_define_log</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">ScratchDir</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
+                <span class="n">tm_version</span> <span class="o">=</span> <span class="n">turbomoleio</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_tm_version</span><span class="p">()</span>
+                <span class="k">assert</span> <span class="n">tm_version</span> <span class="o">==</span> <span class="s1">&#39;7.5.1&#39;</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018-2021 BASF SE, Matgenix SRL.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

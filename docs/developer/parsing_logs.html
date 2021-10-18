@@ -4,10 +4,11 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Output logs parsing &mdash; turbomoleio 1.0.0 documentation</title>
+  <title>Output logs parsing &mdash; turbomoleio 1.1.0 documentation</title>
   
 
   
@@ -32,6 +33,7 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -63,7 +65,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
             
           
@@ -88,7 +90,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">User guide</span></p>
+              <p><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../datagroups.html">The data group files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../coord.html">The coord file</a></li>
@@ -96,7 +98,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../output_parsing.html">Outputs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix.html">Appendix</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer guide</span></p>
+<p><span class="caption-text">Developer guide</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Contributing</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Output logs parsing</a><ul>
@@ -108,8 +110,9 @@
 <li class="toctree-l1"><a class="reference internal" href="definerunner.html">Define runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="versioning.html">Versioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="versioning.html#backward-compatibility">Backward-compatibility</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Additional information</span></p>
+<p><span class="caption-text">Additional information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -181,7 +184,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="output-logs-parsing">
+  <section id="output-logs-parsing">
 <span id="developer-parse-logs"></span><h1>Output logs parsing<a class="headerlink" href="#output-logs-parsing" title="Permalink to this headline">¶</a></h1>
 <p>Most of the details about how the parsing of log output files is explained in the
 <a class="reference internal" href="../output_parsing.html#parsing-outputs"><span class="std std-ref">Outputs parsing</span></a> section of the user guide. Here we will provide more information
@@ -232,7 +235,7 @@ without the waste of parsing all the rest of the file.</p></li>
 other parsing methods. This is possible since the parsing methods for the different sections
 are isolated.</p></li>
 </ul>
-<div class="section" id="parsing-a-new-quantity">
+<section id="parsing-a-new-quantity">
 <span id="developer-parse-new-quantity"></span><h2>Parsing a new quantity<a class="headerlink" href="#parsing-a-new-quantity" title="Permalink to this headline">¶</a></h2>
 <p>If you want to start parsing a new quantity for one of the types of log files that are already
 handled you should proceed from the bottom up. First check if the quantity that you want to parse
@@ -262,8 +265,8 @@ be missing). If instead you change or remove one of the existing attributes the 
 data will not be deserialized anymore. Backward compatibility changes as these should
 be though carefully and agreed upon by the community of users.</p>
 </div>
-</div>
-<div class="section" id="parsing-a-new-type-of-log">
+</section>
+<section id="parsing-a-new-type-of-log">
 <h2>Parsing a new type of log<a class="headerlink" href="#parsing-a-new-type-of-log" title="Permalink to this headline">¶</a></h2>
 <p>When parsing the output provided by an executable that is not supported by the current
 version of turbomoleio you should proceed in a similar manner as when
@@ -279,8 +282,8 @@ The same recommendations given in the previous sections hold here as well.</p>
 dictionary. This will be used as a reference to decide which File object to use when
 running a specific executable. In particular it will be used in the unit tests, as
 explained below.</p>
-</div>
-<div class="section" id="tests">
+</section>
+<section id="tests">
 <h2>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h2>
 <p>For the main discussion concerning the testing in turbomoleio you should refer to the
 <a class="reference internal" href="testing.html#developer-testing"><span class="std std-ref">Testing</span></a> section of this developer guide. However, given the particular
@@ -320,8 +323,8 @@ in the case of <code class="docutils literal notranslate"><span class="pre">Escf
 <p>A function to generate the reference JSON files similar to the one described above is available:
 <a class="reference internal" href="../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_files.generate_files" title="turbomoleio.output.tests.test_files.generate_files"><code class="xref py py-func docutils literal notranslate"><span class="pre">turbomoleio.output.tests.test_files.generate_files()</span></code></a>. The same warnings of dealing
 with it carefully should be kept in mind here as well.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

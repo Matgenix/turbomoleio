@@ -4,10 +4,11 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Changelog &mdash; turbomoleio 1.0.0 documentation</title>
+  <title>Changelog &mdash; turbomoleio 1.1.0 documentation</title>
   
 
   
@@ -32,6 +33,7 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -63,7 +65,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
             
           
@@ -88,7 +90,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">User guide</span></p>
+              <p><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="datagroups.html">The data group files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="coord.html">The coord file</a></li>
@@ -96,18 +98,25 @@
 <li class="toctree-l1"><a class="reference internal" href="output_parsing.html">Outputs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer guide</span></p>
+<p><span class="caption-text">Developer guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="developer/introduction.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer/parsing_logs.html">Output logs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer/definerunner.html">Define runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer/testing.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer/versioning.html">Versioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/versioning.html#backward-compatibility">Backward-compatibility</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Additional information</span></p>
+<p><span class="caption-text">Additional information</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#release-1-1-0-sep-20-2021">Release 1.1.0 (Sep 20, 2021)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#features-added">Features added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bug-fixing">Bug fixing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-and-development">Testing and development</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#release-1-0-0-mar-11-2021">Release 1.0.0 (Mar 11, 2021)</a></li>
 </ul>
 </li>
@@ -179,9 +188,42 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="changelog">
+  <section id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="release-1-0-0-mar-11-2021">
+<section id="release-1-1-0-sep-20-2021">
+<h2>Release 1.1.0 (Sep 20, 2021)<a class="headerlink" href="#release-1-1-0-sep-20-2021" title="Permalink to this headline">¶</a></h2>
+<section id="features-added">
+<h3>Features added<a class="headerlink" href="#features-added" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Parsing of MP2 calculations performed with mpgrad and rimp2/ricc2 [preliminary].</p></li>
+</ul>
+</section>
+<section id="bug-fixing">
+<h3>Bug fixing<a class="headerlink" href="#bug-fixing" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Corrected parsing of convergence information in statpt and relax programs.</p></li>
+</ul>
+</section>
+<section id="testing-and-development">
+<h3>Testing and development<a class="headerlink" href="#testing-and-development" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Reorganization of test files for the output parsing</dt><dd><ul>
+<li><p>A generation folder has been created in the testfiles folder. This folder
+contains all the available tests and the required information to
+regenerate reference output files and objects for a new Turbomole versions.</p></li>
+<li><p>Reference Turbomole output files and serialized data objects are stored in
+specific version-related folders.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>New development script to regenerate reference outputs, data and file objects for the
+testing of the output parsing.</p></li>
+</ul>
+</section>
+</section>
+<section id="release-1-0-0-mar-11-2021">
 <h2>Release 1.0.0 (Mar 11, 2021)<a class="headerlink" href="#release-1-0-0-mar-11-2021" title="Permalink to this headline">¶</a></h2>
 <p>First official release (GPL v3 license) of turbomoleio, the python interface to
 Turbomole. Turbomoleio is expected to work with Turbomole version 7.3 and higher.
@@ -212,8 +254,8 @@ Some parts may work with previous versions as well.</p>
 </dl>
 </li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

@@ -24,6 +24,31 @@
 Changelog
 =========
 
+Release 1.1.0 (Sep 20, 2021)
+============================
+
+Features added
+--------------
+
+* Parsing of MP2 calculations performed with mpgrad and rimp2/ricc2 [preliminary].
+
+Bug fixing
+----------
+
+* Corrected parsing of convergence information in statpt and relax programs.
+
+Testing and development
+-----------------------
+
+* Reorganization of test files for the output parsing
+    * A generation folder has been created in the testfiles folder. This folder
+      contains all the available tests and the required information to
+      regenerate reference output files and objects for a new Turbomole versions.
+    * Reference Turbomole output files and serialized data objects are stored in
+      specific version-related folders.
+* New development script to regenerate reference outputs, data and file objects for the
+  testing of the output parsing.
+
 Release 1.0.0 (Mar 11, 2021)
 ============================
 

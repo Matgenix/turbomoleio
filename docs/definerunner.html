@@ -4,10 +4,11 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Running define &mdash; turbomoleio 1.0.0 documentation</title>
+  <title>Running define &mdash; turbomoleio 1.1.0 documentation</title>
   
 
   
@@ -32,6 +33,7 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -63,7 +65,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
             
           
@@ -88,7 +90,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">User guide</span></p>
+              <p><span class="caption-text">User guide</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="datagroups.html">The data group files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="coord.html">The coord file</a></li>
@@ -102,15 +104,16 @@
 <li class="toctree-l1"><a class="reference internal" href="output_parsing.html">Outputs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer guide</span></p>
+<p><span class="caption-text">Developer guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="developer/introduction.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer/parsing_logs.html">Output logs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer/definerunner.html">Define runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer/testing.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer/versioning.html">Versioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/versioning.html#backward-compatibility">Backward-compatibility</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Additional information</span></p>
+<p><span class="caption-text">Additional information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
@@ -182,7 +185,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="running-define">
+  <section id="running-define">
 <span id="id1"></span><h1>Running define<a class="headerlink" href="#running-define" title="Permalink to this headline">¶</a></h1>
 <p>A crucial point of the execution of TURBOMOLE is generating the input through the <code class="docutils literal notranslate"><span class="pre">define</span></code> executable.
 Since <code class="docutils literal notranslate"><span class="pre">define</span></code> is executed interactively this step is challenging when aiming at automating
@@ -244,7 +247,7 @@ of calculations. Anyway it is focused on providing options for those inputs that
 define. Simple data groups can be set after the execution of <code class="docutils literal notranslate"><span class="pre">DefineRunner</span></code> by the user with the
 standard functions available to modify a data group file (e.g. with the <code class="docutils literal notranslate"><span class="pre">cdg</span></code> function.
 See <a class="reference internal" href="datagroups.html#mod-data-group"><span class="std std-ref">Modifying a data group value</span></a> and <a class="reference internal" href="datagroups.html#control-object"><span class="std std-ref">The Control object</span></a>).</p>
-<div class="section" id="the-definerunner-parameters">
+<section id="the-definerunner-parameters">
 <h2>The DefineRunner parameters<a class="headerlink" href="#the-definerunner-parameters" title="Permalink to this headline">¶</a></h2>
 <p>In this section we provide a full list of all the parameters that can be passed to the <code class="docutils literal notranslate"><span class="pre">parameter</span></code>
 argument when creating an instance of <code class="docutils literal notranslate"><span class="pre">DefineRunner</span></code>.</p>
@@ -341,7 +344,7 @@ This adds the <code class="docutils literal notranslate"><span class="pre">$cosm
 <li><p><code class="docutils literal notranslate"><span class="pre">use_old_amat</span></code> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>): if True adds the <code class="docutils literal notranslate"><span class="pre">use_old_amat</span></code> to the <code class="docutils literal notranslate"><span class="pre">$cosmo</span></code> data
 group, i.e. uses A matrix setup of TURBOMOLE 5.7.</p></li>
 </ul>
-<div class="section" id="validation">
+<section id="validation">
 <h3>Validation<a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h3>
 <p>An <strong>experimental feature</strong> is available to validate the correctness of the dictionary that you want
 to use as <code class="docutils literal notranslate"><span class="pre">paramaters</span></code> for <code class="docutils literal notranslate"><span class="pre">DefineRunner</span></code>. It is based on the
@@ -375,9 +378,9 @@ it is correct you can probably ignore the failure in the validation. In addition
 parameters a validation of the possible values is missing. Just to mention one, the validation
 only checks that the value of <code class="docutils literal notranslate"><span class="pre">functional</span></code> is a string, but no check is performed to verify
 that the value is the name of an existing functional.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>

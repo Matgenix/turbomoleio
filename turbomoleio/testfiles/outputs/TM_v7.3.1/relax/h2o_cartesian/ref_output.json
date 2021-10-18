@@ -1,11 +1,11 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "RelaxOutput",
-  "@version": "1.0.0",
+  "@version": "1.1.0",
   "info": {
     "@module": "turbomoleio.output.data",
     "@class": "RelaxData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "optimizations": [
       "CARTESIAN coordinates"
     ],
@@ -15,7 +15,7 @@
   "convergence": {
     "@module": "turbomoleio.output.data",
     "@class": "RelaxConvergenceData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "energy_change": {
       "value": 75.8805603,
       "thr": 1e-06,
@@ -33,17 +33,17 @@
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": "1.0.0",
-    "host": "localhost.localdomain",
+    "@version": "1.1.0",
+    "host": "fedora",
     "start_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-06-10 14:04:27.795000"
+      "string": "2021-09-20 09:39:39.312000"
     },
     "end_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-06-10 14:04:27.802000"
+      "string": "2021-09-20 09:39:39.319000"
     },
     "cpu_time": 0.01,
     "wall_time": 0.01
@@ -51,7 +51,7 @@
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "version": "7.3.1",
     "build": null,
     "executable": "relax"

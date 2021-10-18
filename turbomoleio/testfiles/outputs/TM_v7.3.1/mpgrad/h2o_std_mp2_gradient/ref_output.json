@@ -1,13 +1,18 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "MP2Output",
-  "@version": "1.0.0",
+  "@version": "1.1.0",
   "info": null,
-  "energy": -76.12753617782002,
+  "results": {
+    "@module": "turbomoleio.output.data",
+    "@class": "MP2Results",
+    "@version": "1.1.0",
+    "energy": -76.12753617782002
+  },
   "geometry": {
     "@module": "turbomoleio.output.data",
     "@class": "GeometryData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "center_of_mass": [
       -0.0,
       0.0,
@@ -75,7 +80,7 @@
   "basis": {
     "@module": "turbomoleio.output.data",
     "@class": "BasisData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "basis_per_specie": {
       "o": "def-SV(P)",
       "h": "def-SV(P)"
@@ -87,7 +92,7 @@
   "symmetry": {
     "@module": "turbomoleio.output.data",
     "@class": "SymmetryData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "symbol": "c1",
     "n_reps": 1,
     "reps": [
@@ -98,25 +103,25 @@
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "host": "fedora",
     "start_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-07-08 15:36:00.726000"
+      "string": "2021-09-20 09:39:38.844000"
     },
     "end_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-07-08 15:36:00.765000"
+      "string": "2021-09-20 09:39:38.881000"
     },
     "cpu_time": 0.04,
-    "wall_time": 0.05
+    "wall_time": 0.04
   },
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "version": "7.3.1",
     "build": null,
     "executable": "mpgrad"

@@ -1,12 +1,12 @@
 
 OPTIMIZATION CYCLE 6
-Thu  8 Jul 15:56:23 CEST 2021
+Mon 20 Sep 09:39:37 CEST 2021
 
  statpt (fedora) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-07-08 15:56:23.304 
+    2021-09-20 09:39:37.851 
 
 
 
@@ -115,7 +115,7 @@ Thu  8 Jul 15:56:23 CEST 2021
    ****  statpt : all done  ****
 
 
-    2021-07-08 15:56:23.310 
+    2021-09-20 09:39:37.856 
 
 fine, there is no data group "$actual step"
 next step = dscf
@@ -131,7 +131,7 @@ next step = dscf
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-07-08 15:56:23.328 
+    2021-09-20 09:39:37.875 
 
 
 
@@ -470,7 +470,7 @@ COSMO: using sym. in pot. calc.
    ****  dscf : all done  ****
 
 
-    2021-07-08 15:56:23.370 
+    2021-09-20 09:39:37.915 
 
 fine, there is no data group "$actual step"
 next step = mpgrad
@@ -486,7 +486,7 @@ next step = mpgrad
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-07-08 15:56:23.387 
+    2021-09-20 09:39:37.933 
 
 
 
@@ -928,14 +928,14 @@ dE/dz -0.1669097D-05  0.8345201D-06  0.8345201D-06
 
 
     ------------------------------------------------------------------------
-         total  cpu-time :   0.07 seconds
+         total  cpu-time :   0.06 seconds
          total wall-time :   0.07 seconds
     ------------------------------------------------------------------------
 
    ****  mpgrad : all done  ****
 
 
-    2021-07-08 15:56:23.449 
+    2021-09-20 09:39:37.993 
 
 fine, there is no data group "$actual step"
 next step = relax

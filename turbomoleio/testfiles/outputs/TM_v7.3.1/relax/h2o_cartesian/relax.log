@@ -1,9 +1,9 @@
 
- relax (localhost.localdomain) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
+ relax (fedora) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-06-10 14:04:27.795 
+    2021-09-20 09:39:39.312 
 
 
 
@@ -23,7 +23,7 @@
 
 
    *************************************************************************
-   ridft                                                                    
+   dscf                                                                     
    *************************************************************************
 
 
@@ -192,7 +192,7 @@ length of quasi-newton displacement vector for atom     1 is limited to   0.10
 
 
   ---------------------------------------------------------------------
-  ridft                                                                        
+  dscf                                                                         
   Optimization statistics for    1 cycles
   ---------------------------------------------------------------------
 
@@ -268,5 +268,5 @@ length of quasi-newton displacement vector for atom     1 is limited to   0.10
    ****  relax : all done  ****
 
 
-    2021-06-10 14:04:27.802 
+    2021-09-20 09:39:39.319 
 

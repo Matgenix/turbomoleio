@@ -36,8 +36,7 @@ date_format = "%Y-%m-%d %H:%M:%S.%f"
 float_number_re = r"[+-]?[0-9]*[.]?[0-9]+"
 float_number_d_re = r"[+-]?[0-9]*[.]?[0-9]+D[+-]\d{2}"
 float_number_e_re = r"[+-]?[0-9]*[.]?[0-9]+E[+-]\d{2}"
-float_number_all_re = r"[+-]?[0-9]*[.]?[0-9]+([ED][+-]\d{2})*"
-float_number_all_re2 = r"[+-]?[0-9]*[.]?[0-9]+(?:[ED][+-]\d{2})?"
+float_number_all_re = r"[+-]?[0-9]*[.]?[0-9]+(?:[ED][+-]\d{2})?"
 irrep_re_group = r"\w'\""
 
 
@@ -2101,7 +2100,7 @@ class Parser:
         r += r"GROUND\s+STATE\s+FIRST-ORDER\s+PROPERTIES"
         r += r"\s+>{11,11}\*\s+\*\s+\*\s+\*{62,62}\s+"
         r += r"-{48,48}\s+Method\s+:\s+MP2\s+Total\s+Energy\s+:\s+("
-        r += float_number_all_re2
+        r += float_number_all_re
         r += r")\s+"
         m = re.findall(r, string=self.string)
         if len(m) == 1:
@@ -2111,9 +2110,9 @@ class Parser:
 
         # Try to parse from mpgrad program
         r = r"\*{53,53}\s+\*\s+\*\s+\*\s+"
-        r += r"SCF-energy\s+:\s+(" + float_number_all_re2 + r")\s+\*\s+\*\s+"
-        r += r"MP2-energy\s+:\s+(" + float_number_all_re2 + r")\s+\*\s+\*\s+"
-        r += r"total\s+:\s+(" + float_number_all_re2 + r")\s+\*\s+\*\s+"
+        r += r"SCF-energy\s+:\s+(" + float_number_all_re + r")\s+\*\s+\*\s+"
+        r += r"MP2-energy\s+:\s+(" + float_number_all_re + r")\s+\*\s+\*\s+"
+        r += r"total\s+:\s+(" + float_number_all_re + r")\s+\*\s+\*\s+"
         r += r"\*\s+\*\s+\(MP2-energy\s+evaluated\s+from\s+T2\s+amplitudes\)\s+\*\s+\*\s+\*\s+\*{53,53}"
         m = re.findall(r, string=self.string)
         if len(m) == 1:

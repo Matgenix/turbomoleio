@@ -1,10 +1,10 @@
  operating system is UNIX !
 
- ridft (localhost.localdomain) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
+ ridft (fedora) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-06-10 14:04:28.031 
+    2021-09-20 09:39:39.718 
 
 
 
@@ -430,12 +430,12 @@ molecular C6(AA) [au] =        44.52
 
 
     ------------------------------------------------------------------------
-         total  cpu-time :   0.04 seconds
-         total wall-time :   0.04 seconds
+         total  cpu-time :   0.03 seconds
+         total wall-time :   0.03 seconds
     ------------------------------------------------------------------------
 
    ****  ridft : all done  ****
 
 
-    2021-06-10 14:04:28.065 
+    2021-09-20 09:39:39.745 
 

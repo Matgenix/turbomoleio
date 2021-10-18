@@ -1,5 +1,3 @@
-$title
-jobex_mp2_dscf_mpgrad_cosmo
 $operating system unix
 $symmetry c2v
 $redundant    file=coord
@@ -29,10 +27,6 @@ $rundimensions
    rhfshells=1
    nbf(AO)=18
 $scfmo   file=mos
-$closed shells
- a1      1-3                                    ( 2 )
- b1      1                                      ( 2 )
- b2      1                                      ( 2 )
 $scfiterlimit      200
 $scfconv        7
 $thize     0.10000000E-04
@@ -76,4 +70,10 @@ $ricc2
 $last step     define
 $cosmo
 $cosmo_out = out.cosmo
+$title
+jobex_mp2_dscf_mpgrad_cosmo
+$closed shells
+ a1      1-3                                    ( 2 )
+ b1      1                                      ( 2 )
+ b2      1                                      ( 2 )
 $end

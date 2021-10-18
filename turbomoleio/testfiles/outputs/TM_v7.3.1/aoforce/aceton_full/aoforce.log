@@ -1,10 +1,10 @@
  operating system is UNIX !
 
- force (localhost.localdomain) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
+ force (fedora) : TURBOMOLE V7.3.1 () 25 Feb 2019 at 10:12:05
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-06-10 14:04:02.546 
+    2021-09-20 09:39:12.781 
 
 
 
@@ -74,7 +74,7 @@
        center of nuclear charge:    0.00482639   -0.85800920    0.00000000
 
    *************************************************************************
-   ridft                                                                    
+   dscf                                                                     
    *************************************************************************
 
 
@@ -237,7 +237,7 @@
                                <mu|h|nu>    -> Hessian
                                nucl. rep.   -> Hessian
      integrals are neglected if expon. factor <  6.944444444444444E-014
-      ...terminated. cpu:       0.03       wall:       0.03
+      ...terminated. cpu:       0.02       wall:       0.02
  
  
  
@@ -245,9 +245,9 @@
  CONSTRUCTING second deriv. of 2e energy    -> Hessian
    treating Coulomb (and exchange) contribution
      integrals will be neglected if total contribution <  6.944444444444444E-010
-      ...terminated. cpu:       1.33       wall:       1.34
+      ...terminated. cpu:       1.19       wall:       1.19
    treating exchange-correlation contribution
-      ...terminated. cpu:       1.58       wall:       1.60
+      ...terminated. cpu:       1.37       wall:       1.37
  
  
  
@@ -275,7 +275,7 @@
  
          Maximum core memory set to                    500 MB
          This corresponds to                 12082 vectors in CAO basis
-      ...terminated. cpu:       0.80       wall:       0.80
+      ...terminated. cpu:       0.70       wall:       0.70
  
  
  
@@ -285,7 +285,7 @@
           Maximum core memory set to                    500 MB
           Atoms treated simultaneously :                    10
  max of dfo   6.84546970462346     
-      ...terminated. cpu:       1.14       wall:       1.15
+      ...terminated. cpu:       1.02       wall:       1.02
  
  
  
@@ -372,7 +372,7 @@
 
  NOTE: Residual norms are larger than 1.00D-05 due to mgrid option!
 
-      ...terminated. cpu:       2.15       wall:       2.16
+      ...terminated. cpu:       1.92       wall:       1.93
  
  
  
@@ -829,12 +829,12 @@ reduced mass(g/mol)     1.039    1.037    1.101    1.101    1.107    1.104
 
 
     ------------------------------------------------------------------------
-         total  cpu-time :   7.39 seconds
-         total wall-time :   7.43 seconds
+         total  cpu-time :   6.51 seconds
+         total wall-time :   6.53 seconds
     ------------------------------------------------------------------------
 
    ****  force : all done  ****
 
 
-    2021-06-10 14:04:09.970 
+    2021-09-20 09:39:19.307 
 

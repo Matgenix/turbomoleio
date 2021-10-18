@@ -1,5 +1,3 @@
-$title
-ridft
 $operating system unix
 $symmetry c1
 $redundant    file=coord
@@ -28,8 +26,6 @@ $rundimensions
    rhfshells=1
    nbf(AO)=18
 $scfmo   file=mos
-$closed shells
- a       1-5                                    ( 2 )
 $scfiterlimit      200
 $thize     0.10000000E-04
 $thime        5
@@ -71,4 +67,8 @@ $jbas    file=auxbasis
 $last step     define
 $disp3 bj
 $scfconv 8
+$title
+ridft
+$closed shells
+ a       1-5                                    ( 2 )
 $end

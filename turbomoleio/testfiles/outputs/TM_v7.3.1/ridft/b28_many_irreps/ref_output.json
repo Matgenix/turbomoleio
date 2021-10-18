@@ -1,15 +1,15 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "ScfOutput",
-  "@version": "1.0.0",
+  "@version": "1.1.0",
   "dft": {
     "@module": "turbomoleio.output.data",
     "@class": "DFTData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "functional": {
       "@module": "turbomoleio.output.data",
       "@class": "FunctionalData",
-      "@version": "1.0.0",
+      "@version": "1.1.0",
       "msg": "B-P86 functional\n exchange:    LDA + Becke (B88)\n correlation: LDA (VWN) + Perdew (P86)",
       "name": "b-p",
       "func_type": "GGA",
@@ -18,7 +18,7 @@
     "ri": {
       "@module": "turbomoleio.output.data",
       "@class": "RiData",
-      "@version": "1.0.0",
+      "@version": "1.1.0",
       "ricore": 500,
       "marij": false,
       "rij_memory": 15,
@@ -31,11 +31,11 @@
   "scf": {
     "@module": "turbomoleio.output.data",
     "@class": "ScfData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "iterations": {
       "@module": "turbomoleio.output.data",
       "@class": "ScfIterationData",
-      "@version": "1.0.0",
+      "@version": "1.1.0",
       "energies": [
         -690.81171678829,
         -693.83482648002,
@@ -79,7 +79,7 @@
   "energies": {
     "@module": "turbomoleio.output.data",
     "@class": "ScfEnergiesData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "total_energy": -694.90185563154,
     "kinetic_energy": 684.60486965242,
     "potential_energy": -1379.50672528396,
@@ -89,7 +89,7 @@
   "electrostatic": {
     "@module": "turbomoleio.output.data",
     "@class": "ElectrostaticMomentsData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "charge": 0.0,
     "unrestricted_electrons": 2.0,
     "dipole_vector": [
@@ -121,7 +121,7 @@
   "geometry": {
     "@module": "turbomoleio.output.data",
     "@class": "GeometryData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "center_of_mass": [
       0.0,
       -0.0,
@@ -564,7 +564,7 @@
   "basis": {
     "@module": "turbomoleio.output.data",
     "@class": "BasisData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "basis_per_specie": {
       "b": "def-SV(P)"
     },
@@ -577,25 +577,25 @@
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": "1.0.0",
-    "host": "localhost.localdomain",
+    "@version": "1.1.0",
+    "host": "fedora",
     "start_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-06-10 14:04:28.185000"
+      "string": "2021-09-20 09:39:39.862000"
     },
     "end_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-06-10 14:04:29.480000"
+      "string": "2021-09-20 09:39:40.969000"
     },
-    "cpu_time": 1.29,
-    "wall_time": 1.3
+    "cpu_time": 1.1,
+    "wall_time": 1.11
   },
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "version": "7.3.1",
     "build": null,
     "executable": "ridft"
@@ -604,7 +604,7 @@
   "spin": {
     "@module": "turbomoleio.output.data",
     "@class": "SpinData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "unrestricted": true,
     "s2": {
       "s2": 2.0015267
@@ -613,7 +613,7 @@
   "integral": {
     "@module": "turbomoleio.output.data",
     "@class": "IntegralData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "integral_neglect_threshold": 7.9e-11,
     "thize": 1e-05,
     "thime": 5
@@ -622,7 +622,7 @@
   "symmetry": {
     "@module": "turbomoleio.output.data",
     "@class": "SymmetryData",
-    "@version": "1.0.0",
+    "@version": "1.1.0",
     "symbol": "d14d",
     "n_reps": 17,
     "reps": [
