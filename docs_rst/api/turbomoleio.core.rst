@@ -44,6 +44,14 @@ turbomoleio.core.symmetry module
    :undoc-members:
    :show-inheritance:
 
+turbomoleio.core.utils module
+-----------------------------
+
+.. automodule:: turbomoleio.core.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

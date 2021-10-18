@@ -129,3 +129,6 @@ dmypy.json
 
 # JetBrain's Pycharm
 .idea/
+
+# Dry-run comparison files
+dryrun_itest.json

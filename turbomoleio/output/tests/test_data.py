@@ -30,11 +30,13 @@ import pytest
 
 from turbomoleio.output.data import TurbomoleData, ScfIterationData, AoforceVibrationalData
 from turbomoleio.testfiles.utils import has_matplotlib
+from turbomoleio.testfiles.utils import TM_VERSIONS
 
 
-def test_str(testdir):
+@pytest.mark.parametrize("tm_version", TM_VERSIONS)
+def test_str(testdir, tm_version):
 
-    path = os.path.join(testdir, "outputs", "dscf", "h2o_std.log")
+    path = os.path.join(testdir, "outputs", tm_version, "dscf", "h2o_std", "dscf.log")
     with open(path) as f:
         log = f.read()
 
@@ -44,8 +46,9 @@ def test_str(testdir):
     assert "dscf" in s
 
 
-def test_ScfIterationData(testdir):
-    path = os.path.join(testdir, "outputs", "dscf", "h2o_std.log")
+@pytest.mark.parametrize("tm_version", TM_VERSIONS)
+def test_ScfIterationData(testdir, tm_version):
+    path = os.path.join(testdir, "outputs", tm_version, "dscf", "h2o_std", "dscf.log")
     sid = ScfIterationData.from_file(path)
 
     if has_matplotlib():
@@ -53,7 +56,7 @@ def test_ScfIterationData(testdir):
 
 
 def test_AoforceVibrationalData(testdir):
-    path = os.path.join(testdir, "outputs", "aoforce", "aceton_full.log")
+    path = os.path.join(testdir, "outputs", "TM_v7.3", "aoforce", "aceton_full", "aoforce.log")
     avd = AoforceVibrationalData.from_file(path)
 
     assert avd.n_negative_freqs(tol=0.1) == 1

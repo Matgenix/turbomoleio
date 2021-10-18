@@ -4,10 +4,11 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>turbomoleio.input package &mdash; turbomoleio 1.0.0 documentation</title>
+  <title>turbomoleio.input package &mdash; turbomoleio 1.1.0 documentation</title>
   
 
   
@@ -32,6 +33,7 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -63,7 +65,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
             
           
@@ -88,7 +90,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">User guide</span></p>
+              <p><span class="caption-text">User guide</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../datagroups.html">The data group files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../coord.html">The coord file</a></li>
@@ -106,15 +108,16 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Developer guide</span></p>
+<p><span class="caption-text">Developer guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../developer/introduction.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developer/parsing_logs.html">Output logs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developer/definerunner.html">Define runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developer/testing.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developer/versioning.html">Versioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/versioning.html#backward-compatibility">Backward-compatibility</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Additional information</span></p>
+<p><span class="caption-text">Additional information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -192,9 +195,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="turbomoleio-input-package">
+  <section id="turbomoleio-input-package">
 <h1>turbomoleio.input package<a class="headerlink" href="#turbomoleio-input-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="subpackages">
+<section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
@@ -211,11 +214,11 @@
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="submodules">
+</section>
+<section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-turbomoleio.input.define">
+</section>
+<section id="module-turbomoleio.input.define">
 <span id="turbomoleio-input-define-module"></span><h2>turbomoleio.input.define module<a class="headerlink" href="#module-turbomoleio.input.define" title="Permalink to this headline">¶</a></h2>
 <p>Module containing the required classes to run define based on a set of input parameters.</p>
 <dl class="py exception">
@@ -311,8 +314,8 @@ define &lt; define_commands</p>
 <dl class="py method">
 <dt id="turbomoleio.input.define.DefineRunner.run_full">
 <code class="sig-name descname">run_full</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/input/define.html#DefineRunner.run_full"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#turbomoleio.input.define.DefineRunner.run_full" title="Permalink to this definition">¶</a></dt>
-<dd><p>Runs define going thorugh all the menus using the parameters. If The jobs reaches the end
-without exceptions being raised it will check if the job eneded normally or abnormally.</p>
+<dd><p>Runs define going through all the menus using the parameters. If The jobs reaches the end
+without exceptions being raised it will check if the job ended normally or abnormally.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if define ended normally otherwise abnormally.</p>
@@ -329,7 +332,7 @@ without exceptions being raised it will check if the job eneded normally or abno
 <dd><p>Runs define in a folder where a control file is already present and only regenerates
 the molecular orbital files. If the usemo option is defined the related molecular orbital
 will be taken from there and updated, otherwise they will be generated from scratch with
-the extended huckel guess. (N.B. the control should not be the one currently being edited
+the extended hueckel guess. (N.B. the control should not be the one currently being edited
 by define)</p>
 <p>Also allows to change some information in the geometry. If at least one of the following
 options is enabled it will enter the geometry menu: sym, desy, ired. Notice that if the
@@ -377,8 +380,8 @@ expected from define, but a proper way of handling with the case has not been im
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-turbomoleio.input.utils">
+</section>
+<section id="module-turbomoleio.input.utils">
 <span id="turbomoleio-input-utils-module"></span><h2>turbomoleio.input.utils module<a class="headerlink" href="#module-turbomoleio.input.utils" title="Permalink to this headline">¶</a></h2>
 <dl class="py exception">
 <dt id="turbomoleio.input.utils.ParametersValidationError">
@@ -449,11 +452,11 @@ Consider it as an experimental feature.</p>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-turbomoleio.input">
+</section>
+<section id="module-turbomoleio.input">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-turbomoleio.input" title="Permalink to this headline">¶</a></h2>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

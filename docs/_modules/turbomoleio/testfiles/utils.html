@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>turbomoleio.testfiles.utils &mdash; turbomoleio 1.0.0 documentation</title>
+  <title>turbomoleio.testfiles.utils &mdash; turbomoleio 1.1.0 documentation</title>
   
 
   
@@ -32,6 +32,7 @@
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -61,7 +62,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
             
           
@@ -86,7 +87,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">User guide</span></p>
+              <p><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../datagroups.html">The data group files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../coord.html">The coord file</a></li>
@@ -94,15 +95,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../output_parsing.html">Outputs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../appendix.html">Appendix</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer guide</span></p>
+<p><span class="caption-text">Developer guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/introduction.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/parsing_logs.html">Output logs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/definerunner.html">Define runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/testing.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/versioning.html">Versioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/versioning.html#backward-compatibility">Backward-compatibility</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Additional information</span></p>
+<p><span class="caption-text">Additional information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
@@ -202,19 +204,37 @@
 <span class="kn">import</span> <span class="nn">shlex</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
 <span class="kn">import</span> <span class="nn">numbers</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
-<span class="kn">from</span> <span class="nn">monty.os</span> <span class="kn">import</span> <span class="n">cd</span>
+<span class="kn">from</span> <span class="nn">monty.os</span> <span class="kn">import</span> <span class="n">cd</span><span class="p">,</span> <span class="n">makedirs_p</span>
 <span class="kn">from</span> <span class="nn">monty.json</span> <span class="kn">import</span> <span class="n">MSONable</span><span class="p">,</span> <span class="n">MontyDecoder</span>
 <span class="kn">from</span> <span class="nn">monty.serialization</span> <span class="kn">import</span> <span class="n">dumpfn</span><span class="p">,</span> <span class="n">loadfn</span>
 <span class="kn">from</span> <span class="nn">turbomoleio.input.define</span> <span class="kn">import</span> <span class="n">DefineRunner</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.input.define</span> <span class="kn">import</span> <span class="n">DefineError</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.input.utils</span> <span class="kn">import</span> <span class="n">get_define_template</span>
 <span class="kn">from</span> <span class="nn">turbomoleio.output.states</span> <span class="kn">import</span> <span class="n">EigerRunner</span><span class="p">,</span> <span class="n">States</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.output.files</span> <span class="kn">import</span> <span class="n">JobexOutput</span><span class="p">,</span> <span class="n">EscfOnlyOutput</span>
 <span class="kn">from</span> <span class="nn">turbomoleio.core.control</span> <span class="kn">import</span> <span class="n">Control</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.core.control</span> <span class="kn">import</span> <span class="n">adg</span><span class="p">,</span> <span class="n">cdg</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.output.files</span> <span class="kn">import</span> <span class="n">exec_to_out_obj</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.output.parser</span> <span class="kn">import</span> <span class="n">Parser</span>
 
 
 <span class="n">TESTDIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">TM_VERSIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;TM_v7.3&#39;</span><span class="p">,</span> <span class="s1">&#39;TM_v7.3.1&#39;</span><span class="p">]</span>
+<span class="n">TESTS_CONFIGS_TM_VERSIONS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">tmv</span><span class="p">:</span> <span class="n">loadfn</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TESTDIR</span><span class="p">,</span> <span class="s1">&#39;outputs&#39;</span><span class="p">,</span> <span class="n">tmv</span><span class="p">,</span> <span class="s1">&#39;tests_config.yaml&#39;</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">tmv</span> <span class="ow">in</span> <span class="n">TM_VERSIONS</span>
+<span class="p">}</span>
+<span class="n">PARSER_METHODS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;all_done&quot;</span><span class="p">,</span> <span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="s2">&quot;centers&quot;</span><span class="p">,</span> <span class="s2">&quot;coordinates&quot;</span><span class="p">,</span> <span class="s2">&quot;basis&quot;</span><span class="p">,</span> <span class="s2">&quot;symmetry&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;cosmo_header&quot;</span><span class="p">,</span> <span class="s2">&quot;density_functional_data&quot;</span><span class="p">,</span> <span class="s2">&quot;rij_info&quot;</span><span class="p">,</span> <span class="s2">&quot;dftd&quot;</span><span class="p">,</span> <span class="s2">&quot;pre_scf_run&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;scf_iterations&quot;</span><span class="p">,</span> <span class="s2">&quot;scf_energies&quot;</span><span class="p">,</span> <span class="s2">&quot;cosmo_results&quot;</span><span class="p">,</span> <span class="s2">&quot;electrostatic_moments&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;timings&quot;</span><span class="p">,</span> <span class="s2">&quot;s2&quot;</span><span class="p">,</span> <span class="s2">&quot;is_uhf&quot;</span><span class="p">,</span> <span class="s2">&quot;fermi&quot;</span><span class="p">,</span> <span class="s2">&quot;integral&quot;</span><span class="p">,</span> <span class="s2">&quot;pre_escf_run&quot;</span><span class="p">,</span> <span class="s2">&quot;escf_iterations&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;escf_gs_total_en&quot;</span><span class="p">,</span> <span class="s2">&quot;escf_excitations&quot;</span><span class="p">,</span> <span class="s2">&quot;rdgrad_memory&quot;</span><span class="p">,</span> <span class="s2">&quot;gradient&quot;</span><span class="p">,</span> <span class="s2">&quot;egrad_excited_state&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;statpt_info&quot;</span><span class="p">,</span> <span class="s2">&quot;relax_info&quot;</span><span class="p">,</span> <span class="s2">&quot;relax_gradient_values&quot;</span><span class="p">,</span> <span class="s2">&quot;relax_conv_info&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;aoforce_numerical_integration&quot;</span><span class="p">,</span> <span class="s2">&quot;aoforce_analysis&quot;</span><span class="p">,</span> <span class="s2">&quot;mp2_results&quot;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="ItestError"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.ItestError">[docs]</a><span class="k">class</span> <span class="nc">ItestError</span><span class="p">(</span><span class="ne">BaseException</span><span class="p">):</span>
@@ -473,6 +493,181 @@
             <span class="k">raise</span></div>
 
 
+<span class="n">REF_DICT_TEST_OTHER</span> <span class="o">=</span> <span class="s1">&#39;REF_DICT_TEST_OTHER&#39;</span>
+<span class="n">REF_SEQUENCE_TEST_OTHER</span> <span class="o">=</span> <span class="s1">&#39;REF_SEQUENCE_TEST_OTHER&#39;</span>
+<span class="n">REF_STRING_TEST_OTHER</span> <span class="o">=</span> <span class="s1">&#39;REF_STRING_TEST_OTHER&#39;</span>
+<span class="n">REF_NUMBER_TEST_OTHER</span> <span class="o">=</span> <span class="s1">&#39;REF_NUMBER_TEST_OTHER&#39;</span>
+<span class="n">TEST_NUMBER_REF_OTHER</span> <span class="o">=</span> <span class="s1">&#39;TEST_NUMBER_REF_OTHER&#39;</span>
+<span class="n">TEST_STRING_REF_OTHER</span> <span class="o">=</span> <span class="s1">&#39;TEST_STRING_REF_OTHER&#39;</span>
+<span class="n">DICT_DIFFERENT_KEYS</span> <span class="o">=</span> <span class="s1">&#39;DICT_DIFFERENT_KEYS&#39;</span>
+<span class="n">SEQUENCE_DIFFERENT_SIZES</span> <span class="o">=</span> <span class="s1">&#39;SEQUENCE_DIFFERENT_SIZES&#39;</span>
+<span class="n">NUMBERS_DIFFER</span> <span class="o">=</span> <span class="s1">&#39;NUMBERS_DIFFER&#39;</span>
+<span class="n">ARRAYS_DIFFER</span> <span class="o">=</span> <span class="s1">&#39;ARRAYS_DIFFER&#39;</span>
+<span class="n">STRINGS_DIFFER</span> <span class="o">=</span> <span class="s1">&#39;STRINGS_DIFFER&#39;</span>
+<span class="n">OBJECTS_DIFFER</span> <span class="o">=</span> <span class="s1">&#39;OBJECTS_DIFFER&#39;</span>
+<span class="n">DIFFERENCE_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="n">REF_DICT_TEST_OTHER</span><span class="p">,</span> <span class="n">REF_SEQUENCE_TEST_OTHER</span><span class="p">,</span>
+                    <span class="n">REF_STRING_TEST_OTHER</span><span class="p">,</span> <span class="n">REF_NUMBER_TEST_OTHER</span><span class="p">,</span>
+                    <span class="n">TEST_NUMBER_REF_OTHER</span><span class="p">,</span> <span class="n">TEST_STRING_REF_OTHER</span><span class="p">,</span> <span class="n">DICT_DIFFERENT_KEYS</span><span class="p">,</span>
+                    <span class="n">SEQUENCE_DIFFERENT_SIZES</span><span class="p">,</span>
+                    <span class="n">NUMBERS_DIFFER</span><span class="p">,</span> <span class="n">ARRAYS_DIFFER</span><span class="p">,</span> <span class="n">STRINGS_DIFFER</span><span class="p">,</span> <span class="n">OBJECTS_DIFFER</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_update_differences</span><span class="p">(</span><span class="n">differences</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">difference_type</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">difference_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">DIFFERENCE_TYPES</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Difference type &quot;</span><span class="si">{</span><span class="n">difference_type</span><span class="si">}</span><span class="s1">&quot; is not valid&#39;</span><span class="p">)</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;&gt;&gt;&gt;</span><span class="si">{</span><span class="n">difference_type</span><span class="si">}</span><span class="s1">&lt;&lt;&lt;&#39;</span>
+    <span class="k">if</span> <span class="n">message</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">all_levels</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">differences</span><span class="p">]</span>
+    <span class="n">level_t</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">level_t</span> <span class="ow">in</span> <span class="n">all_levels</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Should not be reached here&#39;</span><span class="p">)</span>
+    <span class="n">differences</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">level</span><span class="p">,</span> <span class="n">msg</span><span class="p">))</span>
+
+
+<span class="c1"># TODO: We should think about how to test eigenvectors, reduced_masses etc ...</span>
+<span class="n">ignored_dryrun_itest_parsed_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;start_time&quot;</span><span class="p">,</span> <span class="s2">&quot;end_time&quot;</span><span class="p">,</span> <span class="s2">&quot;wall_time&quot;</span><span class="p">,</span> <span class="s2">&quot;cpu_time&quot;</span><span class="p">,</span> <span class="s2">&quot;construction_timings&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;host&quot;</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="s2">&quot;build&quot;</span><span class="p">,</span> <span class="s2">&quot;eigenvectors&quot;</span><span class="p">,</span> <span class="s2">&quot;reduced_masses&quot;</span><span class="p">,</span> <span class="s2">&quot;electric_dipole&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;magnetic_dipole&quot;</span><span class="p">,</span> <span class="s2">&quot;electric_quadrupole&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;@version&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="compare_differences"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.compare_differences">[docs]</a><span class="k">def</span> <span class="nf">compare_differences</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">desired</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">current_level</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to list all differences between test object and reference objects to within some tolerance.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        actual: the object to check.</span>
+<span class="sd">        desired : the expected object.</span>
+<span class="sd">        rtol (float): relative tolerance.</span>
+<span class="sd">        atol (float): absolute tolerance.</span>
+<span class="sd">        current_level: current_level in a nested comparison.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        AssertionError: if actual and desired are not equal.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__tracebackhide__</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Hide traceback for py.test</span>
+    <span class="n">differences</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">current_level</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">current_level</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">desired</span><span class="p">)))]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">current_level</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">current_level</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">desired</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">_update_differences</span><span class="p">(</span><span class="n">differences</span><span class="p">,</span> <span class="n">current_level</span><span class="p">,</span> <span class="n">REF_DICT_TEST_OTHER</span><span class="p">,</span>
+                                <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Reference object is a </span><span class="si">{</span><span class="nb">dict</span><span class="si">}</span><span class="s1">, &#39;</span>
+                                        <span class="sa">f</span><span class="s1">&#39;tested object is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">differences</span>
+        <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">set</span><span class="p">(</span><span class="n">desired</span><span class="p">):</span>
+            <span class="n">_update_differences</span><span class="p">(</span><span class="n">differences</span><span class="p">,</span> <span class="n">current_level</span><span class="p">,</span> <span class="n">DICT_DIFFERENT_KEYS</span><span class="p">,</span>
+                                <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Keys in reference dict are different from keys in tested dict:</span><span class="se">\n</span><span class="s1">&#39;</span>
+                                        <span class="sa">f</span><span class="s1">&#39; - Reference keys: </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">desired</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                                        <span class="sa">f</span><span class="s1">&#39; - Test keys: </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">actual</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                                        <span class="sa">f</span><span class="s1">&#39; - Keys in reference but not in test: &#39;</span>
+                                        <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">actual</span><span class="p">)))</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                                        <span class="sa">f</span><span class="s1">&#39; - Keys in test but not in reference: &#39;</span>
+                                        <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">desired</span><span class="p">)))</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="n">common_keys</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">actual</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">common_keys</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">ignored_dryrun_itest_parsed_keys</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">lvl</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">current_level</span><span class="p">)</span>
+            <span class="n">lvl</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">desired</span><span class="p">[</span><span class="n">k</span><span class="p">]))))</span>
+            <span class="n">differences</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">compare_differences</span><span class="p">(</span><span class="n">actual</span><span class="o">=</span><span class="n">actual</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">desired</span><span class="o">=</span><span class="n">desired</span><span class="p">[</span><span class="n">k</span><span class="p">],</span>
+                                                   <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">,</span>
+                                                   <span class="n">current_level</span><span class="o">=</span><span class="n">lvl</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">differences</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">desired</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">_update_differences</span><span class="p">(</span><span class="n">differences</span><span class="p">,</span> <span class="n">current_level</span><span class="p">,</span> <span class="n">REF_STRING_TEST_OTHER</span><span class="p">,</span>
+                                <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Reference object is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span><span class="si">}</span><span class="s1">, &#39;</span>
+                                        <span class="sa">f</span><span class="s1">&#39;tested object is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">differences</span>
+
+        <span class="k">if</span> <span class="n">desired</span> <span class="o">!=</span> <span class="n">actual</span><span class="p">:</span>
+            <span class="n">_update_differences</span><span class="p">(</span><span class="n">differences</span><span class="p">,</span> <span class="n">current_level</span><span class="p">,</span> <span class="n">STRINGS_DIFFER</span><span class="p">,</span>
+                                <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39; - Reference string: </span><span class="si">{</span><span class="n">desired</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                                        <span class="sa">f</span><span class="s1">&#39; - Test string: </span><span class="si">{</span><span class="n">actual</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">differences</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">desired</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+            <span class="n">_update_differences</span><span class="p">(</span><span class="n">differences</span><span class="p">,</span> <span class="n">current_level</span><span class="p">,</span> <span class="n">REF_NUMBER_TEST_OTHER</span><span class="p">,</span>
+                                <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Reference object is a number (</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span><span class="si">}</span><span class="s1">), &#39;</span>
+                                        <span class="sa">f</span><span class="s1">&#39;tested object is not a number (</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">differences</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">desired</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">):</span>
+            <span class="n">_update_differences</span><span class="p">(</span><span class="n">differences</span><span class="p">,</span> <span class="n">current_level</span><span class="p">,</span> <span class="n">NUMBERS_DIFFER</span><span class="p">,</span>
+                                <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39; - Reference number: </span><span class="si">{</span><span class="n">desired</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                                        <span class="sa">f</span><span class="s1">&#39; - Test number: </span><span class="si">{</span><span class="n">actual</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">differences</span>
+
+    <span class="n">actual_np</span><span class="p">,</span> <span class="n">desired_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">actual</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">actual_np</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">desired_np</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">actual_np</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">desired_np</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+            <span class="n">_update_differences</span><span class="p">(</span><span class="n">differences</span><span class="p">,</span> <span class="n">current_level</span><span class="p">,</span> <span class="n">ARRAYS_DIFFER</span><span class="p">,</span>
+                                <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Reference and test arrays do not have the same shape</span><span class="se">\n</span><span class="s1">&#39;</span>
+                                        <span class="sa">f</span><span class="s1">&#39; - Shape of reference array: </span><span class="si">{</span><span class="n">desired_np</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                                        <span class="sa">f</span><span class="s1">&#39; - Shape of test array: </span><span class="si">{</span><span class="n">actual_np</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">differences</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">actual_np</span><span class="p">,</span> <span class="n">desired_np</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">):</span>
+            <span class="n">_update_differences</span><span class="p">(</span><span class="n">differences</span><span class="p">,</span> <span class="n">current_level</span><span class="p">,</span> <span class="n">ARRAYS_DIFFER</span><span class="p">,</span>
+                                <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Reference and test arrays are not equal to tolerance &#39;</span>
+                                        <span class="sa">f</span><span class="s1">&#39;rtol=</span><span class="si">{</span><span class="n">rtol</span><span class="si">}</span><span class="s1">, atol=</span><span class="si">{</span><span class="n">atol</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                                        <span class="sa">f</span><span class="s1">&#39; - Reference array: </span><span class="si">{</span><span class="n">desired</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                                        <span class="sa">f</span><span class="s1">&#39; - Test array: </span><span class="si">{</span><span class="n">actual</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">differences</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">desired</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="n">_update_differences</span><span class="p">(</span><span class="n">differences</span><span class="p">,</span> <span class="n">current_level</span><span class="p">,</span> <span class="n">REF_SEQUENCE_TEST_OTHER</span><span class="p">,</span>
+                                <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Reference object is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span><span class="si">}</span><span class="s1">, &#39;</span>
+                                        <span class="sa">f</span><span class="s1">&#39;tested object is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">differences</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">desired</span><span class="p">):</span>
+            <span class="n">_update_differences</span><span class="p">(</span><span class="n">differences</span><span class="p">,</span> <span class="n">current_level</span><span class="p">,</span> <span class="n">SEQUENCE_DIFFERENT_SIZES</span><span class="p">,</span>
+                                <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Number of items in reference list or tuple is </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span><span class="si">}</span><span class="s1">,&#39;</span>
+                                        <span class="sa">f</span><span class="s1">&#39;number of items in tested list or tuple is </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="c1">#TODO: decide here if we test whether the first N are the same ? or if one is a subset of the other ?</span>
+            <span class="c1"># In any case, we should give more information of what is in there</span>
+            <span class="k">return</span> <span class="n">differences</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ref</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">desired</span><span class="p">):</span>
+            <span class="n">lvl</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">current_level</span><span class="p">)</span>
+            <span class="n">lvl</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">ref</span><span class="p">))))</span>
+            <span class="n">differences</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">compare_differences</span><span class="p">(</span><span class="n">actual</span><span class="o">=</span><span class="n">actual</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">desired</span><span class="o">=</span><span class="n">ref</span><span class="p">,</span>
+                                                   <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">,</span>
+                                                   <span class="n">current_level</span><span class="o">=</span><span class="n">lvl</span><span class="p">))</span>
+            <span class="c1"># TODO: decide here if we test whether there is a shuffling of the items ?</span>
+        <span class="k">return</span> <span class="n">differences</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">desired</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+        <span class="n">_update_differences</span><span class="p">(</span><span class="n">differences</span><span class="p">,</span> <span class="n">current_level</span><span class="p">,</span> <span class="n">TEST_NUMBER_REF_OTHER</span><span class="p">,</span>
+                            <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Reference object is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span><span class="si">}</span><span class="s1">, &#39;</span>
+                                    <span class="sa">f</span><span class="s1">&#39;tested object is a number (</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">differences</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">desired</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">_update_differences</span><span class="p">(</span><span class="n">differences</span><span class="p">,</span> <span class="n">current_level</span><span class="p">,</span> <span class="n">TEST_STRING_REF_OTHER</span><span class="p">,</span>
+                            <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Reference object is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span><span class="si">}</span><span class="s1">, &#39;</span>
+                                    <span class="sa">f</span><span class="s1">&#39;tested object is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">differences</span>
+
+    <span class="c1"># If the reference and tested objects are not a dict, list, tuple, str, number or array of numbers,</span>
+    <span class="c1"># compare the objects directly</span>
+    <span class="k">if</span> <span class="n">actual</span> <span class="o">!=</span> <span class="n">desired</span><span class="p">:</span>
+        <span class="n">_update_differences</span><span class="p">(</span><span class="n">differences</span><span class="p">,</span> <span class="n">current_level</span><span class="p">,</span> <span class="n">OBJECTS_DIFFER</span><span class="p">,</span>
+                            <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Reference and test objects are not equal.&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">differences</span>
+
+    <span class="k">return</span> <span class="n">differences</span></div>
+
+
 <div class="viewcode-block" id="has_matplotlib"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.has_matplotlib">[docs]</a><span class="k">def</span> <span class="nf">has_matplotlib</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    True if matplotlib is installed.</span>
@@ -533,8 +728,11 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">define_timeout</span> <span class="o">=</span> <span class="mi">10</span>
     <span class="n">generate_ref</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">dryrun</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">dryrun_fpath</span> <span class="o">=</span> <span class="s1">&#39;dryrun_itest.json&#39;</span>
     <span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-4</span>
-    <span class="n">delete_tmp_dir</span> <span class="o">=</span> <span class="kc">True</span></div>
+    <span class="n">delete_tmp_dir</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">dryrun_use_ref_control</span> <span class="o">=</span> <span class="kc">False</span></div>
 
 
 <span class="n">ignored_itest_parsed_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;start_time&quot;</span><span class="p">,</span> <span class="s2">&quot;end_time&quot;</span><span class="p">,</span> <span class="s2">&quot;wall_time&quot;</span><span class="p">,</span> <span class="s2">&quot;cpu_time&quot;</span><span class="p">,</span> <span class="s2">&quot;construction_timings&quot;</span><span class="p">,</span>
@@ -578,7 +776,11 @@
 
     <span class="n">opt_define_timeout</span> <span class="o">=</span> <span class="n">ItestConfig</span><span class="o">.</span><span class="n">define_timeout</span>
     <span class="n">opt_generate_ref</span> <span class="o">=</span> <span class="n">ItestConfig</span><span class="o">.</span><span class="n">generate_ref</span>
+    <span class="n">opt_dryrun</span> <span class="o">=</span> <span class="n">ItestConfig</span><span class="o">.</span><span class="n">dryrun</span>
+    <span class="n">dryrun_fpath</span> <span class="o">=</span> <span class="n">ItestConfig</span><span class="o">.</span><span class="n">dryrun_fpath</span>
     <span class="n">opt_tol</span> <span class="o">=</span> <span class="n">ItestConfig</span><span class="o">.</span><span class="n">tol</span>
+
+    <span class="n">dryrun_differences</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">with</span> <span class="n">temp_dir</span><span class="p">(</span><span class="n">ItestConfig</span><span class="o">.</span><span class="n">delete_tmp_dir</span><span class="p">)</span> <span class="k">as</span> <span class="n">tmp_dir</span><span class="p">:</span>
         <span class="c1"># get the coord file (for the structure defined in the string)</span>
@@ -604,10 +806,16 @@
 
         <span class="n">current_control</span> <span class="o">=</span> <span class="n">Control</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;control&quot;</span><span class="p">)</span>
         <span class="n">compare_control</span> <span class="o">=</span> <span class="n">current_control</span><span class="o">.</span><span class="n">compare</span><span class="p">(</span><span class="n">ref_control</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">opt_tol</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ItestConfig</span><span class="o">.</span><span class="n">dryrun_use_ref_control</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="s2">&quot;control_generated&quot;</span><span class="p">)</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">get_control_integration</span><span class="p">(</span><span class="n">control_reference_filename</span><span class="p">),</span> <span class="s2">&quot;control&quot;</span><span class="p">)</span>
         <span class="c1"># print the output of Control.compare if the compare fails</span>
-        <span class="k">assert</span> <span class="n">compare_control</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="n">compare_control</span>
+        <span class="k">if</span> <span class="n">opt_dryrun</span> <span class="ow">and</span> <span class="n">compare_control</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dryrun_differences</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;control&#39;</span><span class="p">,</span> <span class="n">compare_control</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">compare_control</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="n">compare_control</span>
 
-        <span class="k">for</span> <span class="n">executable</span><span class="p">,</span> <span class="n">exec_args</span><span class="p">,</span> <span class="n">out_parser</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">executables</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">file_classes</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">iexec</span><span class="p">,</span> <span class="p">(</span><span class="n">executable</span><span class="p">,</span> <span class="n">exec_args</span><span class="p">,</span> <span class="n">out_parser</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">executables</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">file_classes</span><span class="p">)):</span>
             <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="n">executable</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">exec_args</span><span class="p">:</span>
                 <span class="n">cmd</span> <span class="o">+=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">exec_args</span><span class="p">)</span>
@@ -632,7 +840,12 @@
                     <span class="k">if</span> <span class="n">opt_generate_ref</span><span class="p">:</span>
                         <span class="n">dumpfn</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">out_ref_path</span><span class="p">)</span>
                     <span class="n">out_ref</span> <span class="o">=</span> <span class="n">loadfn</span><span class="p">(</span><span class="n">out_ref_path</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-                    <span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">out_ref</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">opt_tol</span><span class="p">,</span> <span class="n">ignored_values</span><span class="o">=</span><span class="n">ignored_itest_parsed_keys</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">opt_dryrun</span><span class="p">:</span>
+                        <span class="n">diffs</span> <span class="o">=</span> <span class="n">compare_differences</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">out_ref</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">opt_tol</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">diffs</span><span class="p">:</span>
+                            <span class="n">dryrun_differences</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">executable</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">iexec</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">diffs</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">out_ref</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">opt_tol</span><span class="p">,</span> <span class="n">ignored_values</span><span class="o">=</span><span class="n">ignored_itest_parsed_keys</span><span class="p">)</span>
 
                 <span class="n">c</span> <span class="o">=</span> <span class="n">Control</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;control&quot;</span><span class="p">)</span>
                 <span class="n">e</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">energy</span>
@@ -642,8 +855,16 @@
                     <span class="k">if</span> <span class="n">opt_generate_ref</span><span class="p">:</span>
                         <span class="n">dumpfn</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">e_ref_path</span><span class="p">)</span>
                     <span class="n">e_ref</span> <span class="o">=</span> <span class="n">loadfn</span><span class="p">(</span><span class="n">e_ref_path</span><span class="p">)</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">scf</span><span class="p">,</span> <span class="n">e_ref</span><span class="o">.</span><span class="n">scf</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">opt_tol</span><span class="p">)</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">total</span><span class="p">,</span> <span class="n">e_ref</span><span class="o">.</span><span class="n">total</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">opt_tol</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">opt_dryrun</span><span class="p">:</span>
+                        <span class="n">diffs</span> <span class="o">=</span> <span class="n">compare_differences</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">scf</span><span class="p">,</span> <span class="n">e_ref</span><span class="o">.</span><span class="n">scf</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">opt_tol</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">diffs</span><span class="p">:</span>
+                            <span class="n">dryrun_differences</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">executable</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">iexec</span><span class="si">}</span><span class="s1">) Energy.scf&#39;</span><span class="p">,</span> <span class="n">diffs</span><span class="p">))</span>
+                        <span class="n">diffs</span> <span class="o">=</span> <span class="n">compare_differences</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">total</span><span class="p">,</span> <span class="n">e_ref</span><span class="o">.</span><span class="n">total</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">opt_tol</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">diffs</span><span class="p">:</span>
+                            <span class="n">dryrun_differences</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">executable</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">iexec</span><span class="si">}</span><span class="s1">) Energy.total&#39;</span><span class="p">,</span> <span class="n">diffs</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">scf</span><span class="p">,</span> <span class="n">e_ref</span><span class="o">.</span><span class="n">scf</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">opt_tol</span><span class="p">)</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">total</span><span class="p">,</span> <span class="n">e_ref</span><span class="o">.</span><span class="n">total</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">opt_tol</span><span class="p">)</span>
 
                 <span class="n">g</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">gradient</span>
                 <span class="k">if</span> <span class="n">g</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -652,14 +873,24 @@
                     <span class="k">if</span> <span class="n">opt_generate_ref</span><span class="p">:</span>
                         <span class="n">dumpfn</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">g_ref_path</span><span class="p">)</span>
                     <span class="n">g_ref</span> <span class="o">=</span> <span class="n">loadfn</span><span class="p">(</span><span class="n">g_ref_path</span><span class="p">)</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">gradients</span><span class="p">,</span> <span class="n">g_ref</span><span class="o">.</span><span class="n">gradients</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">opt_tol</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">opt_dryrun</span><span class="p">:</span>
+                        <span class="n">diffs</span> <span class="o">=</span> <span class="n">compare_differences</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">gradients</span><span class="p">,</span> <span class="n">g_ref</span><span class="o">.</span><span class="n">gradients</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">opt_tol</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">diffs</span><span class="p">:</span>
+                            <span class="n">dryrun_differences</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">executable</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">iexec</span><span class="si">}</span><span class="s1">) Gradient&#39;</span><span class="p">,</span> <span class="n">diffs</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">gradients</span><span class="p">,</span> <span class="n">g_ref</span><span class="o">.</span><span class="n">gradients</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">opt_tol</span><span class="p">)</span>
 
                 <span class="c1"># check that the output from eiger and our parser give the same results</span>
                 <span class="n">states</span> <span class="o">=</span> <span class="n">States</span><span class="o">.</span><span class="n">from_file</span><span class="p">()</span>
                 <span class="n">eiger_runner</span> <span class="o">=</span> <span class="n">EigerRunner</span><span class="p">()</span>
                 <span class="n">eiger_runner</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
                 <span class="n">eiger_out</span> <span class="o">=</span> <span class="n">eiger_runner</span><span class="o">.</span><span class="n">get_eiger_output</span><span class="p">()</span>
-                <span class="k">assert</span> <span class="n">eiger_out</span><span class="o">.</span><span class="n">compare_states</span><span class="p">(</span><span class="n">states</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+                <span class="n">eiger_comp</span> <span class="o">=</span> <span class="n">eiger_out</span><span class="o">.</span><span class="n">compare_states</span><span class="p">(</span><span class="n">states</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">opt_dryrun</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">eiger_comp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">dryrun_differences</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">executable</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">iexec</span><span class="si">}</span><span class="s1">) Eiger comparison&#39;</span><span class="p">,</span> <span class="n">diffs</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">assert</span> <span class="n">eiger_comp</span> <span class="ow">is</span> <span class="kc">None</span>
 
                 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">_stdout&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">executable</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                     <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">program_std_out</span><span class="p">)</span>
@@ -672,7 +903,121 @@
 
                 <span class="k">raise</span>
 
+        <span class="k">if</span> <span class="n">opt_dryrun</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dryrun_differences</span><span class="p">:</span>
+                <span class="n">frames</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getouterframes</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">())</span>
+                <span class="n">test_frame</span> <span class="o">=</span> <span class="n">frames</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">fname_itest</span> <span class="o">=</span> <span class="n">test_frame</span><span class="o">.</span><span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/turbomoleio/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="n">funct_itest</span> <span class="o">=</span> <span class="n">test_frame</span><span class="o">.</span><span class="n">function</span>
+                <span class="n">line_itest</span> <span class="o">=</span> <span class="n">test_frame</span><span class="o">.</span><span class="n">lineno</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dryrun_fpath</span><span class="p">):</span>
+                    <span class="n">alldiffs</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dryrun_fpath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                        <span class="n">alldiffs</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                <span class="n">diff_identifier</span> <span class="o">=</span> <span class="p">(</span><span class="n">fname_itest</span><span class="p">,</span> <span class="n">funct_itest</span><span class="p">,</span> <span class="n">coord_filename</span><span class="p">,</span> <span class="n">control_reference_filename</span><span class="p">,</span> <span class="n">line_itest</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">diff_identifier</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">did</span><span class="p">)</span> <span class="k">for</span> <span class="n">did</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">alldiffs</span><span class="p">]:</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Difference already in list. This might be that you are running the dry-run &#39;</span>
+                                       <span class="s1">&#39;mode a second time. You should delete the dry-run file (&quot;dryrun_itest.json&quot;) &#39;</span>
+                                       <span class="s1">&#39;or specify a different one with the --dryrun-fpath=DRYRUN_FPATH option &#39;</span>
+                                       <span class="s1">&#39;in pytest.&#39;</span><span class="p">)</span>
+                <span class="n">alldiffs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">diff_identifier</span><span class="p">,</span> <span class="n">dryrun_differences</span><span class="p">))</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dryrun_fpath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">alldiffs</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="generate_control_for_test"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.generate_control_for_test">[docs]</a><span class="k">def</span> <span class="nf">generate_control_for_test</span><span class="p">(</span><span class="n">test_definition</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Regenerates control from the definition of the test.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        test_definition: Dictionary with the definition of the test</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">test_definition</span><span class="p">[</span><span class="s1">&#39;define&#39;</span><span class="p">][</span><span class="s1">&#39;template&#39;</span><span class="p">]:</span>
+        <span class="n">dp</span> <span class="o">=</span> <span class="n">get_define_template</span><span class="p">(</span><span class="n">test_definition</span><span class="p">[</span><span class="s1">&#39;define&#39;</span><span class="p">][</span><span class="s1">&#39;template&#39;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dp</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">test_definition</span><span class="p">[</span><span class="s1">&#39;define&#39;</span><span class="p">][</span><span class="s1">&#39;parameters&#39;</span><span class="p">]:</span>
+        <span class="n">dp</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">test_definition</span><span class="p">[</span><span class="s1">&#39;define&#39;</span><span class="p">][</span><span class="s1">&#39;parameters&#39;</span><span class="p">])</span>
+    <span class="n">datagroups</span> <span class="o">=</span> <span class="n">test_definition</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;datagroups&#39;</span><span class="p">)</span>
+    <span class="n">add_datagroups</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">change_datagroups</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">datagroups</span><span class="p">:</span>
+        <span class="n">add_datagroups</span> <span class="o">=</span> <span class="n">test_definition</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;datagroups&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">change_datagroups</span> <span class="o">=</span> <span class="n">test_definition</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;datagroups&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">DefineRunner</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
+    <span class="n">run_full_ok</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">run_full</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">run_full_ok</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">DefineError</span><span class="p">(</span><span class="s1">&#39;Generation of control file with the DefineRunner failed.&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">add_datagroups</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">dg</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">add_datagroups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">adg</span><span class="p">(</span><span class="n">dg</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">change_datagroups</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">dg</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">change_datagroups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">cdg</span><span class="p">(</span><span class="n">dg</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="generate_reference_out_parser_files"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.generate_reference_out_parser_files">[docs]</a><span class="k">def</span> <span class="nf">generate_reference_out_parser_files</span><span class="p">(</span><span class="n">log_fpath</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper function to generate the reference files for the test of the files and parser objects</span>
+<span class="sd">    for a given log file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        log_fpath (str): Path to the logfile.</span>
+<span class="sd">        outdir (str): Directory to output reference File and Parser_methods objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">outdir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">outdir</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+    <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">log_fpath</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">fname</span> <span class="o">==</span> <span class="s1">&#39;job.last&#39;</span><span class="p">:</span>
+        <span class="n">tm_exec</span> <span class="o">=</span> <span class="s1">&#39;jobex&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">tm_exec</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">tm_exec</span> <span class="o">==</span> <span class="s1">&#39;jobex&#39;</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">JobexOutput</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">log_fpath</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">tm_exec</span> <span class="o">==</span> <span class="s1">&#39;escf&#39;</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">exec_to_out_obj</span><span class="p">[</span><span class="s1">&#39;escf&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">log_fpath</span><span class="p">)</span>
+        <span class="n">out_escf_only</span> <span class="o">=</span> <span class="n">EscfOnlyOutput</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">log_fpath</span><span class="p">)</span>
+        <span class="n">dumpfn</span><span class="p">(</span><span class="n">out_escf_only</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outdir</span><span class="p">,</span> <span class="s1">&#39;ref_escf_output.json&#39;</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">exec_to_out_obj</span><span class="p">[</span><span class="n">tm_exec</span><span class="p">]</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">log_fpath</span><span class="p">)</span>
+    <span class="n">dumpfn</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outdir</span><span class="p">,</span> <span class="s1">&#39;ref_output.json&#39;</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">Parser</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">log_fpath</span><span class="p">)</span>
+    <span class="n">parsed_data</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">PARSER_METHODS</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+        <span class="n">parsed_data</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+
+    <span class="n">dumpfn</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outdir</span><span class="p">,</span> <span class="s1">&#39;ref_parser.json&#39;</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">log_fpath</span><span class="p">,</span> <span class="n">outdir</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="generate_reference_output"><a class="viewcode-back" href="../../../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.generate_reference_output">[docs]</a><span class="k">def</span> <span class="nf">generate_reference_output</span><span class="p">(</span><span class="n">test_definition</span><span class="p">,</span>
+                              <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Executes the list of Turbomole commands in the definition of the test</span>
+<span class="sd">    Args:</span>
+<span class="sd">        test_definition: Dictionary with the definition of the test</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cmds</span> <span class="o">=</span> <span class="n">test_definition</span><span class="p">[</span><span class="s1">&#39;commands&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="n">cmds</span><span class="p">:</span>
+        <span class="n">cmd_split</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">tm_exec</span> <span class="o">=</span> <span class="n">cmd_split</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cmd_split</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">options</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmd_split</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="n">options</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39; </span><span class="si">{</span><span class="n">options</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">tm_exec</span><span class="si">}{</span><span class="n">options</span><span class="si">}</span><span class="s1"> &gt; </span><span class="si">{</span><span class="n">tm_exec</span><span class="si">}</span><span class="s1">.log 2&gt; </span><span class="si">{</span><span class="n">tm_exec</span><span class="si">}</span><span class="s1">.err&#39;</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

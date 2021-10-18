@@ -29,61 +29,62 @@ will not be repeated for the Data objects separately
 import pytest
 import os
 import json
+from monty.serialization import loadfn
 
-from turbomoleio.output.files import exec_to_out_obj, JobexOutput, EscfOnlyOutput
+from turbomoleio.output.files import exec_to_out_obj, JobexOutput, EscfOnlyOutput, EscfOutput
 from turbomoleio.testfiles.utils import assert_almost_equal
+from turbomoleio.testfiles.utils import TM_VERSIONS
+from turbomoleio.testfiles.utils import TESTS_CONFIGS_TM_VERSIONS
 
 
-files_list = [("dscf", "h2o_std"), ("dscf", "h2o_uhf"), ("dscf", "nh3_cosmo_fermi"),
-              ("dscf", "nh3_dftd1"), ("dscf", "aceton_dftd3_tzvp"),("ridft", "h2o_dftd2_marij"),
-              ("ridft", "h2o_dftd3-bj_not_conv"), ("ridft", "nh3_rijk_xcfun_m06"),
-              ("ridft", "b28_many_irreps"), ("grad", "h2o_std"), ("rdgrad", "h2o_dftd3-bj"),
-              ("relax", "h2o_internal"), ("relax", "h2o_cartesian"), ("relax", "no_version_header"),
-              ("statpt", "h3cbr_internal"), ("statpt", "aceton_cartesian"),
-              ("escf", "Al6_columns"), ("escf", "h2o_ridft_cosmo"), ("escf", "h2o_ridft_rpat"),
-              ("egrad", "h2o_sym"), ("egrad", "h3cbr_nosym"), ("aoforce", "aceton_full"),
-              ("aoforce", "h2_numforce"), ("jobex", "h2o_dscf"), ("jobex", "no3_ridft"),
-              ("escf_only", "h2o_ridft_cosmo")]
+files_list = [
+    (tm_version, tm_exec, test_name)
+    for tm_version in TM_VERSIONS
+    for tm_exec, exec_tests in TESTS_CONFIGS_TM_VERSIONS[tm_version]['testlist'].items()
+    for test_name in exec_tests
+]
 
 
 @pytest.fixture(scope="function", params=files_list, ids=[os.path.join(*f) for f in files_list])
 def cls_dict_path(request, testdir):
-    ref_name = request.param[0]
-    if ref_name == "escf_only":
-        directory = "escf"
+    tm_version = request.param[0]
+    tm_exec = request.param[1]
+    test_name = request.param[2]
+    path = os.path.join(testdir, "outputs", tm_version, tm_exec, test_name)
+    output_clses = []
+    ref_dicts = []
+    fpaths = []
+    if tm_exec == "escf":
+        output_clses.append(EscfOnlyOutput)
+        ref_dicts.append(loadfn(os.path.join(path, "ref_escf_output.json"), cls=None))
+        fpaths.append(os.path.join(path, f"{tm_exec}.log"))
+        output_clses.append(EscfOutput)
+        ref_dicts.append(loadfn(os.path.join(path, "ref_output.json"), cls=None))
+        fpaths.append(os.path.join(path, f"{tm_exec}.log"))
+    elif tm_exec == "jobex":
+        output_clses.append(JobexOutput)
+        ref_dicts.append(loadfn(os.path.join(path, "ref_output.json"), cls=None))
+        fpaths.append(os.path.join(path, "job.last"))
     else:
-        directory = ref_name
-    name = request.param[1]
-    path = os.path.join(testdir, "outputs", directory, name)
+        output_clses.append(exec_to_out_obj[tm_exec])
+        ref_dicts.append(loadfn(os.path.join(path, "ref_output.json"), cls=None))
+        fpaths.append(os.path.join(path, f"{tm_exec}.log"))
 
-    if ref_name == "escf_only":
-        json_path = path + "_outfile_escf_only.json"
-    else:
-        json_path = path + "_outfile.json"
-
-    with open(json_path) as f:
-        d = json.load(f)
-
-    exec_dict = dict(exec_to_out_obj)
-    exec_dict["jobex"] = JobexOutput
-    exec_dict["escf_only"] = EscfOnlyOutput
-
-    file_path = path + ".log" if ref_name != "jobex" else path + "_job.last"
-
-    return exec_dict[ref_name], d, file_path
+    return output_clses, ref_dicts, fpaths
 
 
-class TestParser:
+class TestFiles:
 
     def test_properties(self, cls_dict_path):
-        output_cls, desired, path = cls_dict_path
+        output_clses, desired_list, paths_list = cls_dict_path
 
-        parsed_data = output_cls.from_file(path).as_dict()
+        for output_cls, desired, path in zip(output_clses, desired_list, paths_list):
+            parsed_data = output_cls.from_file(path).as_dict()
 
-        # ignore date values since in the dictionary they are datetime, while
-        # just strings in the json file.
-        assert_almost_equal(parsed_data, desired, rtol=1e-4,
-                            ignored_values=["start_time", "end_time", "@version"])
+            # ignore date values since in the dictionary they are datetime, while
+            # just strings in the json file.
+            assert_almost_equal(parsed_data, desired, rtol=1e-4,
+                                ignored_values=["start_time", "end_time", "@version"])
 
 
 def generate_files(files=None, overwrite=False):

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>turbomoleio.core.control &mdash; turbomoleio 1.0.0 documentation</title>
+  <title>turbomoleio.core.control &mdash; turbomoleio 1.1.0 documentation</title>
   
 
   
@@ -32,6 +32,7 @@
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -61,7 +62,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
             
           
@@ -86,7 +87,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">User guide</span></p>
+              <p><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../datagroups.html">The data group files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../coord.html">The coord file</a></li>
@@ -94,15 +95,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../output_parsing.html">Outputs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../appendix.html">Appendix</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer guide</span></p>
+<p><span class="caption-text">Developer guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/introduction.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/parsing_logs.html">Output logs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/definerunner.html">Define runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/testing.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/versioning.html">Versioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/versioning.html#backward-compatibility">Backward-compatibility</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Additional information</span></p>
+<p><span class="caption-text">Additional information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
@@ -297,7 +299,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">n_steps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The number of steps present</span>
+<span class="sd">        The number of steps present.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scf</span><span class="p">)</span>
 
@@ -410,28 +412,28 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">norms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Total norm of the gradients for each step</span>
+<span class="sd">        Total norm of the gradients for each step.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gradients</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">max_gradients</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Norms of the largest gradients for each step</span>
+<span class="sd">        Norms of the largest gradients for each step.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gradients</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">n_steps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The number of steps present</span>
+<span class="sd">        The number of steps present.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gradients</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">last_grad_norm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The value of the last gradient norm</span>
+<span class="sd">        The value of the last gradient norm.</span>
 <span class="sd">        None if no steps presents.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -651,7 +653,7 @@
 <span class="sd">        Generates an instance of Shell from a JSON serialized representation.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            d (dict): the dictionary with the data to inizialize Shells</span>
+<span class="sd">            d (dict): the dictionary with the data to initialize Shells</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">             A Shells instance</span>
@@ -703,7 +705,7 @@
 <div class="viewcode-block" id="Control.add_cosmo"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.add_cosmo">[docs]</a>    <span class="k">def</span> <span class="nf">add_cosmo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nppa</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nspa</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">disex</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rsolv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">routf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cavity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                   <span class="n">use_old_amat</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Adds the $cosmo datagroup to the control, using the keyworkds to set the cosmo options.</span>
+<span class="sd">        Adds the $cosmo datagroup to the control, using the keywords to set the cosmo options.</span>
 <span class="sd">        If None all the options will not be written to the control file.</span>
 
 <span class="sd">        Args:</span>
@@ -749,7 +751,7 @@
     <span class="k">def</span> <span class="nf">from_metric</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">metric</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates a new Control containing the value of the metric in $redund_inp</span>
-<span class="sd">        and an empty $coord</span>
+<span class="sd">        and an empty $coord.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            metric (int): the value of the metric</span>
@@ -964,7 +966,7 @@
 <span class="sd">        Creates the destination folder if not already existing.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            dest_dir (str): path to the destionation folder.</span>
+<span class="sd">            dest_dir (str): path to the destination folder.</span>
 <span class="sd">            force_overwrite (bool): if True files already present in the</span>
 <span class="sd">                destination folder will be overwritten.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1125,7 +1127,7 @@
 
 <span class="sd">    If the datagroup is not present will be created with the specified options.</span>
 
-<span class="sd">    If the entire data group should be modifed it would be safer to use</span>
+<span class="sd">    If the entire data group should be modified it would be safer to use</span>
 <span class="sd">    change_data_group.</span>
 
 <span class="sd">    Args:</span>

@@ -1,0 +1,26 @@
+# Define parameters are taken
+#  - from a template
+#  - from the explicit parameters
+#  - from a template and explicit parameters overriding those in the template
+define:
+  template: "ridft_escf"
+  parameters:
+    desy: True
+    ex_method: rpa
+    ex_multi: triplet
+    ex_irrep_states:
+      a1: 10
+      a2: 9
+      b1: 10
+      b2: 10
+    ex_all_states: null
+
+# Data groups to add to or change in the control file after running define
+#datagroups:
+#  add:
+#    fermi: "tmstrt=500 tmend=50 tmfac=0.9 hlcrt=0.2"
+
+# List of TM commands to be run
+commands:
+  - ridft
+  - escf

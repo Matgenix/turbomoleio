@@ -28,6 +28,14 @@ turbomoleio.core.tests.test\_molecule module
    :undoc-members:
    :show-inheritance:
 
+turbomoleio.core.tests.test\_utils module
+-----------------------------------------
+
+.. automodule:: turbomoleio.core.tests.test_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

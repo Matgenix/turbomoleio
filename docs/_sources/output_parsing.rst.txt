@@ -215,6 +215,10 @@ Common data objects
 
     :class:`turbomoleio.output.data.AoforceVibrationalData` Analysis of vibrational states in aoforce.
 
+    :class:`turbomoleio.output.data.MP2Data` Information about an MP2 calculation.
+
+    :class:`turbomoleio.output.data.MP2Results` Results from an MP2 calculation.
+
 
 File data objects
 ^^^^^^^^^^^^^^^^^
@@ -236,6 +240,10 @@ File data objects
     :class:`turbomoleio.output.files.StatptOutput` Data from a statpt calculation.
 
     :class:`turbomoleio.output.files.AoforceOutput` Data from an aoforce calculation.
+
+    :class:`turbomoleio.output.files.Ricc2Output` Data from an Ri CC2 calculation.
+
+    :class:`turbomoleio.output.files.MP2Output` Data from an MP2 calculation (mpgrad, ricc2 or pnoccsd).
 
     :class:`turbomoleio.output.files.JobexOutput` Data from the last step of a jobex calculation.
 

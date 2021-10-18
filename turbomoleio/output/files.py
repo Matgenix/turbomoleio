@@ -25,6 +25,7 @@ from turbomoleio.output.data import DFTData, ScfData, ScfEnergiesData, Electrost
 from turbomoleio.output.data import SmearingData, EscfData, AoforceNumericalIntegrationData, AoforceRotationalData
 from turbomoleio.output.data import AoforceVibrationalData, RelaxConvergenceData, RelaxData, RelaxGradientsData
 from turbomoleio.output.data import StatptData, SymmetryData
+from turbomoleio.output.data import MP2Data, MP2Results
 
 
 class ScfOutput(BaseData):
@@ -425,10 +426,98 @@ class AoforceOutput(BaseData):
         return cls(numerical_integration=ni, rotational=rot, vibrational=vib, run=run, tm=tm)
 
 
+class Ricc2Output(BaseData):
+    """
+    Object containing the data of the output of a ricc2 calculation.
+    """
+    def __init__(self, mp2, run, tm):
+        """
+        Args:
+            mp2 (MP2Results): MP2 results.
+            run (RunData): information about calculation running (e.g. timings, ...)
+            tm (TurbomoleData): information about the turbomole used for the calculation.
+        """
+        self.mp2 = mp2
+        self.run = run
+        self.tm = tm
+
+    @classmethod
+    def from_parser(cls, parser):
+        """
+        Generates an instance of Ricc2Output from a parser based on the stdout
+        of a Turbomole executable.
+
+        Args:
+            parser (Parser): the parser to be used to extract the data.
+
+        Returns:
+            Ricc2Output.
+        """
+        mp2 = MP2Results.from_parser(parser)
+        run = RunData.from_parser(parser)
+        tm = TurbomoleData.from_parser(parser)
+
+        return cls(mp2=mp2, run=run, tm=tm)
+
+
+class MP2Output(BaseData):
+    """
+    Object containing the data of the output of an MP2 calculation, i.e. mpgrad, ricc2 (with proper MP2 options),
+    or pnoccsd (with proper MP2 options).
+
+    Note: Parsing of PNO-based MP2 calculations (i.e. performed with the pnoccsd program) is not (yet) supported.
+    """
+    def __init__(self, info, results, geometry, basis, symmetry, cosmo, run, tm):
+        """
+        Args:
+            info (MP2Data): Information about MP2 calculation.
+            results (MP2Results): Results of an MP2 calculation.
+            geometry (GeometryData): the geometry of the system.
+            basis (BasisData): the basis used for the calculation.
+            symmetry (SymmetryData): information about the symmetry of the molecule.
+            cosmo (CosmoData): cosmo approximations and results.
+            run (RunData): information about calculation running (e.g. timings, ...)
+            tm (TurbomoleData): information about the turbomole used for the calculation.
+        """
+        self.info = info
+        self.results = results
+        self.geometry = geometry
+        self.basis = basis
+        self.symmetry = symmetry
+        self.cosmo = cosmo
+        self.run = run
+        self.tm = tm
+
+    @classmethod
+    def from_parser(cls, parser):
+        """
+        Generates an instance of MP2Output from a parser based on the stdout
+        of a Turbomole executable.
+
+        Args:
+            parser (Parser): the parser to be used to extract the data.
+
+        Returns:
+            MP2Output.
+        """
+        info = MP2Data.from_parser(parser)
+        results = MP2Results.from_parser(parser)
+        run = RunData.from_parser(parser)
+        tm = TurbomoleData.from_parser(parser)
+        geometry = GeometryData.from_parser(parser)
+        basis = BasisData.from_parser(parser)
+        symmetry = SymmetryData.from_parser(parser)
+        cosmo = CosmoData.from_parser(parser)
+        # TODO: fix parsing of Cosmo data in non-scf executables or add a separate parsing
+
+        return cls(info=info, results=results, geometry=geometry,
+                   basis=basis, symmetry=symmetry, cosmo=cosmo, run=run, tm=tm)
+
+
 class JobexOutput(BaseData):
     """
     Object containing the data of the output of the last step of a jobex calculation.
-    Namely the outputs of the last energy, gradient and relax calulations stored in
+    Namely the outputs of the last energy, gradient and relax calculations stored in
     the "job.last" file.
     """
 
@@ -438,7 +527,7 @@ class JobexOutput(BaseData):
             energy (ScfOutput): the output data of the energy calculation.
             gradient: the output data of the energy calculation. The type depends on
                 the type of calculation. Can be GradOutput, EgradOutput or coming from
-                other executables.
+                other executables (e.g. Ricc2Output or MP2Output).
             relax (RelaxOutput or StatptOutput): the output data of the relax calculation.
         """
         self.energy = energy
@@ -487,5 +576,8 @@ exec_to_out_obj = {
     "relax": RelaxOutput,
     "statpt": StatptOutput,
     "aoforce": AoforceOutput,
-    "force": AoforceOutput, # because when executed aoforce has the name "force" in the header.
+    "force": AoforceOutput,  # because when executed aoforce has the name "force" in the header.
+    "mpgrad": MP2Output,
+    "ricc2": Ricc2Output,
+    "rimp2": MP2Output,
 }

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>turbomoleio.core.tests.test_molecule &mdash; turbomoleio 1.0.0 documentation</title>
+  <title>turbomoleio.core.tests.test_molecule &mdash; turbomoleio 1.1.0 documentation</title>
   
 
   
@@ -32,6 +32,7 @@
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
 
@@ -61,7 +62,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
             
           
@@ -86,7 +87,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">User guide</span></p>
+              <p><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../datagroups.html">The data group files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../coord.html">The coord file</a></li>
@@ -94,15 +95,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../output_parsing.html">Outputs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../appendix.html">Appendix</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer guide</span></p>
+<p><span class="caption-text">Developer guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer/introduction.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer/parsing_logs.html">Output logs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer/definerunner.html">Define runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer/testing.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer/versioning.html">Versioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer/versioning.html#backward-compatibility">Backward-compatibility</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Additional information</span></p>
+<p><span class="caption-text">Additional information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
@@ -206,6 +208,11 @@
 <span class="kn">from</span> <span class="nn">turbomoleio.core.molecule</span> <span class="kn">import</span> <span class="n">CollinearBendingAngle</span><span class="p">,</span> <span class="n">PerpendicularBendingAngle</span><span class="p">,</span> <span class="n">InternalDefinition</span>
 <span class="kn">from</span> <span class="nn">turbomoleio.core.molecule</span> <span class="kn">import</span> <span class="n">MoleculeSystem</span>
 <span class="kn">from</span> <span class="nn">turbomoleio.core.datagroups</span> <span class="kn">import</span> <span class="n">DataGroups</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pymatgen.core.periodic_table</span> <span class="kn">import</span> <span class="n">DummySpecies</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">DummySpecies</span> <span class="o">=</span> <span class="kc">None</span>
 
 
 <span class="n">replace_comments_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^\s*#.*?$&quot;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
@@ -635,7 +642,11 @@
     <span class="k">def</span> <span class="nf">test_dummy_atoms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule_filepath</span><span class="p">):</span>
         <span class="n">ms</span> <span class="o">=</span> <span class="n">MoleculeSystem</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">molecule_filepath</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;coord&quot;</span><span class="p">)</span>
         <span class="n">mol</span> <span class="o">=</span> <span class="n">ms</span><span class="o">.</span><span class="n">molecule</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mol</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">specie</span><span class="p">,</span> <span class="n">DummySpecie</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">mol</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">specie</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">mol</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">specie</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
+        <span class="c1"># Pymatgen&#39;s Specie and DummySpecie have been changed to Species and</span>
+        <span class="c1"># DummySpecies in v2020.10.9. We keep testing both for backward compatibility.</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mol</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">specie</span><span class="p">,</span> <span class="p">(</span><span class="n">DummySpecies</span><span class="p">,</span> <span class="n">DummySpecie</span><span class="p">))</span>
         <span class="k">assert</span> <span class="n">mol</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">specie</span><span class="o">.</span><span class="n">symbol</span> <span class="o">==</span> <span class="s2">&quot;Q&quot;</span>
 
 

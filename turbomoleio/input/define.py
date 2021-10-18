@@ -128,13 +128,13 @@ class DefineRunner:
     def _expect(self, pattern, timeout=-1, action=None):
         """
         Runs self.define.expect with the options provided.
-        Handles the timeout and eof expections, logs and raises them as specific define exceptions.
+        Handles the timeout and eof exceptions, logs and raises them as specific define exceptions.
 
         Args:
             pattern: the pattern given to pexpect.expect(). See pexpect documentations for more details.
             timeout (int): number of second that should be waited before raising the TIMEOUT exception.
-                The default (-1) keeps the timeout value set in spwan.
-            action (str): a string describing the action that is being perfomed. Will be used for logging and
+                The default (-1) keeps the timeout value set in spawn.
+            action (str): a string describing the action that is being performed. Will be used for logging and
                 tracing of errors.
 
         Returns:
@@ -164,7 +164,7 @@ class DefineRunner:
 
         Args:
             line (str): a string with the line that should be sent to define.
-            action (str): a string describing the action that is being perfomed. Will be used for logging and
+            action (str): a string describing the action that is being performed. Will be used for logging and
                 tracing of errors.
 
         Returns:
@@ -223,8 +223,8 @@ class DefineRunner:
 
     def run_full(self):
         """
-        Runs define going thorugh all the menus using the parameters. If The jobs reaches the end
-        without exceptions being raised it will check if the job eneded normally or abnormally.
+        Runs define going through all the menus using the parameters. If The jobs reaches the end
+        without exceptions being raised it will check if the job ended normally or abnormally.
 
         Returns:
             bool: True if define ended normally otherwise abnormally.
@@ -343,7 +343,7 @@ class DefineRunner:
         Runs define in a folder where a control file is already present and only regenerates
         the molecular orbital files. If the usemo option is defined the related molecular orbital
         will be taken from there and updated, otherwise they will be generated from scratch with
-        the extended huckel guess. (N.B. the control should not be the one currently being edited
+        the extended hueckel guess. (N.B. the control should not be the one currently being edited
         by define)
 
         Also allows to change some information in the geometry. If at least one of the following
@@ -497,7 +497,7 @@ class DefineRunner:
 
     def _general_menu(self):
         """
-        Runs all the options for the general menu
+        Runs all the options for the general menu.
 
         Returns:
             None
@@ -653,7 +653,7 @@ class DefineRunner:
 
         Args:
             from_geometry_menu (bool): if True the code start at the moment of closing the
-                geometry menu. Otherwise the the geometry meny has been entirely skipped
+                geometry menu. Otherwise the the geometry menu has been entirely skipped
                 before.
 
         Returns:
@@ -686,7 +686,7 @@ class DefineRunner:
         Sets the atomic basis set.
 
         Args:
-            atom_type (str): defines the type type of atom(s) adderessed. Can be "all", a list "1,2,4-6"
+            atom_type (str): defines the type type of atom(s) addressed. Can be "all", a list "1,2,4-6"
                 or the atomic specie "\"c\"" (quotes are required).
             basis (stR): the type of basis.
 
@@ -709,7 +709,7 @@ class DefineRunner:
 
     def _define_basis_sets(self):
         """
-        Defines the basis set using the "basis" and "basis_atom" keyworkds in the parameters.
+        Defines the basis set using the "basis" and "basis_atom" keywords in the parameters.
 
         Returns:
             None
@@ -742,7 +742,7 @@ class DefineRunner:
 
     def _go_to_general_menu(self):
         """
-        Returns to the general menu
+        Returns to the general menu.
 
         Returns:
             None
@@ -889,10 +889,9 @@ class DefineRunner:
         elif case == 1:
             self._go_to_general_menu()
 
-
     def _excited_state_menu(self):
         """
-        Handles the whole excited state menu
+        Handles the whole excited state menu.
 
         Returns:
             None
@@ -1033,7 +1032,6 @@ class DefineRunner:
             case = self._expect(["GENERAL OPTIONS FOR RESPONSE CALCULATIONS*"],
                                 action="back to response calulation menu")
 
-
         elif case == 2:
             # already at the end of the other cases
             pass
@@ -1044,7 +1042,7 @@ class DefineRunner:
 
     def _set_ri_state(self):
         """
-        Sets the parameters for ri calculation
+        Sets the parameters for ri calculation.
 
         Returns:
             None
@@ -1078,7 +1076,7 @@ class DefineRunner:
 
     def _set_dft_options(self, use_dft=True):
         """
-        Sets the dft options
+        Sets the dft options.
 
         Returns:
             None
@@ -1172,7 +1170,7 @@ class DefineRunner:
             self._sendline("*", action="quit cabs menu")
             case = self._expect(["INPUT MENU FOR CALCULATIONS WITH ricc2*"], action="back to ricc2 options")
 
-            #Note: it seems that the line ccsdapprox  ccsd(f12*) is already there with just use_f12
+            # Note: it seems that the line ccsdapprox ccsd(f12*) is already there with just use_f12
             # this option is kept for safety.
             if self.parameters.get("use_f12*", False) and method == "ccsd(t)":
                 mdgo("rir12", {"ccsdapprox": "ccsdapprox  ccsd(f12*)"})
@@ -1209,7 +1207,7 @@ class DefineRunner:
 
     def _set_scf_options(self):
         """
-        Sets all the options for scf
+        Sets all the options for scf.
 
         Returns:
             None
@@ -1236,7 +1234,7 @@ class DefineRunner:
 
     def _quit_general_menu(self):
         """
-        Quits the general menu, exiting from define
+        Quits the general menu, exiting from define.
 
         Returns:
             None
@@ -1246,7 +1244,7 @@ class DefineRunner:
 
     def _copy_mo_files(self):
         """
-        Copies the mos, alpha and beta files from the "copymo" path given in the parameters "copymo"
+        Copies the mos, alpha and beta files from the "copymo" path given in the parameters "copymo".
 
         Returns:
             None
@@ -1279,7 +1277,8 @@ class DefineRunner:
                 shutil.copy(source_alpha, self.workdir)
                 shutil.copy(source_beta, self.workdir)
 
-            # manipulate mos file in copymo dir and save it to alpha and beta if mos file in copymo dir an alpha/beta file in calculation dir
+            # manipulate mos file in copymo dir and save it to alpha and beta
+            # if mos file in copymo dir an alpha/beta file in calculation dir
             if os.path.isfile(source_mos) and os.path.isfile(dest_alpha) and os.path.isfile(dest_beta):
                 with open(source_mos, "r") as f:
                     new_alpha = f.readlines()
@@ -1299,7 +1298,7 @@ class DefineRunner:
 
     def _add_cosmo(self):
         """
-        Adds $cosmo datagroup based on the parameters available
+        Adds $cosmo datagroup based on the parameters available.
 
         Returns:
             None
@@ -1315,7 +1314,7 @@ class DefineRunner:
 
     def _postprocess(self):
         """
-        Adds keyworks to the control file that should be set outside define:
+        Adds keywords to the control file that should be set outside define:
             * cosmo
             * disp
 
@@ -1329,7 +1328,6 @@ class DefineRunner:
         c = Control.from_file("control")
         c.set_disp(self.parameters.get("disp", None))
         c.to_file("control")
-
 
     def dump_command_file(self, filepath="define_commands"):
         """

@@ -34,7 +34,7 @@ def file_doesnt_end_with(test, endings):
 
 def find_package_data():
     """Find package_data."""
-    package_data = {}
+    package_data = {"turbomoleio": ["input/templates/*.yaml"]}
     return package_data
 
 

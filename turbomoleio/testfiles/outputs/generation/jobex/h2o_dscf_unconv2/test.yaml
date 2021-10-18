@@ -1,0 +1,5 @@
+# Define parameters are taken
+#  - from a template
+#  - from the explicit parameters
+#  - from a template and explicit parameters overriding those in the template
+disable: True  # This is a fake and fixed output test at this stage for jobex convergence

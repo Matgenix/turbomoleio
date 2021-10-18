@@ -1,0 +1,200 @@
+{
+  "all_done": true,
+  "header": {
+    "executable": "statpt",
+    "host": "fedora",
+    "tm_version": "7.3.1",
+    "tm_build": null,
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2021-09-20 09:39:46.444000"
+    }
+  },
+  "centers": {
+    "center_of_mass": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "center_of_charge": [
+      -0.00071328,
+      0.15355432,
+      0.0
+    ]
+  },
+  "coordinates": {
+    "coords": [
+      [
+        0.04340035,
+        -2.43303953,
+        0.0
+      ],
+      [
+        2.40289845,
+        1.33092842,
+        0.0
+      ],
+      [
+        -2.44869437,
+        1.25914649,
+        0.0
+      ],
+      [
+        -0.00810063,
+        -0.18289217,
+        0.0
+      ],
+      [
+        2.09020694,
+        3.35088178,
+        0.0
+      ],
+      [
+        -4.02779836,
+        -0.02916167,
+        0.0
+      ],
+      [
+        3.51545227,
+        0.83515949,
+        1.64389798
+      ],
+      [
+        3.51545227,
+        0.83515949,
+        -1.64389798
+      ],
+      [
+        -2.56998075,
+        2.4714595,
+        1.64993688
+      ],
+      [
+        -2.56998075,
+        2.4714595,
+        -1.64993688
+      ]
+    ],
+    "species": [
+      "o",
+      "c",
+      "c",
+      "c",
+      "h",
+      "h",
+      "h",
+      "h",
+      "h",
+      "h"
+    ],
+    "charges": [
+      8.0,
+      6.0,
+      6.0,
+      6.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "isotopes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "basis": null,
+  "symmetry": null,
+  "cosmo_header": null,
+  "density_functional_data": null,
+  "rij_info": null,
+  "dftd": null,
+  "pre_scf_run": null,
+  "scf_iterations": null,
+  "scf_energies": null,
+  "cosmo_results": null,
+  "electrostatic_moments": null,
+  "timings": {
+    "cpu_time": 0.01,
+    "wall_time": 0.01,
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2021-09-20 09:39:46.449000"
+    }
+  },
+  "s2": null,
+  "is_uhf": false,
+  "fermi": null,
+  "integral": null,
+  "pre_escf_run": null,
+  "escf_iterations": null,
+  "escf_gs_total_en": null,
+  "escf_excitations": null,
+  "rdgrad_memory": null,
+  "gradient": null,
+  "egrad_excited_state": null,
+  "statpt_info": {
+    "max_trust_radius": 0.3,
+    "min_trust_radius": 0.001,
+    "init_trust_radius": 0.15,
+    "min_grad_norm_for_gdiis": 0.01,
+    "prev_steps_for_gdiis": 5,
+    "hessian_update_method": "BFGS",
+    "thr_energy_change": 1e-06,
+    "thr_max_displ": 0.001,
+    "thr_max_grad": 0.001,
+    "thr_rms_displ": 0.0005,
+    "thr_rms_grad": 0.0005,
+    "use_defaults": true,
+    "final_step_radius": 0.15
+  },
+  "relax_info": null,
+  "relax_gradient_values": {
+    "norm_cartesian": 0.0816113,
+    "norm_internal": null,
+    "max_internal": null
+  },
+  "relax_conv_info": {
+    "energy_change": {
+      "value": 192.9994511,
+      "thr": 1e-06,
+      "conv": false
+    },
+    "rms_displ": {
+      "value": 0.0273861,
+      "thr": 0.0005,
+      "conv": false
+    },
+    "rms_grad": {
+      "value": 0.0149001,
+      "thr": 0.0005,
+      "conv": false
+    },
+    "max_displ": {
+      "value": 0.101281,
+      "thr": 0.001,
+      "conv": false
+    },
+    "max_grad": {
+      "value": 0.0551049,
+      "thr": 0.001,
+      "conv": false
+    }
+  },
+  "aoforce_numerical_integration": null,
+  "aoforce_analysis": null,
+  "mp2_results": {
+    "energy": null
+  }
+}

@@ -4,10 +4,11 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Versioning &mdash; turbomoleio 1.0.0 documentation</title>
+  <title>Versioning &mdash; turbomoleio 1.1.0 documentation</title>
   
 
   
@@ -32,6 +33,7 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -63,7 +65,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
             
           
@@ -88,7 +90,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">User guide</span></p>
+              <p><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../datagroups.html">The data group files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../coord.html">The coord file</a></li>
@@ -96,15 +98,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../output_parsing.html">Outputs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix.html">Appendix</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer guide</span></p>
+<p><span class="caption-text">Developer guide</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parsing_logs.html">Output logs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="definerunner.html">Define runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Versioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#backward-compatibility">Backward-compatibility</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Additional information</span></p>
+<p><span class="caption-text">Additional information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -176,23 +179,36 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="versioning">
-<h1>Versioning<a class="headerlink" href="#versioning" title="Permalink to this headline">¶</a></h1>
-<p>turbomoleio adopts a <a class="reference external" href="https://semver.org/">semantic versioning</a> to identify the different
-versions of the packages when released. In particular, given a version number
+  <section id="versioning">
+<span id="developer-versioning"></span><h1>Versioning<a class="headerlink" href="#versioning" title="Permalink to this headline">¶</a></h1>
+<p>turbomoleio adopts a slightly modified <a class="reference external" href="https://semver.org/">semantic versioning</a> to identify
+the different versions of the packages when released. In particular, given a version number
 MAJOR.MINOR.PATCH, increment the:</p>
 <ol class="arabic simple">
 <li><p>MAJOR version when you make incompatible API changes,</p></li>
-<li><p>MINOR version when you add functionality in a backwards-compatible manner, and</p></li>
-<li><p>PATCH version when you make backwards-compatible bug fixes.</p></li>
 </ol>
+<p>#. MINOR version corresponds to a specific version of Turbomole (e.g. 1.0.x is for Turbomole
+version 7.3, 1.1.y is for Turbomole version 7.4, …), and
+#. PATCH version when you add new functionalities in a backward-compatible manner or make
+backwards-compatible bug fixes.</p>
 <p>To ease the access to the version number, this is stored as a string in a single
 point in the python code, i.e. in the <code class="xref py py-mod docutils literal notranslate"><span class="pre">turbomoleio.__version__</span></code> module.
 This file is accessed by the <code class="docutils literal notranslate"><span class="pre">turbomoleio/__init__.py</span></code> module, by the <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>
 file and by the <code class="docutils literal notranslate"><span class="pre">doc/conf.py</span></code> file used to configure the generation of the documentation.
 When creating a new version of turbomoleio you should thus only update the version in
 <code class="docutils literal notranslate"><span class="pre">turbomoleio/__version__.py</span></code>.</p>
-</div>
+</section>
+<section id="backward-compatibility">
+<h1>Backward-compatibility<a class="headerlink" href="#backward-compatibility" title="Permalink to this headline">¶</a></h1>
+<p>The latest version of turbomoleio supports the latest version of Turbomole. The latest version
+thus supports the generation of input files using the <cite>define</cite> executable, the reading, parsing and
+modification of datagroup-like files, as well as the parsing of the output files (log files)
+of the latest version of Turbomole. In addition, the latest version of turbomoleio (corresponding
+to the latest version of Turbomole) also supports the parsing of the output files generated with
+older versions of Turbomole (starting at version 7.3).</p>
+<p>For example, turbomoleio 1.2.0 supports Turbomole version 7.5 for all the features and supports
+parsing of outputs for Turbomole version 7.3 and 7.4.</p>
+</section>
 
 
            </div>
