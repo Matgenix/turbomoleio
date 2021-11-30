@@ -29,6 +29,7 @@ from collections import namedtuple
 from fnmatch import fnmatch
 from monty.json import MSONable, MontyDecoder
 from pymatgen.core.structure import Molecule
+from pymatgen.core.structure import Structure
 from pymatgen.core.units import ang_to_bohr, bohr_to_ang
 from turbomoleio.core.datagroups import DataGroups
 
@@ -109,17 +110,19 @@ class MoleculeSystem(MSONable):
     should be consistent. Methods are implemented to check such consistency.
     """
 
-    def __init__(self, molecule, int_def=None, frozen_indices=None, user_defined_bonds=None):
+    def __init__(self, molecule, int_def=None, frozen_indices=None, user_defined_bonds=None, periodicity=None):
         """
 
         Args:
-            molecule (Molecule): a pymatgen Molecule object with the geometry of
-                the system. Only supports ordered molecules.
+            molecule (Molecule): a pymatgen Molecule or Structure object with the geometry of
+                the system. Only supports ordered molecules/structures.
             int_def (list): a list of InternalDefinition.
             frozen_indices (set): a set of indices (0-based) indicating atoms
                 that should have fixed cartesian coordinates.
             user_defined_bonds (set): set of tuples with (index1, symbol, index2),
                 where the atoms index are 0-based and the symbol can be "-" or "|".
+            periodicity (str): periodicity of the system when a Structure object is given.
+                Can be "0D", "1D", "2D" or "3D".
         """
         if not molecule.is_ordered:
             raise ValueError("MoleculeSystem does not handle disordered structures.")
@@ -128,6 +131,11 @@ class MoleculeSystem(MSONable):
         self.int_def = int_def if int_def else []
         self.frozen_indices = set(frozen_indices) if frozen_indices else set()
         self.user_defined_bonds = set(user_defined_bonds) if user_defined_bonds else set()
+        self.periodicity = None
+        if isinstance(molecule, Structure):
+            self.periodicity = periodicity or '3D'
+        elif periodicity:
+            raise ValueError("Molecule with periodicity is not allowed.")
 
     @classmethod
     def from_string(cls, string, fmt="coord"):
@@ -264,6 +272,9 @@ class MoleculeSystem(MSONable):
             for udb in sorted(self.user_defined_bonds):
                 strings_list.append("{}{}{}".format(udb[0]+1, udb[1], udb[2]+1))
             lines.append(", ".join(strings_list))
+
+        if self.periodicity is not None:
+            lines.append("$periodic {}".format(self.periodicity[0]))
 
         lines.append("$end")
 

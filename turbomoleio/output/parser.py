@@ -821,6 +821,65 @@ class Parser:
         return d
 
     @lazy_property
+    def riper_scf_energies(self):
+        """
+        Final energies for scf calculation with riper executable.
+
+        Returns:
+            dict with the energy and its contributions: "total_energy", "kinetic_energy",
+            "coulomb_energy", "xc_energy", "ts_energy", "free_energy"
+            and "sigma0_energy".
+        """
+        # Parsing the section:
+        #               +--------------------------------------------------+
+        #               |                FINAL ENERGIES                    |
+        #               +--------------------------------------------------+
+        #               | KINETIC ENERGY       =          75.3219906303    |
+        #               | COULOMB ENERGY       =        -140.6650084669    |
+        #               | EXCH. & CORR. ENERGY =         -10.8758949666    |
+        #               |==================================================|
+        #               | TOTAL ENERGY         =         -76.2189128032    |
+        #               | T*S                  =          -0.0000000000    |
+        #               | FREE  ENERGY         =         -76.2189128032    |
+        #               | ENERGY (sigma->0)    =         -76.2189128032    |
+        #               +--------------------------------------------------+
+
+        # Note that "FINAL ENERGIES" is needed here because the rest of the table is also
+        # provided for each scf iteration.
+        r = r"FINAL ENERGIES\s+\|\s+\+-{50,}\+\s+\|\s+KINETIC ENERGY(.*?)\+-{50,}\+"
+
+        match = re.search(r, self.string, re.DOTALL)
+
+        if match is None:
+            return None
+
+        d = dict(total_energy=None,
+                 kinetic_energy=None,
+                 coulomb_energy=None,
+                 xc_energy=None,
+                 ts_energy=None,
+                 free_energy=None,
+                 sigma0_energy=None)
+
+        for l in match.group().splitlines():
+            if 'KINETIC ENERGY' in l:
+                d['kinetic_energy'] = convert_float(l.split('=')[1].split()[-2])
+            elif 'COULOMB ENERGY' in l:
+                d['coulomb_energy'] = convert_float(l.split('=')[1].split()[-2])
+            elif 'EXCH. & CORR. ENERGY' in l:
+                d['xc_energy'] = convert_float(l.split('=')[1].split()[-2])
+            elif 'TOTAL ENERGY' in l:
+                d['total_energy'] = convert_float(l.split('=')[1].split()[-2])
+            elif 'T*S' in l:
+                d['ts_energy'] = convert_float(l.split('=')[1].split()[-2])
+            elif 'FREE  ENERGY' in l:
+                d['free_energy'] = convert_float(l.split('=')[1].split()[-2])
+            elif 'ENERGY (sigma->0)' in l:
+                d['sigma0_energy'] = convert_float(l.split('=')[1].split()[-2])
+
+        return d
+
+    @lazy_property
     def cosmo_results(self):
         """
         Results of cosmo.
@@ -2151,7 +2210,7 @@ class Parser:
 
             executable = header["executable"]
 
-            if executable in ("dscf", "ridft"):
+            if executable in ("dscf", "ridft", "riper"):
                 p_en = p
                 exec_en = executable
             elif executable in ("grad", "rdgrad", "egrad", "mpgrad", "ricc2"):

@@ -31,6 +31,10 @@ from turbomoleio.output.data import MP2Data, MP2Results
 class ScfOutput(BaseData):
     """
     Object containing the data of the output of an scf calculation, i.e. dscf or ridft.
+
+    Note: for riper calculations, not all data is currently parsed. The final
+        energies are extracted but e.g. information about scf loops is currently not
+        parsed.
     """
 
     def __init__(self, dft, scf, energies, electrostatic, geometry, basis, run, tm,
@@ -569,6 +573,7 @@ class JobexOutput(BaseData):
 exec_to_out_obj = {
     "dscf": ScfOutput,
     "ridft": ScfOutput,
+    "riper": ScfOutput,
     "escf": EscfOutput,
     "grad": GradOutput,
     "rdgrad": GradOutput,

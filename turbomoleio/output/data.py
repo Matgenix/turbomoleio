@@ -642,7 +642,8 @@ class ScfEnergiesData(BaseData):
     """
 
     def __init__(self, total_energy=None, kinetic_energy=None, potential_energy=None,
-                 virial_theorem=None, wavefunction_norm=None):
+                 virial_theorem=None, wavefunction_norm=None, coulomb_energy=None,
+                 xc_energy=None, ts_energy=None, free_energy=None, sigma0_energy=None):
         """
         Args:
             total_energy (float):
@@ -650,12 +651,22 @@ class ScfEnergiesData(BaseData):
             potential_energy (float):
             virial_theorem (float):
             wavefunction_norm (float):
+            coulomb_energy (float):
+            xc_energy (float):
+            ts_energy (float):
+            free_energy (float):
+            sigma0_energy (float):
         """
         self.total_energy = total_energy
         self.kinetic_energy = kinetic_energy
         self.potential_energy = potential_energy
         self.virial_theorem = virial_theorem
         self.wavefunction_norm = wavefunction_norm
+        self.coulomb_energy = coulomb_energy
+        self.xc_energy = xc_energy
+        self.ts_energy = ts_energy
+        self.free_energy = free_energy
+        self.sigma0_energy = sigma0_energy
 
     @classmethod
     def from_parser(cls, parser):
@@ -671,11 +682,16 @@ class ScfEnergiesData(BaseData):
         """
 
         en_data = parser.scf_energies
+        riper_en_data = parser.riper_scf_energies
 
-        if not en_data:
-            return None
+        if en_data:
+            if riper_en_data:
+                raise RuntimeError('Found scf energy data from dscf/ridft as well as from riper.')
+            return cls(**en_data)
+        elif riper_en_data:
+            return cls(**riper_en_data)
 
-        return cls(**en_data)
+        return None
 
 
 class ElectrostaticMomentsData(BaseData):
