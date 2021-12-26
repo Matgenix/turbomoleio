@@ -39,6 +39,8 @@ testlist:
     - nh3_rijk_xcfun_m06
   rimp2:
     - h2o_std_mp2
+  riper:
+    - h_chain
   statpt:
     - aceton_cartesian
     - h3cbr_internal

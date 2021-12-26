@@ -1,0 +1,114 @@
+{
+  "@module": "turbomoleio.output.files",
+  "@class": "ScfOutput",
+  "@version": "1.1.0",
+  "dft": null,
+  "scf": null,
+  "energies": {
+    "@module": "turbomoleio.output.data",
+    "@class": "ScfEnergiesData",
+    "@version": "1.1.0",
+    "total_energy": -1.1488022244,
+    "kinetic_energy": 0.9417993516,
+    "potential_energy": null,
+    "virial_theorem": null,
+    "wavefunction_norm": null,
+    "coulomb_energy": -1.4575736519,
+    "xc_energy": -0.633027924,
+    "ts_energy": null,
+    "free_energy": null,
+    "sigma0_energy": null
+  },
+  "electrostatic": null,
+  "geometry": {
+    "@module": "turbomoleio.output.data",
+    "@class": "GeometryData",
+    "@version": "1.1.0",
+    "center_of_mass": [
+      1.88972612,
+      0.0,
+      0.0
+    ],
+    "center_of_charge": [
+      1.88972612,
+      0.0,
+      0.0
+    ],
+    "molecule": {
+      "@module": "pymatgen.core.structure",
+      "@class": "Molecule",
+      "charge": 0.0,
+      "spin_multiplicity": 1,
+      "sites": [
+        {
+          "name": "H",
+          "species": [
+            {
+              "element": "H",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            0.4999999987760739,
+            0.0,
+            0.0
+          ],
+          "properties": {}
+        },
+        {
+          "name": "H",
+          "species": [
+            {
+              "element": "H",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            1.500000001619994,
+            0.0,
+            0.0
+          ],
+          "properties": {}
+        }
+      ]
+    }
+  },
+  "basis": null,
+  "run": {
+    "@module": "turbomoleio.output.data",
+    "@class": "RunData",
+    "@version": "1.1.0",
+    "host": "fedora",
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2021-12-26 16:25:16.399000"
+    },
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2021-12-26 16:25:16.866000"
+    },
+    "cpu_time": 0.13,
+    "wall_time": 0.47
+  },
+  "tm": {
+    "@module": "turbomoleio.output.data",
+    "@class": "TurbomoleData",
+    "@version": "1.1.0",
+    "version": "7.3.1",
+    "build": null,
+    "executable": "riper"
+  },
+  "cosmo": null,
+  "spin": {
+    "@module": "turbomoleio.output.data",
+    "@class": "SpinData",
+    "@version": "1.1.0",
+    "unrestricted": false,
+    "s2": null
+  },
+  "integral": null,
+  "smearing": null,
+  "symmetry": null
+}
