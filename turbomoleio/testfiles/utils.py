@@ -57,7 +57,7 @@ PARSER_METHODS = ["all_done", "header", "centers", "coordinates", "basis", "symm
                   "timings", "s2", "is_uhf", "fermi", "integral", "pre_escf_run", "escf_iterations",
                   "escf_gs_total_en", "escf_excitations", "rdgrad_memory", "gradient", "egrad_excited_state",
                   "statpt_info", "relax_info", "relax_gradient_values", "relax_conv_info",
-                  "aoforce_numerical_integration", "aoforce_analysis", "mp2_results"]
+                  "aoforce_numerical_integration", "aoforce_analysis", "mp2_results", "riper_scf_energies"]
 
 
 class ItestError(BaseException):

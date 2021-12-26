@@ -82,15 +82,15 @@
     "start_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-12-26 16:25:16.399000"
+      "string": "2021-12-26 16:35:48.368000"
     },
     "end_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-12-26 16:25:16.866000"
+      "string": "2021-12-26 16:35:48.446000"
     },
-    "cpu_time": 0.13,
-    "wall_time": 0.47
+    "cpu_time": 0.08,
+    "wall_time": 0.08
   },
   "tm": {
     "@module": "turbomoleio.output.data",

@@ -4,7 +4,7 @@
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-12-26 16:25:16.399 
+    2021-12-26 16:35:48.368 
 
  Number of MKL threads:      1
 
@@ -433,63 +433,63 @@
     ------------------------------------------------------------------------
     module                         sec     %               sec     %
     ------------------------------------------------------------------------
-    RIPER                         0.1   99.96            0.5  100.00   0.3
-    Preliminaries                 0.0   22.29            0.3   53.50   0.1
-    BANDS init                    0.0    0.88            0.0    9.98   0.0
-    DFT grid setup                0.0    2.15            0.0    1.91   0.3
-    DFT atomic grids              0.0    1.06            0.0    1.70   0.2
-    DFT system grid               0.0    0.36            0.0    0.00   0.5
-    DFT octree                    0.0    0.66            0.0    0.21   0.9
-    CFMM preliminaries            0.0    0.27            0.0    0.00   0.4
-    RI core setup                 0.0    0.20            0.0    0.00   0.3
-    SCF                           0.1   68.92            0.2   33.12   0.6
-    Ini CAOk sp                   0.0    0.01            0.0    0.21   0.0
-    nuclear energy                0.0    0.37            0.0    0.21   0.5
-    SCF looop                     0.1   67.28            0.2   32.27   0.6
-    XC matrix                     0.1   49.14            0.1   13.80   1.0
-    Coulomb total                 0.0   13.51            0.0    4.03   1.0
-    gamma vector                  0.0    4.72            0.0    1.49   0.9
-    gamma CNF FF                  0.0    3.95            0.0    1.06   1.1
-    gamma CNF FF mom              0.0    0.43            0.0    0.00   0.6
-    gamma CNF FF p. 1             0.0    1.64            0.0    0.64   0.7
-    gamma CNF FF p. 3             0.0    1.23            0.0    0.21   1.6
-    gamma CNF NF                  0.0    0.59            0.0    0.21   0.8
-    gamma CNF NF p. 1             0.0    0.48            0.0    0.21   0.6
-    Coulomb matrix                0.0    8.51            0.0    2.34   1.0
-    jmat CNF FF                   0.0    4.51            0.0    1.27   1.0
-    jmat CNF FF mom               0.0    0.37            0.0    0.21   0.5
-    jmat CNF FF p. 1              0.0    2.27            0.0    0.64   1.0
-    jmat CNF FF p. 3              0.0    1.16            0.0    0.21   1.6
-    jmat CNF NF                   0.0    0.35            0.0    0.00   0.5
-    elec. en. aux                 0.0    3.40            0.0    1.06   0.9
-    DIIS                          0.0    0.54            0.0    0.21   0.7
-    SCF solve                     0.0    0.70            0.1   12.74   0.0
-    FON                           0.0    0.07            0.0    0.21   0.1
-    D build                       0.0    0.18            0.0    0.00   0.2
-    MO dump                       0.0    2.33            0.0    1.27   0.5
-    mos dump                      0.0    0.51            0.0    0.21   0.7
-    Gradient                      0.0    5.22            0.0    1.49   1.0
-    grad XC                       0.0    3.64            0.0    1.06   1.0
-    grad Coulomb                  0.0    1.22            0.0    0.42   0.8
-    grad FF CNF                   0.0    1.00            0.0    0.21   1.3
-    CNF FF dnuc                   0.0    0.34            0.0    0.00   0.5
-    CNF FF daux                   0.0    0.27            0.0    0.21   0.4
-    CNF FF drho                   0.0    0.37            0.0    0.00   0.5
-    grad NF CNF                   0.0    0.19            0.0    0.21   0.3
-    CNF NF drhonuc                0.0    0.04            0.0    0.21   0.1
-    Properties                    0.0    0.10            0.0    0.00   0.1
+    RIPER                         0.1   99.94            0.1  100.00   1.0
+    Preliminaries                 0.0   10.82            0.0    9.88   1.1
+    BANDS init                    0.0    0.82            0.0    0.00   0.7
+    DFT grid setup                0.0    3.06            0.0    3.70   0.8
+    DFT atomic grids              0.0    1.19            0.0    1.23   1.0
+    DFT system grid               0.0    0.63            0.0    1.23   0.5
+    DFT octree                    0.0    1.13            0.0    1.23   0.9
+    CFMM preliminaries            0.0    0.47            0.0    0.00   0.4
+    RI core setup                 0.0    0.36            0.0    0.00   0.3
+    SCF                           0.1   75.43            0.1   76.54   1.0
+    nuclear energy                0.0    0.57            0.0    1.23   0.5
+    SCF looop                     0.1   72.47            0.1   72.84   1.0
+    XC matrix                     0.0   52.72            0.0   50.62   1.0
+    Coulomb total                 0.0   15.64            0.0   16.05   1.0
+    gamma vector                  0.0    5.54            0.0    7.41   0.7
+    gamma CNF FF                  0.0    4.52            0.0    6.17   0.7
+    gamma CNF FF mom              0.0    0.51            0.0    1.23   0.4
+    gamma CNF FF p. 1             0.0    1.87            0.0    3.70   0.5
+    gamma CNF FF p. 2             0.0    0.11            0.0    0.00   0.1
+    gamma CNF FF p. 3             0.0    1.40            0.0    0.00   1.1
+    gamma CNF NF                  0.0    0.80            0.0    1.23   0.6
+    gamma CNF NF p. 1             0.0    0.67            0.0    1.23   0.5
+    Coulomb matrix                0.0    9.76            0.0    8.64   1.1
+    jmat CNF FF                   0.0    5.15            0.0    3.70   1.4
+    jmat CNF FF mom               0.0    0.42            0.0    0.00   0.3
+    jmat CNF FF p. 1              0.0    2.58            0.0    1.23   2.1
+    jmat CNF FF p. 3              0.0    1.33            0.0    2.47   0.5
+    jmat CNF NF                   0.0    0.44            0.0    1.23   0.4
+    elec. en. aux                 0.0    3.89            0.0    3.70   1.0
+    DIIS                          0.0    0.76            0.0    2.47   0.3
+    SCF solve                     0.0    0.31            0.0    0.00   0.2
+    D build                       0.0    0.15            0.0    0.00   0.1
+    MO dump                       0.0    2.23            0.0    3.70   0.6
+    mos dump                      0.0    0.98            0.0    1.23   0.8
+    Gradient                      0.0    8.99            0.0    8.64   1.0
+    grad XC                       0.0    6.29            0.0    6.17   1.0
+    grad Coulomb                  0.0    2.11            0.0    2.47   0.8
+    grad FF CNF                   0.0    1.74            0.0    2.47   0.7
+    CNF FF dnuc                   0.0    0.58            0.0    1.23   0.5
+    CNF FF daux                   0.0    0.48            0.0    0.00   0.4
+    CNF FF drho                   0.0    0.65            0.0    1.23   0.5
+    grad NF CNF                   0.0    0.32            0.0    0.00   0.3
+    CNF NF drhoaux                0.0    0.13            0.0    0.00   0.1
+    CNF NF dauxaux                0.0    0.11            0.0    0.00   0.1
+    Properties                    0.0    0.18            0.0    0.00   0.1
     ------------------------------------------------------------------------
-    sum                           0.5  377.94            1.3  278.98   0.4
+    sum                           0.3  400.76            0.3  406.17   1.0
     ------------------------------------------------------------------------
 
 
     ------------------------------------------------------------------------
-         total  cpu-time :   0.13 seconds
-         total wall-time :   0.47 seconds
+         total  cpu-time :   0.08 seconds
+         total wall-time :   0.08 seconds
     ------------------------------------------------------------------------
 
    ****  riper : all done  ****
 
 
-    2021-12-26 16:25:16.866 
+    2021-12-26 16:35:48.446 
 
