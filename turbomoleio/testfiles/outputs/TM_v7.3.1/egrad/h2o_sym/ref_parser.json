@@ -436,5 +436,7 @@
   "aoforce_analysis": null,
   "mp2_results": {
     "energy": null
-  }
+  },
+  "riper_scf_energies": null,
+  "periodicity_data": null
 }

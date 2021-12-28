@@ -51,7 +51,12 @@
       "kinetic_energy": 75.83518869155,
       "potential_energy": -151.77289217113,
       "virial_theorem": 1.99865001464,
-      "wavefunction_norm": 1.0
+      "wavefunction_norm": 1.0,
+      "coulomb_energy": null,
+      "xc_energy": null,
+      "ts_energy": null,
+      "free_energy": null,
+      "sigma0_energy": null
     },
     "electrostatic": {
       "@module": "turbomoleio.output.data",

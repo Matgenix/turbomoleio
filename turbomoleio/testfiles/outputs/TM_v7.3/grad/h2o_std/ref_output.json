@@ -1,7 +1,7 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "GradOutput",
-  "@version": null,
+  "@version": "1.1.0",
   "gradients": [
     [
       0.0,
@@ -39,17 +39,25 @@
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": null,
+    "@version": "1.1.0",
     "host": "ucl-laptop",
-    "start_time": "2018-11-13 10:03:32.131000",
-    "end_time": "2018-11-13 10:03:32.168000",
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2018-11-13 10:03:32.131000"
+    },
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2018-11-13 10:03:32.168000"
+    },
     "cpu_time": 0.03,
     "wall_time": 0.05
   },
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": null,
+    "@version": "1.1.0",
     "version": "7.3",
     "build": "22118",
     "executable": "grad"

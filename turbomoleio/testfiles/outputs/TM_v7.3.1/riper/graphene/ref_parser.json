@@ -97,5 +97,38 @@
     "ts_energy": -0.0,
     "free_energy": -76.2143772616,
     "sigma0_energy": -76.2143772616
+  },
+  "periodicity_data": {
+    "periodicity": 2,
+    "tm_lattice_params": [
+      4.66463026,
+      4.66463026,
+      120.0
+    ],
+    "shortest_interatomic_distance": 2.6931,
+    "direct_space_vectors": [
+      [
+        4.66463026,
+        0.0,
+        0.0
+      ],
+      [
+        -2.33231519,
+        4.03968827,
+        0.0
+      ]
+    ],
+    "reciprocal_space_vectors": [
+      [
+        1.34698464,
+        0.77768197,
+        -0.0
+      ],
+      [
+        0.0,
+        1.5553639,
+        -0.0
+      ]
+    ]
   }
 }

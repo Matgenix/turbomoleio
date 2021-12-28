@@ -1,12 +1,12 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "AoforceOutput",
-  "@version": null,
+  "@version": "1.1.0",
   "numerical_integration": null,
   "rotational": {
     "@module": "turbomoleio.output.data",
     "@class": "AoforceRotationalData",
-    "@version": null,
+    "@version": "1.1.0",
     "b": [
       56.3661785582,
       56.3661785582,
@@ -43,7 +43,7 @@
   "vibrational": {
     "@module": "turbomoleio.output.data",
     "@class": "AoforceVibrationalData",
-    "@version": null,
+    "@version": "1.1.0",
     "frequencies": [
       0.0,
       0.0,
@@ -191,17 +191,25 @@
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": null,
+    "@version": "1.1.0",
     "host": "ucl-laptop",
-    "start_time": "2019-07-12 23:26:49.347000",
-    "end_time": "2019-07-12 23:26:49.361000",
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2019-07-12 23:26:49.347000"
+    },
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2019-07-12 23:26:49.361000"
+    },
     "cpu_time": 0.01,
     "wall_time": 0.02
   },
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": null,
+    "@version": "1.1.0",
     "version": "7.3",
     "build": "22118",
     "executable": "force"

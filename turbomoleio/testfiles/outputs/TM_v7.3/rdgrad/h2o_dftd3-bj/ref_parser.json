@@ -5,7 +5,11 @@
     "host": "ucl-laptop",
     "tm_version": "7.3",
     "tm_build": "22118",
-    "start_time": "2019-07-12 16:54:48.154000"
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2019-07-12 16:54:48.154000"
+    }
   },
   "centers": {
     "center_of_mass": null,
@@ -39,7 +43,11 @@
   "timings": {
     "cpu_time": 0.05,
     "wall_time": 0.31,
-    "end_time": "2019-07-12 16:54:48.402000"
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2019-07-12 16:54:48.402000"
+    }
   },
   "s2": null,
   "is_uhf": false,
@@ -96,5 +104,10 @@
   "relax_gradient_values": null,
   "relax_conv_info": null,
   "aoforce_numerical_integration": null,
-  "aoforce_analysis": null
+  "aoforce_analysis": null,
+  "mp2_results": {
+    "energy": null
+  },
+  "riper_scf_energies": null,
+  "periodicity_data": null
 }

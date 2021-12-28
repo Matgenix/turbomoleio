@@ -1,26 +1,26 @@
 {
   "all_done": true,
   "header": {
-    "executable": "dscf",
-    "host": "fedora",
-    "tm_version": "7.3.1",
-    "tm_build": null,
+    "executable": "grad",
+    "host": "ucl-laptop",
+    "tm_version": "7.3",
+    "tm_build": "22118",
     "start_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-09-20 09:39:24.681000"
+      "string": "2019-07-13 00:03:02.954000"
     }
   },
   "centers": {
     "center_of_mass": [
-      -0.0,
       0.0,
-      -0.60378908
+      0.0,
+      -0.63621883
     ],
     "center_of_charge": [
       0.0,
       0.0,
-      -0.50790525
+      -0.53518503
     ]
   },
   "coordinates": {
@@ -28,17 +28,17 @@
       [
         0.0,
         0.0,
-        -0.72557892
+        -0.76455005
       ],
       [
-        1.41713421,
+        1.45677419,
         0.0,
-        0.36278946
+        0.38227502
       ],
       [
-        -1.41713421,
+        -1.45677419,
         0.0,
-        0.36278946
+        0.38227502
       ]
     ],
     "species": [
@@ -94,42 +94,30 @@
     "conv_one_e_en": 0.001,
     "virtual_orbital_shift_on": true,
     "virtual_orbital_shift_limit": 0.1,
-    "orbital_characterization": "expanded",
+    "orbital_characterization": "scfconv=6",
     "restart_file": "mos",
     "n_occupied_orbitals": 5
   },
   "scf_iterations": {
     "energies": [
-      -76.143808666911,
-      -76.30004694603,
-      -76.332109920961,
-      -76.340965429794,
-      -76.342214940716,
-      -76.342442666881,
-      -76.342476431038,
-      -76.342482792164,
-      -76.342761851311
+      -76.344592831485,
+      -76.34459283468,
+      -76.344946039932
     ],
     "first_index": 1,
-    "n_steps": 9,
+    "n_steps": 3,
     "dampings": [
       0.7,
-      0.65,
-      0.6,
-      0.65,
       0.7,
-      0.75,
-      0.8,
-      0.85,
-      0.9
+      0.75
     ],
     "converged": true
   },
   "scf_energies": {
-    "total_energy": -76.34276185131,
-    "kinetic_energy": 75.98560722262,
-    "potential_energy": -152.32836907394,
-    "virial_theorem": 1.99532169625,
+    "total_energy": -76.34494603993,
+    "kinetic_energy": 75.86403591878,
+    "potential_energy": -152.20898195871,
+    "virial_theorem": 1.99370082571,
     "wavefunction_norm": 1.0
   },
   "cosmo_results": null,
@@ -137,42 +125,42 @@
     "unrestricted_electrons": null,
     "charge": -0.0,
     "dipole": {
-      "norm": 0.8344,
+      "norm": 0.8436,
       "moment": [
+        -0.0,
         0.0,
-        0.0,
-        0.834365
+        0.843619
       ]
     },
     "quadrupole": {
-      "trace": -13.844133,
-      "anisotropy": 2.065257,
+      "trace": -13.940046,
+      "anisotropy": 2.103946,
       "moment": [
         [
-          -3.238569,
+          -3.244563,
           0.0,
-          0.0
-        ],
-        [
-          0.0,
-          -5.264852,
           -0.0
         ],
         [
           0.0,
+          -5.314935,
+          0.0
+        ],
+        [
           -0.0,
-          -5.34071
+          0.0,
+          -5.380549
         ]
       ]
     }
   },
   "timings": {
-    "cpu_time": 0.04,
-    "wall_time": 0.04,
+    "cpu_time": 0.03,
+    "wall_time": 0.03,
     "end_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-09-20 09:39:24.718000"
+      "string": "2019-07-13 00:03:02.978000"
     }
   },
   "s2": null,
@@ -188,12 +176,91 @@
   "escf_gs_total_en": null,
   "escf_excitations": null,
   "rdgrad_memory": null,
-  "gradient": null,
+  "gradient": {
+    "gradients": [
+      [
+        0.0,
+        0.0,
+        2.436021e-05
+      ],
+      [
+        6.774627e-06,
+        0.0,
+        2.405706e-07
+      ],
+      [
+        -6.774627e-06,
+        0.0,
+        2.405706e-07
+      ]
+    ],
+    "dielectric": [
+      [
+        2e-05,
+        0.0,
+        -0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        -0.0,
+        0.0,
+        -1.8e-05
+      ]
+    ]
+  },
   "egrad_excited_state": null,
-  "statpt_info": null,
+  "statpt_info": {
+    "max_trust_radius": 0.3,
+    "min_trust_radius": 0.001,
+    "init_trust_radius": 0.15,
+    "min_grad_norm_for_gdiis": 0.01,
+    "prev_steps_for_gdiis": 5,
+    "hessian_update_method": "BFGS",
+    "thr_energy_change": 1e-06,
+    "thr_max_displ": 0.001,
+    "thr_max_grad": 0.001,
+    "thr_rms_displ": 0.0005,
+    "thr_rms_grad": 0.0005,
+    "use_defaults": true,
+    "final_step_radius": null
+  },
   "relax_info": null,
-  "relax_gradient_values": null,
-  "relax_conv_info": null,
+  "relax_gradient_values": {
+    "norm_cartesian": 2.61787e-05,
+    "norm_internal": 1.94879e-05,
+    "max_internal": null
+  },
+  "relax_conv_info": {
+    "energy_change": {
+      "value": 1e-07,
+      "thr": 1e-06,
+      "conv": false
+    },
+    "rms_displ": {
+      "value": 0.000101,
+      "thr": 0.0005,
+      "conv": false
+    },
+    "rms_grad": {
+      "value": 1.38e-05,
+      "thr": 0.0005,
+      "conv": true
+    },
+    "max_displ": {
+      "value": 0.0001428,
+      "thr": 0.001,
+      "conv": true
+    },
+    "max_grad": {
+      "value": 1.95e-05,
+      "thr": 0.001,
+      "conv": true
+    }
+  },
   "aoforce_numerical_integration": null,
   "aoforce_analysis": null,
   "mp2_results": {
