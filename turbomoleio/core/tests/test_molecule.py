@@ -26,6 +26,7 @@ import re
 
 from pymatgen.core.periodic_table import DummySpecie
 from pymatgen.core.structure import Molecule
+from pymatgen.core.structure import Structure
 from turbomoleio.testfiles.utils import temp_dir, assert_MSONable
 from turbomoleio.core.molecule import Distance, BondAngle, DihedralAngle, InverseDistance, OutOfPlaneAngle
 from turbomoleio.core.molecule import CollinearBendingAngle, PerpendicularBendingAngle, InternalDefinition
@@ -78,6 +79,7 @@ def check_dg(to_test, ref):
             assert s_f == pytest.approx(r_f)
         except ValueError:
             assert s == r
+
 
 def check_user_defined_bonds_dg(to_test, ref):
     """
@@ -166,7 +168,7 @@ class TestInternalDefinition:
         assert da.is_valid(molecule)
 
         da = DihedralAngle(status="k", indices=[[0,1,2,3], [1,2,3,4], [0,2,3,4]],
-                          weights=[-0.1, 0.7, 0.7], value=-51.72110)
+                           weights=[-0.1, 0.7, 0.7], value=-51.72110)
         assert da.is_valid(molecule)
 
         assert str(da)
@@ -380,14 +382,14 @@ $end
         assert mol[1].coords[0] == pytest.approx(-0.6090991821345737)
         assert len(mol) == 4
 
-        assert ms.frozen_indices == {0,3}
+        assert ms.frozen_indices == {0, 3}
 
         assert len(ms.int_def) == 2
         assert ms.int_def[0].value == pytest.approx(2.43987)
-        assert ms.int_def[1].value == None
+        assert ms.int_def[1].value is None
         assert ms.int_def[0].status == "k"
         assert ms.int_def[1].status == "f"
-        assert ms.int_def[0].indices[0] == [0,1]
+        assert ms.int_def[0].indices[0] == [0, 1]
         assert len(ms.int_def[1].indices) == 2
         assert ms.int_def[1].weights[1] == pytest.approx(-0.5)
 
@@ -413,7 +415,7 @@ $end
         assert mol[1].coords[0] == pytest.approx(-0.6090991821345737)
         assert len(mol) == 4
 
-        assert ms.user_defined_bonds == {(0,"-",1), (1,"-",2), (2,"|",3)}
+        assert ms.user_defined_bonds == {(0, "-", 1), (1, "-", 2), (2, "|", 3)}
         dg = DataGroups(ms.to_coord_string())
         dg_ref = DataGroups(string)
         assert len(dg.dg_list) == 3
@@ -451,7 +453,7 @@ $end
         assert len(dg.dg_list) == 2
         check_dg(dg.sdg("coord", strict=True), test_value)
 
-        ms.frozen_indices = {0,1}
+        ms.frozen_indices = {0, 1}
         test_value = """
 0.00000000000000 0.00000000000000 0.00000000000000 c f
 0.00000000000000 0.00000000000000 2.86118897312869 o f
@@ -465,13 +467,10 @@ $end
     def test_dummy_atoms(self, molecule_filepath):
         ms = MoleculeSystem.from_file(molecule_filepath, fmt="coord")
         mol = ms.molecule
-        print(mol[-1].specie)
-        print(mol[-1].specie.__class__)
         # Pymatgen's Specie and DummySpecie have been changed to Species and
         # DummySpecies in v2020.10.9. We keep testing both for backward compatibility.
         assert isinstance(mol[-1].specie, (DummySpecies, DummySpecie))
         assert mol[-1].specie.symbol == "Q"
-
 
         test_value2 = """
 0.00000000000000 0.00000000000000 -0.12178983933899 o
@@ -496,6 +495,7 @@ $end
     @pytest.mark.parametrize('molecule_filename', ['co2.json'])
     def test_to_file(self, molecule, delete_tmp_dir):
         ms = MoleculeSystem(molecule)
+        assert ms.periodicity is None
 
         with temp_dir(delete_tmp_dir) as tmp_dir:
             fname = os.path.join(tmp_dir, 'coord_test')
@@ -521,11 +521,11 @@ $end
         ms.add_distance(2, 3, value=10, weights=1.0)
         assert ms.has_inconsistencies()
 
-        ms.add_distance([0,1], [2,3])
+        ms.add_distance([0, 1], [2, 3])
         assert len(ms.int_def[-1].indices) == 2
 
         with pytest.raises(ValueError):
-            ms.add_distance([1,2,3], [1,2])
+            ms.add_distance([1, 2, 3], [1, 2])
 
         assert_MSONable(ms)
 
@@ -561,11 +561,11 @@ $end
         ms.add_dihedral(2, 3, 4, 1, value=10)
         assert ms.has_inconsistencies()
 
-        ms.add_dihedral([0,1], [2,3], [3,4], [1, 0])
+        ms.add_dihedral([0, 1], [2, 3], [3, 4], [1, 0])
         assert len(ms.int_def[-1].indices) == 2
 
         with pytest.raises(ValueError):
-            ms.add_dihedral([1,2,3], [1,2], [2,3], [3,4])
+            ms.add_dihedral([1, 2, 3], [1, 2], [2, 3], [3, 4])
 
     @pytest.mark.parametrize('molecule_filename', ['ch4.json'])
     def test_check_index(self, molecule):
@@ -577,3 +577,54 @@ $end
             ms._check_index([-1])
 
         assert ms._check_index([4]) is None
+
+    @pytest.mark.parametrize('structure_filename', ['SiO2.json'])
+    def test_periodic_3d(self, structure):
+        ms = MoleculeSystem(molecule=structure)
+        assert ms.periodicity == '3D'
+        coord_string = ms.to_coord_string()
+        assert '$periodic 3' in coord_string
+        assert '$cell' in coord_string
+        lines = coord_string.split('\n')
+        iline_cell = lines.index('$cell')
+        abc_alphabetagamma = [float(nn) for nn in lines[iline_cell+1].split()]
+        assert abc_alphabetagamma == pytest.approx(
+            [9.489264667, 9.489264667, 10.41346809,
+             90.0, 90.0, 120.0]
+        )
+
+    @pytest.mark.parametrize('structure_filename', ['SiO2_rotated.json'])
+    def test_periodic_wrong_rotation(self, structure):
+        ms = MoleculeSystem(molecule=structure)
+        with pytest.raises(ValueError,
+                           match=r'Lattice should be oriented such that first vector '
+                                 r'is aligned with x cartesian direction and second vector '
+                                 r'is in the xy cartesian plane.'):
+            ms.to_coord_string()
+
+    @pytest.mark.parametrize('structure_filename', ['graphene.json'])
+    def test_periodic_2d(self, structure):
+        ms = MoleculeSystem(molecule=structure, periodicity='2D')
+        assert ms.periodicity == '2D'
+        coord_string = ms.to_coord_string()
+        assert '$periodic 2' in coord_string
+        assert '$cell' in coord_string
+        lines = coord_string.split('\n')
+        iline_cell = lines.index('$cell')
+        ab_gamma = [float(nn) for nn in lines[iline_cell + 1].split()]
+        assert ab_gamma == pytest.approx(
+            [4.664630258, 4.664630258, 120.0]
+        )
+
+    @pytest.mark.parametrize('structure_filename', ['graphene'])
+    def test_read_periodic_2d(self, structure_filepath):
+        ms = MoleculeSystem.from_file(structure_filepath, fmt='coord', periodic_extension=5.0)
+        assert isinstance(ms.molecule, Structure)
+        assert ms.periodicity == '2D'
+        current_coord_dg = DataGroups(string=ms.to_coord_string())
+        ref_coord_dg = DataGroups.from_file(structure_filepath)
+        compare_coord = current_coord_dg.compare(ref_coord_dg, tol=1e-6)
+        assert compare_coord is None, compare_coord
+        assert ms.molecule.lattice.c == pytest.approx(5.0)
+        ms = MoleculeSystem.from_file(structure_filepath, fmt='coord', periodic_extension=7.0)
+        assert ms.molecule.lattice.c == pytest.approx(7.0)

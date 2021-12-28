@@ -28,23 +28,40 @@ import numpy as np
 from collections import namedtuple
 from fnmatch import fnmatch
 from monty.json import MSONable, MontyDecoder
+from pymatgen.core.lattice import Lattice
 from pymatgen.core.structure import Molecule
 from pymatgen.core.structure import Structure
 from pymatgen.core.units import ang_to_bohr, bohr_to_ang
 from turbomoleio.core.datagroups import DataGroups
 
 
-def get_mol_and_indices_frozen(string):
+def get_mol_and_indices_frozen(string, cell_string=None, periodic_string=None,
+                               periodic_extension=5.0):
     """
     Extracts a pymatgen Molecule and indices of the frozen atoms from the
     $coord datagroup.
 
     Args:
-        string (str): The string containing the list of coordinates
+        string (str): The string containing the list of coordinates.
+        cell_string (str): The string containing the cell parameters.
+            For 1D periodic systems, cell consists of a single
+            number: "a" lattice parameter.
+            For 2D periodic systems, cell consists of 3 numbers:
+            "a" and "b" lattice parameters and Gamma angle between
+            "a" and "b".
+            For 3D periodic systems, cell consists of 6 numbers:
+            "a", "b" and "c" lattice parameters and Alpha, Beta and
+            Gamma angles between lattice parameters.
+        periodic_string (str): The string describing periodicity.
+        periodic_extension (float): For 1D and 2D periodic systems,
+            periodic_extension is the amount (in Angstroms of
+            artifically added vacuum in the Structure object in
+            the non-periodic directions.
 
     Returns:
         namedtuple:
-            molecule: a pymatgen molecule
+            molecule: a pymatgen molecule or structure (when cell and
+            periodic are provided).
             frozen_indices: a set with the indices of the frozen atoms.
     """
 
@@ -70,7 +87,40 @@ def get_mol_and_indices_frozen(string):
         if len(s) == 5 and s[-1].lower() == "f":
             frozen_indices.add(iatom)
 
-    mol = Molecule(species, coords)
+    coords = np.array(coords)
+    if cell_string is not None:
+        periodicity = int(periodic_string.strip())
+        cell = [float(sp) for sp in cell_string.strip().split()]
+        if periodicity == 1:
+            if len(cell) != 1:
+                raise ValueError('The $cell data group should contain 1 number for 1D periodic systems')
+            yrange = np.max(coords[:, 1])-np.min(coords[:, 1])
+            zrange = np.max(coords[:, 2])-np.min(coords[:, 2])
+            lattice = Lattice.orthorhombic(a=bohr_to_ang*cell[0],
+                                           b=bohr_to_ang*yrange+periodic_extension,
+                                           c=bohr_to_ang*zrange+periodic_extension)
+        elif periodicity == 2:
+            if len(cell) != 3:
+                raise ValueError('The $cell data group should contain 3 numbers for 2D periodic systems')
+            zrange = np.max(coords[:, 2])-np.min(coords[:, 2])
+            lattice = Lattice.from_parameters(a=bohr_to_ang*cell[0],
+                                              b=bohr_to_ang*cell[1],
+                                              c=bohr_to_ang*zrange+periodic_extension,
+                                              alpha=90.0, beta=90.0, gamma=cell[2])
+        elif periodicity == 3:
+            if len(cell) != 6:
+                raise ValueError('The $cell data group should contain 6 numbers for 3D periodic systems')
+            lattice = Lattice.from_parameters(a=bohr_to_ang*cell[0],
+                                              b=bohr_to_ang*cell[1],
+                                              c=bohr_to_ang*cell[2],
+                                              alpha=cell[3],
+                                              beta=cell[4],
+                                              gamma=cell[5])
+        else:
+            raise RuntimeError('Periodicity should be one of 1, 2 or 3.')
+        mol = Structure(lattice=lattice, species=species, coords=coords, coords_are_cartesian=True)
+    else:
+        mol = Molecule(species, coords)
     CoordMolecule = namedtuple("CoordMolecule", ["molecule", "frozen_indices"])
 
     return CoordMolecule(mol, frozen_indices)
@@ -138,7 +188,7 @@ class MoleculeSystem(MSONable):
             raise ValueError("Molecule with periodicity is not allowed.")
 
     @classmethod
-    def from_string(cls, string, fmt="coord"):
+    def from_string(cls, string, fmt="coord", periodic_extension=5.0):
         """
         Creates an instance from a string. Could be the string of a coord file
         or any format supported by pymatgen Molecule.
@@ -157,7 +207,13 @@ class MoleculeSystem(MSONable):
             coordinates_str = dg.sdg("$coord", strict=True)
             if not coordinates_str:
                 raise ValueError("The string does not contain $coord!")
-            mol, fi = get_mol_and_indices_frozen(coordinates_str)
+            cell_str = dg.sdg("$cell", strict=True)
+            periodic_str = dg.sdg("$periodic", strict=True)
+            if cell_str is None and periodic_str is not None or cell_str is not None and periodic_str is None:
+                raise ValueError('Datagroups $cell and $periodic should either be both None or both set.')
+            mol, fi = get_mol_and_indices_frozen(coordinates_str, cell_str, periodic_str,
+                                                 periodic_extension=periodic_extension)
+            periodicity = None if periodic_str is None else f'{periodic_str.strip()}D'
 
             int_def_str = dg.sdg("$intdef", strict=True)
             int_def = []
@@ -205,13 +261,14 @@ class MoleculeSystem(MSONable):
                         else:
                             raise ValueError("Cannot parse user-defined bonds for line: {}".format(l))
 
-            return cls(mol, int_def=int_def, frozen_indices=fi, user_defined_bonds=user_def_bonds)
+            return cls(mol, int_def=int_def, frozen_indices=fi, user_defined_bonds=user_def_bonds,
+                       periodicity=periodicity)
 
         else:
             return cls(Molecule.from_str(string, fmt))
 
     @classmethod
-    def from_file(cls, filepath, fmt=None):
+    def from_file(cls, filepath, fmt=None, periodic_extension=5.0):
         """
         Creates an instance from a file. Could be a coord file or any other
         format supported by pymatgen Molecule.
@@ -228,7 +285,7 @@ class MoleculeSystem(MSONable):
         fname = os.path.basename(filepath)
         if fmt == "coord" or (fmt is None and fnmatch(fname, "coord")):
             with open(filepath) as f:
-                return cls.from_string(f.read(), fmt="coord")
+                return cls.from_string(f.read(), fmt="coord", periodic_extension=periodic_extension)
         else:
             return cls(molecule=Molecule.from_file(filepath))
 
@@ -275,6 +332,35 @@ class MoleculeSystem(MSONable):
 
         if self.periodicity is not None:
             lines.append("$periodic {}".format(self.periodicity[0]))
+            lattice = self.molecule.lattice
+            lmat = lattice.matrix
+            if (
+                    not np.isclose(lmat[0][1], 0.0) or
+                    not np.isclose(lmat[0][2], 0.0) or
+                    not np.isclose(lmat[0][1], 0.0)
+            ):
+                raise ValueError('Lattice should be oriented such that first vector '
+                                 'is aligned with x cartesian direction and second vector '
+                                 'is in the xy cartesian plane.')
+
+            if self.periodicity[0] == '1':
+                lines.append(f"$cell\n  {ang_to_bohr * lattice.a}")
+            elif self.periodicity[0] == '2':
+                lines.append(f"$cell\n  "
+                             f"{ang_to_bohr * lattice.a}   "
+                             f"{ang_to_bohr * lattice.b}   "
+                             f"{lattice.gamma}")
+            elif self.periodicity[0] == '3':
+                lines.append(f"$cell\n  "
+                             f"{ang_to_bohr * lattice.a}   "
+                             f"{ang_to_bohr * lattice.b}   "
+                             f"{ang_to_bohr * lattice.c}   "
+                             f"{lattice.alpha}   "
+                             f"{lattice.beta}   "
+                             f"{lattice.gamma}"
+                             )
+            else:
+                raise ValueError('Periodicity should be "1D", "2D" or "3D" for use in riper calculations.')
 
         lines.append("$end")
 

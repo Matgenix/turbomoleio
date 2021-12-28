@@ -3,6 +3,7 @@ import os
 import pytest
 
 from pymatgen.core.structure import Molecule
+from pymatgen.core.structure import Structure
 
 from turbomoleio.core.control import Control
 
@@ -40,6 +41,18 @@ def molecule(molecule_filename):
     return Molecule.from_file(os.path.join(TESTDIR,
                                            'structures',
                                            molecule_filename))
+
+
+@pytest.fixture
+def structure(structure_filename):
+    return Structure.from_file(os.path.join(TESTDIR,
+                                            'structures',
+                                            structure_filename))
+
+
+@pytest.fixture
+def structure_filepath(structure_filename):
+    return os.path.join(TESTDIR, 'structures', structure_filename)
 
 
 @pytest.fixture

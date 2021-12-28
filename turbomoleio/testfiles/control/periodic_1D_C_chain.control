@@ -1,0 +1,120 @@
+$redund_inp
+    metric 3
+$coord    file=coord
+$title
+ridft
+$operating system unix
+$symmetry c1
+$user-defined bonds    file=coord
+$optimize
+ internal   off
+ redundant  off
+ cartesian  on
+ global     off
+ basis      off
+$atoms
+c  1-2                                                                         \
+   basis =c pob-TZVP                                                           \
+   jbas  =c universal
+$basis    file=basis
+$rundimensions
+   dim(fock,dens)=789
+   natoms=2
+   nshell=16
+   nbf(CAO)=38
+   dim(trafo[SAO<-->AO/CAO])=42
+   rhfshells=1
+   nbf(AO)=36
+$scfmo    file=mos
+$closed shells
+ a       1-6                                    ( 2 )
+$scfiterlimit      200
+$thize     0.10000000E-04
+$thime        5
+$scfdump
+$scfintunit
+ unit=30       size=0        file=twoint
+$scfdiis
+$maxcor    500 MiB  per_core
+$scforbitalshift  automatic=.1
+$drvopt
+   cartesian  on
+   basis      off
+   global     off
+   hessian    on
+   dipole     on
+   nuclear polarizability
+$interconversion  off
+   qconv=1.d-7
+   maxiter=25
+$coordinateupdate
+   dqmax=0.3
+   interpolate  on
+   statistics    5
+$forceupdate
+   ahlrichs numgeo=0  mingeo=3 maxgeo=4 modus=<g|dq> dynamic fail=0.3
+   threig=0.005  reseig=0.005  thrbig=3.0  scale=1.00  damping=0.0
+$forceinit on
+   diag=default
+$energy    file=energy
+$grad    file=gradient
+$forceapprox    file=forceapprox
+$scfconv   6
+$scfdamp   start=0.700  step=0.050  min=0.050
+$ricore      500
+$rij
+$jbas    file=auxbasis
+$last step     riper
+$disp3
+$dft
+   functional b-p
+   gridsize   m3
+$periodic 1
+$cell
+    4.8021148447
+$kpoints
+  nkpoints 4
+$riper
+  sigma 0.01
+$optcell
+$last SCF energy change = -.13558235E-07
+$gradlatt
+  cycle =      1    energy =      -75.8229057370 |dE/dlatt| =  0.921301
+   0.37794522492515D+01
+      -.92130064839626D+00
+  cycle =      2    energy =      -75.9311936674 |dE/dlatt| =  0.549143
+   0.39294522493000D+01
+      -.54914326148767D+00
+  cycle =      3    energy =      -76.0488515863 |dE/dlatt| =  0.532222
+   0.41135985245000D+01
+      -.53222161674592D+00
+  cycle =      4    energy =      -76.1329677736 |dE/dlatt| =  0.273604
+   0.43383285525000D+01
+      -.27360388386068D+00
+  cycle =      5    energy =      -76.1813559787 |dE/dlatt| =  0.080898
+   0.46230623063000D+01
+      -.80897501039401D-01
+  cycle =      6    energy =      -76.1879597431 |dE/dlatt| =  0.019127
+   0.47512307475000D+01
+      -.19126868760234D-01
+  cycle =      7    energy =      -76.1884962846 |dE/dlatt| =  0.000755
+   0.47957399610000D+01
+      -.75534657691428D-03
+  cycle =      8    energy =      -76.1885076918 |dE/dlatt| =  0.001318
+   0.48019065149000D+01
+      0.13183950600970D-02
+  cycle =      9    energy =      -76.1885097847 |dE/dlatt| =  0.001266
+   0.48027974451000D+01
+      0.12657498642192D-02
+  cycle =     10    energy =      -76.1885121304 |dE/dlatt| =  0.000570
+   0.48028185489000D+01
+      0.56966474000317D-03
+  cycle =     11    energy =      -76.1885124763 |dE/dlatt| =  0.000073
+   0.48022837637000D+01
+      0.73377241457290D-04
+  cycle =     12    energy =      -76.1885124899 |dE/dlatt| =  0.000064
+   0.48021148447000D+01
+      0.63810585401318D-04
+$optinfo       file=optinfo
+$hessapprox   file=hessapprox
+$end

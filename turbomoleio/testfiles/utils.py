@@ -622,7 +622,7 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
                 c.cdg(k, v)
             c.to_file()
 
-        if opt_generate_ref: # pragma: no cover
+        if opt_generate_ref:  # pragma: no cover
             shutil.copy2("control", get_control_integration(control_reference_filename))
 
         ref_control = Control.from_file(get_control_integration(control_reference_filename))
@@ -662,7 +662,7 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
                                                 "{}_{}.json".format(control_reference_filename, executable))
                     if opt_generate_ref:
                         dumpfn(out, out_ref_path)
-                    out_ref = loadfn(out_ref_path, cls=None)
+                    out_ref = loadfn(out_ref_path).as_dict()
                     if opt_dryrun:
                         diffs = compare_differences(out, out_ref, atol=opt_tol)
                         if diffs:
