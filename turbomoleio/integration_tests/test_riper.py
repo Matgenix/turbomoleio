@@ -26,30 +26,23 @@ import pytest
 from turbomoleio.testfiles.utils import run_itest
 from turbomoleio.core.control import sdg
 from turbomoleio.input.utils import get_define_template
-from turbomoleio.output.files import JobexOutput
+from turbomoleio.output.files import ScfOutput
 
-structures = ['h2o', 'nh3']
+structures = ['graphene']
 
 
 @pytest.mark.integration
-class TestJobex:
+class TestRiper:
 
-    @pytest.mark.parametrize("structure", structures)
-    def test_run_jobex_dscf(self, structure):
-        dp = get_define_template("dscf")
-        dp["desy"] = True
-        dp["ired"] = True
-
-        assert run_itest("jobex", dp, structure, "jobex_dscf_{}_sym".format(structure),
-                         JobexOutput, arguments="-c 2")
-
-    @pytest.mark.parametrize('structure_filename', ["graphene"])
-    def test_run_jobex_riper(self, structure_filepath):
+    @pytest.mark.parametrize('structure_filename', structures)
+    def test_run_riper(self, structure_filepath):
         structure_filename = os.path.basename(structure_filepath)
-        dp = get_define_template("ridft")
+        # Turbomole does not seem to recognize periodic and cell within the coord file
+        # even when they are reference in the control file with "$periodic file=coord"
+        # and "$cell file=coord"
         periodic = sdg('periodic', structure_filepath)
         cell = sdg('cell', structure_filepath)
-        assert run_itest("jobex", dp, structure_filename, "jobex_riper_{}".format(structure_filename),
-                         JobexOutput, arguments="-c 2", datagroups_options={'periodic': periodic,
-                                                                            'cell': cell,
-                                                                            'optcell': ''})
+        assert run_itest(["riper"], get_define_template("ridft"),
+                         structure_filename, "ridft_riper_{}_std".format(structure_filename), [ScfOutput],
+                         datagroups_options={'periodic': periodic,
+                                             'cell': cell})

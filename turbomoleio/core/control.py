@@ -184,11 +184,11 @@ class Gradient(MSONable):
         self.energies = np.array(energies)
         self.molecules = molecules
         self.periodicity = periodicity
-        if lattice_vectors:
+        if lattice_vectors is not None:
             self.lattice_vectors = np.array(lattice_vectors)
         else:
             self.lattice_vectors = None
-        if lattice_gradients:
+        if lattice_gradients is not None:
             self.lattice_gradients = np.array(lattice_gradients)
         else:
             self.lattice_gradients = None

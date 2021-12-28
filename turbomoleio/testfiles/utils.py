@@ -649,7 +649,8 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
             try:
                 ret_code = process.wait()
 
-                if ret_code or "ended normally" not in program_std_err:
+                # The riper executable does not echo "ended normally" in the std err file...
+                if ret_code or (executable != "riper" and "ended normally" not in program_std_err):
                     raise ItestError("Executable {} has failed with return code {}".format(executable, ret_code))
 
                 if out_parser:
