@@ -45,6 +45,8 @@ testlist:
     - h2o_std_mp2
   riper:
     - h_chain
+    - graphene
+    - bulk_LiH
   statpt:
     - aceton_cartesian
     - h3cbr_internal

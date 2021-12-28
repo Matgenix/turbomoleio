@@ -8,16 +8,16 @@
     "@module": "turbomoleio.output.data",
     "@class": "ScfEnergiesData",
     "@version": "1.1.0",
-    "total_energy": -1.1595574974,
-    "kinetic_energy": 1.058328347,
+    "total_energy": -76.2143772616,
+    "kinetic_energy": 75.3114188019,
     "potential_energy": null,
     "virial_theorem": null,
     "wavefunction_norm": null,
-    "coulomb_energy": -1.5316593353,
-    "xc_energy": -0.6862265092,
+    "coulomb_energy": -140.6546509484,
+    "xc_energy": -10.8711451151,
     "ts_energy": -0.0,
-    "free_energy": -1.1595574974,
-    "sigma0_energy": -1.1595574974
+    "free_energy": -76.2143772616,
+    "sigma0_energy": -76.2143772616
   },
   "electrostatic": null,
   "geometry": {
@@ -25,13 +25,13 @@
     "@class": "GeometryData",
     "@version": "1.1.0",
     "center_of_mass": [
-      1.88972612,
-      0.5,
+      1.16615753,
+      2.01984413,
       0.5
     ],
     "center_of_charge": [
-      1.88972612,
-      0.5,
+      1.16615753,
+      2.01984413,
       0.5
     ],
     "molecule": {
@@ -41,31 +41,31 @@
       "spin_multiplicity": 1,
       "sites": [
         {
-          "name": "H",
+          "name": "C",
           "species": [
             {
-              "element": "H",
+              "element": "C",
               "occu": 1
             }
           ],
           "xyz": [
-            0.4999999987760739,
-            0.2645886054515,
+            -2.1167088436119998e-08,
+            1.4251406459935192,
             0.2645886054515
           ],
           "properties": {}
         },
         {
-          "name": "H",
+          "name": "C",
           "species": [
             {
-              "element": "H",
+              "element": "C",
               "occu": 1
             }
           ],
           "xyz": [
-            1.500000001619994,
-            0.2645886054515,
+            1.2342080048567237,
+            0.7125703256426458,
             0.2645886054515
           ],
           "properties": {}
@@ -82,15 +82,15 @@
     "start_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-12-28 15:25:26.354000"
+      "string": "2021-12-28 15:29:48.624000"
     },
     "end_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-12-28 15:25:26.651000"
+      "string": "2021-12-28 15:29:59.904000"
     },
-    "cpu_time": 0.3,
-    "wall_time": 0.3
+    "cpu_time": 11.26,
+    "wall_time": 11.29
   },
   "tm": {
     "@module": "turbomoleio.output.data",

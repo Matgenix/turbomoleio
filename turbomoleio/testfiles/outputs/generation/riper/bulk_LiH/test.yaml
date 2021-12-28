@@ -6,16 +6,18 @@ define:
   template: "dscf"
   parameters:
     sym: c1
+    basis: SV(P)
 
 # Data groups to add to or change in the control file after running define
 datagroups:
   add:
-    periodic: "1"
-    cell: "\n   3.7794522492515403"
-    kpoints: "\n   nkpoints 4"
-    riper: "\n   sigma 0.01"
-#  change:
-#    scfconv: '8'
+    periodic: "3"
+    cell: "\n   5.345185132166401   5.345185132166401   5.345185132166402   60.0 60.0 60.0"
+    kpoints: "\n   nkpoints 1 1 1"
+    riper: "\n   lmaxmom 3\n   sigma 0.01\n   nctrgt 3\n   wsicl 2.0\n   epsbext 1.0d-2\n   thrints 1.0d-8\n   lenonly on"
+    optcell: ""
+  change:
+    scfconv: '5'
 
 # List of TM commands to be run
 commands:

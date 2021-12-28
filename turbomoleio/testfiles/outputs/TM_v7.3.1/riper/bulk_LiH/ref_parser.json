@@ -8,40 +8,40 @@
     "start_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-12-28 15:25:26.354000"
+      "string": "2021-12-28 18:56:39.327000"
     }
   },
   "centers": {
     "center_of_mass": [
-      1.88972612,
-      0.5,
-      0.5
+      0.67796736,
+      0.39142464,
+      0.27677902
     ],
     "center_of_charge": [
-      1.88972612,
-      0.5,
-      0.5
+      1.33629628,
+      0.77151102,
+      0.54554067
     ]
   },
   "coordinates": {
     "coords": [
       [
-        0.94486306,
-        0.5,
-        0.5
+        0.0,
+        0.0,
+        0.0
       ],
       [
-        2.83458919,
-        0.5,
-        0.5
+        5.34518513,
+        3.08604407,
+        2.18216269
       ]
     ],
     "species": [
-      "h",
+      "li",
       "h"
     ],
     "charges": [
-      1.0,
+      3.0,
       1.0
     ],
     "isotopes": [
@@ -61,12 +61,12 @@
   "cosmo_results": null,
   "electrostatic_moments": null,
   "timings": {
-    "cpu_time": 0.3,
-    "wall_time": 0.3,
+    "cpu_time": 9.23,
+    "wall_time": 9.27,
     "end_time": {
       "@module": "datetime",
       "@class": "datetime",
-      "string": "2021-12-28 15:25:26.651000"
+      "string": "2021-12-28 18:56:48.594000"
     }
   },
   "s2": null,
@@ -90,12 +90,12 @@
     "energy": null
   },
   "riper_scf_energies": {
-    "total_energy": -1.1595574974,
-    "kinetic_energy": 1.058328347,
-    "coulomb_energy": -1.5316593353,
-    "xc_energy": -0.6862265092,
+    "total_energy": -8.8791372082,
+    "kinetic_energy": 6.4311393735,
+    "coulomb_energy": -13.3676095567,
+    "xc_energy": -1.942667025,
     "ts_energy": -0.0,
-    "free_energy": -1.1595574974,
-    "sigma0_energy": -1.1595574974
+    "free_energy": -8.8791372082,
+    "sigma0_energy": -8.8791372082
   }
 }

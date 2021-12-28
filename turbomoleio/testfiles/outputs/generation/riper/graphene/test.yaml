@@ -10,9 +10,9 @@ define:
 # Data groups to add to or change in the control file after running define
 datagroups:
   add:
-    periodic: "1"
-    cell: "\n   3.7794522492515403"
-    kpoints: "\n   nkpoints 4"
+    periodic: "2"
+    cell: "\n   4.664630258336029   4.664630258336029   120.00000085999999"
+    kpoints: "\n   nkpoints 2 2"
     riper: "\n   sigma 0.01"
 #  change:
 #    scfconv: '8'

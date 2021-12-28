@@ -4,7 +4,7 @@
  Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
 
 
-    2021-12-26 16:35:48.368 
+    2021-12-28 15:25:26.354 
 
  Number of MKL threads:      1
 
@@ -17,7 +17,6 @@
               assign orbital basis set names as defaults
               read basis sets from /home/davidwaroquiers/Softwares/Turbomole/evaluation_license/turbolinux731/jbasen/
               (basis sets have been saved in file auxbasis)
-  Keyword $riper not found - using default options 
     
     *************************************************************************
     *************************************************************************
@@ -76,11 +75,41 @@
               +--------------------------------------------------+
 
                     atomic coordinates            atom    charge  isotop
-          0.94486306    0.00000000    0.00000000    h      1.000     0
-          2.83458919    0.00000000    0.00000000    h      1.000     0
+          0.94486306    0.50000000    0.50000000    h      1.000     0
+          2.83458919    0.50000000    0.50000000    h      1.000     0
  
-       center of nuclear mass  :    1.88972612    0.00000000    0.00000000
-       center of nuclear charge:    1.88972612    0.00000000    0.00000000
+       center of nuclear mass  :    1.88972612    0.50000000    0.50000000
+       center of nuclear charge:    1.88972612    0.50000000    0.50000000
+
+
+              +--------------------------------------------------+
+              | Periodic system found: PBC structure information |
+              +--------------------------------------------------+
+
+                           Cell parameters (au,deg.)
+   +-------------------------------------------------------------------------
+   |      |a|                                                                |
+   +-------------------------------------------------------------------------
+       3.77945225
+   +-------------------------------------------------------------------------
+
+       Shortest interatomic distance (bohr):           1.8897
+
+       Periodicity in 1 dimensions
+
+       Direct space cell vectors (au):
+               a      3.77945225      0.00000000      0.00000000
+
+       Reciprocal space cell vectors (au):
+               a      1.66245924     -0.00000000     -0.00000000
+
+              +--------------------------------------------------+
+              |        Fractional crystal coordinates            |
+              +--------------------------------------------------+
+
+                atom            fractional coordinates
+                  h     0.25000000    0.50000000    0.50000000
+                  h     0.75000000    0.50000000    0.50000000
 
    * BASIS SET information:
 
@@ -133,18 +162,36 @@
        Energy and gradient calculation 
        Translation/rotation projected out of the gradient vector 
        Threshold for integrals neglect (differential overlap):    0.3342E-09
+       Diagonalization of overlap matrices 
+       Threshold for neglect of eigenvalues of overlap matrices:   0.1000E-05
        Diagonalization method set to:                                2
        Maximum number of SCF iterations included in the DIIS:        4
        Automatic orbital shift for HOMO-LUMO gap below:           0.1000E+00
+
+       Fractional occupation numbers with Gaussian smearing 
+         width of the smearing:                                   0.1000E-01
+               
+              +--------------------------------------------------+
+              |                 K-POINT MESH                     |
+              +--------------------------------------------------+
+               
+       Total number of k points used for density integration:      4
+       Number of symmetry distinct k points used:                  2
+
+       Reciprocal space cell vector (au):
+               a      1.66245924     -0.00000000     -0.00000000
+       Number of k-points along this vector:     4
+       Fractional coordinates:
+         -0.3750  -0.1250   0.1250   0.3750
                
               +--------------------------------------------------+
               |      SCREENING OF BASIS FUNCTION PRODUCTS        |
               +--------------------------------------------------+
                
          Threshold for shell products neglect:          0.3E-09
-         Tolerance for shell products extents:          0.1E-05
-         Number of {mu,nu} shell products:                   10
-         Number of primitive basis function products:        35
+         Tolerance for shell products extents:          0.1E-07
+         Number of {mu,nu,L} shell products:                 82
+         Number of primitive basis function products:       186
         
                
               +--------------------------------------------------+
@@ -154,7 +201,20 @@
 
  reading orbital data $scfmo  from file mos
  orbital characterization : expanded
-  Gamma point orbitals have been orthonormalized
+
+  Diagonalization of the overlap matrix requested 
+    Threshold for eigenvalues:    0.1000E-05
+    Total number of vectors:           4
+    Largest eigenvalue:          0.5087E+01
+    - for the k-point:                1
+    Smallest eigenvalue:         0.4503E-04
+    - for the k-point:                1
+    Largest number of vectors:        4
+    - for the k-point:                1
+    Smallest number of vectors:       4
+    - for the k-point:                1
+
+  BANDS have been orthonormalized
                
               +--------------------------------------------------+
               |           DENSITY FUNCTIONAL THEORY              |
@@ -178,7 +238,7 @@
        Specified sharpness parameter is .64000D+00.
        Calculation of weight derivatives is switched OFF
        Maximum number of grid points per atom:             5340
-       Total number of grid points of the system:          10174
+       Total number of grid points of the system:          9668
                
               +--------------------------------------------------+
               |        CONTINUOUS FAST MULTIPOLE METHOD          |
@@ -187,17 +247,31 @@
    Continuous Fast Multipole Method for the Coulomb term
      order of multipole expansions:         20
      well-separateness criterion:         3.0000
-     total number of centers:               18
-     number of octree levels:                4
-     number of boxes at all levels:          7
-     max. number of NF boxes per box:        4
-     length of the lowest level box:      3.4318
-     length of the highest level box:    27.4548
+     local multipole expansions switched on
+     local expansions incremented by:        2
+     total number of centers:               90
+     number of octree levels:                3
+     number of boxes at all levels:          5
+     max. number of NF boxes per box:        2
+     length of the lowest level box:     20.2579
+     length of the highest level box:    81.0317
+ 
+   Periodic boundary conditions - crystal field construction:
+     extent of the nuclei:              0.9449
+     extent of electron density:       18.9160
+     extent of auxiliary density:       8.8476
+     final crystal field radius:       42.5432
+     number of lattice vectors:           23
  
    RI core memory information
      core memory allocated for RI integrals:           1 MB
      maximum memory needed for RI integrals:           1 MB
  
+         ------------------ Fractional Occupations ----------------
+           Fermi level           =             -0.5746133979
+           Electrons(/UC)        =              2.0000000000
+           Current HOMO-LUMO gap =     0.26325E+01
+         ----------------------------------------------------------
                
               +--------------------------------------------------+
               |                SCF iteration    1                |
@@ -206,17 +280,26 @@
           Number of electrons from P*S  =     2.00000000000000
            
           Numerical integration of the XC term:
-          Number of electrons           =     2.00000081253536
+          Number of electrons           =     2.00000041814216
            
-          SCF energy change             = -1.136D+00
+         ------------------ Fractional Occupations ----------------
+           Fermi level           =             -0.4239139540
+           Electrons(/UC)        =              2.0000000000
+           Current HOMO-LUMO gap =     0.12447E+01
+         ----------------------------------------------------------
+          SCF energy change             = -1.315D+00
+          Free energy change            = -1.315D+00
           new damping factor            =      0.700
   
               +--------------------------------------------------+
-              | KINETIC ENERGY       =           0.7779276333    |
-              | COULOMB ENERGY       =          -1.3309920031    |
-              | EXCH. & CORR. ENERGY =          -0.5833392142    |
+              | KINETIC ENERGY       =           0.5286647727    |
+              | COULOMB ENERGY       =          -1.2492006755    |
+              | EXCH. & CORR. ENERGY =          -0.5943184914    |
               |==================================================|
-              | TOTAL ENERGY         =          -1.1364035840    |
+              | TOTAL ENERGY         =          -1.3148543942    |
+              | T*S                  =          -0.0000000000    |
+              | FREE  ENERGY         =          -1.3148543942    |
+              | ENERGY (sigma->0)    =          -1.3148543942    |
               +--------------------------------------------------+
   
                
@@ -227,19 +310,28 @@
           Number of electrons from P*S  =     2.00000000000000
            
           Numerical integration of the XC term:
-          Number of electrons           =     2.00000058802199
+          Number of electrons           =     1.99999934092846
            
-          Norm of current diis error    =  1.023D-01
-          RMS of difference density     =  7.877D-03
-          SCF energy change             = -6.926D-03
-          new damping factor            =      0.650
+          Norm of current diis error    =  3.151D-01
+         ------------------ Fractional Occupations ----------------
+           Fermi level           =             -0.2945431373
+           Electrons(/UC)        =              2.0000000000
+           Current HOMO-LUMO gap =     0.68813E+00
+         ----------------------------------------------------------
+          RMS of difference density     =  2.369D-02
+          SCF energy change             =  1.972D-01
+          Free energy change            =  1.972D-01
+          new damping factor            =      0.750
   
               +--------------------------------------------------+
-              | KINETIC ENERGY       =           0.8308256800    |
-              | COULOMB ENERGY       =          -1.3744072783    |
-              | EXCH. & CORR. ENERGY =          -0.5997484686    |
+              | KINETIC ENERGY       =           0.9888698645    |
+              | COULOMB ENERGY       =          -1.4478860459    |
+              | EXCH. & CORR. ENERGY =          -0.6586301368    |
               |==================================================|
-              | TOTAL ENERGY         =          -1.1433300669    |
+              | TOTAL ENERGY         =          -1.1176463182    |
+              | T*S                  =          -0.0000000000    |
+              | FREE  ENERGY         =          -1.1176463182    |
+              | ENERGY (sigma->0)    =          -1.1176463182    |
               +--------------------------------------------------+
   
                
@@ -250,19 +342,28 @@
           Number of electrons from P*S  =     2.00000000000000
            
           Numerical integration of the XC term:
-          Number of electrons           =     2.00000039108466
+          Number of electrons           =     1.99999922070543
            
-          Norm of current diis error    =  5.570D-02
-          RMS of difference density     =  7.257D-03
-          SCF energy change             = -3.840D-03
-          new damping factor            =      0.550
+          Norm of current diis error    =  1.910D-01
+         ------------------ Fractional Occupations ----------------
+           Fermi level           =             -0.2479365525
+           Electrons(/UC)        =              2.0000000000
+           Current HOMO-LUMO gap =     0.48091E+00
+         ----------------------------------------------------------
+          RMS of difference density     =  2.952D-03
+          SCF energy change             = -2.245D-02
+          Free energy change            = -2.245D-02
+          new damping factor            =      0.700
   
               +--------------------------------------------------+
-              | KINETIC ENERGY       =           0.8801986327    |
-              | COULOMB ENERGY       =          -1.4126282821    |
-              | EXCH. & CORR. ENERGY =          -0.6147407875    |
+              | KINETIC ENERGY       =           1.0049936918    |
+              | COULOMB ENERGY       =          -1.4772240978    |
+              | EXCH. & CORR. ENERGY =          -0.6678637398    |
               |==================================================|
-              | TOTAL ENERGY         =          -1.1471704369    |
+              | TOTAL ENERGY         =          -1.1400941458    |
+              | T*S                  =          -0.0000000000    |
+              | FREE  ENERGY         =          -1.1400941458    |
+              | ENERGY (sigma->0)    =          -1.1400941458    |
               +--------------------------------------------------+
   
                
@@ -273,19 +374,28 @@
           Number of electrons from P*S  =     2.00000000000000
            
           Numerical integration of the XC term:
-          Number of electrons           =     2.00000026676530
+          Number of electrons           =     1.99999913273883
            
-          Norm of current diis error    =  2.581D-02
-          RMS of difference density     =  4.788D-03
-          SCF energy change             = -1.280D-03
-          new damping factor            =      0.450
+          Norm of current diis error    =  1.083D-01
+         ------------------ Fractional Occupations ----------------
+           Fermi level           =             -0.2385603634
+           Electrons(/UC)        =              2.0000000000
+           Current HOMO-LUMO gap =     0.39800E+00
+         ----------------------------------------------------------
+          RMS of difference density     =  3.911D-03
+          SCF energy change             = -1.284D-02
+          Free energy change            = -1.284D-02
+          new damping factor            =      0.600
   
               +--------------------------------------------------+
-              | KINETIC ENERGY       =           0.9129027966    |
-              | COULOMB ENERGY       =          -1.4368465976    |
-              | EXCH. & CORR. ENERGY =          -0.6245064008    |
+              | KINETIC ENERGY       =           1.0197127444    |
+              | COULOMB ENERGY       =          -1.4982985427    |
+              | EXCH. & CORR. ENERGY =          -0.6743469054    |
               |==================================================|
-              | TOTAL ENERGY         =          -1.1484502018    |
+              | TOTAL ENERGY         =          -1.1529327038    |
+              | T*S                  =          -0.0000000000    |
+              | FREE  ENERGY         =          -1.1529327038    |
+              | ENERGY (sigma->0)    =          -1.1529327038    |
               +--------------------------------------------------+
   
                
@@ -296,20 +406,28 @@
           Number of electrons from P*S  =     2.00000000000000
            
           Numerical integration of the XC term:
-          Number of electrons           =     2.00000020113854
+          Number of electrons           =     1.99999906269364
            
-          Norm of current diis error    =  9.881D-03
-          Orbitals were orthonormalized
-          RMS of difference density     =  2.602D-03
-          SCF energy change             = -3.003D-04
-          new damping factor            =      0.350
+          Norm of current diis error    =  5.502D-02
+         ------------------ Fractional Occupations ----------------
+           Fermi level           =             -0.2447242855
+           Electrons(/UC)        =              2.0000000000
+           Current HOMO-LUMO gap =     0.36490E+00
+         ----------------------------------------------------------
+          RMS of difference density     =  3.277D-03
+          SCF energy change             = -5.067D-03
+          Free energy change            = -5.067D-03
+          new damping factor            =      0.500
   
               +--------------------------------------------------+
-              | KINETIC ENERGY       =           0.9306748647    |
-              | COULOMB ENERGY       =          -1.4496662114    |
-              | EXCH. & CORR. ENERGY =          -0.6297591506    |
+              | KINETIC ENERGY       =           1.0352727266    |
+              | COULOMB ENERGY       =          -1.5137227707    |
+              | EXCH. & CORR. ENERGY =          -0.6795493784    |
               |==================================================|
-              | TOTAL ENERGY         =          -1.1487504973    |
+              | TOTAL ENERGY         =          -1.1579994225    |
+              | T*S                  =          -0.0000000000    |
+              | FREE  ENERGY         =          -1.1579994225    |
+              | ENERGY (sigma->0)    =          -1.1579994225    |
               +--------------------------------------------------+
   
                
@@ -320,19 +438,28 @@
           Number of electrons from P*S  =     2.00000000000000
            
           Numerical integration of the XC term:
-          Number of electrons           =     2.00000017333181
+          Number of electrons           =     1.99999900663256
            
-          Norm of current diis error    =  3.098D-03
-          RMS of difference density     =  1.119D-03
-          SCF energy change             = -4.663D-05
-          new damping factor            =      0.250
+          Norm of current diis error    =  2.023D-02
+         ------------------ Fractional Occupations ----------------
+           Fermi level           =             -0.2462212069
+           Electrons(/UC)        =              2.0000000000
+           Current HOMO-LUMO gap =     0.35219E+00
+         ----------------------------------------------------------
+          RMS of difference density     =  2.014D-03
+          SCF energy change             = -1.312D-03
+          Free energy change            = -1.312D-03
+          new damping factor            =      0.400
   
               +--------------------------------------------------+
-              | KINETIC ENERGY       =           0.9383146887    |
-              | COULOMB ENERGY       =          -1.4551062302    |
-              | EXCH. & CORR. ENERGY =          -0.6320055907    |
+              | KINETIC ENERGY       =           1.0497765505    |
+              | COULOMB ENERGY       =          -1.5252865727    |
+              | EXCH. & CORR. ENERGY =          -0.6838014928    |
               |==================================================|
-              | TOTAL ENERGY         =          -1.1487971322    |
+              | TOTAL ENERGY         =          -1.1593115150    |
+              | T*S                  =          -0.0000000000    |
+              | FREE  ENERGY         =          -1.1593115150    |
+              | ENERGY (sigma->0)    =          -1.1593115150    |
               +--------------------------------------------------+
   
                
@@ -343,19 +470,28 @@
           Number of electrons from P*S  =     2.00000000000000
            
           Numerical integration of the XC term:
-          Number of electrons           =     2.00000016385618
+          Number of electrons           =     1.99999898546220
            
-          Norm of current diis error    =  7.826D-04
-          RMS of difference density     =  3.837D-04
-          SCF energy change             = -4.767D-06
-          new damping factor            =      0.150
+          Norm of current diis error    =  6.647D-03
+         ------------------ Fractional Occupations ----------------
+           Fermi level           =             -0.2467135598
+           Electrons(/UC)        =              2.0000000000
+           Current HOMO-LUMO gap =     0.34772E+00
+         ----------------------------------------------------------
+          RMS of difference density     =  9.255D-04
+          SCF energy change             = -2.175D-04
+          Free energy change            = -2.175D-04
+          new damping factor            =      0.300
   
               +--------------------------------------------------+
-              | KINETIC ENERGY       =           0.9409332575    |
-              | COULOMB ENERGY       =          -1.4569611934    |
-              | EXCH. & CORR. ENERGY =          -0.6327739635    |
+              | KINETIC ENERGY       =           1.0555138032    |
+              | COULOMB ENERGY       =          -1.5296063709    |
+              | EXCH. & CORR. ENERGY =          -0.6854364244    |
               |==================================================|
-              | TOTAL ENERGY         =          -1.1488018995    |
+              | TOTAL ENERGY         =          -1.1595289921    |
+              | T*S                  =          -0.0000000000    |
+              | FREE  ENERGY         =          -1.1595289921    |
+              | ENERGY (sigma->0)    =          -1.1595289921    |
               +--------------------------------------------------+
   
                
@@ -366,19 +502,92 @@
           Number of electrons from P*S  =     2.00000000000000
            
           Numerical integration of the XC term:
-          Number of electrons           =     2.00000016126337
+          Number of electrons           =     1.99999897817357
            
-          Norm of current diis error    =  1.486D-04
-          RMS of difference density     =  1.052D-04
-          SCF energy change             = -3.133D-07
+          Norm of current diis error    =  1.882D-03
+         ------------------ Fractional Occupations ----------------
+           Fermi level           =             -0.2468976278
+           Electrons(/UC)        =              2.0000000000
+           Current HOMO-LUMO gap =     0.34636E+00
+         ----------------------------------------------------------
+          RMS of difference density     =  3.581D-04
+          SCF energy change             = -2.616D-05
+          Free energy change            = -2.616D-05
           new damping factor            =      0.200
   
               +--------------------------------------------------+
-              | KINETIC ENERGY       =           0.9416511208    |
-              | COULOMB ENERGY       =          -1.4574688682    |
-              | EXCH. & CORR. ENERGY =          -0.6329844654    |
+              | KINETIC ENERGY       =           1.0575342589    |
+              | COULOMB ENERGY       =          -1.5310849629    |
+              | EXCH. & CORR. ENERGY =          -0.6860044509    |
               |==================================================|
-              | TOTAL ENERGY         =          -1.1488022128    |
+              | TOTAL ENERGY         =          -1.1595551549    |
+              | T*S                  =          -0.0000000000    |
+              | FREE  ENERGY         =          -1.1595551549    |
+              | ENERGY (sigma->0)    =          -1.1595551549    |
+              +--------------------------------------------------+
+  
+               
+              +--------------------------------------------------+
+              |                SCF iteration    9                |
+              +--------------------------------------------------+
+  
+          Number of electrons from P*S  =     2.00000000000000
+           
+          Numerical integration of the XC term:
+          Number of electrons           =     1.99999897597174
+           
+          Norm of current diis error    =  4.294D-04
+         ------------------ Fractional Occupations ----------------
+           Fermi level           =             -0.2467283520
+           Electrons(/UC)        =              2.0000000000
+           Current HOMO-LUMO gap =     0.34602E+00
+         ----------------------------------------------------------
+          RMS of difference density     =  1.166D-04
+          SCF energy change             = -2.219D-06
+          Free energy change            = -2.219D-06
+          new damping factor            =      0.100
+  
+              +--------------------------------------------------+
+              | KINETIC ENERGY       =           1.0581499463    |
+              | COULOMB ENERGY       =          -1.5315306439    |
+              | EXCH. & CORR. ENERGY =          -0.6861766761    |
+              |==================================================|
+              | TOTAL ENERGY         =          -1.1595573737    |
+              | T*S                  =          -0.0000000000    |
+              | FREE  ENERGY         =          -1.1595573737    |
+              | ENERGY (sigma->0)    =          -1.1595573737    |
+              +--------------------------------------------------+
+  
+               
+              +--------------------------------------------------+
+              |                SCF iteration   10                |
+              +--------------------------------------------------+
+  
+          Number of electrons from P*S  =     2.00000000000000
+           
+          Numerical integration of the XC term:
+          Number of electrons           =     1.99999897543005
+           
+          Norm of current diis error    =  6.968D-05
+         ------------------ Fractional Occupations ----------------
+           Fermi level           =             -0.2468455649
+           Electrons(/UC)        =              2.0000000000
+           Current HOMO-LUMO gap =     0.34596E+00
+         ----------------------------------------------------------
+          RMS of difference density     =  3.070D-05
+          SCF energy change             = -1.203D-07
+          Free energy change            = -1.203D-07
+          new damping factor            =      0.150
+  
+              +--------------------------------------------------+
+              | KINETIC ENERGY       =           1.0583018554    |
+              | COULOMB ENERGY       =          -1.5316402402    |
+              | EXCH. & CORR. ENERGY =          -0.6862191092    |
+              |==================================================|
+              | TOTAL ENERGY         =          -1.1595574940    |
+              | T*S                  =          -0.0000000000    |
+              | FREE  ENERGY         =          -1.1595574940    |
+              | ENERGY (sigma->0)    =          -1.1595574940    |
               +--------------------------------------------------+
   
                
@@ -389,28 +598,31 @@
           Number of electrons from P*S  =     2.00000000000000
            
           Numerical integration of the XC term:
-          Number of electrons           =     2.00000016072825
+          Number of electrons           =     1.99999897533574
            
   
-              SCF converged within      8 cycles.
+              SCF converged within     10 cycles.
   
               +--------------------------------------------------+
               |                FINAL ENERGIES                    |
               +--------------------------------------------------+
-              | KINETIC ENERGY       =           0.9417993516    |
-              | COULOMB ENERGY       =          -1.4575736519    |
-              | EXCH. & CORR. ENERGY =          -0.6330279240    |
+              | KINETIC ENERGY       =           1.0583283470    |
+              | COULOMB ENERGY       =          -1.5316593353    |
+              | EXCH. & CORR. ENERGY =          -0.6862265092    |
               |==================================================|
-              | TOTAL ENERGY         =          -1.1488022244    |
+              | TOTAL ENERGY         =          -1.1595574974    |
+              | T*S                  =          -0.0000000000    |
+              | FREE  ENERGY         =          -1.1595574974    |
+              | ENERGY (sigma->0)    =          -1.1595574974    |
               +--------------------------------------------------+
   
   
          ------------------ Fermi Level Statistics ----------------
-             Lowest unoccupied band =       -0.011655
-             Highest occupied band  =       -0.346798
-             Band gap               =        0.335143
-             Band gap middle        =       -0.179226
-             Fermi level            =       -0.179226
+             Lowest unoccupied band =        0.041555
+             Highest occupied band  =       -0.304402
+             Band gap               =        0.345957
+             Band gap middle        =       -0.131424
+             Fermi level            =       -0.246846
          ----------------------------------------------------------
 
  <geterg> : there is no data group $energy 
@@ -421,7 +633,7 @@
 
  orbitals $scfmo  will be written to file mos
 
-     Translation & rotation projected out of the gradient vector
+     Translation projected out of the gradient vector
 
 
  <getgrd> : data group $grad  is missing 
@@ -433,63 +645,71 @@
     ------------------------------------------------------------------------
     module                         sec     %               sec     %
     ------------------------------------------------------------------------
-    RIPER                         0.1   99.94            0.1  100.00   1.0
-    Preliminaries                 0.0   10.82            0.0    9.88   1.1
-    BANDS init                    0.0    0.82            0.0    0.00   0.7
-    DFT grid setup                0.0    3.06            0.0    3.70   0.8
-    DFT atomic grids              0.0    1.19            0.0    1.23   1.0
-    DFT system grid               0.0    0.63            0.0    1.23   0.5
-    DFT octree                    0.0    1.13            0.0    1.23   0.9
-    CFMM preliminaries            0.0    0.47            0.0    0.00   0.4
-    RI core setup                 0.0    0.36            0.0    0.00   0.3
-    SCF                           0.1   75.43            0.1   76.54   1.0
-    nuclear energy                0.0    0.57            0.0    1.23   0.5
-    SCF looop                     0.1   72.47            0.1   72.84   1.0
-    XC matrix                     0.0   52.72            0.0   50.62   1.0
-    Coulomb total                 0.0   15.64            0.0   16.05   1.0
-    gamma vector                  0.0    5.54            0.0    7.41   0.7
-    gamma CNF FF                  0.0    4.52            0.0    6.17   0.7
-    gamma CNF FF mom              0.0    0.51            0.0    1.23   0.4
-    gamma CNF FF p. 1             0.0    1.87            0.0    3.70   0.5
-    gamma CNF FF p. 2             0.0    0.11            0.0    0.00   0.1
-    gamma CNF FF p. 3             0.0    1.40            0.0    0.00   1.1
-    gamma CNF NF                  0.0    0.80            0.0    1.23   0.6
-    gamma CNF NF p. 1             0.0    0.67            0.0    1.23   0.5
-    Coulomb matrix                0.0    9.76            0.0    8.64   1.1
-    jmat CNF FF                   0.0    5.15            0.0    3.70   1.4
-    jmat CNF FF mom               0.0    0.42            0.0    0.00   0.3
-    jmat CNF FF p. 1              0.0    2.58            0.0    1.23   2.1
-    jmat CNF FF p. 3              0.0    1.33            0.0    2.47   0.5
-    jmat CNF NF                   0.0    0.44            0.0    1.23   0.4
-    elec. en. aux                 0.0    3.89            0.0    3.70   1.0
-    DIIS                          0.0    0.76            0.0    2.47   0.3
-    SCF solve                     0.0    0.31            0.0    0.00   0.2
-    D build                       0.0    0.15            0.0    0.00   0.1
-    MO dump                       0.0    2.23            0.0    3.70   0.6
-    mos dump                      0.0    0.98            0.0    1.23   0.8
-    Gradient                      0.0    8.99            0.0    8.64   1.0
-    grad XC                       0.0    6.29            0.0    6.17   1.0
-    grad Coulomb                  0.0    2.11            0.0    2.47   0.8
-    grad FF CNF                   0.0    1.74            0.0    2.47   0.7
-    CNF FF dnuc                   0.0    0.58            0.0    1.23   0.5
-    CNF FF daux                   0.0    0.48            0.0    0.00   0.4
-    CNF FF drho                   0.0    0.65            0.0    1.23   0.5
-    grad NF CNF                   0.0    0.32            0.0    0.00   0.3
-    CNF NF drhoaux                0.0    0.13            0.0    0.00   0.1
-    CNF NF dauxaux                0.0    0.11            0.0    0.00   0.1
-    Properties                    0.0    0.18            0.0    0.00   0.1
+    RIPER                         0.3   99.98            0.3  100.00   1.0
+    Preliminaries                 0.0    3.71            0.0    3.65   1.0
+    BANDS init                    0.0    0.27            0.0    0.33   0.8
+    DFT grid setup                0.0    3.77            0.0    3.65   1.0
+    DFT atomic grids              0.0    0.31            0.0    0.33   0.9
+    DFT system grid               0.0    3.06            0.0    2.99   1.0
+    DFT octree                    0.0    0.37            0.0    0.33   1.1
+    CFMM preliminaries            0.0    0.61            0.0    0.66   0.9
+    RI core setup                 0.0    0.09            0.0    0.33   0.3
+    PQ matrix                     0.0    0.44            0.0    0.33   1.3
+    PQ CFF                        0.0    0.40            0.0    0.33   1.2
+    SCF                           0.2   82.51            0.2   82.72   1.0
+    nuclear energy                0.0    0.18            0.0    0.33   0.5
+    jmat nuclear                  0.0    0.20            0.0    0.00   0.6
+    FON                           0.0    0.17            0.0    0.00   0.5
+    SCF looop                     0.2   81.47            0.2   81.73   1.0
+    XC matrix                     0.2   67.13            0.2   66.78   1.0
+    Coulomb total                 0.0   12.54            0.0   12.62   1.0
+    gamma vector                  0.0    5.42            0.0    5.65   0.9
+    gamma CFF                     0.0    1.19            0.0    1.00   1.2
+    gamma CNF FF                  0.0    2.89            0.0    3.65   0.8
+    gamma CNF FF mom              0.0    0.80            0.0    1.00   0.8
+    gamma CNF FF p. 1             0.0    0.59            0.0    1.33   0.4
+    gamma CNF FF p. 2             0.0    0.86            0.0    0.33   2.5
+    gamma CNF FF p. 3             0.0    0.44            0.0    0.33   1.3
+    gamma CNF NF                  0.0    1.25            0.0    0.66   1.8
+    gamma CNF NF p. 1             0.0    0.63            0.0    0.33   1.9
+    gamma CNF NF p. 2             0.0    0.55            0.0    0.33   1.6
+    Coulomb matrix                0.0    7.01            0.0    6.64   1.0
+    jmat CFF                      0.0    1.25            0.0    1.33   0.9
+    jmat CNF FF                   0.0    2.82            0.0    2.66   1.0
+    jmat CNF FF mom               0.0    0.13            0.0    0.00   0.4
+    jmat CNF FF p. 1              0.0    0.58            0.0    0.33   1.7
+    jmat CNF FF p. 2              0.0    0.89            0.0    1.00   0.9
+    jmat CNF FF p. 3              0.0    0.43            0.0    0.33   1.3
+    jmat CNF NF                   0.0    0.23            0.0    0.00   0.7
+    elec. en. aux                 0.0    2.60            0.0    2.66   1.0
+    DIIS                          0.0    0.23            0.0    0.33   0.7
+    SCF solve                     0.0    0.18            0.0    0.33   0.5
+    MO dump                       0.0    0.92            0.0    1.66   0.5
+    mos dump                      0.0    0.24            0.0    0.33   0.7
+    Gradient                      0.0    8.60            0.0    8.64   1.0
+    grad XC                       0.0    5.90            0.0    5.98   1.0
+    grad Coulomb                  0.0    2.54            0.0    2.66   0.9
+    grad CFF                      0.0    0.39            0.0    0.33   1.2
+    CFF drho                      0.0    0.28            0.0    0.33   0.8
+    grad FF CNF                   0.0    0.93            0.0    1.00   0.9
+    CNF FF dnuc                   0.0    0.23            0.0    0.33   0.7
+    CNF FF daux                   0.0    0.25            0.0    0.33   0.7
+    CNF FF drho                   0.0    0.44            0.0    0.33   1.3
+    grad NF CNF                   0.0    1.20            0.0    1.33   0.9
+    CNF NF drhoaux                0.0    0.66            0.0    0.66   1.0
+    CNF NF drhonuc                0.0    0.45            0.0    0.66   0.7
     ------------------------------------------------------------------------
-    sum                           0.3  400.76            0.3  406.17   1.0
+    sum                           1.2  411.58            1.2  411.96   1.0
     ------------------------------------------------------------------------
 
 
     ------------------------------------------------------------------------
-         total  cpu-time :   0.08 seconds
-         total wall-time :   0.08 seconds
+         total  cpu-time :   0.30 seconds
+         total wall-time :   0.30 seconds
     ------------------------------------------------------------------------
 
    ****  riper : all done  ****
 
 
-    2021-12-26 16:35:48.446 
+    2021-12-28 15:25:26.651 
 

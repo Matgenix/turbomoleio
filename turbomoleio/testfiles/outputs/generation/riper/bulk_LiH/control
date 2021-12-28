@@ -11,20 +11,22 @@ $optimize
  global     off
  basis      off
 $atoms
-h  1-2                                                                         \
-   basis =h def-SV(P)
+li 1                                                                           \
+   basis =li SV(P)
+h  2                                                                           \
+   basis =h SV(P)
 $basis    file=basis
 $rundimensions
-   dim(fock,dens)=10
+   dim(fock,dens)=39
    natoms=2
-   nshell=4
-   nbf(CAO)=4
-   dim(trafo[SAO<-->AO/CAO])=4
+   nshell=6
+   nbf(CAO)=8
+   dim(trafo[SAO<-->AO/CAO])=8
    rhfshells=1
-   nbf(AO)=4
+   nbf(AO)=8
 $scfmo   file=mos
 $closed shells
- a       1                                      ( 2 )
+ a       1-2                                    ( 2 )
 $scfiterlimit      200
 $thize     0.10000000E-04
 $thime        5
@@ -59,14 +61,21 @@ $forceapprox    file=forceapprox
 $dft
    functional b-p
    gridsize   m3
-$scfconv   6
 $scfdamp   start=0.700  step=0.050  min=0.050
 $last step     define
-$periodic 1
+$periodic 3
 $cell
-   3.7794522492515403
+   5.345185132166401   5.345185132166401   5.345185132166402   60.0 60.0 60.0
 $kpoints
-   nkpoints 4
+   nkpoints 1 1 1
 $riper
+   lmaxmom 3
    sigma 0.01
+   nctrgt 3
+   wsicl 2.0
+   epsbext 1.0d-2
+   thrints 1.0d-8
+   lenonly on
+$optcell
+$scfconv 5
 $end
