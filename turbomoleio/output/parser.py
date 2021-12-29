@@ -2190,7 +2190,8 @@ class Parser:
         Information about periodicity.
 
         Returns:
-            dict with "energy_only".
+            dict with "periodicity", "tm_lattice_params", "shortest_interatomic_distance",
+                "direct_space_vectors", "reciprocal_space_vectors".
         """
         r = r"Periodic system found\: PBC structure information.*"
         r += r"Reciprocal space cell vectors \(au\)\:\s+"

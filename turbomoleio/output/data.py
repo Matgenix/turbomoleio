@@ -1500,3 +1500,94 @@ class MP2Results(BaseData):
             return None
 
         return cls(**data)
+
+
+class PeriodicityData(BaseData):
+    """
+    Information about periodicity
+    """
+
+    def __init__(self, periodicity=None, lattice_params=None,
+                 shortest_interatomic_distance=None,
+                 direct_space_vectors=None, reciprocal_space_vectors=None):
+        """
+        Args:
+            periodicity (int): Periodicity of the system (1, 2 or 3).
+            lattice_params: Lattice parameters of the system (in Angstroms).
+                For 1D systems, a single number: [a]
+                For 2D systems, three numbers: [a, b, gamma], i.e. the two lattice
+                    parameters and the angle between them.
+                For 3D systems, three numbers: [a, b, c, alpha, beta, gamma], i.e.
+                    three two lattice parameters and the angles between them.
+            shortest_interatomic_distance: Shortest interatomic distance in the
+                system (in Angstroms).
+            direct_space_vectors: Lattice vectors of the system (in Angstroms).
+                The first vector will always be aligned with the x cartesian direction.
+                For 2D and 3D, the second vector is always in the xy cartesian plane.
+            reciprocal_space_vectors: Reciprocal lattice vectors of the system (in Angstroms^-1).
+                The physics definition of the reciprocal lattice vectors is used here, i.e.
+                    b1 = 2*pi/V * (a2 x a3)
+                    b2 = 2*pi/V * (a3 x a1)
+                    b3 = 2*pi/V * (a1 x a2)
+                The crystallographer's definition is easily recovered as:
+                    b'1 = b1 / (2*pi)
+                    b'2 = b2 / (2*pi)
+                    b'3 = b3 / (2*pi)
+
+        Returns:
+            PeriodicityData.
+
+        """
+        self.periodicity = periodicity
+        self.lattice_params = lattice_params
+        self.shortest_interatomic_distance = shortest_interatomic_distance
+        self.direct_space_vectors = direct_space_vectors
+        self.reciprocal_space_vectors = reciprocal_space_vectors
+
+    @classmethod
+    def from_parser(cls, parser):
+        """
+        Generates an instance of PeriodicityData from a parser based on the stdout
+        of a Turbomole executable. Returns None if no data could be parsed.
+
+        Args:
+            parser (Parser): the parser to be used to extract the data.
+
+        Returns:
+            PeriodicityData.
+        """
+        data = parser.periodicity_data
+        if not data:
+            return None
+
+        periodicity = data["periodicity"]
+        if periodicity == 1:
+            # a
+            lattice_params = [bohr_to_ang * data["tm_lattice_params"][0]]
+        elif periodicity == 2:
+            # a, b, gamma
+            lattice_params = [bohr_to_ang * data["tm_lattice_params"][0],
+                              bohr_to_ang * data["tm_lattice_params"][1],
+                              data["tm_lattice_params"][2]]
+        elif periodicity == 3:
+            # a, b, c, alpha, beta, gamma
+            lattice_params = [bohr_to_ang * data["tm_lattice_params"][0],
+                              bohr_to_ang * data["tm_lattice_params"][1],
+                              bohr_to_ang * data["tm_lattice_params"][2],
+                              data["tm_lattice_params"][3],
+                              data["tm_lattice_params"][4],
+                              data["tm_lattice_params"][5]]
+        else:
+            raise RuntimeError('"periodicity" should be 1, 2 or 3.')
+
+        direct_space_vectors = [[bohr_to_ang * xx for xx in vect]
+                                for vect in data["direct_space_vectors"]]
+        reciprocal_space_vectors = [[xx / bohr_to_ang for xx in vect]
+                                    for vect in data["reciprocal_space_vectors"]]
+
+        return cls(periodicity=periodicity,
+                   lattice_params=lattice_params,
+                   shortest_interatomic_distance=bohr_to_ang*data["shortest_interatomic_distance"],
+                   direct_space_vectors=direct_space_vectors,
+                   reciprocal_space_vectors=reciprocal_space_vectors
+                   )
