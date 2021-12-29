@@ -225,7 +225,8 @@
         "b1",
         "b2"
       ]
-    }
+    },
+    "periodicity": null
   },
   "gradient": {
     "@module": "turbomoleio.output.files",

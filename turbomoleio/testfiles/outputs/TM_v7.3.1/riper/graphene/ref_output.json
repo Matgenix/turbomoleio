@@ -110,5 +110,41 @@
   },
   "integral": null,
   "smearing": null,
-  "symmetry": null
+  "symmetry": null,
+  "periodicity": {
+    "@module": "turbomoleio.output.data",
+    "@class": "PeriodicityData",
+    "@version": "1.1.0",
+    "periodicity": 2,
+    "lattice_params": [
+      2.4684160308805354,
+      2.4684160308805354,
+      120.0
+    ],
+    "shortest_interatomic_distance": 1.425127146682869,
+    "direct_space_vectors": [
+      [
+        2.4684160308805354,
+        0.0,
+        0.0
+      ],
+      [
+        -1.2342080471909005,
+        2.137710971636165,
+        0.0
+      ]
+    ],
+    "reciprocal_space_vectors": [
+      [
+        2.545432063677638,
+        1.4696059353594344,
+        -0.0
+      ],
+      [
+        0.0,
+        2.939211795129824,
+        -0.0
+      ]
+    ]
+  }
 }

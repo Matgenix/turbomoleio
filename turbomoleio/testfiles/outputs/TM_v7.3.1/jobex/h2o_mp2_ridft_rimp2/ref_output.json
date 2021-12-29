@@ -238,7 +238,8 @@
       "reps": [
         "a"
       ]
-    }
+    },
+    "periodicity": null
   },
   "gradient": {
     "@module": "turbomoleio.output.files",

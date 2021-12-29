@@ -268,7 +268,8 @@
         "a2\"",
         "e\""
       ]
-    }
+    },
+    "periodicity": null
   },
   "gradient": {
     "@module": "turbomoleio.output.files",
