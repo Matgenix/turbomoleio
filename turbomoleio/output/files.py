@@ -26,6 +26,7 @@ from turbomoleio.output.data import SmearingData, EscfData, AoforceNumericalInte
 from turbomoleio.output.data import AoforceVibrationalData, RelaxConvergenceData, RelaxData, RelaxGradientsData
 from turbomoleio.output.data import StatptData, SymmetryData
 from turbomoleio.output.data import MP2Data, MP2Results
+from turbomoleio.output.data import PeriodicityData
 
 
 class ScfOutput(BaseData):
@@ -38,7 +39,7 @@ class ScfOutput(BaseData):
     """
 
     def __init__(self, dft, scf, energies, electrostatic, geometry, basis, run, tm,
-                 cosmo, spin, integral, smearing, symmetry):
+                 cosmo, spin, integral, smearing, symmetry, periodicity=None):
         """
         Args:
             dft (DFTData): information about dft calculation.
@@ -53,7 +54,8 @@ class ScfOutput(BaseData):
             spin (SpinData): information about the spin of the system.
             integral (IntegralData): information about the thresholds for integrals.
             smearing (SmearingData): information about the smearing ($fermi datagroup).
-            symmetry (SymmetryData): information about the symmetry of the molecule
+            symmetry (SymmetryData): information about the symmetry of the molecule.
+            periodicity (PeriodicityData): information about the periodicity of the system.
         """
         self.dft = dft
         self.scf = scf
@@ -68,6 +70,7 @@ class ScfOutput(BaseData):
         self.integral = integral
         self.smearing = smearing
         self.symmetry = symmetry
+        self.periodicity = periodicity
 
     @classmethod
     def from_parser(cls, parser):
@@ -94,10 +97,11 @@ class ScfOutput(BaseData):
         integral = IntegralData.from_parser(parser)
         smearing = SmearingData.from_parser(parser)
         symmetry = SymmetryData.from_parser(parser)
+        periodicity = PeriodicityData.from_parser(parser)
 
         return cls(dft=dft, scf=scf, energies=energies, electrostatic=electrostatic, geometry=geometry,
                    basis=basis, run=run, tm=tm, cosmo=cosmo, spin=spin, integral=integral,
-                   smearing=smearing, symmetry=symmetry)
+                   smearing=smearing, symmetry=symmetry, periodicity=periodicity)
 
 
 class EscfOutput(BaseData):
