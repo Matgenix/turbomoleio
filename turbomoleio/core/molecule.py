@@ -57,7 +57,7 @@ def get_mol_and_indices_frozen(string, cell_string=None, periodic_string=None,
         periodic_extension (float): For 1D and 2D periodic systems,
             periodic_extension is the amount (in Angstroms of
             artifically added vacuum in the Structure object in
-            the non-periodic directions.
+            the non-periodic directions).
 
     Returns:
         namedtuple:
@@ -125,10 +125,9 @@ def get_mol_and_indices_frozen(string, cell_string=None, periodic_string=None,
     elif lattice_string is not None:
         if cell_string is not None:
             raise ValueError('Only cell_string or lattice_string should be set.')
+        lattice_string = lattice_string.strip()
         periodicity = int(periodic_string.strip())
         lattice_numbers = np.array([[float(ln) for ln in line.split()] for line in lattice_string.splitlines()])
-        print(lattice_numbers)
-        print(lattice_numbers.shape)
         if periodicity == 1:
             if lattice_numbers.shape != (1, 1):
                 raise ValueError('The lattice_numbers should contain 1 number for 1D periodic systems')
@@ -662,12 +661,17 @@ class PeriodicSystem(BaseSystem):
             if not coordinates_str:
                 raise ValueError("The string does not contain $coord!")
             cell_str = dg.sdg("$cell", strict=True)
+            lattice_str = dg.sdg("$lattice", strict=True)
             periodic_str = dg.sdg("$periodic", strict=True)
             if periodic_str is None:
                 raise ValueError('The $periodic data group should be set for periodic systems.')
-            if cell_str is None :
-                raise ValueError('The $cell data group should be set for periodic systems.')
-            mol, fi = get_mol_and_indices_frozen(coordinates_str, cell_str, periodic_str,
+            if cell_str is None and lattice_str is None:
+                raise ValueError('The $cell or $lattice data group should be set for periodic systems.')
+            if cell_str is not None and lattice_str is not None:
+                raise ValueError('Only one of $cell and $lattice data group should be set for periodic systems.')
+            mol, fi = get_mol_and_indices_frozen(coordinates_str, cell_string=cell_str,
+                                                 lattice_string=lattice_str,
+                                                 periodic_string=periodic_str,
                                                  periodic_extension=periodic_extension)
             periodicity = int(periodic_str.strip())
 
