@@ -37,7 +37,7 @@ from monty.os import makedirs_p, cd
 from pymatgen.util.plotting import add_fig_kwargs, get_ax_fig_plt
 from turbomoleio.core.datagroups import DataGroups
 from turbomoleio.core.symmetry import irrep_size
-from turbomoleio.core.molecule import get_mol_and_indices_frozen, MoleculeSystem
+from turbomoleio.core.molecule import get_mol_and_indices_frozen, MoleculeSystem, PeriodicSystem
 
 
 class Defaults:
@@ -166,22 +166,22 @@ class Gradient(MSONable):
     """
 
     def __init__(self, gradients=None, energies=None, molecules=None,
-                 periodicity='0D', lattice_vectors=None, lattice_gradients=None):
+                 periodicity=0, lattice_vectors=None, lattice_gradients=None):
         """
         Args:
             gradients (list): gradients for all the steps and all the atoms
                 with shape nsteps*natoms*3.
             energies (list): total energies for each step.
             molecules (list): list of MoleculeSystem with coordinates for each step.
-            periodicity (str): periodicity of the system: 0D (default) or 1D/2D/3D for
+            periodicity (int): periodicity of the system: 0 (default) or 1/2/3 for
                 calculations performed with riper.
             lattice_vectors (list): list of lattice vectors for each step. The number
-                and size of each lattice vector depends on the periodicity. For 1D,
-                a single lattice vector of size one.
+                and size of each lattice vector depends on the periodicity. For
+                1-dimensional systems, a single lattice vector of size one.
             lattice_gradients (list): lattice gradients for all the steps.
         """
-        self.gradients = np.array(gradients)
-        self.energies = np.array(energies)
+        self.gradients = np.array(gradients) if gradients is not None else np.array([])
+        self.energies = np.array(energies) if energies is not None else np.array([])
         self.molecules = molecules
         self.periodicity = periodicity
         if lattice_vectors is not None:
@@ -208,11 +208,43 @@ class Gradient(MSONable):
         gradients = []
         energies = []
         molecules = []
-        periodicity = '0D'
+        periodicity = 0
         lattice_vectors = None
         lattice_gradients = None
+        lattice_strings = []
 
-        for c in cycles:
+        if lattice_string:
+            # skip the first as it is before the first
+            lattice_cycles = lattice_string.split("cycle =")[1:]
+
+            lattice_vectors = []
+            lattice_gradients = []
+            gradlatt_energies = []  # used to double check with energy from grad datagroup
+
+            for c in lattice_cycles:
+                lines = c.splitlines()
+                header = lines[0]
+                match = re.search(r"energy\s+=\s+([+-]?[0-9]*[.]?[0-9]+)", header)
+                gradlatt_energies.append(float(match.group(1)))
+
+                periodicity = len(lines[1].split())
+                lv = []
+                latstring = []
+                for l in lines[1:1+periodicity]:
+                    l = l.replace("D", "E")
+                    lv.append([float(sp) for sp in l.split()])
+                for lvline in lv:
+                    latstring.append(' '.join([str(ll) for ll in lvline]))
+                latstring = '\n'.join(latstring)
+                lattice_strings.append(latstring)
+                lattice_vectors.append(np.array(lv))
+                lg = []
+                for l in lines[1+periodicity:1+2*periodicity]:
+                    l = l.replace("D", "E")
+                    lg.append([float(sp) for sp in l.split()])
+                lattice_gradients.append(np.array(lg))
+
+        for ic, c in enumerate(cycles):
             lines = c.splitlines()
             header = lines[0]
             match = re.search(r"energy\s+=\s+([+-]?[0-9]*[.]?[0-9]+)", header)
@@ -234,35 +266,16 @@ class Gradient(MSONable):
                     raise RuntimeError("Encountered line with unexpected number of tokens: {}".format(l))
 
             gradients.append(grad)
-            mol, fi = get_mol_and_indices_frozen("\n".join(coordinates))
-            molecules.append(MoleculeSystem(molecule=mol, frozen_indices=fi))
-
-        if lattice_string:
-            # skip the first as it is before the first
-            lattice_cycles = lattice_string.split("cycle =")[1:]
-
-            lattice_vectors = []
-            lattice_gradients = []
-            gradlatt_energies = []  # used to double check with energy from grad datagroup
-
-            for c in lattice_cycles:
-                lines = c.splitlines()
-                header = lines[0]
-                match = re.search(r"energy\s+=\s+([+-]?[0-9]*[.]?[0-9]+)", header)
-                gradlatt_energies.append(float(match.group(1)))
-
-                ndim = len(lines[1].split())
-                periodicity = f'{ndim}D'
-                lv = []
-                for l in lines[1:1+ndim]:
-                    l = l.replace("D", "E")
-                    lv.append([float(sp) for sp in l.split()])
-                lattice_vectors.append(np.array(lv))
-                lg = []
-                for l in lines[1+ndim:1+2*ndim]:
-                    l = l.replace("D", "E")
-                    lg.append([float(sp) for sp in l.split()])
-                lattice_gradients.append(np.array(lg))
+            if periodicity == 0:
+                mol, fi = get_mol_and_indices_frozen("\n".join(coordinates))
+                molecules.append(MoleculeSystem(molecule=mol, frozen_indices=fi))
+            else:
+                mol, fi = get_mol_and_indices_frozen(
+                    "\n".join(coordinates),
+                    lattice_string=lattice_strings[ic],
+                    periodic_string=f'{periodicity}'
+                )
+                molecules.append(PeriodicSystem(structure=mol, frozen_indices=fi, periodicity=periodicity))
 
         return cls(gradients=gradients, energies=energies, molecules=molecules,
                    periodicity=periodicity,

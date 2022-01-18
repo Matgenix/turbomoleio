@@ -145,7 +145,7 @@ class TestGradient:
             assert g.n_steps == 6
             assert g.last_grad_norm == pytest.approx(5.145114095400708e-05)
             assert g.last_grad_max == pytest.approx(3.8028925027729e-05)
-            assert g.periodicity == '0D'
+            assert g.periodicity == 0
             assert g.lattice_vectors is None
             assert g.lattice_gradients is None
 
@@ -175,7 +175,7 @@ class TestGradient:
             shutil.copy2(os.path.join(testdir, 'control', 'periodic_1D_C_chain.energy'), "energy")
             shutil.copy2(os.path.join(testdir, 'control', 'periodic_1D_C_chain.gradient'), "gradient")
             g = Gradient.from_file(filename="control")
-            assert g.periodicity == '1D'
+            assert g.periodicity == 1
             assert g.lattice_vectors is not None
             assert g.lattice_gradients is not None
             assert len(g.lattice_vectors) == 12
@@ -201,7 +201,7 @@ class TestGradient:
             shutil.copy2(os.path.join(testdir, 'control', 'periodic_2D_graphene.energy'), "energy")
             shutil.copy2(os.path.join(testdir, 'control', 'periodic_2D_graphene.gradient'), "gradient")
             g = Gradient.from_file(filename="control")
-            assert g.periodicity == '2D'
+            assert g.periodicity == 2
             assert g.lattice_vectors is not None
             assert g.lattice_gradients is not None
             assert len(g.lattice_vectors) == 10
@@ -223,7 +223,7 @@ class TestGradient:
             shutil.copy2(os.path.join(testdir, 'control', 'periodic_3D_HC.energy'), "energy")
             shutil.copy2(os.path.join(testdir, 'control', 'periodic_3D_HC.gradient'), "gradient")
             g = Gradient.from_file(filename="control")
-            assert g.periodicity == '3D'
+            assert g.periodicity == 3
             assert g.lattice_vectors is not None
             assert g.lattice_gradients is not None
             assert len(g.lattice_vectors) == 18

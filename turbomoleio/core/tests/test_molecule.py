@@ -31,6 +31,7 @@ from turbomoleio.testfiles.utils import temp_dir, assert_MSONable
 from turbomoleio.core.molecule import Distance, BondAngle, DihedralAngle, InverseDistance, OutOfPlaneAngle
 from turbomoleio.core.molecule import CollinearBendingAngle, PerpendicularBendingAngle, InternalDefinition
 from turbomoleio.core.molecule import MoleculeSystem
+from turbomoleio.core.molecule import PeriodicSystem
 from turbomoleio.core.datagroups import DataGroups
 
 try:
@@ -489,13 +490,12 @@ $end
         m = Molecule.from_file(molecule_filepath)
         assert not m.is_ordered
 
-        with pytest.raises(ValueError, match=r'^MoleculeSystem does not handle disordered structures.$'):
+        with pytest.raises(ValueError, match=r'^Turbomoleio and turbomole do not handle disordered structures.$'):
             MoleculeSystem(m).to_coord_string()
 
     @pytest.mark.parametrize('molecule_filename', ['co2.json'])
     def test_to_file(self, molecule, delete_tmp_dir):
         ms = MoleculeSystem(molecule)
-        assert ms.periodicity is None
 
         with temp_dir(delete_tmp_dir) as tmp_dir:
             fname = os.path.join(tmp_dir, 'coord_test')
@@ -578,11 +578,14 @@ $end
 
         assert ms._check_index([4]) is None
 
+
+class TestPeriodicSystem:
+
     @pytest.mark.parametrize('structure_filename', ['SiO2.json'])
     def test_periodic_3d(self, structure):
-        ms = MoleculeSystem(molecule=structure)
-        assert ms.periodicity == '3D'
-        coord_string = ms.to_coord_string()
+        ps = PeriodicSystem(structure=structure)
+        assert ps.periodicity == 3
+        coord_string = ps.to_coord_string()
         assert '$periodic 3' in coord_string
         assert '$cell' in coord_string
         lines = coord_string.split('\n')
@@ -595,18 +598,18 @@ $end
 
     @pytest.mark.parametrize('structure_filename', ['SiO2_rotated.json'])
     def test_periodic_wrong_rotation(self, structure):
-        ms = MoleculeSystem(molecule=structure)
+        ps = PeriodicSystem(structure=structure)
         with pytest.raises(ValueError,
                            match=r'Lattice should be oriented such that first vector '
                                  r'is aligned with x cartesian direction and second vector '
                                  r'is in the xy cartesian plane.'):
-            ms.to_coord_string()
+            ps.to_coord_string()
 
     @pytest.mark.parametrize('structure_filename', ['graphene.json'])
     def test_periodic_2d(self, structure):
-        ms = MoleculeSystem(molecule=structure, periodicity='2D')
-        assert ms.periodicity == '2D'
-        coord_string = ms.to_coord_string()
+        ps = PeriodicSystem(structure=structure, periodicity=2)
+        assert ps.periodicity == 2
+        coord_string = ps.to_coord_string()
         assert '$periodic 2' in coord_string
         assert '$cell' in coord_string
         lines = coord_string.split('\n')
@@ -618,13 +621,13 @@ $end
 
     @pytest.mark.parametrize('structure_filename', ['graphene'])
     def test_read_periodic_2d(self, structure_filepath):
-        ms = MoleculeSystem.from_file(structure_filepath, fmt='coord', periodic_extension=5.0)
-        assert isinstance(ms.molecule, Structure)
-        assert ms.periodicity == '2D'
-        current_coord_dg = DataGroups(string=ms.to_coord_string())
+        ps = PeriodicSystem.from_file(structure_filepath, fmt='coord', periodic_extension=5.0)
+        assert isinstance(ps.structure, Structure)
+        assert ps.periodicity == 2
+        current_coord_dg = DataGroups(string=ps.to_coord_string())
         ref_coord_dg = DataGroups.from_file(structure_filepath)
         compare_coord = current_coord_dg.compare(ref_coord_dg, tol=1e-6)
         assert compare_coord is None, compare_coord
-        assert ms.molecule.lattice.c == pytest.approx(5.0)
-        ms = MoleculeSystem.from_file(structure_filepath, fmt='coord', periodic_extension=7.0)
-        assert ms.molecule.lattice.c == pytest.approx(7.0)
+        assert ps.structure.lattice.c == pytest.approx(5.0)
+        ps = PeriodicSystem.from_file(structure_filepath, fmt='coord', periodic_extension=7.0)
+        assert ps.structure.lattice.c == pytest.approx(7.0)
