@@ -53,7 +53,13 @@ def get_mol_and_indices_frozen(string, cell_string=None, periodic_string=None,
             For 3D periodic systems, cell consists of 6 numbers:
             "a", "b" and "c" lattice parameters and Alpha, Beta and
             Gamma angles between lattice parameters.
+            Only cell_string or lattice_string should be set for
+            periodic systems (not both).
         periodic_string (str): The string describing periodicity.
+        lattice_string (str): The string containing the lattice
+            parameters as a matrix.
+            Only cell_string or lattice_string should be set for
+            periodic systems (not both).
         periodic_extension (float): For 1D and 2D periodic systems,
             periodic_extension is the amount (in Angstroms of
             artifically added vacuum in the Structure object in
@@ -65,6 +71,9 @@ def get_mol_and_indices_frozen(string, cell_string=None, periodic_string=None,
             periodic are provided).
             frozen_indices: a set with the indices of the frozen atoms.
     """
+
+    if cell_string is not None and lattice_string is not None:
+        raise ValueError('Only cell_string or lattice_string should be set.')
 
     lines = [line.strip() for line in string.splitlines()]
 
@@ -90,8 +99,6 @@ def get_mol_and_indices_frozen(string, cell_string=None, periodic_string=None,
 
     coords = np.array(coords)
     if cell_string is not None:
-        if lattice_string is not None:
-            raise ValueError('Only cell_string or lattice_string should be set.')
         periodicity = int(periodic_string.strip())
         cell = [float(sp) for sp in cell_string.strip().split()]
         if periodicity == 1:
@@ -121,10 +128,9 @@ def get_mol_and_indices_frozen(string, cell_string=None, periodic_string=None,
                                               gamma=cell[5])
         else:
             raise RuntimeError('Periodicity should be one of 1, 2 or 3.')
-        mol = Structure(lattice=lattice, species=species, coords=coords, coords_are_cartesian=True)
+        mol = Structure(lattice=lattice, species=species, coords=coords, coords_are_cartesian=True,
+                        to_unit_cell=False)
     elif lattice_string is not None:
-        if cell_string is not None:
-            raise ValueError('Only cell_string or lattice_string should be set.')
         lattice_string = lattice_string.strip()
         periodicity = int(periodic_string.strip())
         lattice_numbers = np.array([[float(ln) for ln in line.split()] for line in lattice_string.splitlines()])
@@ -150,7 +156,8 @@ def get_mol_and_indices_frozen(string, cell_string=None, periodic_string=None,
             lattice = Lattice(bohr_to_ang*np.array(lattice_numbers))
         else:
             raise RuntimeError('Periodicity should be one of 1, 2 or 3.')
-        mol = Structure(lattice=lattice, species=species, coords=coords, coords_are_cartesian=True)
+        mol = Structure(lattice=lattice, species=species, coords=coords, coords_are_cartesian=True,
+                        to_unit_cell=False)
     else:
         mol = Molecule(species, coords)
     CoordMolecule = namedtuple("CoordMolecule", ["molecule", "frozen_indices"])
@@ -181,11 +188,68 @@ def get_coord_lines(molecule, frozen_indices=None):
 
 
 class BaseSystem(MSONable):
-    def __init__(self, molecule_or_structure, frozen_indices=None):
+    """Common base class for MoleculeSystem and PeriodicSystem objects."""
+
+    def __init__(self, molecule_or_structure, frozen_indices=None, periodicity=0):
+        """Common base for MoleculeSystem and PeriodicSystem objects.
+
+        Args:
+            molecule_or_structure: pymatgen Molecule or Structure.
+            frozen_indices (set): a set of indices (0-based) indicating atoms
+                that should have fixed cartesian coordinates.
+            periodicity: Periodicity of the system. Default is 0 for MoleculeSystem and
+                should be 1, 2 or 3 for PeriodicSystem.
+        """
         if not molecule_or_structure.is_ordered:
             raise ValueError("Turbomoleio and turbomole do not handle disordered structures.")
-        self.molecule_or_structure = molecule_or_structure
+        self._molecule_or_structure = molecule_or_structure
         self.frozen_indices = set(frozen_indices) if frozen_indices else set()
+        self.periodicity = periodicity
+
+    def coord_lines(self):
+        """
+        Gives the lines of the $coord datagroup based on the internal Structure.
+
+        Returns:
+            list: list of strings with the $coord datagroup.
+        """
+
+        return get_coord_lines(self._molecule_or_structure, self.frozen_indices)
+
+    @abc.abstractmethod
+    def to_coord_string(self):
+        """
+        Creates the string of a coord file for this system.
+
+        Should be implemented separately for molecules and periodic systems.
+        """
+
+    def to_coord_file(self, filepath="coord"):
+        """
+        Writes the system to a coord file.
+
+        Args:
+            filepath (str): the path to the file
+        """
+        with open(filepath, 'wt') as f:
+            f.write(self.to_coord_string())
+
+    def to_file(self, filepath, fmt=None):
+        """
+        Writes the system to a file depending on the specified format. Could be
+        a coord file or any other format supported by pymatgen Molecule or Structure.
+
+        Args:
+            filepath (str): path to the file.
+            fmt (str): the format of the data. could be "coord" for Turbomole
+                coord file or any format supported in pymatgen Molecule or Structure.
+                If None the code would try to infer it from the file name.
+        """
+        fname = os.path.basename(filepath)
+        if fmt == "coord" or (fmt is None and fnmatch(fname, "*coord*")):
+            self.to_coord_file(filepath)
+        else:
+            self._molecule_or_structure.to(filename=filepath, fmt=fmt)
 
 
 class MoleculeSystem(BaseSystem):
@@ -216,11 +280,12 @@ class MoleculeSystem(BaseSystem):
         self.user_defined_bonds = set(user_defined_bonds) if user_defined_bonds else set()
         if not isinstance(molecule, Molecule):
             raise ValueError("A Molecule object should be provided for molecule systems.")
-        super().__init__(molecule_or_structure=molecule, frozen_indices=frozen_indices)
+        super().__init__(molecule_or_structure=molecule, frozen_indices=frozen_indices,
+                         periodicity=0)
 
     @property
     def molecule(self):
-        return self.molecule_or_structure
+        return self._molecule_or_structure
 
     @classmethod
     def from_string(cls, string, fmt="coord"):
@@ -317,26 +382,6 @@ class MoleculeSystem(BaseSystem):
         else:
             return cls(molecule=Molecule.from_file(filepath))
 
-    def to_coord_file(self, filepath="coord"):
-        """
-        Writes the system to a coord file.
-
-        Args:
-            filepath (str): the path to the file
-        """
-        with open(filepath, 'wt') as f:
-            f.write(self.to_coord_string())
-
-    def coord_lines(self):
-        """
-        Gives the lines of the $coord datagroup based on the internal Molecule.
-
-        Returns:
-            list: list of strings with the $coord datagroup.
-        """
-
-        return get_coord_lines(self.molecule, self.frozen_indices)
-
     def to_coord_string(self):
         """
         Creates the string of a coord file for this system.
@@ -361,23 +406,6 @@ class MoleculeSystem(BaseSystem):
         lines.append("$end")
 
         return "\n".join(lines)
-
-    def to_file(self, filepath, fmt=None):
-        """
-        Writes the system to a file depending on the specified format. Could be
-        a coord file or any other format supported by pymatgen Molecule.
-
-        Args:
-            filepath (str): path to the file.
-            fmt (str): the format of the data. could be "coord" for Turbomole
-                coord file or any format supported in pymatgen Molecule.
-                If None the code would try to infer it from the file name.
-        """
-        fname = os.path.basename(filepath)
-        if fmt == "coord" or (fmt is None and fnmatch(fname, "*coord*")):
-            self.to_coord_file(filepath)
-        else:
-            self.molecule.to(filename=filepath, fmt=fmt)
 
     def _check_index(self, indices_list):
         """
@@ -616,7 +644,7 @@ class PeriodicSystem(BaseSystem):
     should be consistent. Methods are implemented to check such consistency.
     """
 
-    def __init__(self, structure, frozen_indices=None, periodicity=None):
+    def __init__(self, structure, frozen_indices=None, periodicity=3):
         """
 
         Args:
@@ -625,34 +653,36 @@ class PeriodicSystem(BaseSystem):
             frozen_indices (set): a set of indices (0-based) indicating atoms
                 that should have fixed cartesian coordinates.
             periodicity (int): periodicity of the system when a Structure object is given.
-                Can be 0, 1, 2, or 3.
+                Can be 1, 2, or 3.
         """
         if not structure.is_ordered:
-            raise ValueError("MoleculeSystem does not handle disordered structures.")
+            raise ValueError("PeriodicSystem does not handle disordered structures.")
 
         self.frozen_indices = set(frozen_indices) if frozen_indices else set()
-        self.periodicity = periodicity or 3
+        if periodicity not in (1, 2, 3):
+            raise ValueError("Periodicity should be 1, 2 or 3. For molecules (i.e. periodicity = 0), "
+                             "use the MoleculeSystem)")
         if not isinstance(structure, Structure):
             raise ValueError("A Structure object should be provided for periodic systems.")
-        super().__init__(molecule_or_structure=structure, frozen_indices=frozen_indices)
+        super().__init__(molecule_or_structure=structure, frozen_indices=frozen_indices, periodicity=periodicity)
 
     @property
     def structure(self):
-        return self.molecule_or_structure
+        return self._molecule_or_structure
 
     @classmethod
     def from_string(cls, string, fmt="coord", periodic_extension=5.0):
         """
         Creates an instance from a string. Could be the string of a coord file
-        or any format supported by pymatgen Molecule.
+        or any format supported by pymatgen Structure.
 
         Args:
             string (str): the string with the data.
             fmt (str): the format of the data. could be "coord" for Turbomole
-                coord file or any format supported in pymatgen Molecule.
+                coord file or any format supported in pymatgen Structure.
 
         Returns:
-            An instance of MoleculeSystem.
+            An instance of PeriodicSystem.
         """
 
         if fmt == "coord":
@@ -692,43 +722,23 @@ class PeriodicSystem(BaseSystem):
     def from_file(cls, filepath, fmt=None, periodic_extension=5.0):
         """
         Creates an instance from a file. Could be a coord file or any other
-        format supported by pymatgen Molecule.
+        format supported by pymatgen Structure.
 
         Args:
             filepath (str): path to the file.
             fmt (str): the format of the data. could be "coord" for Turbomole
-                coord file or any format supported in pymatgen Molecule.
+                coord file or any format supported in pymatgen Structure.
                 If None the code would try to infer it from the file name.
 
         Returns:
-            An instance of MoleculeSystem.
+            An instance of PeriodicSystem.
         """
         fname = os.path.basename(filepath)
         if fmt == "coord" or (fmt is None and fnmatch(fname, "coord")):
             with open(filepath) as f:
                 return cls.from_string(f.read(), fmt="coord", periodic_extension=periodic_extension)
         else:
-            return cls(molecule=Structure.from_file(filepath))
-
-    def to_coord_file(self, filepath="coord"):
-        """
-        Writes the system to a coord file.
-
-        Args:
-            filepath (str): the path to the file
-        """
-        with open(filepath, 'wt') as f:
-            f.write(self.to_coord_string())
-
-    def coord_lines(self):
-        """
-        Gives the lines of the $coord datagroup based on the internal Molecule.
-
-        Returns:
-            list: list of strings with the $coord datagroup.
-        """
-
-        return get_coord_lines(self.structure, self.frozen_indices)
+            return cls(structure=Structure.from_file(filepath))
 
     def to_coord_string(self):
         """
@@ -740,62 +750,44 @@ class PeriodicSystem(BaseSystem):
         lines = ["$coord"]
         lines.extend(self.coord_lines())
 
-        if self.periodicity is not None:
-            lines.append("$periodic {}".format(self.periodicity))
-            lattice = self.structure.lattice
-            lmat = lattice.matrix
-            if (
-                    not np.allclose(lmat[0][1:], 0.0) or
-                    not np.isclose(lmat[1][2], 0.0)
-            ):
-                raise ValueError('Lattice should be oriented such that first vector '
-                                 'is aligned with x cartesian direction and second vector '
-                                 'is in the xy cartesian plane.')
+        lines.append("$periodic {}".format(self.periodicity))
+        lattice = self.structure.lattice
+        lmat = lattice.matrix
+        if (
+                not np.allclose(lmat[0][1:], 0.0) or
+                not np.isclose(lmat[1][2], 0.0)
+        ):
+            raise ValueError('Lattice should be oriented such that first vector '
+                             'is aligned with x cartesian direction and second vector '
+                             'is in the xy cartesian plane.')
 
-            if self.periodicity == 1:
-                lines.append(f"$cell\n  {ang_to_bohr * lattice.a}")
-            elif self.periodicity == 2:
-                lines.append(f"$cell\n  "
-                             f"{ang_to_bohr * lattice.a}   "
-                             f"{ang_to_bohr * lattice.b}   "
-                             f"{lattice.gamma}")
-            elif self.periodicity == 3:
-                lines.append(f"$cell\n  "
-                             f"{ang_to_bohr * lattice.a}   "
-                             f"{ang_to_bohr * lattice.b}   "
-                             f"{ang_to_bohr * lattice.c}   "
-                             f"{lattice.alpha}   "
-                             f"{lattice.beta}   "
-                             f"{lattice.gamma}"
-                             )
-            else:
-                raise ValueError('Periodicity should be 1, 2 or 3 for use in riper calculations.')
+        if self.periodicity == 1:
+            lines.append(f"$cell\n  {ang_to_bohr * lattice.a}")
+        elif self.periodicity == 2:
+            lines.append(f"$cell\n  "
+                         f"{ang_to_bohr * lattice.a}   "
+                         f"{ang_to_bohr * lattice.b}   "
+                         f"{lattice.gamma}")
+        elif self.periodicity == 3:
+            lines.append(f"$cell\n  "
+                         f"{ang_to_bohr * lattice.a}   "
+                         f"{ang_to_bohr * lattice.b}   "
+                         f"{ang_to_bohr * lattice.c}   "
+                         f"{lattice.alpha}   "
+                         f"{lattice.beta}   "
+                         f"{lattice.gamma}"
+                         )
+        else:
+            raise ValueError('Periodicity should be 1, 2 or 3 for use in riper calculations.')
 
         lines.append("$end")
 
         return "\n".join(lines)
 
-    def to_file(self, filepath, fmt=None):
-        """
-        Writes the system to a file depending on the specified format. Could be
-        a coord file or any other format supported by pymatgen Molecule.
-
-        Args:
-            filepath (str): path to the file.
-            fmt (str): the format of the data. could be "coord" for Turbomole
-                coord file or any format supported in pymatgen Molecule.
-                If None the code would try to infer it from the file name.
-        """
-        fname = os.path.basename(filepath)
-        if fmt == "coord" or (fmt is None and fnmatch(fname, "*coord*")):
-            self.to_coord_file(filepath)
-        else:
-            self.molecule.to(filename=filepath, fmt=fmt)
-
     def _check_index(self, indices_list):
         """
         Helper method to determine if one of the indices exceeds the number of
-        atoms in the molecule or if it negative. Used when adding internal coordinates.
+        atoms in the structure or if it negative. Used when adding internal coordinates.
 
         Args:
             indices_list (list): list of integers with the indices.
@@ -803,181 +795,9 @@ class PeriodicSystem(BaseSystem):
         Raises:
             ValueError: if the index is larger than the number of sites.
         """
-        n_sites = self.molecule.num_sites
+        n_sites = self.structure.num_sites
         if any(n<0 or n >= n_sites for n in indices_list):
             raise ValueError("One of the indices representing the atoms is negative or larger then the number of sites")
-
-    def add_distance(self, atom1, atom2, value=None, weights=None, status="f", add_user_def_bonds=True):
-        """
-        Adds a distance coordinate to the list of internal coordinates.
-        Typically used to add frozen coordinates.
-
-        Allows to set linear combinations of the coordinate. If a single value is given to the
-        arguments it will be a simple internal coordinate. If a list of atoms and values are
-        given this will produce a linear combination of those coordinates.
-
-        Args:
-            atom1 (int or list): index (0-based) or list on indices of the first atom(s).
-            atom2 (int or list): index (0-based) or list on indices of the second atom(s).
-            value (float): value of the distance.
-            weights (float or list): weight or list of weights in case of linear
-                combinations of coordinates. Should have the same length as the atoms.
-                If None will be set to a list of 1.0 with the same length as atoms.
-            status (str): the status of the coordinate, can be "k", "f", "d" and "i".
-            add_user_def_bonds (bool): if True the pair of atoms will be added to the
-                user defined bonds.
-        """
-        if np.ndim(atom1) == 0:
-            atom1 = [atom1]
-        if np.ndim(atom2) == 0:
-            atom2 = [atom2]
-
-        if len(atom1) != len(atom2):
-            raise ValueError("list of atoms should have the same length")
-
-        self._check_index(atom1)
-        self._check_index(atom2)
-
-        indices = np.transpose([atom1, atom2]).tolist()
-
-        self.int_def.append(Distance(status=status, indices=indices, weights=weights, value=value))
-
-        if add_user_def_bonds:
-            for (i, j) in indices:
-                self.user_defined_bonds.add((i, "-", j))
-
-    def add_bond_angle(self, atom1, atom2, vertex, value=None, weights=None,
-                       status="f", add_user_def_bonds=True):
-        """
-        Adds a bond angle coordinate to the list of internal coordinates.
-        Typically used to add frozen coordinates.
-
-        Allows to set linear combinations of the coordinate. If a single value is given to the
-        arguments it will be a simple internal coordinate. If a list of atoms and values are
-        given this will produce a linear combination of those coordinates.
-
-        Args:
-            atom1 (int or list): index (0-based) or list on indices of the first atom(s).
-            atom2 (int or list): index (0-based) or list on indices of the second atom(s).
-            vertex (int or list): index (0-based) or list on indices of the vertex.
-            value (float): value of the distance.
-            weights (float or list): weight or list of weights in case of linear
-                combinations of coordinates. Should have the same length as the atoms.
-                If None will be set to a list of 1.0 with the same length as atoms.
-            status (str): the status of the coordinate, can be "k", "f", "d" and "i".
-            add_user_def_bonds (bool): if True the pair of atoms will be added to the used defined bonds
-        """
-        if np.ndim(atom1) == 0:
-            atom1 = [atom1]
-        if np.ndim(atom2) == 0:
-            atom2 = [atom2]
-        if np.ndim(vertex) == 0:
-            vertex = [vertex]
-
-        if not len(atom1) == len(atom2) == len(vertex):
-            raise ValueError("list of atoms should have the same length")
-
-        self._check_index(atom1)
-        self._check_index(atom2)
-        self._check_index(vertex)
-
-        indices = np.transpose([atom1, atom2, vertex]).tolist()
-
-        self.int_def.append(BondAngle(status=status, indices=indices, weights=weights, value=value))
-
-        if add_user_def_bonds:
-            for (i, j, v) in indices:
-                self.user_defined_bonds.add((i, "-", v))
-                self.user_defined_bonds.add((j, "-", v))
-
-    def add_dihedral(self, atom1, atom2, atom3, atom4, value=None, weights=None,
-                     status="f", add_user_def_bonds=True):
-        """
-        Adds a dihedral angle coordinate to the list of internal coordinates.
-        Typically used to add frozen coordinates.
-
-        Allows to set linear combinations of the coordinate. If a single value is given to the
-        arguments it will be a simple internal coordinate. If a list of atoms and values are
-        given this will produce a linear combination of those coordinates.
-
-        Args:
-            atom1 (int or list): index (0-based) or list on indices of the first atom(s).
-            atom2 (int or list): index (0-based) or list on indices of the second atom(s).
-            atom3 (int or list): index (0-based) or list on indices of the third atom(s).
-            atom4 (int or list): index (0-based) or list on indices of the fourth atom(s).
-            value (float): value of the distance.
-            weights (float or list): weight or list of weights in case of linear
-                combinations of coordinates. Should have the same length as the atoms.
-                If None will be set to a list of 1.0 with the same length as atoms.
-            frozen (bool): True if the coordinate should be frozen.
-            status (str): the status of the coordinate, can be "k", "f", "d" and "i".
-            add_user_def_bonds (bool): if True the pair of atoms will be added to the used defined bonds
-        """
-        if np.ndim(atom1) == 0:
-            atom1 = [atom1]
-        if np.ndim(atom2) == 0:
-            atom2 = [atom2]
-        if np.ndim(atom3) == 0:
-            atom3 = [atom3]
-        if np.ndim(atom4) == 0:
-            atom4 = [atom4]
-
-        if not len(atom1) == len(atom2) == len(atom3) == len(atom4):
-            raise ValueError("list of atoms should have the same length")
-
-        self._check_index(atom1)
-        self._check_index(atom2)
-        self._check_index(atom3)
-        self._check_index(atom4)
-
-        indices = np.transpose([atom1, atom2, atom3, atom4]).tolist()
-
-        self.int_def.append(DihedralAngle(status=status, indices=indices, weights=weights, value=value))
-
-        if add_user_def_bonds:
-            for (i, j, k, l) in indices:
-                self.user_defined_bonds.add((i, "-", j))
-                self.user_defined_bonds.add((j, "-", k))
-                self.user_defined_bonds.add((k, "-", l))
-
-    def get_int_def_inconsistencies(self, atol=1e-4, ltol=1e-4):
-        """
-        Gives a list of the internal coordinates whose values are not consistent
-        with the values obtained from the molecule object.
-
-        Args:
-            atol (float): tolerance allowed on distances (in bohr).
-            ltol (float): tolerance allowed on angles (in degrees).
-
-        Returns:
-            list: list of inconsistent internal coordinates.
-        """
-        errors = []
-
-        for idef in self.int_def:
-            if idef.coord_type == "length":
-                tol = ltol
-            elif idef.coord_type == "angle":
-                tol = atol
-            else:
-                raise ValueError("unknow coord_type {}".format(idef.coord_type))
-            if not idef.is_valid(self.molecule, tol):
-                errors.append(idef)
-
-        return errors
-
-    def has_inconsistencies(self, atol=1e-4, ltol=1e-4):
-        """
-        Checks if any inconsistency in internal coordinates is present.
-
-        Args:
-            atol (float): tolerance allowed on distances (in bohr).
-            ltol (float): tolerance allowed on angles (in degrees).
-
-        Returns:
-            bool: True if inconsistencies are present.
-        """
-        return len(self.get_int_def_inconsistencies(atol=atol, ltol=ltol)) != 0
 
     def as_dict(self):
         """
@@ -989,8 +809,8 @@ class PeriodicSystem(BaseSystem):
         """
         # sort sets to keep consistent representations of dictionary
         d = {"@module": self.__class__.__module__, "@class": self.__class__.__name__,
-             "molecule": self.molecule.as_dict(), "int_def": [i.as_dict() for i in self.int_def],
-             "frozen_indices": sorted(self.frozen_indices), "user_defined_bonds": sorted(self.user_defined_bonds)}
+             "structure": self.structure.as_dict(),
+             "frozen_indices": sorted(self.frozen_indices), "periodicity": self.periodicity}
 
         return d
 
@@ -1004,16 +824,15 @@ class PeriodicSystem(BaseSystem):
             d (dict): json representation of the object.
 
         Returns:
-            An instance of MoleculeSystem.
+            An instance of PeriodicSystem.
         """
         d = d.copy()
         d.pop('@module', None)
         d.pop('@class', None)
         dec = MontyDecoder()
-        d['molecule'] = dec.process_decoded(d['molecule'])
-        d['int_def'] = [dec.process_decoded(i) for i in d['int_def']]
+        d['structure'] = dec.process_decoded(d['structure'])
         d['frozen_indices'] = set(dec.process_decoded(i) for i in d['frozen_indices'])
-        d['user_defined_bonds'] = set(tuple(i) for i in d['user_defined_bonds'])
+        d['periodicity'] = d['periodicity']
         return cls(**d)
 
 
