@@ -37,7 +37,9 @@ from monty.os import makedirs_p, cd
 from pymatgen.util.plotting import add_fig_kwargs, get_ax_fig_plt
 from turbomoleio.core.datagroups import DataGroups
 from turbomoleio.core.symmetry import irrep_size
-from turbomoleio.core.molecule import get_mol_and_indices_frozen, MoleculeSystem, PeriodicSystem
+from turbomoleio.core.molecule import MoleculeSystem
+from turbomoleio.core.periodic import PeriodicSystem
+from turbomoleio.core.base import get_mol_and_indices_frozen
 
 
 class Defaults:
