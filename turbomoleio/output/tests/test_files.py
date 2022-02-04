@@ -56,18 +56,18 @@ def cls_dict_path(request, testdir):
     fpaths = []
     if tm_exec == "escf":
         output_clses.append(EscfOnlyOutput)
-        ref_dicts.append(loadfn(os.path.join(path, "ref_escf_output.json")).as_dict())
+        ref_dicts.append(loadfn(os.path.join(path, "ref_escf_output.json"), cls=None))
         fpaths.append(os.path.join(path, f"{tm_exec}.log"))
         output_clses.append(EscfOutput)
-        ref_dicts.append(loadfn(os.path.join(path, "ref_output.json")).as_dict())
+        ref_dicts.append(loadfn(os.path.join(path, "ref_output.json"), cls=None))
         fpaths.append(os.path.join(path, f"{tm_exec}.log"))
     elif tm_exec == "jobex":
         output_clses.append(JobexOutput)
-        ref_dicts.append(loadfn(os.path.join(path, "ref_output.json")).as_dict())
+        ref_dicts.append(loadfn(os.path.join(path, "ref_output.json"), cls=None))
         fpaths.append(os.path.join(path, "job.last"))
     else:
         output_clses.append(exec_to_out_obj[tm_exec])
-        ref_dicts.append(loadfn(os.path.join(path, "ref_output.json")).as_dict())
+        ref_dicts.append(loadfn(os.path.join(path, "ref_output.json"), cls=None))
         fpaths.append(os.path.join(path, f"{tm_exec}.log"))
 
     return output_clses, ref_dicts, fpaths
