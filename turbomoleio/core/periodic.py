@@ -103,10 +103,10 @@ class PeriodicSystem(BaseSystem):
                 raise ValueError('The $cell or $lattice data group should be set for periodic systems.')
             if cell_str is not None and lattice_str is not None:
                 raise ValueError('Only one of $cell and $lattice data group should be set for periodic systems.')
-            mol, fi = get_mol_and_indices_frozen(coordinates_str, cell_string=cell_str,
-                                                 lattice_string=lattice_str,
-                                                 periodic_string=periodic_str,
-                                                 periodic_extension=periodic_extension)
+            struct, fi = get_mol_and_indices_frozen(coordinates_str, cell_string=cell_str,
+                                                    lattice_string=lattice_str,
+                                                    periodic_string=periodic_str,
+                                                    periodic_extension=periodic_extension)
             periodicity = int(periodic_str.strip())
 
             int_def_str = dg.sdg("$intdef", strict=True)
@@ -117,7 +117,7 @@ class PeriodicSystem(BaseSystem):
             if user_def_bonds_str is not None:
                 raise ValueError('User-defined bonds for periodic systems is not supported.')
 
-            return cls(mol, frozen_indices=fi, periodicity=periodicity)
+            return cls(struct, frozen_indices=fi, periodicity=periodicity)
 
         else:
             return cls(Structure.from_str(string, fmt))
@@ -187,21 +187,6 @@ class PeriodicSystem(BaseSystem):
         lines.append("$end")
 
         return "\n".join(lines)
-
-    def _check_index(self, indices_list):
-        """
-        Helper method to determine if one of the indices exceeds the number of
-        atoms in the structure or if it negative. Used when adding internal coordinates.
-
-        Args:
-            indices_list (list): list of integers with the indices.
-
-        Raises:
-            ValueError: if the index is larger than the number of sites.
-        """
-        n_sites = self.structure.num_sites
-        if any(n<0 or n >= n_sites for n in indices_list):
-            raise ValueError("One of the indices representing the atoms is negative or larger then the number of sites")
 
     def as_dict(self):
         """

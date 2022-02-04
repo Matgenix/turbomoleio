@@ -272,12 +272,12 @@ class Gradient(MSONable):
                 mol, fi = get_mol_and_indices_frozen("\n".join(coordinates))
                 molecules.append(MoleculeSystem(molecule=mol, frozen_indices=fi))
             else:
-                mol, fi = get_mol_and_indices_frozen(
+                struct, fi = get_mol_and_indices_frozen(
                     "\n".join(coordinates),
                     lattice_string=lattice_strings[ic],
                     periodic_string=f'{periodicity}'
                 )
-                molecules.append(PeriodicSystem(structure=mol, frozen_indices=fi, periodicity=periodicity))
+                molecules.append(PeriodicSystem(structure=struct, frozen_indices=fi, periodicity=periodicity))
 
         return cls(gradients=gradients, energies=energies, molecules=molecules,
                    periodicity=periodicity,

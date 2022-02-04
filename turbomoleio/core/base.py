@@ -105,15 +105,15 @@ def get_mol_and_indices_frozen(string, cell_string=None, periodic_string=None,
             yrange = np.max(coords[:, 1])-np.min(coords[:, 1])
             zrange = np.max(coords[:, 2])-np.min(coords[:, 2])
             lattice = Lattice.orthorhombic(a=bohr_to_ang*cell[0],
-                                           b=bohr_to_ang*yrange+periodic_extension,
-                                           c=bohr_to_ang*zrange+periodic_extension)
+                                           b=yrange+periodic_extension,
+                                           c=zrange+periodic_extension)
         elif periodicity == 2:
             if len(cell) != 3:
                 raise ValueError('The $cell data group should contain 3 numbers for 2D periodic systems')
             zrange = np.max(coords[:, 2])-np.min(coords[:, 2])
             lattice = Lattice.from_parameters(a=bohr_to_ang*cell[0],
                                               b=bohr_to_ang*cell[1],
-                                              c=bohr_to_ang*zrange+periodic_extension,
+                                              c=zrange+periodic_extension,
                                               alpha=90.0, beta=90.0, gamma=cell[2],
                                               vesta=True)
         elif periodicity == 3:
@@ -128,41 +128,43 @@ def get_mol_and_indices_frozen(string, cell_string=None, periodic_string=None,
                                               vesta=True)
         else:
             raise RuntimeError('Periodicity should be one of 1, 2 or 3.')
-        mol = Structure(lattice=lattice, species=species, coords=coords, coords_are_cartesian=True,
-                        to_unit_cell=False)
+        molecule_or_structure = Structure(lattice=lattice, species=species, coords=coords, coords_are_cartesian=True,
+                                          to_unit_cell=False)
     elif lattice_string is not None:
         lattice_string = lattice_string.strip()
         periodicity = int(periodic_string.strip())
-        lattice_numbers = np.array([[float(ln) for ln in line.split()] for line in lattice_string.splitlines()])
+        lattice_numbers = bohr_to_ang * np.array(
+            [[float(ln) for ln in line.split()] for line in lattice_string.splitlines()]
+        )
         if periodicity == 1:
             if lattice_numbers.shape != (1, 1):
                 raise ValueError('The lattice_numbers should contain 1 number for 1D periodic systems')
             yrange = np.max(coords[:, 1])-np.min(coords[:, 1])
             zrange = np.max(coords[:, 2])-np.min(coords[:, 2])
-            lattice = Lattice.orthorhombic(a=bohr_to_ang*lattice_numbers[0][0],
-                                           b=bohr_to_ang*yrange+periodic_extension,
-                                           c=bohr_to_ang*zrange+periodic_extension)
+            lattice = Lattice.orthorhombic(a=lattice_numbers[0][0],
+                                           b=yrange+periodic_extension,
+                                           c=zrange+periodic_extension)
         elif periodicity == 2:
             if lattice_numbers.shape != (2, 2):
                 raise ValueError('The lattice_numbers should contain 2x2 numbers for 2D periodic systems')
             zrange = np.max(coords[:, 2])-np.min(coords[:, 2])
-            lat_matrix = [[bohr_to_ang*lattice_numbers[0, 0], bohr_to_ang*lattice_numbers[0, 1], 0.0],
-                          [bohr_to_ang*lattice_numbers[1, 0], bohr_to_ang*lattice_numbers[1, 1], 0.0],
-                          [0.0, 0.0, bohr_to_ang*zrange+periodic_extension]]
+            lat_matrix = [[lattice_numbers[0, 0], lattice_numbers[0, 1], 0.0],
+                          [lattice_numbers[1, 0], lattice_numbers[1, 1], 0.0],
+                          [0.0, 0.0, zrange+periodic_extension]]
             lattice = Lattice(lat_matrix)
         elif periodicity == 3:
             if lattice_numbers.shape != (3, 3):
                 raise ValueError('The lattice_numbers should contain 3x3 numbers for 3D periodic systems')
-            lattice = Lattice(bohr_to_ang*np.array(lattice_numbers))
+            lattice = Lattice(lattice_numbers)
         else:
             raise RuntimeError('Periodicity should be one of 1, 2 or 3.')
-        mol = Structure(lattice=lattice, species=species, coords=coords, coords_are_cartesian=True,
-                        to_unit_cell=False)
+        molecule_or_structure = Structure(lattice=lattice, species=species, coords=coords, coords_are_cartesian=True,
+                                          to_unit_cell=False)
     else:
-        mol = Molecule(species, coords)
-    CoordMolecule = namedtuple("CoordMolecule", ["molecule", "frozen_indices"])
+        molecule_or_structure = Molecule(species, coords)
+    CoordSystem = namedtuple("CoordSystem", ["molecule_or_structure", "frozen_indices"])
 
-    return CoordMolecule(mol, frozen_indices)
+    return CoordSystem(molecule_or_structure, frozen_indices)
 
 
 def get_coord_lines(molecule, frozen_indices=None):
