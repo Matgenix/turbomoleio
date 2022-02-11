@@ -26,7 +26,7 @@ The coord file
 
 In TURBOMOLE the coord file mainly contains the coordinates and the types of the atoms
 of the molecule that should be simulated. These information can be stored in
-`pymatgen <http://pymatgen.org/>`_ ``Molecule`` object. However thare are a set
+`pymatgen <http://pymatgen.org/>`_ ``Molecule`` object. However there are a set
 of data, stored in different data groups, that provide further information
 about the geometry of the molecule, more precisely on the dynamic during a geometry
 optimization. For this reason in turbomoleio the ``coord`` file is represented
@@ -34,6 +34,14 @@ through a :class:`turbomoleio.core.molecule.MoleculeSystem` object. This has met
 to read and generate a ``coord`` file that can be read by TURBOMOLE. Other file formats
 can be written taking advantage of the conversion from ``Molecule``, but the output will be
 limited to the geometry of the molecule.
+
+.. note::
+
+    TURBOMOLE is also capable of performing periodic calculations (1, 2 or 3-dimensional).
+    The :class:`turbomoleio.core.molecule.MoleculeSystem` object is only used for isolated
+    systems, i.e. molecules. For periodic systems, the
+    :class:`turbomoleio.core.periodic.PeriodicSystem` should be used.
+    See :ref:`Periodic systems<periodic_systems>` below for more information.
 
 Internally the ``MoleculeSystem`` stores the geometry of the molecule using a
 pymatgen ``Molecule``. This allows to exploit all the functionalities available in
@@ -110,3 +118,18 @@ but in general this would be more useful to define a few of them and call ``defi
 the ``ired`` option to let it generate a complete list of redundant internal coordinates. Given its
 potentially complicated structure, the ``$redundant`` data group is never parsed nor stored when
 reading a ``coord`` file that contains it.
+
+.. _periodic_systems:
+
+Periodic systems
+================
+
+.. warning::
+
+    This is an experimental feature in turbomoleio. As a work-in-progress, the API might still
+    change without prior notice.
+
+For periodic systems, the ``coord`` file and the periodicity is represented
+through a :class:`turbomoleio.core.periodic.PeriodicSystem` object. This has methods
+to read and generate a ``coord`` file that can be read by TURBOMOLE, as well as the corresponding
+periodic attributes.
