@@ -5,7 +5,11 @@
     "host": "hpclogin03",
     "tm_version": null,
     "tm_build": null,
-    "start_time": "2019-07-12 15:48:23.149000"
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2019-07-12 15:48:23.149000"
+    }
   },
   "centers": {
     "center_of_mass": null,
@@ -30,7 +34,11 @@
   "timings": {
     "cpu_time": 0.03,
     "wall_time": 0.05,
-    "end_time": "2019-07-12 15:48:23.172000"
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2019-07-12 15:48:23.172000"
+    }
   },
   "s2": null,
   "is_uhf": false,
@@ -71,5 +79,10 @@
     }
   },
   "aoforce_numerical_integration": null,
-  "aoforce_analysis": null
+  "aoforce_analysis": null,
+  "mp2_results": {
+    "energy": null
+  },
+  "riper_scf_energies": null,
+  "periodicity_data": null
 }

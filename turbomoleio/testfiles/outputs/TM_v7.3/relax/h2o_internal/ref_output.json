@@ -1,11 +1,11 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "RelaxOutput",
-  "@version": null,
+  "@version": "1.1.0",
   "info": {
     "@module": "turbomoleio.output.data",
     "@class": "RelaxData",
-    "@version": null,
+    "@version": "1.1.0",
     "optimizations": [
       "INTERNAL coordinates"
     ],
@@ -14,7 +14,7 @@
   "gradients": {
     "@module": "turbomoleio.output.data",
     "@class": "RelaxGradientsData",
-    "@version": null,
+    "@version": "1.1.0",
     "norm_cartesian": 0.06345,
     "norm_internal": 0.048142,
     "max_internal": 0.048142
@@ -22,7 +22,7 @@
   "convergence": {
     "@module": "turbomoleio.output.data",
     "@class": "RelaxConvergenceData",
-    "@version": null,
+    "@version": "1.1.0",
     "energy_change": {
       "value": 76.3427619,
       "thr": 1e-06,
@@ -40,17 +40,25 @@
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": null,
+    "@version": "1.1.0",
     "host": "ucl-laptop",
-    "start_time": "2018-11-13 10:04:57.174000",
-    "end_time": "2018-11-13 10:04:57.186000",
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2018-11-13 10:04:57.174000"
+    },
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2018-11-13 10:04:57.186000"
+    },
     "cpu_time": 0.02,
     "wall_time": 0.02
   },
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": null,
+    "@version": "1.1.0",
     "version": "7.3",
     "build": "22118",
     "executable": "relax"

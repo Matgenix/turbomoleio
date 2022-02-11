@@ -57,7 +57,8 @@ PARSER_METHODS = ["all_done", "header", "centers", "coordinates", "basis", "symm
                   "timings", "s2", "is_uhf", "fermi", "integral", "pre_escf_run", "escf_iterations",
                   "escf_gs_total_en", "escf_excitations", "rdgrad_memory", "gradient", "egrad_excited_state",
                   "statpt_info", "relax_info", "relax_gradient_values", "relax_conv_info",
-                  "aoforce_numerical_integration", "aoforce_analysis", "mp2_results"]
+                  "aoforce_numerical_integration", "aoforce_analysis", "mp2_results", "riper_scf_energies",
+                  "periodicity_data"]
 
 
 class ItestError(BaseException):
@@ -622,7 +623,7 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
                 c.cdg(k, v)
             c.to_file()
 
-        if opt_generate_ref: # pragma: no cover
+        if opt_generate_ref:  # pragma: no cover
             shutil.copy2("control", get_control_integration(control_reference_filename))
 
         ref_control = Control.from_file(get_control_integration(control_reference_filename))
@@ -649,7 +650,8 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
             try:
                 ret_code = process.wait()
 
-                if ret_code or "ended normally" not in program_std_err:
+                # The riper executable does not echo "ended normally" in the std err file...
+                if ret_code or (executable != "riper" and "ended normally" not in program_std_err):
                     raise ItestError("Executable {} has failed with return code {}".format(executable, ret_code))
 
                 if out_parser:
@@ -662,7 +664,7 @@ def run_itest(executables, define_options, coord_filename, control_reference_fil
                                                 "{}_{}.json".format(control_reference_filename, executable))
                     if opt_generate_ref:
                         dumpfn(out, out_ref_path)
-                    out_ref = loadfn(out_ref_path, cls=None)
+                    out_ref = loadfn(out_ref_path).as_dict()
                     if opt_dryrun:
                         diffs = compare_differences(out, out_ref, atol=opt_tol)
                         if diffs:

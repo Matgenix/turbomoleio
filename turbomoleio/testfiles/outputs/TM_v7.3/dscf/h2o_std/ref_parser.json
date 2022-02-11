@@ -5,7 +5,11 @@
     "host": "ucl-laptop",
     "tm_version": "7.3",
     "tm_build": "22118",
-    "start_time": "2018-11-13 09:16:15.259000"
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2018-11-13 09:16:15.181000"
+    }
   },
   "centers": {
     "center_of_mass": [
@@ -173,7 +177,11 @@
   "timings": {
     "cpu_time": 0.07,
     "wall_time": 0.09,
-    "end_time": "2018-11-13 09:16:15.259000"
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2018-11-13 09:16:15.259000"
+    }
   },
   "s2": null,
   "is_uhf": false,
@@ -181,7 +189,7 @@
   "integral": {
     "integral_neglect_threshold": 1.8e-09,
     "thize": 1e-05,
-    "thime": 5.0
+    "thime": 5
   },
   "pre_escf_run": null,
   "escf_iterations": null,
@@ -195,5 +203,10 @@
   "relax_gradient_values": null,
   "relax_conv_info": null,
   "aoforce_numerical_integration": null,
-  "aoforce_analysis": null
+  "aoforce_analysis": null,
+  "mp2_results": {
+    "energy": null
+  },
+  "riper_scf_energies": null,
+  "periodicity_data": null
 }

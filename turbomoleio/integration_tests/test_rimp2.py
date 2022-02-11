@@ -24,7 +24,7 @@ import pytest
 
 from turbomoleio.testfiles.utils import run_itest
 from turbomoleio.input.utils import get_define_template
-from turbomoleio.output.files import ScfOutput
+from turbomoleio.output.files import ScfOutput, Ricc2Output
 
 # structures = ['aceton', 'ch4', 'h2o', 'h3cbr', 'methanol', 'nh3', 'phenol', 'sf4', 'sih4']
 structures = ['h2o', 'nh3']
@@ -37,7 +37,7 @@ class TestRimp2:
     def test_run_ridft_rimp2(self, structure):
 
         assert run_itest(["ridft", "rimp2"], get_define_template("ridft_rimp2"),
-                          structure, "ridft_rimp2_{}_std".format(structure), [ScfOutput, None])
+                          structure, "ridft_rimp2_{}_std".format(structure), [ScfOutput, Ricc2Output])
 
     def test_run_ridft_adc2(self):
 
@@ -68,8 +68,10 @@ class TestRimp2:
         define_opt["use_f12"] = True
         # define_opt["use_f12*"] = True
 
-        assert run_itest(["ridft", "rimp2"], define_opt, structure,
-                         "ridft_rimp2_{}_f12".format(structure), {})
+        assert run_itest(["ridft", "ricc2"], define_opt, structure,
+                         "ridft_ricc2_{}_f12".format(structure), [ScfOutput, Ricc2Output],
+                         datagroups_options={'ricc2': '\n   mp2 energy only',
+                                             'rir12': '\n   comaprox T+V'})
 
     @pytest.mark.parametrize("structure", structures)
     def test_run_ridft_f12x(self, structure):
@@ -78,6 +80,9 @@ class TestRimp2:
         define_opt["use_f12"] = False
         define_opt["use_f12*"] = True
 
-        assert run_itest(["ridft", "rimp2"], define_opt, structure,
-                         "ridft_rimp2_{}_f12*".format(structure), {})
-
+        assert run_itest(executables=["ridft", "rimp2"],
+                         define_options=define_opt,
+                         coord_filename=structure,
+                         control_reference_filename="ridft_rimp2_{}_f12*".format(structure),
+                         file_classes=[ScfOutput, Ricc2Output])
+# executables, define_options, coord_filename, control_reference_filename, file_classes

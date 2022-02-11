@@ -37,7 +37,9 @@ from monty.os import makedirs_p, cd
 from pymatgen.util.plotting import add_fig_kwargs, get_ax_fig_plt
 from turbomoleio.core.datagroups import DataGroups
 from turbomoleio.core.symmetry import irrep_size
-from turbomoleio.core.molecule import get_mol_and_indices_frozen, MoleculeSystem
+from turbomoleio.core.molecule import MoleculeSystem
+from turbomoleio.core.periodic import PeriodicSystem
+from turbomoleio.core.base import get_mol_and_indices_frozen
 
 
 class Defaults:
@@ -165,25 +167,42 @@ class Gradient(MSONable):
     Usually stored in the "gradient" file or directly in the control file.
     """
 
-    def __init__(self, gradients=None, energies=None, molecules=None):
+    def __init__(self, gradients=None, energies=None, molecules=None,
+                 periodicity=0, lattice_vectors=None, lattice_gradients=None):
         """
         Args:
             gradients (list): gradients for all the steps and all the atoms
                 with shape nsteps*natoms*3.
             energies (list): total energies for each step.
             molecules (list): list of MoleculeSystem with coordinates for each step.
+            periodicity (int): periodicity of the system: 0 (default) or 1/2/3 for
+                calculations performed with riper.
+            lattice_vectors (list): list of lattice vectors for each step. The number
+                and size of each lattice vector depends on the periodicity. For
+                1-dimensional systems, a single lattice vector of size one.
+            lattice_gradients (list): lattice gradients for all the steps.
         """
-        self.gradients = np.array(gradients)
-        self.energies = np.array(energies)
+        self.gradients = np.array(gradients) if gradients is not None else np.array([])
+        self.energies = np.array(energies) if energies is not None else np.array([])
         self.molecules = molecules
+        self.periodicity = periodicity
+        if lattice_vectors is not None:
+            self.lattice_vectors = np.array(lattice_vectors)
+        else:
+            self.lattice_vectors = None
+        if lattice_gradients is not None:
+            self.lattice_gradients = np.array(lattice_gradients)
+        else:
+            self.lattice_gradients = None
 
     @classmethod
-    def from_string(cls, string):
+    def from_string(cls, string, lattice_string=None):
         """
         Creates Gradient object reading from a given file.
 
         Args:
             string (str): the string of the "grad" datagroup.
+            lattice_string (str): the string of the "gradlatt" datagroup.
         """
         # skip the first as it is before the first
         cycles = string.split("cycle =")[1:]
@@ -191,8 +210,43 @@ class Gradient(MSONable):
         gradients = []
         energies = []
         molecules = []
+        periodicity = 0
+        lattice_vectors = None
+        lattice_gradients = None
+        lattice_strings = []
 
-        for c in cycles:
+        if lattice_string:
+            # skip the first as it is before the first
+            lattice_cycles = lattice_string.split("cycle =")[1:]
+
+            lattice_vectors = []
+            lattice_gradients = []
+            gradlatt_energies = []  # used to double check with energy from grad datagroup
+
+            for c in lattice_cycles:
+                lines = c.splitlines()
+                header = lines[0]
+                match = re.search(r"energy\s+=\s+([+-]?[0-9]*[.]?[0-9]+)", header)
+                gradlatt_energies.append(float(match.group(1)))
+
+                periodicity = len(lines[1].split())
+                lv = []
+                latstring = []
+                for l in lines[1:1+periodicity]:
+                    l = l.replace("D", "E")
+                    lv.append([float(sp) for sp in l.split()])
+                for lvline in lv:
+                    latstring.append(' '.join([str(ll) for ll in lvline]))
+                latstring = '\n'.join(latstring)
+                lattice_strings.append(latstring)
+                lattice_vectors.append(np.array(lv))
+                lg = []
+                for l in lines[1+periodicity:1+2*periodicity]:
+                    l = l.replace("D", "E")
+                    lg.append([float(sp) for sp in l.split()])
+                lattice_gradients.append(np.array(lg))
+
+        for ic, c in enumerate(cycles):
             lines = c.splitlines()
             header = lines[0]
             match = re.search(r"energy\s+=\s+([+-]?[0-9]*[.]?[0-9]+)", header)
@@ -214,15 +268,31 @@ class Gradient(MSONable):
                     raise RuntimeError("Encountered line with unexpected number of tokens: {}".format(l))
 
             gradients.append(grad)
-            mol, fi = get_mol_and_indices_frozen("\n".join(coordinates))
-            molecules.append(MoleculeSystem(molecule=mol, frozen_indices=fi))
+            if periodicity == 0:
+                mol, fi = get_mol_and_indices_frozen("\n".join(coordinates))
+                molecules.append(MoleculeSystem(molecule=mol, frozen_indices=fi))
+            else:
+                struct, fi = get_mol_and_indices_frozen(
+                    "\n".join(coordinates),
+                    lattice_string=lattice_strings[ic],
+                    periodic_string=f'{periodicity}'
+                )
+                molecules.append(PeriodicSystem(structure=struct, frozen_indices=fi, periodicity=periodicity))
 
-        return cls(gradients=gradients, energies=energies, molecules=molecules)
+        return cls(gradients=gradients, energies=energies, molecules=molecules,
+                   periodicity=periodicity,
+                   lattice_vectors=lattice_vectors, lattice_gradients=lattice_gradients)
 
     @classmethod
     def from_file(cls, filename='gradient'):
         """
         Creates Gradient object reading from a given file.
+
+        Note: For periodic systems, the lattice gradients are usually either
+            in the control file directly or in a different file. One option
+            is thus to initialize the Gradients object from the control file,
+            which will then get the atom gradients from the $grad datagroup
+            and the lattice gradient from the $gradlatt datagroup.
 
         Args:
             filename (str): Name of the file from which this Gradient object
@@ -230,7 +300,9 @@ class Gradient(MSONable):
         """
         dg = DataGroups.from_file(filename)
         string = dg.show_data_group("grad", show_from_subfile=True, raise_if_missing_subfile=True)
-        return cls.from_string(string)
+        lattice_string = dg.show_data_group("gradlatt", show_from_subfile=True,
+                                            raise_if_missing_subfile=True)
+        return cls.from_string(string, lattice_string=lattice_string)
 
     @property
     def norms(self):
@@ -602,7 +674,9 @@ class Control(DataGroups):
         grad_data_block = self.show_data_group('$grad', show_from_subfile=True, default="")
         if not grad_data_block.strip() or "file=" in grad_data_block:
             return None
-        return Gradient.from_string(string=grad_data_block)
+        gradlatt_data_block = self.show_data_group('$gradlatt', show_from_subfile=True,
+                                                   raise_if_missing_subfile=True)
+        return Gradient.from_string(string=grad_data_block, lattice_string=gradlatt_data_block)
 
     def set_disp(self, dispersion_correction):
         """

@@ -81,34 +81,34 @@ functional_strings = {
 # type of xc functionals
 # NB This should be updated if other standard xc functionals are added to TM.
 functional_types = {
- 's-vwn': 'LDA',
- 's-vwn_Gaussian': 'LDA',
- 'pwlda': 'LDA',
- 'b-lyp': 'GGA',
- 'b-vwn': 'GGA',
- 'b-p': 'GGA',
- 'pbe': 'GGA',
- 'tpss': 'MGGA',
- 'bh-lyp': 'HYB',
- 'b3-lyp': 'HYB',
- 'b3-lyp_Gaussian': 'HYB',
- 'pbe0': 'HYB',
- 'tpssh': 'MHYB',
- 'pw6b95': 'MHYB',
- 'm06': 'MHYB',
- 'm06-l': 'MGGA',
- 'm06-2x': 'MHYB',
- 'lhf': 'ODFT',
- 'oep': 'ODFT',
- 'b97-d': 'GGA',
- 'pbeh-3c': 'HYB',
- 'b97-3c': 'GGA',
- 'lh07t-svwn': 'LHYB',
- 'lh07s-svwn': 'LHYB',
- 'lh12ct-ssirpw92': 'LHYB',
- 'lh12ct-ssifpw92': 'LHYB',
- 'lh14t-calpbe': 'LHYB',
- 'b2-plyp': 'DHYB'
+    's-vwn': 'LDA',
+    's-vwn_Gaussian': 'LDA',
+    'pwlda': 'LDA',
+    'b-lyp': 'GGA',
+    'b-vwn': 'GGA',
+    'b-p': 'GGA',
+    'pbe': 'GGA',
+    'tpss': 'MGGA',
+    'bh-lyp': 'HYB',
+    'b3-lyp': 'HYB',
+    'b3-lyp_Gaussian': 'HYB',
+    'pbe0': 'HYB',
+    'tpssh': 'MHYB',
+    'pw6b95': 'MHYB',
+    'm06': 'MHYB',
+    'm06-l': 'MGGA',
+    'm06-2x': 'MHYB',
+    'lhf': 'ODFT',
+    'oep': 'ODFT',
+    'b97-d': 'GGA',
+    'pbeh-3c': 'HYB',
+    'b97-3c': 'GGA',
+    'lh07t-svwn': 'LHYB',
+    'lh07s-svwn': 'LHYB',
+    'lh12ct-ssirpw92': 'LHYB',
+    'lh12ct-ssifpw92': 'LHYB',
+    'lh14t-calpbe': 'LHYB',
+    'b2-plyp': 'DHYB'
 }
 
 
@@ -821,6 +821,65 @@ class Parser:
         return d
 
     @lazy_property
+    def riper_scf_energies(self):
+        """
+        Final energies for scf calculation with riper executable.
+
+        Returns:
+            dict with the energy and its contributions: "total_energy", "kinetic_energy",
+            "coulomb_energy", "xc_energy", "ts_energy", "free_energy"
+            and "sigma0_energy".
+        """
+        # Parsing the section:
+        #               +--------------------------------------------------+
+        #               |                FINAL ENERGIES                    |
+        #               +--------------------------------------------------+
+        #               | KINETIC ENERGY       =          75.3219906303    |
+        #               | COULOMB ENERGY       =        -140.6650084669    |
+        #               | EXCH. & CORR. ENERGY =         -10.8758949666    |
+        #               |==================================================|
+        #               | TOTAL ENERGY         =         -76.2189128032    |
+        #               | T*S                  =          -0.0000000000    |
+        #               | FREE  ENERGY         =         -76.2189128032    |
+        #               | ENERGY (sigma->0)    =         -76.2189128032    |
+        #               +--------------------------------------------------+
+
+        # Note that "FINAL ENERGIES" is needed here because the rest of the table is also
+        # provided for each scf iteration.
+        r = r"FINAL ENERGIES\s+\|\s+\+-{50,}\+\s+\|\s+KINETIC ENERGY(.*?)\+-{50,}\+"
+
+        match = re.search(r, self.string, re.DOTALL)
+
+        if match is None:
+            return None
+
+        d = dict(total_energy=None,
+                 kinetic_energy=None,
+                 coulomb_energy=None,
+                 xc_energy=None,
+                 ts_energy=None,
+                 free_energy=None,
+                 sigma0_energy=None)
+
+        for l in match.group().splitlines():
+            if 'KINETIC ENERGY' in l:
+                d['kinetic_energy'] = convert_float(l.split('=')[1].split()[-2])
+            elif 'COULOMB ENERGY' in l:
+                d['coulomb_energy'] = convert_float(l.split('=')[1].split()[-2])
+            elif 'EXCH. & CORR. ENERGY' in l:
+                d['xc_energy'] = convert_float(l.split('=')[1].split()[-2])
+            elif 'TOTAL ENERGY' in l:
+                d['total_energy'] = convert_float(l.split('=')[1].split()[-2])
+            elif 'T*S' in l:
+                d['ts_energy'] = convert_float(l.split('=')[1].split()[-2])
+            elif 'FREE  ENERGY' in l:
+                d['free_energy'] = convert_float(l.split('=')[1].split()[-2])
+            elif 'ENERGY (sigma->0)' in l:
+                d['sigma0_energy'] = convert_float(l.split('=')[1].split()[-2])
+
+        return d
+
+    @lazy_property
     def cosmo_results(self):
         """
         Results of cosmo.
@@ -1458,7 +1517,7 @@ class Parser:
                                 el_dip.append(convert_float(l.split()[1]))
 
                         moments_data["electric_dipole"] = el_dip
-    
+
                     match_mag_dip = regec_mag_dip.search(str_c)
                     if match_mag_dip:
                         mag_dip = []
@@ -1468,7 +1527,7 @@ class Parser:
                                 mag_dip.append(convert_float(l.split()[1]))
 
                         moments_data["magnetic_dipole"] = mag_dip
-    
+
                     match_elec_quad = regec_elec_quad.search(str_c)
                     if match_elec_quad:
                         quadrupole = np.zeros((3, 3))
@@ -1489,13 +1548,13 @@ class Parser:
                                 d_quadrupole["anisotropy"] = convert_float(s[-1])
                             elif " yz " in l:
                                 quadrupole[1, 2] = quadrupole[2, 1] = convert_float(s[1])
-    
+
                         d_quadrupole["moment"] = quadrupole.tolist()
                         moments_data["electric_quadrupole"] = d_quadrupole
 
                     if moments_data:
                         moments_columns.append(moments_data)
-                    
+
                 if moments_columns:
                     exc_data["moments_columns"] = moments_columns
 
@@ -2125,6 +2184,75 @@ class Parser:
 
         return dict(energy=energy)
 
+    @lazy_property
+    def periodicity_data(self):
+        """
+        Information about periodicity.
+
+        Returns:
+            dict with "periodicity", "tm_lattice_params", "shortest_interatomic_distance",
+                "direct_space_vectors", "reciprocal_space_vectors".
+        """
+        r = r"Periodic system found\: PBC structure information.*"
+        r += r"Reciprocal space cell vectors \(au\)\:\s+"
+        r += r"(?:[a|b|c]\s+"
+        r += float_number_all_re
+        r += r"\s+"
+        r += float_number_all_re
+        r += r"\s+"
+        r += float_number_all_re
+        r += r"\s+){1,3}"
+        m = re.findall(r, string=self.string, flags=re.DOTALL)
+        if len(m) == 0:
+            return None
+        elif len(m) > 1:
+            raise RuntimeError('More than one section on periodicity.')
+        periodicity_string = m[0]
+        periodicity = int(re.findall(r"Periodicity in (\d) dimensions", periodicity_string)[0])
+        if periodicity == 1:
+            rlatparams = rf"\+-{{73}}\s+({float_number_all_re})\s+\+-{{73}}"
+            tm_lattice_params = [convert_float(lp) for lp in re.findall(rlatparams, periodicity_string)]
+        elif periodicity == 2:
+            rlatparams = r"\+-{73}"
+            rlatparams += rf"\s+({float_number_all_re})" * 3
+            rlatparams += r"\s+\+-{73}"
+            tm_lattice_params = [convert_float(lp) for lp in re.findall(rlatparams, periodicity_string)[0]]
+        elif periodicity == 3:
+            rlatparams = r"\+-{73}"
+            rlatparams += rf"\s+({float_number_all_re})" * 6
+            rlatparams += r"\s+\+-{73}"
+            tm_lattice_params = [convert_float(lp) for lp in re.findall(rlatparams, periodicity_string)[0]]
+        else:
+            raise RuntimeError('Wrong periodicity.')
+
+        shortest_interatomic_distance = convert_float(
+            re.search(
+                rf"Shortest interatomic distance \(bohr\)\:\s+({float_number_all_re})",
+                periodicity_string
+            ).group(1)
+        )
+
+        rdirect = r"Direct space cell vectors \(au\)\:"
+        rdirect += rf"\s+[a|b|c]\s+({float_number_all_re})\s+({float_number_all_re})\s+({float_number_all_re})" * periodicity
+        direct_space_vectors = np.reshape(
+            [convert_float(val)
+             for val in re.search(rdirect, periodicity_string).groups()],
+            (periodicity, 3)
+        ).tolist()
+
+        r_recip = r"Reciprocal space cell vectors \(au\)\:"
+        r_recip += rf"\s+[a|b|c]\s+({float_number_all_re})\s+({float_number_all_re})\s+({float_number_all_re})" * periodicity
+        reciprocal_space_vectors = np.reshape(
+            [convert_float(val)
+             for val in re.search(r_recip, periodicity_string).groups()],
+            (periodicity, 3)
+        ).tolist()
+
+        return dict(periodicity=periodicity, tm_lattice_params=tm_lattice_params,
+                    shortest_interatomic_distance=shortest_interatomic_distance,
+                    direct_space_vectors=direct_space_vectors,
+                    reciprocal_space_vectors=reciprocal_space_vectors)
+
     def get_split_jobex_parsers(self):
         """
         Given the string of the "job.last" output file of jobex generates the
@@ -2151,7 +2279,7 @@ class Parser:
 
             executable = header["executable"]
 
-            if executable in ("dscf", "ridft"):
+            if executable in ("dscf", "ridft", "riper"):
                 p_en = p
                 exec_en = executable
             elif executable in ("grad", "rdgrad", "egrad", "mpgrad", "ricc2"):
