@@ -28,6 +28,14 @@ turbomoleio.core.tests.test\_molecule module
    :undoc-members:
    :show-inheritance:
 
+turbomoleio.core.tests.test\_periodic module
+--------------------------------------------
+
+.. automodule:: turbomoleio.core.tests.test_periodic
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 turbomoleio.core.tests.test\_utils module
 -----------------------------------------
 

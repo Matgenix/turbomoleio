@@ -399,9 +399,12 @@ class Shells(MSONable):
         """
         Generates an instance of Shells from a string.
         Examples of a string:
-           a1      1-3                      ( 2 )
-           b1      1,3                       ( 2 )
-           b2      1                        ( 2 )
+
+        .. code-block:: text
+
+            a1      1-3                      ( 2 )
+            b1      1,3                       ( 2 )
+            b2      1                        ( 2 )
 
         Args:
             string (str): the string of the datagroup.
@@ -409,7 +412,7 @@ class Shells(MSONable):
         Returns:
             Shells
         """
-        states_per_irrep = {}
+        # states_per_irrep = {}
         states = []
         occupations = []
 
@@ -1012,9 +1015,13 @@ def mdgo(data_group, options, filepath="control", backup_file=None):
     Function that, given a data group that allows several options on separate
     line (e.g. $dft), updates the values of the options according to the
     dictionary provided.
-    The option dictionary should have the form
-    {"option_name1": "option_name1 option_value",
-     "option_name2": "option_name2=option_value"}.
+    The option dictionary should have the form:
+
+    .. code-block:: text
+
+        {"option_name1": "option_name1 option_value",
+         "option_name2": "option_name2=option_value"}
+
     The key will be used to identify the line to be modified and that line
     would be entirely replaced by the value.
     Since different options may be defined in different ways, no
