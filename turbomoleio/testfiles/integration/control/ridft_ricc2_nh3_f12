@@ -1,6 +1,5 @@
 $title
 ridft_rimp2
-$operating system unix
 $symmetry c1
 $user-defined bonds    file=coord
 $coord    file=coord
@@ -22,14 +21,6 @@ h  2-4                                                                         \
    cabs  =h def-SV(P)                                                          \
    jkbas =h def-SV(P)
 $basis    file=basis
-$rundimensions
-   dim(fock,dens)=252
-   natoms=4
-   nshell=12
-   nbf(CAO)=21
-   dim(trafo[SAO<-->AO/CAO])=23
-   rhfshells=1
-   nbf(AO)=20
 $scfmo   file=mos
 $closed shells
  a       1-5                                    ( 2 )
@@ -78,6 +69,10 @@ $ricore      500
 $rij
 $jkbas    file=auxbasis
 $rik
+$rundimensions
+   natoms=4
+   nbf(CAO)=21
+   nbf(AO)=20
 $last step     define
 $ricc2
    mp2 energy only
