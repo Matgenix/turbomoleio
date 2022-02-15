@@ -1,5 +1,4 @@
 $title
-$operating system unix
 $symmetry c1 0
 $user-defined bonds    file=coord
 $coord    file=coord
@@ -15,14 +14,6 @@ n  1                                                                           \
 h  2-4                                                                         \
    basis =h def-SV(P)
 $basis    file=basis
-$rundimensions
-   dim(fock,dens)=252
-   natoms=4
-   nshell=12
-   nbf(CAO)=21
-   dim(trafo[SAO<-->AO/CAO])=23
-   rhfshells=1
-   nbf(AO)=20
 $scfmo   file=mos
 $closed shells
  a       1-5                                    ( 2 )
@@ -59,5 +50,9 @@ $forceinit on
 $energy    file=energy
 $grad    file=gradient
 $forceapprox    file=forceapprox
+$rundimensions
+   natoms=4
+   nbf(CAO)=21
+   nbf(AO)=20
 $last step     define
 $end
