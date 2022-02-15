@@ -1,34 +1,71 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>turbomoleio.output.data &mdash; turbomoleio 1.1.1 documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <meta charset="utf-8">
   
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>turbomoleio.output.data &mdash; turbomoleio 1.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/js/theme.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
+
+   
   <div class="wy-grid-for-nav">
+    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
+          
+
+          
             <a href="../../../index.html" class="icon icon-home"> turbomoleio
+          
+
+          
           </a>
+
+          
+            
+            
               <div class="version">
-                1.1.1
+                1.2.0
               </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -36,7 +73,17 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
               <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../datagroups.html">The data group files</a></li>
@@ -61,30 +108,66 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../bugs.html">Reporting bugs</a></li>
 </ul>
 
+            
+          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">turbomoleio</a>
+        
       </nav>
 
+
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
       <li>turbomoleio.output.data</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
+        
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
+            
   <h1>Source code for turbomoleio.output.data</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1"># The turbomoleio package, a python interface to Turbomole</span>
@@ -1049,12 +1132,11 @@
 <span class="sd">                the occupied orbital, irrep, energy and spin), &quot;virt_orb&quot; (same as &quot;occ_orb&quot;)</span>
 <span class="sd">                and &quot;coeff&quot; (the coefficient of the contribution).</span>
 <span class="sd">            moments_columns (list): a list of dictionaries containing the electric an magnetic</span>
-<span class="sd">                moments for each column.</span>
-<span class="sd">                Each dictionary should contain the following keys:</span>
-<span class="sd">                    electric_dipole (list): 3D vector with the electronic dipole.</span>
-<span class="sd">                    magnetic_dipole (list): 3D vector with the magnetic dipole.</span>
-<span class="sd">                    electric_quadrupole (dict): description of the electronic quadrupole with keys</span>
-<span class="sd">                        moment (the 3x3 matrix of the quadrupole moment), &quot;trace&quot; and &quot;anisotropy&quot;.</span>
+<span class="sd">                moments for each column. Each dictionary should contain the following keys:</span>
+<span class="sd">                &quot;electric_dipole&quot; (3D vector with the electronic dipole as a list),</span>
+<span class="sd">                &quot;magnetic_dipole&quot; (3D vector with the magnetic dipole as a list) and</span>
+<span class="sd">                &quot;electric_quadrupole&quot; (description of the electronic quadrupole with keys</span>
+<span class="sd">                &quot;moment&quot;, i.e. the 3x3 matrix of the quadrupole moment, &quot;trace&quot; and &quot;anisotropy&quot;).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tot_en</span> <span class="o">=</span> <span class="n">tot_en</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">osc_stre</span> <span class="o">=</span> <span class="n">osc_stre</span>
@@ -1591,9 +1673,7 @@
 
 
 <div class="viewcode-block" id="PeriodicityData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.PeriodicityData">[docs]</a><span class="k">class</span> <span class="nc">PeriodicityData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Information about periodicity</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Information about periodicity.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">periodicity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lattice_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">shortest_interatomic_distance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1602,22 +1682,29 @@
 <span class="sd">        Args:</span>
 <span class="sd">            periodicity (int): Periodicity of the system (1, 2 or 3).</span>
 <span class="sd">            lattice_params: Lattice parameters of the system (in Angstroms).</span>
-<span class="sd">                For 1D systems, a single number: [a]</span>
+<span class="sd">                For 1D systems, a single number: [a].</span>
 <span class="sd">                For 2D systems, three numbers: [a, b, gamma], i.e. the two lattice</span>
-<span class="sd">                    parameters and the angle between them.</span>
+<span class="sd">                parameters and the angle between them.</span>
 <span class="sd">                For 3D systems, three numbers: [a, b, c, alpha, beta, gamma], i.e.</span>
-<span class="sd">                    three two lattice parameters and the angles between them.</span>
+<span class="sd">                three two lattice parameters and the angles between them.</span>
 <span class="sd">            shortest_interatomic_distance: Shortest interatomic distance in the</span>
 <span class="sd">                system (in Angstroms).</span>
 <span class="sd">            direct_space_vectors: Lattice vectors of the system (in Angstroms).</span>
 <span class="sd">                The first vector will always be aligned with the x cartesian direction.</span>
 <span class="sd">                For 2D and 3D, the second vector is always in the xy cartesian plane.</span>
 <span class="sd">            reciprocal_space_vectors: Reciprocal lattice vectors of the system (in Angstroms^-1).</span>
-<span class="sd">                The physics definition of the reciprocal lattice vectors is used here, i.e.</span>
+<span class="sd">                The physics definition of the reciprocal lattice vectors is used here:</span>
+
+<span class="sd">                .. code-block:: text</span>
+
 <span class="sd">                    b1 = 2*pi/V * (a2 x a3)</span>
 <span class="sd">                    b2 = 2*pi/V * (a3 x a1)</span>
 <span class="sd">                    b3 = 2*pi/V * (a1 x a2)</span>
+
 <span class="sd">                The crystallographer&#39;s definition is easily recovered as:</span>
+
+<span class="sd">                .. code-block:: text</span>
+
 <span class="sd">                    b&#39;1 = b1 / (2*pi)</span>
 <span class="sd">                    b&#39;2 = b2 / (2*pi)</span>
 <span class="sd">                    b&#39;3 = b3 / (2*pi)</span>
@@ -1682,30 +1769,42 @@
 </pre></div>
 
            </div>
+           
           </div>
           <footer>
+  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2018-2021 BASF SE, Matgenix SRL.</p>
-  </div>
+    <p>
+        &copy; Copyright 2018-2022 BASF SE, Matgenix SRL
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
+
     </section>
+
   </div>
-  <script>
+  
+
+
+  <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

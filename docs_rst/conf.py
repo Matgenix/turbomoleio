@@ -25,7 +25,7 @@ with open(os.path.join(os.path.dirname(__file__), "..", "turbomoleio", "__versio
     exec(f.read(), about)
 
 project = 'turbomoleio'
-copyright = '2018-2021 BASF SE, Matgenix SRL'
+copyright = '2018-2022 BASF SE, Matgenix SRL'
 author = 'Guido Petretto, David Waroquiers, Susanne Salzmann'
 
 # The short X.Y version

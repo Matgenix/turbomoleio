@@ -24,7 +24,13 @@
 Changelog
 =========
 
-Release 1.1.1 (Feb 20, 2022)
+Release 1.2.0 (Feb 16, 2022)
+============================
+
+* Update of reference test files for Turbomole version 7.4.
+* Checked consistency of package with Turbomole version 7.4.
+
+Release 1.1.1 (Feb 15, 2022)
 ============================
 
 Features added

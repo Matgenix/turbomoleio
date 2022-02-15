@@ -961,12 +961,11 @@ class SingleExcitation(MSONable):
                 the occupied orbital, irrep, energy and spin), "virt_orb" (same as "occ_orb")
                 and "coeff" (the coefficient of the contribution).
             moments_columns (list): a list of dictionaries containing the electric an magnetic
-                moments for each column.
-                Each dictionary should contain the following keys:
-                    electric_dipole (list): 3D vector with the electronic dipole.
-                    magnetic_dipole (list): 3D vector with the magnetic dipole.
-                    electric_quadrupole (dict): description of the electronic quadrupole with keys
-                        moment (the 3x3 matrix of the quadrupole moment), "trace" and "anisotropy".
+                moments for each column. Each dictionary should contain the following keys:
+                "electric_dipole" (3D vector with the electronic dipole as a list),
+                "magnetic_dipole" (3D vector with the magnetic dipole as a list) and
+                "electric_quadrupole" (description of the electronic quadrupole with keys
+                "moment", i.e. the 3x3 matrix of the quadrupole moment, "trace" and "anisotropy").
         """
         self.tot_en = tot_en
         self.osc_stre = osc_stre
@@ -1503,9 +1502,7 @@ class MP2Results(BaseData):
 
 
 class PeriodicityData(BaseData):
-    """
-    Information about periodicity
-    """
+    """Information about periodicity."""
 
     def __init__(self, periodicity=None, lattice_params=None,
                  shortest_interatomic_distance=None,
@@ -1514,22 +1511,29 @@ class PeriodicityData(BaseData):
         Args:
             periodicity (int): Periodicity of the system (1, 2 or 3).
             lattice_params: Lattice parameters of the system (in Angstroms).
-                For 1D systems, a single number: [a]
+                For 1D systems, a single number: [a].
                 For 2D systems, three numbers: [a, b, gamma], i.e. the two lattice
-                    parameters and the angle between them.
+                parameters and the angle between them.
                 For 3D systems, three numbers: [a, b, c, alpha, beta, gamma], i.e.
-                    three two lattice parameters and the angles between them.
+                three two lattice parameters and the angles between them.
             shortest_interatomic_distance: Shortest interatomic distance in the
                 system (in Angstroms).
             direct_space_vectors: Lattice vectors of the system (in Angstroms).
                 The first vector will always be aligned with the x cartesian direction.
                 For 2D and 3D, the second vector is always in the xy cartesian plane.
             reciprocal_space_vectors: Reciprocal lattice vectors of the system (in Angstroms^-1).
-                The physics definition of the reciprocal lattice vectors is used here, i.e.
+                The physics definition of the reciprocal lattice vectors is used here:
+
+                .. code-block:: text
+
                     b1 = 2*pi/V * (a2 x a3)
                     b2 = 2*pi/V * (a3 x a1)
                     b3 = 2*pi/V * (a1 x a2)
+
                 The crystallographer's definition is easily recovered as:
+
+                .. code-block:: text
+
                     b'1 = b1 / (2*pi)
                     b'2 = b2 / (2*pi)
                     b'3 = b3 / (2*pi)

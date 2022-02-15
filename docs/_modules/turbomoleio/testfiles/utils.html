@@ -1,34 +1,71 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>turbomoleio.testfiles.utils &mdash; turbomoleio 1.1.1 documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <meta charset="utf-8">
   
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>turbomoleio.testfiles.utils &mdash; turbomoleio 1.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/js/theme.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
+
+   
   <div class="wy-grid-for-nav">
+    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
+          
+
+          
             <a href="../../../index.html" class="icon icon-home"> turbomoleio
+          
+
+          
           </a>
+
+          
+            
+            
               <div class="version">
-                1.1.1
+                1.2.0
               </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -36,7 +73,17 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
               <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../datagroups.html">The data group files</a></li>
@@ -61,30 +108,66 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../bugs.html">Reporting bugs</a></li>
 </ul>
 
+            
+          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">turbomoleio</a>
+        
       </nav>
 
+
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
       <li>turbomoleio.testfiles.utils</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
+        
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
+            
   <h1>Source code for turbomoleio.testfiles.utils</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1"># The turbomoleio package, a python interface to Turbomole</span>
@@ -134,7 +217,7 @@
 
 
 <span class="n">TESTDIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">TM_VERSIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;TM_v7.3&#39;</span><span class="p">,</span> <span class="s1">&#39;TM_v7.3.1&#39;</span><span class="p">]</span>
+<span class="n">TM_VERSIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;TM_v7.3&#39;</span><span class="p">,</span> <span class="s1">&#39;TM_v7.3.1&#39;</span><span class="p">,</span> <span class="s1">&#39;TM_v7.4.1&#39;</span><span class="p">]</span>
 <span class="n">TESTS_CONFIGS_TM_VERSIONS</span> <span class="o">=</span> <span class="p">{</span>
     <span class="n">tmv</span><span class="p">:</span> <span class="n">loadfn</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TESTDIR</span><span class="p">,</span> <span class="s1">&#39;outputs&#39;</span><span class="p">,</span> <span class="n">tmv</span><span class="p">,</span> <span class="s1">&#39;tests_config.yaml&#39;</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">tmv</span> <span class="ow">in</span> <span class="n">TM_VERSIONS</span>
@@ -260,15 +343,15 @@
 <span class="sd">    Function imported from numpy.testing: assert_equal. Version 16.2.</span>
 <span class="sd">    Two key modifications compared to the original implementation:</span>
 <span class="sd">    1) allow comparison of numbers with a tolerance on the difference (other functions</span>
-<span class="sd">        in numpy that allow a tolerance as an argument do not support comparison</span>
-<span class="sd">        between dictionaries).</span>
+<span class="sd">    in numpy that allow a tolerance as an argument do not support comparison</span>
+<span class="sd">    between dictionaries).</span>
 <span class="sd">    2) allow to skip the explicit comparison of some attributes in dictionaries.</span>
 
 <span class="sd">    Raises an AssertionError if two objects are not equal within the required tolerances.</span>
 <span class="sd">    Given two objects (scalars, lists, tuples, dictionaries or numpy arrays),</span>
 <span class="sd">    check that all elements of these objects are almost equal. An exception is raised</span>
 <span class="sd">    at the first conflicting values.</span>
-<span class="sd">    Comparison for numerical values is performed with assert_allclose</span>
+<span class="sd">    Comparison for numerical values is performed with assert_allclose.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        actual: the object to check.</span>
@@ -934,30 +1017,42 @@
 </pre></div>
 
            </div>
+           
           </div>
           <footer>
+  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2018-2021 BASF SE, Matgenix SRL.</p>
-  </div>
+    <p>
+        &copy; Copyright 2018-2021 BASF SE, Matgenix SRL
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
+
     </section>
+
   </div>
-  <script>
+  
+
+
+  <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
