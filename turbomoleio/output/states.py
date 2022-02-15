@@ -436,8 +436,9 @@ class States(MSONable, MutableSequence):
         """
         Generates a States instance with a subset of the State objects filtered
         by spin and irrep.
-        Notice that the same instances of State as in the current object wiil
+        Notice that the same instances of State as in the current object will
         be used.
+
         Args:
             spin (str): string describing the spin. Values allowed: "alpha",
                 "beta" and the shortcuts "a" and "b".

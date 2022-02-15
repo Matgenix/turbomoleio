@@ -1,36 +1,74 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The coord file &mdash; turbomoleio 1.1.1 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
+  <title>The coord file &mdash; turbomoleio 1.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-    <script src="_static/js/theme.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Running define" href="definerunner.html" />
     <link rel="prev" title="The data group files" href="datagroups.html" /> 
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
+
+   
   <div class="wy-grid-for-nav">
+    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
+          
+
+          
             <a href="index.html" class="icon icon-home"> turbomoleio
+          
+
+          
           </a>
+
+          
+            
+            
               <div class="version">
-                1.1.1
+                1.2.0
               </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -38,7 +76,17 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
               <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="datagroups.html">The data group files</a></li>
@@ -66,32 +114,70 @@
 <li class="toctree-l1"><a class="reference internal" href="bugs.html">Reporting bugs</a></li>
 </ul>
 
+            
+          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">turbomoleio</a>
+        
       </nav>
 
+
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
       <li>The coord file</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
+        
+            
             <a href="_sources/coord.rst.txt" rel="nofollow"> View page source</a>
+          
+        
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
-  <div class="section" id="the-coord-file">
-<h1>The coord file<a class="headerlink" href="#the-coord-file" title="Permalink to this headline"></a></h1>
+            
+  <section id="the-coord-file">
+<h1>The coord file<a class="headerlink" href="#the-coord-file" title="Permalink to this headline">¶</a></h1>
 <p>In TURBOMOLE the coord file mainly contains the coordinates and the types of the atoms
 of the molecule that should be simulated. These information can be stored in
 <a class="reference external" href="http://pymatgen.org/">pymatgen</a> <code class="docutils literal notranslate"><span class="pre">Molecule</span></code> object. However there are a set
@@ -179,8 +265,8 @@ but in general this would be more useful to define a few of them and call <code 
 the <code class="docutils literal notranslate"><span class="pre">ired</span></code> option to let it generate a complete list of redundant internal coordinates. Given its
 potentially complicated structure, the <code class="docutils literal notranslate"><span class="pre">$redundant</span></code> data group is never parsed nor stored when
 reading a <code class="docutils literal notranslate"><span class="pre">coord</span></code> file that contains it.</p>
-<div class="section" id="periodic-systems">
-<span id="id1"></span><h2>Periodic systems<a class="headerlink" href="#periodic-systems" title="Permalink to this headline"></a></h2>
+<section id="periodic-systems">
+<span id="id1"></span><h2>Periodic systems<a class="headerlink" href="#periodic-systems" title="Permalink to this headline">¶</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This is an experimental feature in turbomoleio. As a work-in-progress, the API might still
@@ -190,38 +276,56 @@ change without prior notice.</p>
 through a <a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.periodic.PeriodicSystem" title="turbomoleio.core.periodic.PeriodicSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.periodic.PeriodicSystem</span></code></a> object. This has methods
 to read and generate a <code class="docutils literal notranslate"><span class="pre">coord</span></code> file that can be read by TURBOMOLE, as well as the corresponding
 periodic attributes.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
+           
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="datagroups.html" class="btn btn-neutral float-left" title="The data group files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="definerunner.html" class="btn btn-neutral float-right" title="Running define" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="definerunner.html" class="btn btn-neutral float-right" title="Running define" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="datagroups.html" class="btn btn-neutral float-left" title="The data group files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
     </div>
+  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2018-2021 BASF SE, Matgenix SRL.</p>
-  </div>
+    <p>
+        &copy; Copyright 2018-2022 BASF SE, Matgenix SRL
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
+
     </section>
+
   </div>
-  <script>
+  
+
+
+  <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

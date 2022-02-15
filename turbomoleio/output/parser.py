@@ -1869,7 +1869,7 @@ class Parser:
         Returns:
             dict with "memory" (a dict with "core_memory_dft", "memory_per_atom", "atoms_per_loop") and
             "construction_timings" (a list of lists with construction timings. For each element:
-                [str with description of the timing, cpu time in seconds, wall time in seconds]).
+            [str with description of the timing, cpu time in seconds, wall time in seconds]).
         """
 
         # This section may not be present if aoforce runs after a numforce but also

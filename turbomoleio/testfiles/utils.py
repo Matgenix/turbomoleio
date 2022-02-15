@@ -172,15 +172,15 @@ def assert_almost_equal(actual, desired, rtol=1e-7, atol=0, ignored_values=None,
     Function imported from numpy.testing: assert_equal. Version 16.2.
     Two key modifications compared to the original implementation:
     1) allow comparison of numbers with a tolerance on the difference (other functions
-        in numpy that allow a tolerance as an argument do not support comparison
-        between dictionaries).
+    in numpy that allow a tolerance as an argument do not support comparison
+    between dictionaries).
     2) allow to skip the explicit comparison of some attributes in dictionaries.
 
     Raises an AssertionError if two objects are not equal within the required tolerances.
     Given two objects (scalars, lists, tuples, dictionaries or numpy arrays),
     check that all elements of these objects are almost equal. An exception is raised
     at the first conflicting values.
-    Comparison for numerical values is performed with assert_allclose
+    Comparison for numerical values is performed with assert_allclose.
 
     Args:
         actual: the object to check.
