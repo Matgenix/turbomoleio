@@ -46,7 +46,7 @@ from turbomoleio.output.parser import Parser
 
 
 TESTDIR = os.path.split(__file__)[0]
-TM_VERSIONS = ['TM_v7.3', 'TM_v7.3.1']
+TM_VERSIONS = ['TM_v7.3', 'TM_v7.3.1', 'TM_v7.4.1']
 TESTS_CONFIGS_TM_VERSIONS = {
     tmv: loadfn(os.path.join(TESTDIR, 'outputs', tmv, 'tests_config.yaml'))
     for tmv in TM_VERSIONS

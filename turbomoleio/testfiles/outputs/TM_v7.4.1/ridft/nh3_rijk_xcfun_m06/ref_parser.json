@@ -1,0 +1,217 @@
+{
+  "all_done": true,
+  "header": {
+    "executable": "ridft",
+    "host": "fedora",
+    "tm_version": "7.4.1",
+    "tm_build": "b987a8a8",
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2022-02-15 14:14:52.074000"
+    }
+  },
+  "centers": {
+    "center_of_mass": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "center_of_charge": [
+      -0.0,
+      0.0,
+      -0.08907541
+    ]
+  },
+  "coordinates": {
+    "coords": [
+      [
+        0.0,
+        0.0,
+        0.12917062
+      ],
+      [
+        1.75612466,
+        0.0,
+        -0.59831614
+      ],
+      [
+        -0.87806233,
+        1.52084857,
+        -0.59831614
+      ],
+      [
+        -0.87806233,
+        -1.52084857,
+        -0.59831614
+      ]
+    ],
+    "species": [
+      "n",
+      "h",
+      "h",
+      "h"
+    ],
+    "charges": [
+      7.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "isotopes": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "basis": {
+    "basis_per_specie": {
+      "n": "def-SV(P)",
+      "h": "def-SV(P)"
+    },
+    "aux_basis_per_specie": {
+      "n": "def-SV(P)",
+      "h": "def-SV(P)"
+    },
+    "number_scf_basis_func": 20,
+    "number_scf_aux_basis_func": 131
+  },
+  "symmetry": {
+    "symbol": "c1",
+    "n_reps": 1,
+    "reps": [
+      "a"
+    ]
+  },
+  "cosmo_header": null,
+  "density_functional_data": {
+    "functional_msg": "M06 meta-GGA functional\n Truhlar functional with 27% HF exchange\n USING XCfun library, see documentation\n XCFun library is being used, version:   1.99000000000000     \nXCFun DFT library Copyright 2009-2011 Ulf Ekstrom and contributors.\nSee http://admol.org/xcfun for more information.\n\nThis is free software; see the source code for copying conditions.\nThere is ABSOLUTELY NO WARRANTY; not even for MERCHANTABILITY or\nFITNESS FOR A PARTICULAR PURPOSE. For details see the documentation.\nScientific users of this library should cite\nU. Ekstrom, L. Visscher, R. Bast, A. J. Thorvaldsen and K. Ruud;\nJ.Chem.Theor.Comp. 2010, DOI: 10.1021/ct100117s\n\n\nXCFun uses functional: m06",
+    "functional_name": "m06",
+    "functional_type": "MHYB",
+    "xcfun": "1.99000000000000",
+    "spherical_gridsize": 3,
+    "gridpoints": 302
+  },
+  "rij_info": {
+    "marij": false,
+    "rij_memory": 1,
+    "rik": true,
+    "ricore": 500
+  },
+  "dftd": null,
+  "pre_scf_run": {
+    "diis": true,
+    "diis_error_vect": "FDS-SDF",
+    "conv_tot_en": 1e-07,
+    "conv_one_e_en": 0.0001,
+    "virtual_orbital_shift_on": true,
+    "virtual_orbital_shift_limit": 0.1,
+    "orbital_characterization": "expanded",
+    "restart_file": "mos",
+    "n_occupied_orbitals": 5
+  },
+  "scf_iterations": {
+    "energies": [
+      -56.284679298172,
+      -56.430416233621,
+      -56.451616450644,
+      -56.454045176285,
+      -56.454566001146,
+      -56.454586528094,
+      -56.454588600419,
+      -56.454588710087,
+      -56.453310865787
+    ],
+    "first_index": 1,
+    "n_steps": 9,
+    "dampings": [
+      0.3,
+      0.25,
+      0.2,
+      0.25,
+      0.3,
+      0.15,
+      0.1,
+      0.1,
+      0.1
+    ],
+    "converged": true
+  },
+  "scf_energies": {
+    "total_energy": -56.45331086579,
+    "kinetic_energy": 56.12047867503,
+    "potential_energy": -112.57378954082,
+    "virial_theorem": 1.99410429281,
+    "wavefunction_norm": 1.0
+  },
+  "cosmo_results": null,
+  "electrostatic_moments": {
+    "unrestricted_electrons": null,
+    "charge": -0.0,
+    "dipole": {
+      "norm": 0.744,
+      "moment": [
+        0.0023,
+        -0.0,
+        -0.744021
+      ]
+    },
+    "quadrupole": {
+      "trace": -15.416018999999999,
+      "anisotropy": 1.754798,
+      "moment": [
+        [
+          -4.552874,
+          0.0,
+          0.001177
+        ],
+        [
+          0.0,
+          -4.554608,
+          0.0
+        ],
+        [
+          0.001177,
+          0.0,
+          -6.308538
+        ]
+      ]
+    }
+  },
+  "timings": {
+    "cpu_time": 2.99,
+    "wall_time": 2.99,
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2022-02-15 14:14:55.064000"
+    }
+  },
+  "s2": null,
+  "is_uhf": false,
+  "fermi": null,
+  "integral": {
+    "integral_neglect_threshold": 1.6e-10,
+    "thize": 1e-05,
+    "thime": 5
+  },
+  "pre_escf_run": null,
+  "escf_iterations": null,
+  "escf_gs_total_en": null,
+  "escf_excitations": null,
+  "rdgrad_memory": null,
+  "gradient": null,
+  "egrad_excited_state": null,
+  "statpt_info": null,
+  "relax_info": null,
+  "relax_gradient_values": null,
+  "relax_conv_info": null,
+  "aoforce_numerical_integration": null,
+  "aoforce_analysis": null,
+  "mp2_results": {
+    "energy": null
+  },
+  "riper_scf_energies": null,
+  "periodicity_data": null
+}

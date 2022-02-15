@@ -1,4 +1,5 @@
-$operating system unix
+$title
+ridft_escf
 $symmetry c2v
 $redundant    file=coord
 $user-defined bonds    file=coord
@@ -17,23 +18,19 @@ h  2-3                                                                         \
    basis =h def-SV(P)                                                          \
    jbas  =h def-SV(P)
 $basis    file=basis
-$rundimensions
-   dim(fock,dens)=211
-   natoms=3
-   nshell=10
-   nbf(CAO)=19
-   dim(trafo[SAO<-->AO/CAO])=25
-   rhfshells=1
-   nbf(AO)=18
 $scfmo   file=mos
+$closed shells
+ a1      1-3                                    ( 2 )
+ b1      1                                      ( 2 )
+ b2      1                                      ( 2 )
 $scfiterlimit      200
 $thize     0.10000000E-04
 $thime        5
+$scfdamp   start=0.300  step=0.050  min=0.100
 $scfdump
 $scfintunit
  unit=30       size=0        file=twoint
 $scfdiis
-$maxcor    500 MiB  per_core
 $scforbitalshift  automatic=.1
 $drvopt
    cartesian  on
@@ -60,20 +57,18 @@ $forceapprox    file=forceapprox
 $scfinstab rpas
 $soes
  a1           3
+$rpacor      220   in_total
 $denconv 1d-7
 $dft
    functional b-p
    gridsize   m3
-$scfconv   6
-$scfdamp   start=0.700  step=0.050  min=0.050
+$scfconv   7
 $ricore      500
 $rij
 $jbas    file=auxbasis
+$rundimensions
+   natoms=3
+   nbf(CAO)=19
+   nbf(AO)=18
 $last step     define
-$title
-ridft_escf
-$closed shells
- a1      1-3                                    ( 2 )
- b1      1                                      ( 2 )
- b2      1                                      ( 2 )
 $end
