@@ -93,8 +93,8 @@ with open(os.path.join(os.path.dirname(__file__), "turbomoleio", "__version__.py
 # This dict is eventually passed to setup after additional keys are added.
 setup_args = dict(name="turbomoleio",
                   version=about["__version__"],
-                  description=about['__description__'],
-                  long_description="  ",
+                  description=about["__description__"],
+                  long_description=about["__long_description__"],
                   author="Michiel van Setten, David Waroquiers, Guido Petretto, Jan Kloppenburg",
                   author_email="mjvansetten@gmail.com, david.waroquiers@matgenix.com, guido.petretto@matgenix.com, "
                                "jan.kloppenburg@uclouvain.be",
