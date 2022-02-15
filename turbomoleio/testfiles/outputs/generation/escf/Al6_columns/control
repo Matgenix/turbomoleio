@@ -905,6 +905,8 @@ $scfinstab urpa
 $rpacor 50
 $soes all 1
 $scfmo   file=mos
+$maxcor    500 MiB  per_core
+$forceapprox    file=forceapprox
 $closed shells
  a1'     1-6                                    ( 2 )
  a2'     1                                      ( 2 )
@@ -912,6 +914,4 @@ $closed shells
  a1"     1                                      ( 2 )
  a2"     1-5                                    ( 2 )
  e"      1-6                                    ( 2 )
-$maxcor    500 MiB  per_core
-$forceapprox    file=forceapprox
 $end

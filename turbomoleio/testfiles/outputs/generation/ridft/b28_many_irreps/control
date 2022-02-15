@@ -1,4 +1,5 @@
-$operating system unix
+$title
+ridft
 $symmetry d14d
 $user-defined bonds    file=coord
 $coord    file=coord
@@ -13,59 +14,9 @@ b  1-28                                                                        \
    basis =b def-SV(P)                                                          \
    jbas  =b def-SV(P)
 $basis    file=basis
-$rundimensions
-   dim(fock,dens)=88998
-   natoms=28
-   nshell=168
-   nbf(CAO)=420
-   dim(trafo[SAO<-->AO/CAO])=19336
-   rhfshells=2
-   nbf(AO)=392
 $uhfmo_alpha   file=alpha
 $uhfmo_beta   file=beta
 $uhf
-$scfiterlimit      200
-$thize     0.10000000E-04
-$thime        5
-$scfdump
-$scfintunit
- unit=30       size=0        file=twoint
-$scfdiis
-$maxcor    500 MiB  per_core
-$drvopt
-   cartesian  on
-   basis      off
-   global     off
-   hessian    on
-   dipole     on
-   nuclear polarizability
-$interconversion  off
-   qconv=1.d-7
-   maxiter=25
-$coordinateupdate
-   dqmax=0.3
-   interpolate  on
-   statistics    5
-$forceupdate
-   ahlrichs numgeo=0  mingeo=3 maxgeo=4 modus=<g|dq> dynamic fail=0.3
-   threig=0.005  reseig=0.005  thrbig=3.0  scale=1.00  damping=0.0
-$forceinit on
-   diag=default
-$energy    file=energy
-$grad    file=gradient
-$forceapprox    file=forceapprox
-$dft
-   functional b-p
-   gridsize   m3
-$scfconv   6
-$scfdamp   start=0.700  step=0.050  min=0.050
-$scforbitalshift  closedshell=.05
-$ricore      500
-$rij
-$jbas    file=auxbasis
-$last step     define
-$title
-ridft
 $alpha shells
  a1      1-4                                    ( 1 )
  b2      1-3                                    ( 1 )
@@ -98,4 +49,48 @@ $beta shells
  e11     1-2                                    ( 1 )
  e12     1-2                                    ( 1 )
  e13     1-2                                    ( 1 )
+$scfiterlimit      200
+$thize     0.10000000E-04
+$thime        5
+$scfdamp   start=1.000  step=0.050  min=0.100
+$scfdump
+$scfintunit
+ unit=30       size=0        file=twoint
+$scfdiis
+$maxcor    500 MiB  per_core
+$drvopt
+   cartesian  on
+   basis      off
+   global     off
+   hessian    on
+   dipole     on
+   nuclear polarizability
+$interconversion  off
+   qconv=1.d-7
+   maxiter=25
+$coordinateupdate
+   dqmax=0.3
+   interpolate  on
+   statistics    5
+$forceupdate
+   ahlrichs numgeo=0  mingeo=3 maxgeo=4 modus=<g|dq> dynamic fail=0.3
+   threig=0.005  reseig=0.005  thrbig=3.0  scale=1.00  damping=0.0
+$forceinit on
+   diag=default
+$energy    file=energy
+$grad    file=gradient
+$forceapprox    file=forceapprox
+$dft
+   functional b-p
+   gridsize   m3
+$scfconv   7
+$scforbitalshift  closedshell=.05
+$ricore      500
+$rij
+$jbas    file=auxbasis
+$rundimensions
+   natoms=28
+   nbf(CAO)=420
+   nbf(AO)=392
+$last step     define
 $end

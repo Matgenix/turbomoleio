@@ -1,0 +1,919 @@
+{
+  "all_done": true,
+  "header": {
+    "executable": "egrad",
+    "host": "fedora",
+    "tm_version": "7.4.1",
+    "tm_build": "b987a8a8",
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2022-02-15 14:14:34.833000"
+    }
+  },
+  "centers": {
+    "center_of_mass": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "center_of_charge": [
+      0.0,
+      0.0,
+      -0.19107046
+    ]
+  },
+  "coordinates": {
+    "coords": [
+      [
+        0.0,
+        0.0,
+        -3.04112594
+      ],
+      [
+        0.97212284,
+        1.68376616,
+        -3.67601852
+      ],
+      [
+        0.97212284,
+        -1.68376616,
+        -3.67601852
+      ],
+      [
+        -1.94424569,
+        0.0,
+        -3.67601852
+      ],
+      [
+        0.0,
+        0.0,
+        0.59622031
+      ]
+    ],
+    "species": [
+      "c",
+      "h",
+      "h",
+      "h",
+      "br"
+    ],
+    "charges": [
+      6.0,
+      1.0,
+      1.0,
+      1.0,
+      35.0
+    ],
+    "isotopes": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "basis": {
+    "basis_per_specie": {
+      "c": "def-SV(P)",
+      "h": "def-SV(P)",
+      "br": "def-SV(P)"
+    },
+    "aux_basis_per_specie": {},
+    "number_scf_basis_func": 52,
+    "number_scf_aux_basis_func": null
+  },
+  "symmetry": {
+    "symbol": "c1",
+    "n_reps": 1,
+    "reps": [
+      "a"
+    ]
+  },
+  "cosmo_header": null,
+  "density_functional_data": {
+    "functional_msg": "B-P86 functional\n exchange:    LDA + Becke (B88)\n correlation: LDA (VWN) + Perdew (P86)",
+    "functional_name": "b-p",
+    "functional_type": "GGA",
+    "xcfun": null,
+    "spherical_gridsize": 3,
+    "gridpoints": 302
+  },
+  "rij_info": null,
+  "dftd": null,
+  "pre_scf_run": null,
+  "scf_iterations": null,
+  "scf_energies": null,
+  "cosmo_results": null,
+  "electrostatic_moments": {
+    "unrestricted_electrons": null,
+    "charge": 0.0,
+    "dipole": {
+      "norm": 1.7382,
+      "moment": [
+        -0.219654,
+        -0.0,
+        -1.724291
+      ]
+    },
+    "quadrupole": {
+      "trace": -53.473977000000005,
+      "anisotropy": 2.893489,
+      "moment": [
+        [
+          -17.791945,
+          -0.0,
+          0.878623
+        ],
+        [
+          -0.0,
+          -19.261571,
+          0.0
+        ],
+        [
+          0.878623,
+          0.0,
+          -16.42046
+        ]
+      ]
+    }
+  },
+  "timings": {
+    "cpu_time": 2.19,
+    "wall_time": 2.2,
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2022-02-15 14:14:37.023000"
+    }
+  },
+  "s2": null,
+  "is_uhf": false,
+  "fermi": null,
+  "integral": {
+    "integral_neglect_threshold": 3.3e-11,
+    "thize": 1e-05,
+    "thime": 5
+  },
+  "pre_escf_run": {
+    "calc_type": "RPA SINGLET-EXCITATION",
+    "residuum_convergence_criterium": 1e-05,
+    "n_occupied_orbitals": 22,
+    "orbital_characterization": "scfconv=7",
+    "max_davidson_iter": 25,
+    "machine_precision": 2.22e-16,
+    "max_core_mem": 220.0,
+    "max_cao_basis_vectors": 8612,
+    "max_treated_vectors": 18,
+    "irrep_data": {
+      "a": {
+        "tensor_space_dim": 660,
+        "n_roots": 10
+      }
+    }
+  },
+  "escf_iterations": {
+    "steps": [
+      [
+        [
+          "a",
+          0,
+          0.1104386619886619
+        ]
+      ],
+      [
+        [
+          "a",
+          0,
+          0.01902291898699951
+        ]
+      ],
+      [
+        [
+          "a",
+          1,
+          0.001947444159126688
+        ]
+      ],
+      [
+        [
+          "a",
+          3,
+          0.000357176201821817
+        ]
+      ],
+      [
+        [
+          "a",
+          7,
+          4.812820207089289e-05
+        ]
+      ],
+      [
+        [
+          "a",
+          10,
+          8.137193885882913e-06
+        ]
+      ]
+    ],
+    "converged": true
+  },
+  "escf_gs_total_en": -2614.005271607,
+  "escf_excitations": {
+    "a": [
+      {
+        "tot_en": -2613.775721258578,
+        "osc_stre": 7.973690669801004e-06,
+        "rot_stre": -4.359622814149032e-16,
+        "dominant_contributions": [
+          {
+            "occ_orb": {
+              "index": 22,
+              "irrep": "a",
+              "energy": -6.5,
+              "spin": null
+            },
+            "virt_orb": {
+              "index": 23,
+              "irrep": "a",
+              "energy": -0.66,
+              "spin": null
+            },
+            "coeff": 99.6
+          }
+        ],
+        "moments_columns": [
+          {
+            "electric_dipole": [
+              0.007213,
+              -0.0,
+              -0.000285
+            ],
+            "magnetic_dipole": [
+              0.0,
+              0.001695,
+              -0.0
+            ],
+            "electric_quadrupole": {
+              "trace": 0.0015840000000000001,
+              "anisotropy": 0.198269,
+              "moment": [
+                [
+                  0.091857,
+                  0.0,
+                  -0.068729
+                ],
+                [
+                  0.0,
+                  -0.091224,
+                  0.0
+                ],
+                [
+                  -0.068729,
+                  0.0,
+                  0.000951
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "tot_en": -2613.775700528467,
+        "osc_stre": 8.181619354474115e-06,
+        "rot_stre": -1.092071419373559e-15,
+        "dominant_contributions": [
+          {
+            "occ_orb": {
+              "index": 21,
+              "irrep": "a",
+              "energy": -6.5,
+              "spin": null
+            },
+            "virt_orb": {
+              "index": 23,
+              "irrep": "a",
+              "energy": -0.66,
+              "spin": null
+            },
+            "coeff": 99.6
+          }
+        ],
+        "moments_columns": [
+          {
+            "electric_dipole": [
+              -0.0,
+              -0.007312,
+              0.0
+            ],
+            "magnetic_dipole": [
+              0.001693,
+              -0.0,
+              0.0
+            ],
+            "electric_quadrupole": {
+              "trace": -0.0,
+              "anisotropy": 0.198657,
+              "moment": [
+                [
+                  -0.0,
+                  0.091425,
+                  0.0
+                ],
+                [
+                  0.091425,
+                  0.0,
+                  0.069255
+                ],
+                [
+                  0.0,
+                  0.069255,
+                  0.0
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "tot_en": -2613.706981293913,
+        "osc_stre": 7.777246409052212e-06,
+        "rot_stre": 1.135299232046865e-15,
+        "dominant_contributions": [
+          {
+            "occ_orb": {
+              "index": 22,
+              "irrep": "a",
+              "energy": -6.5,
+              "spin": null
+            },
+            "virt_orb": {
+              "index": 24,
+              "irrep": "a",
+              "energy": 1.6,
+              "spin": null
+            },
+            "coeff": 99.8
+          }
+        ],
+        "moments_columns": [
+          {
+            "electric_dipole": [
+              -0.006253,
+              -0.0,
+              -6.1e-05
+            ],
+            "magnetic_dipole": [
+              0.0,
+              -0.002314,
+              0.0
+            ],
+            "electric_quadrupole": {
+              "trace": -0.001014,
+              "anisotropy": 1.944884,
+              "moment": [
+                [
+                  -0.292201,
+                  0.0,
+                  -1.084304
+                ],
+                [
+                  0.0,
+                  0.291387,
+                  -0.0
+                ],
+                [
+                  -1.084304,
+                  -0.0,
+                  -0.0002
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "tot_en": -2613.706962649916,
+        "osc_stre": 7.954267519626777e-06,
+        "rot_stre": -3.250727962210122e-15,
+        "dominant_contributions": [
+          {
+            "occ_orb": {
+              "index": 21,
+              "irrep": "a",
+              "energy": -6.5,
+              "spin": null
+            },
+            "virt_orb": {
+              "index": 24,
+              "irrep": "a",
+              "energy": 1.6,
+              "spin": null
+            },
+            "coeff": 99.8
+          }
+        ],
+        "moments_columns": [
+          {
+            "electric_dipole": [
+              0.0,
+              -0.006324,
+              -0.0
+            ],
+            "magnetic_dipole": [
+              0.002316,
+              0.0,
+              0.0
+            ],
+            "electric_quadrupole": {
+              "trace": 0.0,
+              "anisotropy": 1.945663,
+              "moment": [
+                [
+                  0.0,
+                  0.291982,
+                  0.0
+                ],
+                [
+                  0.291982,
+                  -0.0,
+                  -1.084719
+                ],
+                [
+                  0.0,
+                  -1.084719,
+                  0.0
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "tot_en": -2613.667110040014,
+        "osc_stre": 3.451235505609956e-07,
+        "rot_stre": 3.902294929878764e-15,
+        "dominant_contributions": [
+          {
+            "occ_orb": {
+              "index": 22,
+              "irrep": "a",
+              "energy": -6.5,
+              "spin": null
+            },
+            "virt_orb": {
+              "index": 25,
+              "irrep": "a",
+              "energy": 2.71,
+              "spin": null
+            },
+            "coeff": 51.1
+          },
+          {
+            "occ_orb": {
+              "index": 21,
+              "irrep": "a",
+              "energy": -6.5,
+              "spin": null
+            },
+            "virt_orb": {
+              "index": 26,
+              "irrep": "a",
+              "energy": 2.71,
+              "spin": null
+            },
+            "coeff": 48.9
+          }
+        ],
+        "moments_columns": [
+          {
+            "electric_dipole": [
+              -0.0,
+              -0.001237,
+              0.0
+            ],
+            "magnetic_dipole": [
+              -2.6e-05,
+              0.0,
+              0.001177
+            ],
+            "electric_quadrupole": {
+              "trace": -0.0,
+              "anisotropy": 0.021206,
+              "moment": [
+                [
+                  0.0,
+                  -0.000342,
+                  0.0
+                ],
+                [
+                  -0.000342,
+                  -0.0,
+                  0.012238
+                ],
+                [
+                  0.0,
+                  0.012238,
+                  -0.0
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "tot_en": -2613.665607743472,
+        "osc_stre": 0.002845517535936081,
+        "rot_stre": 4.247451306585731e-16,
+        "dominant_contributions": [
+          {
+            "occ_orb": {
+              "index": 22,
+              "irrep": "a",
+              "energy": -6.5,
+              "spin": null
+            },
+            "virt_orb": {
+              "index": 26,
+              "irrep": "a",
+              "energy": 2.71,
+              "spin": null
+            },
+            "coeff": 50.3
+          },
+          {
+            "occ_orb": {
+              "index": 21,
+              "irrep": "a",
+              "energy": -6.5,
+              "spin": null
+            },
+            "virt_orb": {
+              "index": 25,
+              "irrep": "a",
+              "energy": 2.71,
+              "spin": null
+            },
+            "coeff": 49.5
+          }
+        ],
+        "moments_columns": [
+          {
+            "electric_dipole": [
+              0.112087,
+              0.0,
+              0.001634
+            ],
+            "magnetic_dipole": [
+              0.0,
+              -0.002253,
+              0.0
+            ],
+            "electric_quadrupole": {
+              "trace": -0.007731,
+              "anisotropy": 1.910822,
+              "moment": [
+                [
+                  -0.057449,
+                  0.0,
+                  -1.101749
+                ],
+                [
+                  0.0,
+                  0.056006,
+                  -0.0
+                ],
+                [
+                  -1.101749,
+                  -0.0,
+                  -0.006287
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "tot_en": -2613.665600553972,
+        "osc_stre": 0.002815298074721636,
+        "rot_stre": -4.973707989442442e-16,
+        "dominant_contributions": [
+          {
+            "occ_orb": {
+              "index": 21,
+              "irrep": "a",
+              "energy": -6.5,
+              "spin": null
+            },
+            "virt_orb": {
+              "index": 26,
+              "irrep": "a",
+              "energy": 2.71,
+              "spin": null
+            },
+            "coeff": 51.0
+          },
+          {
+            "occ_orb": {
+              "index": 22,
+              "irrep": "a",
+              "energy": -6.5,
+              "spin": null
+            },
+            "virt_orb": {
+              "index": 25,
+              "irrep": "a",
+              "energy": 2.71,
+              "spin": null
+            },
+            "coeff": 48.8
+          }
+        ],
+        "moments_columns": [
+          {
+            "electric_dipole": [
+              0.0,
+              -0.111501,
+              -0.0
+            ],
+            "magnetic_dipole": [
+              -0.002254,
+              -0.0,
+              -1.3e-05
+            ],
+            "electric_quadrupole": {
+              "trace": 0.0,
+              "anisotropy": 1.906516,
+              "moment": [
+                [
+                  -0.0,
+                  -0.056153,
+                  -0.0
+                ],
+                [
+                  -0.056153,
+                  0.0,
+                  1.099294
+                ],
+                [
+                  -0.0,
+                  1.099294,
+                  0.0
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "tot_en": -2613.663555484773,
+        "osc_stre": 0.03127875409603813,
+        "rot_stre": -3.511671808510834e-15,
+        "dominant_contributions": [
+          {
+            "occ_orb": {
+              "index": 21,
+              "irrep": "a",
+              "energy": -6.5,
+              "spin": null
+            },
+            "virt_orb": {
+              "index": 25,
+              "irrep": "a",
+              "energy": 2.71,
+              "spin": null
+            },
+            "coeff": 48.9
+          },
+          {
+            "occ_orb": {
+              "index": 22,
+              "irrep": "a",
+              "energy": -6.5,
+              "spin": null
+            },
+            "virt_orb": {
+              "index": 26,
+              "irrep": "a",
+              "energy": 2.71,
+              "spin": null
+            },
+            "coeff": 48.1
+          }
+        ],
+        "moments_columns": [
+          {
+            "electric_dipole": [
+              0.000312,
+              0.0,
+              -0.370542
+            ],
+            "magnetic_dipole": [
+              0.0,
+              -1e-05,
+              0.0
+            ],
+            "electric_quadrupole": {
+              "trace": 1.808064,
+              "anisotropy": 1.271956,
+              "moment": [
+                [
+                  0.178594,
+                  0.0,
+                  -0.004183
+                ],
+                [
+                  0.0,
+                  0.178825,
+                  -0.0
+                ],
+                [
+                  -0.004183,
+                  -0.0,
+                  1.450645
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "tot_en": -2613.616757104312,
+        "osc_stre": 0.009014111779579975,
+        "rot_stre": -1.211222952810222e-15,
+        "dominant_contributions": [
+          {
+            "occ_orb": {
+              "index": 19,
+              "irrep": "a",
+              "energy": -10.95,
+              "spin": null
+            },
+            "virt_orb": {
+              "index": 23,
+              "irrep": "a",
+              "energy": -0.66,
+              "spin": null
+            },
+            "coeff": 99.7
+          }
+        ],
+        "moments_columns": [
+          {
+            "electric_dipole": [
+              -0.0,
+              -0.186554,
+              0.0
+            ],
+            "magnetic_dipole": [
+              0.001684,
+              -0.0,
+              0.0
+            ],
+            "electric_quadrupole": {
+              "trace": -0.0,
+              "anisotropy": 1.761935,
+              "moment": [
+                [
+                  0.0,
+                  -0.162467,
+                  0.0
+                ],
+                [
+                  -0.162467,
+                  -0.0,
+                  1.004196
+                ],
+                [
+                  0.0,
+                  1.004196,
+                  -0.0
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "tot_en": -2613.616732439692,
+        "osc_stre": 0.009071251670564183,
+        "rot_stre": -3.653896557366599e-16,
+        "dominant_contributions": [
+          {
+            "occ_orb": {
+              "index": 18,
+              "irrep": "a",
+              "energy": -10.96,
+              "spin": null
+            },
+            "virt_orb": {
+              "index": 23,
+              "irrep": "a",
+              "energy": -0.66,
+              "spin": null
+            },
+            "coeff": 99.7
+          }
+        ],
+        "moments_columns": [
+          {
+            "electric_dipole": [
+              0.187017,
+              -0.0,
+              0.006716
+            ],
+            "magnetic_dipole": [
+              0.0,
+              0.001681,
+              0.0
+            ],
+            "electric_quadrupole": {
+              "trace": -0.024293999999999996,
+              "anisotropy": 1.765663,
+              "moment": [
+                [
+                  -0.166266,
+                  -0.0,
+                  -1.006165
+                ],
+                [
+                  -0.0,
+                  0.16075,
+                  0.0
+                ],
+                [
+                  -1.006165,
+                  0.0,
+                  -0.018779
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "rdgrad_memory": null,
+  "gradient": {
+    "gradients": [
+      [
+        -0.09995971,
+        -3.298939e-10,
+        0.06344875
+      ],
+      [
+        0.015751,
+        -0.0422028,
+        0.02783363
+      ],
+      [
+        0.015751,
+        0.0422028,
+        0.02783363
+      ],
+      [
+        0.07003746,
+        2.320646e-10,
+        0.06391954
+      ],
+      [
+        -0.00157236,
+        2.261269e-11,
+        -0.1830458
+      ]
+    ],
+    "dielectric": [
+      [
+        -0.105546,
+        -0.0,
+        -0.070184
+      ],
+      [
+        -0.0,
+        -0.142119,
+        -0.0
+      ],
+      [
+        -0.070184,
+        -0.0,
+        -0.741695
+      ]
+    ]
+  },
+  "egrad_excited_state": {
+    "index": 10,
+    "default": true
+  },
+  "statpt_info": null,
+  "relax_info": null,
+  "relax_gradient_values": null,
+  "relax_conv_info": null,
+  "aoforce_numerical_integration": null,
+  "aoforce_analysis": null,
+  "mp2_results": {
+    "energy": null
+  },
+  "riper_scf_energies": null,
+  "periodicity_data": null
+}

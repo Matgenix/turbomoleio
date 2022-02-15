@@ -1,0 +1,132 @@
+
+ statpt (fedora) : TURBOMOLE rev. V7.4.1 (b987a8a8) compiled 15 Oct 2019 at 12:03:25
+ Copyright (C) 2019 TURBOMOLE GmbH, Karlsruhe
+
+
+    2022-02-15 14:15:18.916 
+
+
+
+                           this is S T A T P T   
+
+
+                     hessian and coordinate update for
+                          stationary point search 
+
+                     by barbara unterreiner, marek sierka,
+                           and reinhart ahlrichs
+
+                          quantum chemistry group
+                          universitaet  karlsruhe
+                                  germany
+
+
+
+
+              +--------------------------------------------------+
+              | Atomic coordinate, charge and isotop information |
+              +--------------------------------------------------+
+
+                    atomic coordinates            atom    charge  isotop
+          0.04340035   -2.43303953    0.00000000    o      8.000     0
+          2.40289845    1.33092842    0.00000000    c      6.000     0
+         -2.44869437    1.25914649    0.00000000    c      6.000     0
+         -0.00810063   -0.18289217    0.00000000    c      6.000     0
+          2.09020694    3.35088178    0.00000000    h      1.000     0
+         -4.02779836   -0.02916167    0.00000000    h      1.000     0
+          3.51545227    0.83515949    1.64389798    h      1.000     0
+          3.51545227    0.83515949   -1.64389798    h      1.000     0
+         -2.56998075    2.47145950    1.64993688    h      1.000     0
+         -2.56998075    2.47145950   -1.64993688    h      1.000     0
+ 
+       center of nuclear mass  :   -0.00000000    0.00000000    0.00000000
+       center of nuclear charge:   -0.00071328    0.15355432    0.00000000
+  Keyword $statpt not found - using default options
+ 
+        ***************  Stationary point options ******************
+        ************************************************************
+           Maximum allowed trust radius:           3.000000E-01
+           Minimum allowed trust radius:           1.000000E-03
+           Initial trust radius:                   1.500000E-01
+           GDIIS used if gradient norm <           1.000000E-02
+           Number of previous steps for GDIIS:       5
+           Hessian update method:                  BFGS
+                        *** Convergence criteria ***                
+           Threshold for energy change:            1.000000E-06
+           Threshold for max displacement element: 1.000000E-03
+           Threshold for max gradient element :    1.000000E-03
+           Threshold for RMS of displacement:      5.000000E-04
+           Threshold for RMS of gradient:          5.000000E-04
+        ************************************************************
+ 
+
+ keyword $statp missing in file <control>
+
+  Keyword $statpt not found - using default options
+
+ keyword $optinfo  missing in file <control>
+
+  *************************************************************************
+   ATOM                      CARTESIAN COORDINATES
+    1 o       0.04340035000000     -2.43303953000000      0.00000000000000
+    2 c       2.40289845000000      1.33092842000000      0.00000000000000
+    3 c      -2.44869437000000      1.25914649000000      0.00000000000000
+    4 c      -0.00810063000000     -0.18289217000000      0.00000000000000
+    5 h       2.09020694000000      3.35088178000000      0.00000000000000
+    6 h      -4.02779836000000     -0.02916167000000      0.00000000000000
+    7 h       3.51545227000000      0.83515949000000      1.64389798000000
+    8 h       3.51545227000000      0.83515949000000     -1.64389798000000
+    9 h      -2.56998075000000      2.47145950000000      1.64993688000000
+   10 h      -2.56998075000000      2.47145950000000     -1.64993688000000
+  *************************************************************************
+   ATOM                      CARTESIAN GRADIENTS  
+    1 o      -0.00164111514958      0.05515525074003      0.00000000000162
+    2 c       0.00681095670633     -0.00225366708790      0.00000000000164
+    3 c      -0.00452997216613      0.00112020222210     -0.00000000000595
+    4 c       0.00135853177624     -0.03431185966169     -0.00000000000130
+    5 h       0.00225102959899     -0.01960723158657      0.00000000000155
+    6 h       0.01587170229086      0.01369377440811      0.00000000000021
+    7 h      -0.01086645865439      0.00545177551015     -0.01577167497436
+    8 h      -0.01086645865392      0.00545177550995      0.01577167497473
+    9 h       0.00080899188974     -0.01234826398811     -0.01481431704221
+   10 h       0.00080899188995     -0.01234826398835      0.01481431704227
+  *************************************************************************
+
+  norm of actual CARTESIAN gradient:  8.16359E-02
+
+  ENERGY =    -192.9994516105 a.u.; # of cycle =    1
+
+
+ keyword $hessapprox missing in file <control>
+
+
+  USING DIAGONAL INITIAL HESSIAN
+  Diagonal elements set to:    0.50000
+  Number of zero Hessian eigenvalues:   6
+
+  Results of the TRO shift search
+  Final shift: -4.42393E-02 residual -2.87964E-16
+  Final step radius: 1.50000E-01
+
+      ****************************************************************** 
+                          CONVERGENCE INFORMATION
+
+                               Converged?     Value      Criterion
+             Energy change         no     192.9994516   0.0000010
+             RMS of displacement   no       0.0273861   0.0005000
+             RMS of gradient       no       0.0149046   0.0005000
+             MAX displacement      no       0.1013430   0.0010000
+             MAX gradient          no       0.0551553   0.0010000
+      ****************************************************************** 
+
+
+    ------------------------------------------------------------------------
+         total  cpu-time :   0.01 seconds
+         total wall-time :   0.01 seconds
+    ------------------------------------------------------------------------
+
+   ****  statpt : all done  ****
+
+
+    2022-02-15 14:15:18.922 
+

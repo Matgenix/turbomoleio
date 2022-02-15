@@ -1,4 +1,5 @@
-$operating system unix
+$title
+jobex_ridft_rimp2
 $symmetry c1 n
 $redundant    file=coord
 $user-defined bonds    file=coord
@@ -19,15 +20,9 @@ h  2-3                                                                         \
    cbas  =h def-SV(P)                                                          \
    jkbas =h def-SV(P)
 $basis    file=basis
-$rundimensions
-   dim(fock,dens)=211
-   natoms=3
-   nshell=10
-   nbf(CAO)=19
-   dim(trafo[SAO<-->AO/CAO])=21
-   rhfshells=1
-   nbf(AO)=18
 $scfmo   file=mos
+$closed shells
+ a       1-5                                    ( 2 )
 $scfiterlimit      200
 $scfconv        7
 $thize     0.10000000E-04
@@ -72,9 +67,9 @@ $ricore      500
 $rij
 $jkbas    file=auxbasis
 $rik
+$rundimensions
+   natoms=3
+   nbf(CAO)=19
+   nbf(AO)=18
 $last step     define
-$title
-jobex_ridft_rimp2
-$closed shells
- a       1-5                                    ( 2 )
 $end

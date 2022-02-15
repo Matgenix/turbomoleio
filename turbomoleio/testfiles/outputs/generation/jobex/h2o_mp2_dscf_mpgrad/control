@@ -1,4 +1,5 @@
-$operating system unix
+$title
+jobex_mp2_dscf_mpgrad
 $symmetry c2v
 $redundant    file=coord
 $user-defined bonds    file=coord
@@ -18,15 +19,11 @@ h  2-3                                                                         \
    basis =h def-SV(P)                                                          \
    cbas  =h def-SV(P)
 $basis    file=basis
-$rundimensions
-   dim(fock,dens)=211
-   natoms=3
-   nshell=10
-   nbf(CAO)=19
-   dim(trafo[SAO<-->AO/CAO])=25
-   rhfshells=1
-   nbf(AO)=18
 $scfmo   file=mos
+$closed shells
+ a1      1-3                                    ( 2 )
+ b1      1                                      ( 2 )
+ b2      1                                      ( 2 )
 $scfiterlimit      200
 $scfconv        7
 $thize     0.10000000E-04
@@ -61,37 +58,15 @@ $energy    file=energy
 $grad    file=gradient
 $forceapprox    file=forceapprox
 $denconv     0.10000000E-06
+$freeze
+ implicit core=    1 virt=    0
 $cbas    file=auxbasis
 $ricc2
   mp2
   geoopt model=mp2       state=(x)
-$last step     mpgrad
-$last SCF energy change = 0.23939509E-06
-$charge from mpgrad
-          0.000 (not to be modified here)
-$dipole from mpgrad
-  x    -0.00000000000000    y     0.00000000000000    z     0.88533060358599    a.u.
-   | dipole | =    2.2503029436  debye
-$last MP2 energy change = -.24392500E-06
-$optinfo       file=optinfo
-$hessapprox   file=hessapprox
-$mointunit
- type=intermed unit=61       size=1        file=halfint
- type=1112     unit=63       size=1        file=moint
- type=1122     unit=64       size=0        file=moint
- type=1212     unit=65       size=1        file=moint
- type=1212a    unit=70       size=0        file=moint
- type=gamma
- type=gamma
- type=dtdb
- type=dtdb
-$traloop 1
-$statistics  off
-$orbital_max_rnorm 0.63742545098034E-06
-$title
-jobex_mp2_dscf_mpgrad
-$closed shells
- a1      1-3                                    ( 2 )
- b1      1                                      ( 2 )
- b2      1                                      ( 2 )
+$rundimensions
+   natoms=3
+   nbf(CAO)=19
+   nbf(AO)=18
+$last step     define
 $end

@@ -1,4 +1,5 @@
-$operating system unix
+$title
+dscf
 $symmetry c1
 $redundant    file=coord
 $user-defined bonds    file=coord
@@ -15,20 +16,17 @@ o  1                                                                           \
 h  2-3                                                                         \
    basis =h def-SV(P)
 $basis    file=basis
-$rundimensions
-   dim(fock,dens)=211
-   natoms=3
-   nshell=10
-   nbf(CAO)=19
-   dim(trafo[SAO<-->AO/CAO])=21
-   rhfshells=2
-   nbf(AO)=18
 $uhfmo_alpha   file=alpha
 $uhfmo_beta   file=beta
 $uhf
+$alpha shells
+ a       1-5                                    ( 1 )
+$beta shells
+ a       1-4                                    ( 1 )
 $scfiterlimit      200
 $thize     0.10000000E-04
 $thime        5
+$scfdamp   start=1.000  step=0.050  min=0.100
 $scfdump
 $scfintunit
  unit=30       size=0        file=twoint
@@ -59,14 +57,11 @@ $forceapprox    file=forceapprox
 $dft
    functional b-p
    gridsize   m3
-$scfconv   6
-$scfdamp   start=0.700  step=0.050  min=0.050
+$scfconv   7
 $scforbitalshift  closedshell=.05
+$rundimensions
+   natoms=3
+   nbf(CAO)=19
+   nbf(AO)=18
 $last step     define
-$title
-dscf
-$alpha shells
- a       1-5                                    ( 1 )
-$beta shells
- a       1-4                                    ( 1 )
 $end
