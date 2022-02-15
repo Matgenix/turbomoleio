@@ -24,6 +24,21 @@
 Changelog
 =========
 
+Release 1.1.1 (Feb 20, 2022)
+============================
+
+Features added
+--------------
+
+* Handling of periodic systems for the riper module.
+    * Definition of a PeriodicSystem object to handle 1, 2 or 3-dimensionally periodic
+      structures.
+    * Adaptation of the Gradient object to extract the lattice and lattice gradients
+      in addition to the atomic coordinates and gradients.
+    * Note that this feature is currently experimental, meaning that it is a work in
+      progress and the API might change without prior notice.
+* Parsing of periodic calculations performed with riper [preliminary].
+
 Release 1.1.0 (Sep 20, 2021)
 ============================
 

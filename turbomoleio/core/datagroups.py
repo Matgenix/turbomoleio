@@ -524,8 +524,12 @@ class DataGroups(MSONable):
         (e.g. $dft), updates the values of the options according to the
         dictionary provided.
         The option dictionary should have the form:
-        {"option_name1": "option_name1 option_value",
-         "option_name2": "option_name2=option_value"}.
+
+        .. code-block:: text
+
+            {"option_name1": "option_name1 option_value",
+             "option_name2": "option_name2=option_value"}
+
         The key will be used to identify the line to be modified and that line
         would be entirely replaced by the value.
         Since different options may be defined in different ways, no
@@ -626,7 +630,7 @@ class DataGroups(MSONable):
     def empty(cls):
         """Creates an empty DataGroups object.
 
-        An empty DataGroups object only contains the "$end\n" data group.
+        An empty DataGroups object only contains the "$end" data group.
         """
         return cls(dg_list=['$end\n'])
 

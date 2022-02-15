@@ -219,11 +219,13 @@ Common data objects
 
     :class:`turbomoleio.output.data.MP2Results` Results from an MP2 calculation.
 
+    :class:`turbomoleio.output.data.PeriodicityData` Information about the periodicity of the calculation.
+
 
 File data objects
 ^^^^^^^^^^^^^^^^^
 
-    :class:`turbomoleio.output.files.ScfOutput` Data from a dscf or ridft calculation.
+    :class:`turbomoleio.output.files.ScfOutput` Data from a dscf, ridft or riper calculations.
 
     :class:`turbomoleio.output.files.EscfOutput` Data from an escf calculation (contains some data
     about the previous scf calculation).

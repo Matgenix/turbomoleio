@@ -23,7 +23,8 @@
 import re
 import subprocess
 import numpy as np
-from collections import defaultdict, MutableSequence
+from collections import defaultdict
+from collections.abc import MutableSequence
 from copy import copy
 from fractions import Fraction
 from monty.json import MSONable

@@ -1,7 +1,7 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "GradOutput",
-  "@version": null,
+  "@version": "1.1.0",
   "gradients": [
     [
       8.094075e-14,
@@ -39,17 +39,25 @@
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": null,
+    "@version": "1.1.0",
     "host": "ucl-laptop",
-    "start_time": "2019-07-12 16:54:48.154000",
-    "end_time": "2019-07-12 16:54:48.402000",
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2019-07-12 16:54:48.154000"
+    },
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2019-07-12 16:54:48.402000"
+    },
     "cpu_time": 0.05,
     "wall_time": 0.31
   },
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": null,
+    "@version": "1.1.0",
     "version": "7.3",
     "build": "22118",
     "executable": "rdgrad"

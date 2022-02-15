@@ -12,6 +12,14 @@ Subpackages
 Submodules
 ----------
 
+turbomoleio.core.base module
+----------------------------
+
+.. automodule:: turbomoleio.core.base
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 turbomoleio.core.control module
 -------------------------------
 
@@ -32,6 +40,14 @@ turbomoleio.core.molecule module
 --------------------------------
 
 .. automodule:: turbomoleio.core.molecule
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+turbomoleio.core.periodic module
+--------------------------------
+
+.. automodule:: turbomoleio.core.periodic
    :members:
    :undoc-members:
    :show-inheritance:

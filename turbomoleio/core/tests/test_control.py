@@ -145,6 +145,9 @@ class TestGradient:
             assert g.n_steps == 6
             assert g.last_grad_norm == pytest.approx(5.145114095400708e-05)
             assert g.last_grad_max == pytest.approx(3.8028925027729e-05)
+            assert g.periodicity == 0
+            assert g.lattice_vectors is None
+            assert g.lattice_gradients is None
 
             assert_MSONable(g)
 
@@ -164,6 +167,83 @@ class TestGradient:
         lines[6] = "0.00000000000000D+00 "
         with pytest.raises(RuntimeError):
             Gradient.from_string("\n".join(lines))
+
+    def test_periodic(self, testdir, delete_tmp_dir):
+        # 1 dimensional
+        with temp_dir(delete_tmp_dir):
+            shutil.copy2(os.path.join(testdir, 'control', 'periodic_1D_C_chain.control'), "control")
+            shutil.copy2(os.path.join(testdir, 'control', 'periodic_1D_C_chain.energy'), "energy")
+            shutil.copy2(os.path.join(testdir, 'control', 'periodic_1D_C_chain.gradient'), "gradient")
+            g = Gradient.from_file(filename="control")
+            assert g.periodicity == 1
+            assert g.lattice_vectors is not None
+            assert g.lattice_gradients is not None
+            assert len(g.lattice_vectors) == 12
+            assert len(g.lattice_gradients) == 12
+            assert len(g.lattice_vectors[0]) == 1
+            assert len(g.lattice_vectors[0][0]) == 1
+            assert g.lattice_vectors[0][0][0] == pytest.approx(3.7794522492515)
+            assert len(g.lattice_vectors[11]) == 1
+            assert len(g.lattice_vectors[11][0]) == 1
+            assert g.lattice_vectors[11][0][0] == pytest.approx(4.8021148447)
+            assert g.lattice_vectors[5][0][0] == pytest.approx(4.7512307475)
+            assert len(g.lattice_gradients[0]) == 1
+            assert len(g.lattice_gradients[0][0]) == 1
+            assert g.lattice_gradients[0][0][0] == pytest.approx(-0.92130064839626)
+            assert len(g.lattice_gradients[11]) == 1
+            assert len(g.lattice_gradients[11][0]) == 1
+            assert g.lattice_gradients[11][0][0] == pytest.approx(6.3810585401318e-05)
+            assert g.lattice_gradients[4][0][0] == pytest.approx(-0.080897501039401)
+
+        # 2 dimensional
+        with temp_dir(delete_tmp_dir):
+            shutil.copy2(os.path.join(testdir, 'control', 'periodic_2D_graphene.control'), "control")
+            shutil.copy2(os.path.join(testdir, 'control', 'periodic_2D_graphene.energy'), "energy")
+            shutil.copy2(os.path.join(testdir, 'control', 'periodic_2D_graphene.gradient'), "gradient")
+            g = Gradient.from_file(filename="control")
+            assert g.periodicity == 2
+            assert g.lattice_vectors is not None
+            assert g.lattice_gradients is not None
+            assert len(g.lattice_vectors) == 10
+            assert len(g.lattice_gradients) == 10
+            assert len(g.lattice_vectors[0]) == 2
+            assert len(g.lattice_vectors[0][0]) == 2
+            assert g.lattice_vectors[0][0] == pytest.approx([4.66463026, 0.0])
+            assert g.lattice_vectors[0][1] == pytest.approx([-2.33231519083, 4.0396882697516])
+            assert len(g.lattice_vectors[9]) == 2
+            assert len(g.lattice_vectors[9][0]) == 2
+            assert g.lattice_vectors[9][0] == pytest.approx([4.5809809753, 0.0])
+            assert g.lattice_vectors[9][1] == pytest.approx([-2.0545069412832, 4.0953069748706])
+            assert g.lattice_gradients[9][0] == pytest.approx([-1.62632065e-05, -5.49909640e-06])
+            assert g.lattice_gradients[9][1] == pytest.approx([1.04586218e-05, 6.97617028e-05])
+
+        # 3 dimensional
+        with temp_dir(delete_tmp_dir):
+            shutil.copy2(os.path.join(testdir, 'control', 'periodic_3D_HC.control'), "control")
+            shutil.copy2(os.path.join(testdir, 'control', 'periodic_3D_HC.energy'), "energy")
+            shutil.copy2(os.path.join(testdir, 'control', 'periodic_3D_HC.gradient'), "gradient")
+            g = Gradient.from_file(filename="control")
+            assert g.periodicity == 3
+            assert g.lattice_vectors is not None
+            assert g.lattice_gradients is not None
+            assert len(g.lattice_vectors) == 18
+            assert len(g.lattice_gradients) == 18
+            assert len(g.lattice_vectors[0]) == 3
+            assert len(g.lattice_vectors[0][0]) == 3
+            assert g.lattice_vectors[0][0] == pytest.approx([5.09738357, 0.0, 0.0])
+            assert g.lattice_vectors[0][1] == pytest.approx([-2.7319912004445, 3.9245528516757, 0.0])
+            assert g.lattice_vectors[0][2] == pytest.approx([0.75633542716256, -1.6073467332536, 11.481850306654])
+            assert len(g.lattice_vectors[9]) == 3
+            assert len(g.lattice_vectors[9][0]) == 3
+            assert g.lattice_vectors[9][0] == pytest.approx([4.7817678505, 0.0, 0.0])
+            assert g.lattice_vectors[9][1] == pytest.approx([-2.3276141683287, 4.1856654539183, 0.0])
+            assert g.lattice_vectors[9][2] == pytest.approx([0.89126099072162, -1.3162285716079, 11.50855367142])
+            assert g.lattice_vectors[17][0] == pytest.approx([4.7537059886, 0.0, 0.0])
+            assert g.lattice_vectors[17][1] == pytest.approx([-2.2801435854351, 4.1747226082797, 0.0])
+            assert g.lattice_vectors[17][2] == pytest.approx([0.92551779449765, -1.3738823392983, 11.500943692659])
+            assert g.lattice_gradients[17][0] == pytest.approx([-2.31848114e-05, -1.33019726e-04,  8.75872366e-05])
+            assert g.lattice_gradients[17][1] == pytest.approx([1.26202299e-05, -2.91666006e-05, -1.75235859e-05])
+            assert g.lattice_gradients[17][2] == pytest.approx([7.47949755e-05,  9.05389095e-05, -4.96335880e-05])
 
 
 class TestShells:

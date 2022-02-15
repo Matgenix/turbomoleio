@@ -1,7 +1,7 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "EgradOutput",
-  "@version": null,
+  "@version": "1.1.0",
   "gradients": [
     [
       0.0,
@@ -39,11 +39,11 @@
   "dft": {
     "@module": "turbomoleio.output.data",
     "@class": "DFTData",
-    "@version": null,
+    "@version": "1.1.0",
     "functional": {
       "@module": "turbomoleio.output.data",
       "@class": "FunctionalData",
-      "@version": null,
+      "@version": "1.1.0",
       "msg": "B-P86 functional\n exchange:    LDA + Becke (B88)\n correlation: LDA (VWN) + Perdew (P86)",
       "name": "b-p",
       "func_type": "GGA",
@@ -52,7 +52,7 @@
     "ri": {
       "@module": "turbomoleio.output.data",
       "@class": "RiData",
-      "@version": null,
+      "@version": "1.1.0",
       "ricore": 500,
       "marij": false,
       "rij_memory": 1,
@@ -65,12 +65,12 @@
   "escf": {
     "@module": "turbomoleio.output.data",
     "@class": "EscfData",
-    "@version": null,
+    "@version": "1.1.0",
     "calc_type": "RPA SINGLET-EXCITATION",
     "iterations": {
       "@module": "turbomoleio.output.data",
       "@class": "EscfIterationData",
-      "@version": null,
+      "@version": "1.1.0",
       "steps": [
         [
           [
@@ -123,7 +123,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": null,
+          "@version": "1.1.0",
           "tot_en": -75.98670381661319,
           "osc_stre": 0.07845462447819108,
           "rot_stre": 0.0,
@@ -183,7 +183,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": null,
+          "@version": "1.1.0",
           "tot_en": -75.70793967743028,
           "osc_stre": 0.1188035520516519,
           "rot_stre": 0.0,
@@ -243,7 +243,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": null,
+          "@version": "1.1.0",
           "tot_en": -75.3948194357206,
           "osc_stre": 0.005706491475512858,
           "rot_stre": 0.0,
@@ -321,7 +321,7 @@
   "geometry": {
     "@module": "turbomoleio.output.data",
     "@class": "GeometryData",
-    "@version": null,
+    "@version": "1.1.0",
     "center_of_mass": [
       0.0,
       0.0,
@@ -335,7 +335,7 @@
     "molecule": {
       "@module": "pymatgen.core.structure",
       "@class": "Molecule",
-      "charge": 0,
+      "charge": 0.0,
       "spin_multiplicity": 1,
       "sites": [
         {
@@ -349,7 +349,7 @@
           "xyz": [
             0.0,
             0.0,
-            -0.38395982900655107
+            -0.38395982917561094
           ],
           "properties": {}
         },
@@ -362,9 +362,9 @@
             }
           ],
           "xyz": [
-            0.749915128392834,
+            0.7499151287230262,
             0.0,
-            0.19197991450327553
+            0.19197991458780547
           ],
           "properties": {}
         },
@@ -377,9 +377,9 @@
             }
           ],
           "xyz": [
-            -0.749915128392834,
+            -0.7499151287230262,
             0.0,
-            0.19197991450327553
+            0.19197991458780547
           ],
           "properties": {}
         }
@@ -389,7 +389,7 @@
   "basis": {
     "@module": "turbomoleio.output.data",
     "@class": "BasisData",
-    "@version": null,
+    "@version": "1.1.0",
     "basis_per_specie": {
       "o": "def-SV(P)",
       "h": "def-SV(P)"
@@ -401,17 +401,25 @@
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": null,
+    "@version": "1.1.0",
     "host": "ucl-laptop",
-    "start_time": "2018-11-24 01:06:15.442000",
-    "end_time": "2018-11-24 01:06:15.573000",
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2018-11-24 01:06:15.442000"
+    },
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2018-11-24 01:06:15.573000"
+    },
     "cpu_time": 0.12,
     "wall_time": 0.14
   },
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": null,
+    "@version": "1.1.0",
     "version": "7.3",
     "build": "22118",
     "executable": "egrad"
@@ -420,7 +428,7 @@
   "integral": {
     "@module": "turbomoleio.output.data",
     "@class": "IntegralData",
-    "@version": null,
+    "@version": "1.1.0",
     "integral_neglect_threshold": 3.3e-11,
     "thize": 1e-05,
     "thime": 5

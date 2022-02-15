@@ -123,7 +123,7 @@ and the ``option`` that should be matched:
 
     dg.show_data_group_option(data_group="dft", option="functional")
 
-In this case the code will return `` b-p``. Since also for these kind of options the convertions
+In this case the code will return `` b-p``. Since also for these kind of options the conventions
 are not uniform in TURBOMOLE (e.g. the name of the option and the value can be separated by a ``=``)
 the support offered by this method are relatively limited. The code
 will just check among the lines in the ``$dft`` data group if one starts with the specified

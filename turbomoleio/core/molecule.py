@@ -28,76 +28,15 @@ import numpy as np
 from collections import namedtuple
 from fnmatch import fnmatch
 from monty.json import MSONable, MontyDecoder
+from pymatgen.core.lattice import Lattice
 from pymatgen.core.structure import Molecule
+from pymatgen.core.structure import Structure
 from pymatgen.core.units import ang_to_bohr, bohr_to_ang
 from turbomoleio.core.datagroups import DataGroups
+from turbomoleio.core.base import BaseSystem, get_mol_and_indices_frozen
 
 
-def get_mol_and_indices_frozen(string):
-    """
-    Extracts a pymatgen Molecule and indices of the frozen atoms from the
-    $coord datagroup.
-
-    Args:
-        string (str): The string containing the list of coordinates
-
-    Returns:
-        namedtuple:
-            molecule: a pymatgen molecule
-            frozen_indices: a set with the indices of the frozen atoms.
-    """
-
-    lines = [line.strip() for line in string.splitlines()]
-
-    coords = []
-    species = []
-    frozen_indices = set()
-    iatom = -1
-    # here parses lines of this form:
-    # 1.0 0.2 0.1 o
-    # 1.0 0.2 0.1 si
-    # 1.0 0.2 0.1 h f
-    # with the final f meaning that the coordinate is frozen.
-    for l in lines:
-        s = l.split()
-        if not s or s[0].startswith("#"):
-            continue
-        iatom += 1
-        coords.append([float(i) * bohr_to_ang for i in s[0:3]])
-        species.append(s[3].capitalize())
-
-        if len(s) == 5 and s[-1].lower() == "f":
-            frozen_indices.add(iatom)
-
-    mol = Molecule(species, coords)
-    CoordMolecule = namedtuple("CoordMolecule", ["molecule", "frozen_indices"])
-
-    return CoordMolecule(mol, frozen_indices)
-
-
-def get_coord_lines(molecule, frozen_indices=None):
-    """
-    Generates the lines contained in the $coord datagroup from a pymatgen Molecule.
-
-    Args:
-        molecule (Molecule): the molecule that should be converted.
-        frozen_indices (set): indices of the molecule that should be frozen
-            (an "f" appended at the end of the line).
-    Returns:
-        list: list of strings with the lines of $coord.
-    """
-    lines = []
-    frozen_indices = frozen_indices or set()
-    for i, (coords, specie) in enumerate(zip(molecule.cart_coords * ang_to_bohr, molecule.species)):
-        l = "{:.14f} {:.14f} {:.14f} {}".format(*coords, specie.symbol.lower())
-        if i in frozen_indices:
-            l += " f"
-        lines.append(l)
-
-    return lines
-
-
-class MoleculeSystem(MSONable):
+class MoleculeSystem(BaseSystem):
     """
     Object providing information about the geometry of a molcule and its dynamics.
     The geometry is described using a pymatgen Molecule, while internal definitions,
@@ -121,13 +60,16 @@ class MoleculeSystem(MSONable):
             user_defined_bonds (set): set of tuples with (index1, symbol, index2),
                 where the atoms index are 0-based and the symbol can be "-" or "|".
         """
-        if not molecule.is_ordered:
-            raise ValueError("MoleculeSystem does not handle disordered structures.")
-
-        self.molecule = molecule
         self.int_def = int_def if int_def else []
-        self.frozen_indices = set(frozen_indices) if frozen_indices else set()
         self.user_defined_bonds = set(user_defined_bonds) if user_defined_bonds else set()
+        if not isinstance(molecule, Molecule):
+            raise ValueError("A Molecule object should be provided for molecule systems.")
+        super().__init__(molecule_or_structure=molecule, frozen_indices=frozen_indices,
+                         periodicity=0)
+
+    @property
+    def molecule(self):
+        return self._molecule_or_structure
 
     @classmethod
     def from_string(cls, string, fmt="coord"):
@@ -224,26 +166,6 @@ class MoleculeSystem(MSONable):
         else:
             return cls(molecule=Molecule.from_file(filepath))
 
-    def to_coord_file(self, filepath="coord"):
-        """
-        Writes the system to a coord file.
-
-        Args:
-            filepath (str): the path to the file
-        """
-        with open(filepath, 'wt') as f:
-            f.write(self.to_coord_string())
-
-    def coord_lines(self):
-        """
-        Gives the lines of the $coord datagroup based on the internal Molecule.
-
-        Returns:
-            list: list of strings with the $coord datagroup.
-        """
-
-        return get_coord_lines(self.molecule, self.frozen_indices)
-
     def to_coord_string(self):
         """
         Creates the string of a coord file for this system.
@@ -268,23 +190,6 @@ class MoleculeSystem(MSONable):
         lines.append("$end")
 
         return "\n".join(lines)
-
-    def to_file(self, filepath, fmt=None):
-        """
-        Writes the system to a file depending on the specified format. Could be
-        a coord file or any other format supported by pymatgen Molecule.
-
-        Args:
-            filepath (str): path to the file.
-            fmt (str): the format of the data. could be "coord" for Turbomole
-                coord file or any format supported in pymatgen Molecule.
-                If None the code would try to infer it from the file name.
-        """
-        fname = os.path.basename(filepath)
-        if fmt == "coord" or (fmt is None and fnmatch(fname, "*coord*")):
-            self.to_coord_file(filepath)
-        else:
-            self.molecule.to(filename=filepath, fmt=fmt)
 
     def _check_index(self, indices_list):
         """

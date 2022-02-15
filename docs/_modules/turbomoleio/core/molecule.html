@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>turbomoleio.core.molecule &mdash; turbomoleio 1.1.0 documentation</title>
+  <title>turbomoleio.core.molecule &mdash; turbomoleio 1.1.1 documentation</title>
   
 
   
@@ -23,16 +23,12 @@
   
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -62,7 +58,7 @@
             
             
               <div class="version">
-                1.1.0
+                1.1.1
               </div>
             
           
@@ -87,7 +83,7 @@
               
             
             
-              <p><span class="caption-text">User guide</span></p>
+              <p class="caption"><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../datagroups.html">The data group files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../coord.html">The coord file</a></li>
@@ -95,7 +91,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../output_parsing.html">Outputs parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../appendix.html">Appendix</a></li>
 </ul>
-<p><span class="caption-text">Developer guide</span></p>
+<p class="caption"><span class="caption-text">Developer guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/introduction.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/parsing_logs.html">Output logs parsing</a></li>
@@ -104,7 +100,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/versioning.html">Versioning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer/versioning.html#backward-compatibility">Backward-compatibility</a></li>
 </ul>
-<p><span class="caption-text">Additional information</span></p>
+<p class="caption"><span class="caption-text">Additional information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
@@ -205,76 +201,15 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">from</span> <span class="nn">fnmatch</span> <span class="kn">import</span> <span class="n">fnmatch</span>
 <span class="kn">from</span> <span class="nn">monty.json</span> <span class="kn">import</span> <span class="n">MSONable</span><span class="p">,</span> <span class="n">MontyDecoder</span>
+<span class="kn">from</span> <span class="nn">pymatgen.core.lattice</span> <span class="kn">import</span> <span class="n">Lattice</span>
 <span class="kn">from</span> <span class="nn">pymatgen.core.structure</span> <span class="kn">import</span> <span class="n">Molecule</span>
+<span class="kn">from</span> <span class="nn">pymatgen.core.structure</span> <span class="kn">import</span> <span class="n">Structure</span>
 <span class="kn">from</span> <span class="nn">pymatgen.core.units</span> <span class="kn">import</span> <span class="n">ang_to_bohr</span><span class="p">,</span> <span class="n">bohr_to_ang</span>
 <span class="kn">from</span> <span class="nn">turbomoleio.core.datagroups</span> <span class="kn">import</span> <span class="n">DataGroups</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.core.base</span> <span class="kn">import</span> <span class="n">BaseSystem</span><span class="p">,</span> <span class="n">get_mol_and_indices_frozen</span>
 
 
-<div class="viewcode-block" id="get_mol_and_indices_frozen"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.get_mol_and_indices_frozen">[docs]</a><span class="k">def</span> <span class="nf">get_mol_and_indices_frozen</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extracts a pymatgen Molecule and indices of the frozen atoms from the</span>
-<span class="sd">    $coord datagroup.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        string (str): The string containing the list of coordinates</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        namedtuple:</span>
-<span class="sd">            molecule: a pymatgen molecule</span>
-<span class="sd">            frozen_indices: a set with the indices of the frozen atoms.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()]</span>
-
-    <span class="n">coords</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">species</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">frozen_indices</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-    <span class="n">iatom</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-    <span class="c1"># here parses lines of this form:</span>
-    <span class="c1"># 1.0 0.2 0.1 o</span>
-    <span class="c1"># 1.0 0.2 0.1 si</span>
-    <span class="c1"># 1.0 0.2 0.1 h f</span>
-    <span class="c1"># with the final f meaning that the coordinate is frozen.</span>
-    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span> <span class="ow">or</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">):</span>
-            <span class="k">continue</span>
-        <span class="n">iatom</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">coords</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">bohr_to_ang</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]])</span>
-        <span class="n">species</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">capitalize</span><span class="p">())</span>
-
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;f&quot;</span><span class="p">:</span>
-            <span class="n">frozen_indices</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">iatom</span><span class="p">)</span>
-
-    <span class="n">mol</span> <span class="o">=</span> <span class="n">Molecule</span><span class="p">(</span><span class="n">species</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
-    <span class="n">CoordMolecule</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;CoordMolecule&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;molecule&quot;</span><span class="p">,</span> <span class="s2">&quot;frozen_indices&quot;</span><span class="p">])</span>
-
-    <span class="k">return</span> <span class="n">CoordMolecule</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">frozen_indices</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="get_coord_lines"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.get_coord_lines">[docs]</a><span class="k">def</span> <span class="nf">get_coord_lines</span><span class="p">(</span><span class="n">molecule</span><span class="p">,</span> <span class="n">frozen_indices</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates the lines contained in the $coord datagroup from a pymatgen Molecule.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        molecule (Molecule): the molecule that should be converted.</span>
-<span class="sd">        frozen_indices (set): indices of the molecule that should be frozen</span>
-<span class="sd">            (an &quot;f&quot; appended at the end of the line).</span>
-<span class="sd">    Returns:</span>
-<span class="sd">        list: list of strings with the lines of $coord.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">frozen_indices</span> <span class="o">=</span> <span class="n">frozen_indices</span> <span class="ow">or</span> <span class="nb">set</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">specie</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">molecule</span><span class="o">.</span><span class="n">cart_coords</span> <span class="o">*</span> <span class="n">ang_to_bohr</span><span class="p">,</span> <span class="n">molecule</span><span class="o">.</span><span class="n">species</span><span class="p">)):</span>
-        <span class="n">l</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:.14f}</span><span class="s2"> </span><span class="si">{:.14f}</span><span class="s2"> </span><span class="si">{:.14f}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">coords</span><span class="p">,</span> <span class="n">specie</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
-        <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">frozen_indices</span><span class="p">:</span>
-            <span class="n">l</span> <span class="o">+=</span> <span class="s2">&quot; f&quot;</span>
-        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">lines</span></div>
-
-
-<div class="viewcode-block" id="MoleculeSystem"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem">[docs]</a><span class="k">class</span> <span class="nc">MoleculeSystem</span><span class="p">(</span><span class="n">MSONable</span><span class="p">):</span>
+<div class="viewcode-block" id="MoleculeSystem"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem">[docs]</a><span class="k">class</span> <span class="nc">MoleculeSystem</span><span class="p">(</span><span class="n">BaseSystem</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Object providing information about the geometry of a molcule and its dynamics.</span>
 <span class="sd">    The geometry is described using a pymatgen Molecule, while internal definitions,</span>
@@ -298,13 +233,16 @@
 <span class="sd">            user_defined_bonds (set): set of tuples with (index1, symbol, index2),</span>
 <span class="sd">                where the atoms index are 0-based and the symbol can be &quot;-&quot; or &quot;|&quot;.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">molecule</span><span class="o">.</span><span class="n">is_ordered</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;MoleculeSystem does not handle disordered structures.&quot;</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">molecule</span> <span class="o">=</span> <span class="n">molecule</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">int_def</span> <span class="o">=</span> <span class="n">int_def</span> <span class="k">if</span> <span class="n">int_def</span> <span class="k">else</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">frozen_indices</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">frozen_indices</span><span class="p">)</span> <span class="k">if</span> <span class="n">frozen_indices</span> <span class="k">else</span> <span class="nb">set</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">user_defined_bonds</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">user_defined_bonds</span><span class="p">)</span> <span class="k">if</span> <span class="n">user_defined_bonds</span> <span class="k">else</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">molecule</span><span class="p">,</span> <span class="n">Molecule</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;A Molecule object should be provided for molecule systems.&quot;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">molecule_or_structure</span><span class="o">=</span><span class="n">molecule</span><span class="p">,</span> <span class="n">frozen_indices</span><span class="o">=</span><span class="n">frozen_indices</span><span class="p">,</span>
+                         <span class="n">periodicity</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">molecule</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molecule_or_structure</span>
 
 <div class="viewcode-block" id="MoleculeSystem.from_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.from_string">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;coord&quot;</span><span class="p">):</span>
@@ -401,26 +339,6 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">molecule</span><span class="o">=</span><span class="n">Molecule</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="MoleculeSystem.to_coord_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.to_coord_file">[docs]</a>    <span class="k">def</span> <span class="nf">to_coord_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;coord&quot;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Writes the system to a coord file.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            filepath (str): the path to the file</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;wt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_coord_string</span><span class="p">())</span></div>
-
-<div class="viewcode-block" id="MoleculeSystem.coord_lines"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.coord_lines">[docs]</a>    <span class="k">def</span> <span class="nf">coord_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gives the lines of the $coord datagroup based on the internal Molecule.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            list: list of strings with the $coord datagroup.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">return</span> <span class="n">get_coord_lines</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">molecule</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frozen_indices</span><span class="p">)</span></div>
-
 <div class="viewcode-block" id="MoleculeSystem.to_coord_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.to_coord_string">[docs]</a>    <span class="k">def</span> <span class="nf">to_coord_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates the string of a coord file for this system.</span>
@@ -445,23 +363,6 @@
         <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;$end&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="MoleculeSystem.to_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.to_file">[docs]</a>    <span class="k">def</span> <span class="nf">to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Writes the system to a file depending on the specified format. Could be</span>
-<span class="sd">        a coord file or any other format supported by pymatgen Molecule.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            filepath (str): path to the file.</span>
-<span class="sd">            fmt (str): the format of the data. could be &quot;coord&quot; for Turbomole</span>
-<span class="sd">                coord file or any format supported in pymatgen Molecule.</span>
-<span class="sd">                If None the code would try to infer it from the file name.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s2">&quot;coord&quot;</span> <span class="ow">or</span> <span class="p">(</span><span class="n">fmt</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">fnmatch</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;*coord*&quot;</span><span class="p">)):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">to_coord_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">molecule</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filepath</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="n">fmt</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_check_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices_list</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

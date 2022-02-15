@@ -1,0 +1,147 @@
+{
+  "all_done": true,
+  "header": {
+    "executable": "riper",
+    "host": "fedora",
+    "tm_version": "7.3.1",
+    "tm_build": null,
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2021-12-28 18:56:39.327000"
+    }
+  },
+  "centers": {
+    "center_of_mass": [
+      0.67796736,
+      0.39142464,
+      0.27677902
+    ],
+    "center_of_charge": [
+      1.33629628,
+      0.77151102,
+      0.54554067
+    ]
+  },
+  "coordinates": {
+    "coords": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        5.34518513,
+        3.08604407,
+        2.18216269
+      ]
+    ],
+    "species": [
+      "li",
+      "h"
+    ],
+    "charges": [
+      3.0,
+      1.0
+    ],
+    "isotopes": [
+      0,
+      0
+    ]
+  },
+  "basis": null,
+  "symmetry": null,
+  "cosmo_header": null,
+  "density_functional_data": null,
+  "rij_info": null,
+  "dftd": null,
+  "pre_scf_run": null,
+  "scf_iterations": null,
+  "scf_energies": null,
+  "cosmo_results": null,
+  "electrostatic_moments": null,
+  "timings": {
+    "cpu_time": 9.23,
+    "wall_time": 9.27,
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2021-12-28 18:56:48.594000"
+    }
+  },
+  "s2": null,
+  "is_uhf": false,
+  "fermi": null,
+  "integral": null,
+  "pre_escf_run": null,
+  "escf_iterations": null,
+  "escf_gs_total_en": null,
+  "escf_excitations": null,
+  "rdgrad_memory": null,
+  "gradient": null,
+  "egrad_excited_state": null,
+  "statpt_info": null,
+  "relax_info": null,
+  "relax_gradient_values": null,
+  "relax_conv_info": null,
+  "aoforce_numerical_integration": null,
+  "aoforce_analysis": null,
+  "mp2_results": {
+    "energy": null
+  },
+  "riper_scf_energies": {
+    "total_energy": -8.8791372082,
+    "kinetic_energy": 6.4311393735,
+    "coulomb_energy": -13.3676095567,
+    "xc_energy": -1.942667025,
+    "ts_energy": -0.0,
+    "free_energy": -8.8791372082,
+    "sigma0_energy": -8.8791372082
+  },
+  "periodicity_data": {
+    "periodicity": 3,
+    "tm_lattice_params": [
+      5.34518513,
+      5.34518513,
+      5.34518513,
+      60.0,
+      60.0,
+      60.0
+    ],
+    "shortest_interatomic_distance": 3.7796,
+    "direct_space_vectors": [
+      [
+        5.34518513,
+        0.0,
+        0.0
+      ],
+      [
+        2.67259257,
+        4.62906611,
+        0.0
+      ],
+      [
+        2.67259257,
+        1.54302204,
+        4.36432538
+      ]
+    ],
+    "reciprocal_space_vectors": [
+      [
+        1.17548507,
+        -0.67866662,
+        -0.47988977
+      ],
+      [
+        0.0,
+        1.35733324,
+        -0.47988977
+      ],
+      [
+        0.0,
+        0.0,
+        1.43966931
+      ]
+    ]
+  }
+}

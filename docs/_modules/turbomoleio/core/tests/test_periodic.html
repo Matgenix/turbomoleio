@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>turbomoleio.core.tests.test_periodic &mdash; turbomoleio 1.1.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> turbomoleio
+          </a>
+              <div class="version">
+                1.1.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../datagroups.html">The data group files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../coord.html">The coord file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../definerunner.html">Running define</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../output_parsing.html">Outputs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../appendix.html">Appendix</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer/introduction.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer/parsing_logs.html">Output logs parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer/definerunner.html">Define runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer/testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer/versioning.html">Versioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer/versioning.html#backward-compatibility">Backward-compatibility</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bugs.html">Reporting bugs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">turbomoleio</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>turbomoleio.core.tests.test_periodic</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for turbomoleio.core.tests.test_periodic</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># The turbomoleio package, a python interface to Turbomole</span>
+<span class="c1"># for preparing inputs, parsing outputs and other related tools.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (C) 2018-2021 BASF SE, Matgenix SRL.</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of turbomoleio.</span>
+<span class="c1">#</span>
+<span class="c1"># Turbomoleio is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># Turbomoleio is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with turbomoleio (see ~turbomoleio/COPYING). If not,</span>
+<span class="c1"># see &lt;https://www.gnu.org/licenses/&gt;.</span>
+
+<span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="kn">from</span> <span class="nn">pymatgen.core.structure</span> <span class="kn">import</span> <span class="n">Structure</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.core.periodic</span> <span class="kn">import</span> <span class="n">PeriodicSystem</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.core.datagroups</span> <span class="kn">import</span> <span class="n">DataGroups</span>
+
+
+<div class="viewcode-block" id="TestPeriodicSystem"><a class="viewcode-back" href="../../../../api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_periodic.TestPeriodicSystem">[docs]</a><span class="k">class</span> <span class="nc">TestPeriodicSystem</span><span class="p">:</span>
+
+<div class="viewcode-block" id="TestPeriodicSystem.test_periodic_3d"><a class="viewcode-back" href="../../../../api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_periodic.TestPeriodicSystem.test_periodic_3d">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s1">&#39;structure_filename&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;SiO2.json&#39;</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">test_periodic_3d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structure</span><span class="p">):</span>
+        <span class="n">ps</span> <span class="o">=</span> <span class="n">PeriodicSystem</span><span class="p">(</span><span class="n">structure</span><span class="o">=</span><span class="n">structure</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">ps</span><span class="o">.</span><span class="n">periodicity</span> <span class="o">==</span> <span class="mi">3</span>
+        <span class="n">coord_string</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">to_coord_string</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="s1">&#39;$periodic 3&#39;</span> <span class="ow">in</span> <span class="n">coord_string</span>
+        <span class="k">assert</span> <span class="s1">&#39;$cell&#39;</span> <span class="ow">in</span> <span class="n">coord_string</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">coord_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">iline_cell</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;$cell&#39;</span><span class="p">)</span>
+        <span class="n">abc_alphabetagamma</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">nn</span><span class="p">)</span> <span class="k">for</span> <span class="n">nn</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">iline_cell</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
+        <span class="k">assert</span> <span class="n">abc_alphabetagamma</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span>
+            <span class="p">[</span><span class="mf">9.489264667</span><span class="p">,</span> <span class="mf">9.489264667</span><span class="p">,</span> <span class="mf">10.41346809</span><span class="p">,</span>
+             <span class="mf">90.0</span><span class="p">,</span> <span class="mf">90.0</span><span class="p">,</span> <span class="mf">120.0</span><span class="p">]</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestPeriodicSystem.test_periodic_wrong_rotation"><a class="viewcode-back" href="../../../../api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_periodic.TestPeriodicSystem.test_periodic_wrong_rotation">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s1">&#39;structure_filename&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;SiO2_rotated.json&#39;</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">test_periodic_wrong_rotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structure</span><span class="p">):</span>
+        <span class="n">ps</span> <span class="o">=</span> <span class="n">PeriodicSystem</span><span class="p">(</span><span class="n">structure</span><span class="o">=</span><span class="n">structure</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span>
+                           <span class="n">match</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Lattice should be oriented such that first vector &#39;</span>
+                                 <span class="sa">r</span><span class="s1">&#39;is aligned with x cartesian direction and second vector &#39;</span>
+                                 <span class="sa">r</span><span class="s1">&#39;is in the xy cartesian plane.&#39;</span><span class="p">):</span>
+            <span class="n">ps</span><span class="o">.</span><span class="n">to_coord_string</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TestPeriodicSystem.test_periodic_2d"><a class="viewcode-back" href="../../../../api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_periodic.TestPeriodicSystem.test_periodic_2d">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s1">&#39;structure_filename&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;graphene.json&#39;</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">test_periodic_2d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structure</span><span class="p">):</span>
+        <span class="n">ps</span> <span class="o">=</span> <span class="n">PeriodicSystem</span><span class="p">(</span><span class="n">structure</span><span class="o">=</span><span class="n">structure</span><span class="p">,</span> <span class="n">periodicity</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">ps</span><span class="o">.</span><span class="n">periodicity</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="n">coord_string</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">to_coord_string</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="s1">&#39;$periodic 2&#39;</span> <span class="ow">in</span> <span class="n">coord_string</span>
+        <span class="k">assert</span> <span class="s1">&#39;$cell&#39;</span> <span class="ow">in</span> <span class="n">coord_string</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">coord_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">iline_cell</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;$cell&#39;</span><span class="p">)</span>
+        <span class="n">ab_gamma</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">nn</span><span class="p">)</span> <span class="k">for</span> <span class="n">nn</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">iline_cell</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
+        <span class="k">assert</span> <span class="n">ab_gamma</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span>
+            <span class="p">[</span><span class="mf">4.664630258</span><span class="p">,</span> <span class="mf">4.664630258</span><span class="p">,</span> <span class="mf">120.0</span><span class="p">]</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestPeriodicSystem.test_read_periodic_2d"><a class="viewcode-back" href="../../../../api/turbomoleio.core.tests.html#turbomoleio.core.tests.test_periodic.TestPeriodicSystem.test_read_periodic_2d">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s1">&#39;structure_filename&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;graphene&#39;</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">test_read_periodic_2d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structure_filepath</span><span class="p">):</span>
+        <span class="n">ps</span> <span class="o">=</span> <span class="n">PeriodicSystem</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">structure_filepath</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;coord&#39;</span><span class="p">,</span> <span class="n">periodic_extension</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ps</span><span class="o">.</span><span class="n">structure</span><span class="p">,</span> <span class="n">Structure</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">ps</span><span class="o">.</span><span class="n">periodicity</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="n">current_coord_dg</span> <span class="o">=</span> <span class="n">DataGroups</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="n">ps</span><span class="o">.</span><span class="n">to_coord_string</span><span class="p">())</span>
+        <span class="n">ref_coord_dg</span> <span class="o">=</span> <span class="n">DataGroups</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">structure_filepath</span><span class="p">)</span>
+        <span class="n">compare_coord</span> <span class="o">=</span> <span class="n">current_coord_dg</span><span class="o">.</span><span class="n">compare</span><span class="p">(</span><span class="n">ref_coord_dg</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">compare_coord</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="n">compare_coord</span>
+        <span class="k">assert</span> <span class="n">ps</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">lattice</span><span class="o">.</span><span class="n">c</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="mf">5.0</span><span class="p">)</span>
+        <span class="n">ps</span> <span class="o">=</span> <span class="n">PeriodicSystem</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">structure_filepath</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;coord&#39;</span><span class="p">,</span> <span class="n">periodic_extension</span><span class="o">=</span><span class="mf">7.0</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">ps</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">lattice</span><span class="o">.</span><span class="n">c</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="mf">7.0</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018-2021 BASF SE, Matgenix SRL.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
