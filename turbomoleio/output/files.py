@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -20,13 +20,35 @@
 # along with turbomoleio (see ~turbomoleio/COPYING). If not,
 # see <https://www.gnu.org/licenses/>.
 
-from turbomoleio.output.data import BaseData, CosmoData, TurbomoleData, RunData, BasisData, IntegralData
-from turbomoleio.output.data import DFTData, ScfData, ScfEnergiesData, ElectrostaticMomentsData, GeometryData, SpinData
-from turbomoleio.output.data import SmearingData, EscfData, AoforceNumericalIntegrationData, AoforceRotationalData
-from turbomoleio.output.data import AoforceVibrationalData, RelaxConvergenceData, RelaxData, RelaxGradientsData
-from turbomoleio.output.data import StatptData, SymmetryData
-from turbomoleio.output.data import MP2Data, MP2Results
-from turbomoleio.output.data import PeriodicityData
+"""Module with parsed output objects."""
+
+from turbomoleio.output.data import (
+    AoforceNumericalIntegrationData,
+    AoforceRotationalData,
+    AoforceVibrationalData,
+    BaseData,
+    BasisData,
+    CosmoData,
+    DFTData,
+    ElectrostaticMomentsData,
+    EscfData,
+    GeometryData,
+    IntegralData,
+    MP2Data,
+    MP2Results,
+    PeriodicityData,
+    RelaxConvergenceData,
+    RelaxData,
+    RelaxGradientsData,
+    RunData,
+    ScfData,
+    ScfEnergiesData,
+    SmearingData,
+    SpinData,
+    StatptData,
+    SymmetryData,
+    TurbomoleData,
+)
 
 
 class ScfOutput(BaseData):
@@ -38,24 +60,43 @@ class ScfOutput(BaseData):
         parsed.
     """
 
-    def __init__(self, dft, scf, energies, electrostatic, geometry, basis, run, tm,
-                 cosmo, spin, integral, smearing, symmetry, periodicity=None):
-        """
+    def __init__(
+        self,
+        dft,
+        scf,
+        energies,
+        electrostatic,
+        geometry,
+        basis,
+        run,
+        tm,
+        cosmo,
+        spin,
+        integral,
+        smearing,
+        symmetry,
+        periodicity=None,
+    ):
+        """Construct ScfOutput object.
+
         Args:
             dft (DFTData): information about dft calculation.
             scf (ScfData): information about scf loop.
             energies (ScfEnergiesData): final energy of scf calculation.
-            electrostatic (ElectrostaticMomentsData): information about electrostatic moments.
+            electrostatic (ElectrostaticMomentsData): information about
+                electrostatic moments.
             geometry (GeometryData): the geometry of the system.
             basis (BasisData): the basis used for the calculation.
             run (RunData): information about calculation running (e.g. timings, ...)
-            tm (TurbomoleData): information about the turbomole used for the calculation.
+            tm (TurbomoleData): information about the turbomole used for the
+                calculation.
             cosmo (CosmoData): cosmo approximations and results.
             spin (SpinData): information about the spin of the system.
             integral (IntegralData): information about the thresholds for integrals.
             smearing (SmearingData): information about the smearing ($fermi datagroup).
             symmetry (SymmetryData): information about the symmetry of the molecule.
-            periodicity (PeriodicityData): information about the periodicity of the system.
+            periodicity (PeriodicityData): information about the periodicity
+                of the system.
         """
         self.dft = dft
         self.scf = scf
@@ -75,8 +116,9 @@ class ScfOutput(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of ScfOutput from a parser based on the stdout
-        of a Turbomole executable.
+        Generate an instance of ScfOutput from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -99,27 +141,43 @@ class ScfOutput(BaseData):
         symmetry = SymmetryData.from_parser(parser)
         periodicity = PeriodicityData.from_parser(parser)
 
-        return cls(dft=dft, scf=scf, energies=energies, electrostatic=electrostatic, geometry=geometry,
-                   basis=basis, run=run, tm=tm, cosmo=cosmo, spin=spin, integral=integral,
-                   smearing=smearing, symmetry=symmetry, periodicity=periodicity)
+        return cls(
+            dft=dft,
+            scf=scf,
+            energies=energies,
+            electrostatic=electrostatic,
+            geometry=geometry,
+            basis=basis,
+            run=run,
+            tm=tm,
+            cosmo=cosmo,
+            spin=spin,
+            integral=integral,
+            smearing=smearing,
+            symmetry=symmetry,
+            periodicity=periodicity,
+        )
 
 
 class EscfOutput(BaseData):
     """
     Object containing the data of the output of an escf calculation.
+
     Parses also the information relative to the dft part, which is common to the
     output of the scf calculation that preceeds the escf.
     """
 
     def __init__(self, dft, escf, geometry, basis, run, tm, cosmo, integral, symmetry):
-        """
+        """Construct EscfOutput object.
+
         Args:
             dft (DFTData): information about dft calculation.
             escf (EscfData): information about the excited state calculation.
             geometry (GeometryData): the geometry of the system.
             basis (BasisData): the basis used for the calculation.
             run (RunData): information about calculation running (e.g. timings, ...)
-            tm (TurbomoleData): information about the turbomole used for the calculation.
+            tm (TurbomoleData): information about the turbomole used for
+                the calculation.
             cosmo (CosmoData): cosmo approximations and results.
             integral (IntegralData): information about the thresholds for integrals.
             symmetry (SymmetryData): information about the symmetry of the molecule
@@ -137,8 +195,9 @@ class EscfOutput(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of EscfOutput from a parser based on the stdout
-        of a Turbomole executable.
+        Generate an instance of EscfOutput from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -156,22 +215,35 @@ class EscfOutput(BaseData):
         integral = IntegralData.from_parser(parser)
         symmetry = SymmetryData.from_parser(parser)
 
-        return cls(dft=dft, escf=escf, geometry=geometry, basis=basis, run=run, tm=tm,
-                   cosmo=cosmo, integral=integral, symmetry=symmetry)
+        return cls(
+            dft=dft,
+            escf=escf,
+            geometry=geometry,
+            basis=basis,
+            run=run,
+            tm=tm,
+            cosmo=cosmo,
+            integral=integral,
+            symmetry=symmetry,
+        )
 
 
 class EscfOnlyOutput(BaseData):
     """
-    Minimal version of the object containing the data of the output of an escf calculation.
-    Parses only the information relative to escf calculation, ignoring the part that is common
-    to the output of the scf calculation that preceeds the escf.
+    Data containing the minimal information about the output of an escf calculation.
+
+    Parses only the information relative to escf calculation, ignoring the part
+    that is common to the output of the scf calculation that precedes the escf.
     """
+
     def __init__(self, escf, run, tm):
-        """
+        """Construct EscfOnlyOutput object.
+
         Args:
             escf (EscfData): information about the excited state calculation.
             run (RunData): information about calculation running (e.g. timings, ...)
-            tm (TurbomoleData): information about the turbomole used for the calculation.
+            tm (TurbomoleData): information about the turbomole used for
+                the calculation.
         """
         self.escf = escf
         self.run = run
@@ -180,8 +252,9 @@ class EscfOnlyOutput(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of EscfOnlyOutput from a parser based on the stdout
-        of a Turbomole executable.
+        Generate an instance of EscfOnlyOutput from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -198,17 +271,22 @@ class EscfOnlyOutput(BaseData):
 
 class GradOutput(BaseData):
     """
-    Object containing the data of the output of a simple gradient calculation,
-    i.e. grad and rdgrad.
+    Object containing the data of the output of a simple gradient calculation.
+
+    This can be used for e.g. grad and rdgrad.
     """
+
     def __init__(self, gradients, dielectric, run, tm, memory):
-        """
+        """Construct GradOutput object.
+
         Args:
             gradients (list): matrix of shape (natoms, 3) containing the values of
                 the cartesian gradients.
-            dielectric (list): 3x3 matrix containing the values of the dielectric tensor.
+            dielectric (list): 3x3 matrix containing the values of the dielectric
+                tensor.
             run (RunData): information about calculation running (e.g. timings, ...)
-            tm (TurbomoleData): information about the turbomole used for the calculation.
+            tm (TurbomoleData): information about the turbomole used for
+                the calculation.
             memory (int): memory in MB used. Available only for rdgrad.
         """
         self.gradients = gradients
@@ -220,8 +298,9 @@ class GradOutput(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of GradOutput from a parser based on the stdout
-        of a Turbomole executable.
+        Generate an instance of GradOutput from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -237,32 +316,55 @@ class GradOutput(BaseData):
         tm = TurbomoleData.from_parser(parser)
         memory = parser.rdgrad_memory
 
-        return cls(gradients=grad_data["gradients"], dielectric=grad_data["dielectric"],
-                   run=run, tm=tm, memory=memory)
+        return cls(
+            gradients=grad_data["gradients"],
+            dielectric=grad_data["dielectric"],
+            run=run,
+            tm=tm,
+            memory=memory,
+        )
 
 
 class EgradOutput(BaseData):
     """
     Object containing the data of the output of an egrad calculation.
+
     It combines the outputs of standard gradients calculations with the
     output of escf.
     """
-    def __init__(self, gradients, dielectric, dft, escf, geometry, basis, run, tm, cosmo,
-                 integral, ex_state):
-        """
+
+    def __init__(
+        self,
+        gradients,
+        dielectric,
+        dft,
+        escf,
+        geometry,
+        basis,
+        run,
+        tm,
+        cosmo,
+        integral,
+        ex_state,
+    ):
+        """Construct EGradOutput object.
+
         Args:
             gradients (list): matrix of shape (natoms, 3) containing the values of
                 the cartesian gradients.
-            dielectric (list): 3x3 matrix containing the values of the dielectric tensor.
+            dielectric (list): 3x3 matrix containing the values of the dielectric
+                tensor.
             dft (DFTData): information about dft calculation.
             escf (EscfData): information about the excited state calculation.
             geometry (GeometryData): the geometry of the system.
             basis (BasisData): the basis used for the calculation.
-            run (RunData): information about calculation running (e.g. timings, ...)
-            tm (TurbomoleData): information about the turbomole used for the calculation.
+            run (RunData): information about calculation running (e.g. timings, ...).
+            tm (TurbomoleData): information about the turbomole used for
+                the calculation.
             cosmo (CosmoData): cosmo approximations and results.
             integral (IntegralData): information about the thresholds for integrals.
-            ex_state (int): the (1-based) index of the excited state used for the gradients.
+            ex_state (int): the (1-based) index of the excited state used for
+                the gradients.
         """
         self.gradients = gradients
         self.dielectric = dielectric
@@ -279,8 +381,9 @@ class EgradOutput(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of EgradOutput from a parser based on the stdout
-        of a Turbomole executable.
+        Generate an instance of EgradOutput from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -303,17 +406,27 @@ class EgradOutput(BaseData):
         egrad_ex = parser.egrad_excited_state
         ex_state = egrad_ex["index"] if egrad_ex is not None else None
 
-        return cls(gradients=grad_data["gradients"], dielectric=grad_data["dielectric"],
-                   dft=dft, escf=escf, geometry=geometry, basis=basis, run=run, tm=tm,
-                   cosmo=cosmo, integral=integral, ex_state=ex_state)
+        return cls(
+            gradients=grad_data["gradients"],
+            dielectric=grad_data["dielectric"],
+            dft=dft,
+            escf=escf,
+            geometry=geometry,
+            basis=basis,
+            run=run,
+            tm=tm,
+            cosmo=cosmo,
+            integral=integral,
+            ex_state=ex_state,
+        )
 
 
 class RelaxOutput(BaseData):
-    """
-    Object containing the data of the output of a relax calculation (not statpt).
-    """
+    """Object containing the data of the output of a relax calculation (not statpt)."""
+
     def __init__(self, info, gradients, convergence, run, tm):
-        """
+        """Construct RelaxOutput object.
+
         Args:
             info (RelaxData): initial information provided in relax.
             gradients (RelaxGradientsData): gradient values extracted from the relax
@@ -321,7 +434,8 @@ class RelaxOutput(BaseData):
             convergence (RelaxConvergenceData): final information about convergence
                 according to what is defined in the control file.
             run (RunData): information about calculation running (e.g. timings, ...)
-            tm (TurbomoleData): information about the turbomole used for the calculation.
+            tm (TurbomoleData): information about the turbomole used for
+                the calculation.
         """
         self.info = info
         self.gradients = gradients
@@ -332,8 +446,9 @@ class RelaxOutput(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of RelaxOutput from a parser based on the stdout
-        of a Turbomole executable.
+        Generate an instance of RelaxOutput from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -347,15 +462,17 @@ class RelaxOutput(BaseData):
         run = RunData.from_parser(parser)
         tm = TurbomoleData.from_parser(parser)
 
-        return cls(info=info, gradients=gradients, convergence=convergence, run=run, tm=tm)
+        return cls(
+            info=info, gradients=gradients, convergence=convergence, run=run, tm=tm
+        )
 
 
 class StatptOutput(BaseData):
-    """
-    Object containing the data of the output of a statpt calculation (not relax).
-    """
+    """Object containing the data of the output of a statpt calculation (not relax)."""
+
     def __init__(self, info, gradients, convergence, run, tm):
-        """
+        """Construct StatptOutput object.
+
         Args:
             info (StatptData): initial information provided in statpt.
             gradients (RelaxGradientsData): gradient values extracted from the statpt
@@ -363,7 +480,8 @@ class StatptOutput(BaseData):
             convergence (RelaxConvergenceData): final information about convergence
                 according to what is defined in the control file.
             run (RunData): information about calculation running (e.g. timings, ...)
-            tm (TurbomoleData): information about the turbomole used for the calculation.
+            tm (TurbomoleData): information about the turbomole used for
+                the calculation.
         """
         self.info = info
         self.gradients = gradients
@@ -374,8 +492,9 @@ class StatptOutput(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of StatptOutput from a parser based on the stdout
-        of a Turbomole executable.
+        Generate an instance of StatptOutput from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -389,23 +508,32 @@ class StatptOutput(BaseData):
         run = RunData.from_parser(parser)
         tm = TurbomoleData.from_parser(parser)
 
-        return cls(info=info, gradients=gradients, convergence=convergence, run=run, tm=tm)
+        return cls(
+            info=info, gradients=gradients, convergence=convergence, run=run, tm=tm
+        )
 
 
 class AoforceOutput(BaseData):
     """
     Object containing the data of the output of an aforce calculation.
-    Works native aoforce calculations and after a numforce.
+
+    Works with native aoforce calculations and after a numforce.
     """
+
     def __init__(self, numerical_integration, rotational, vibrational, run, tm):
-        """
+        """Construct AoforceOutput object.
+
         Args:
-            numerical_integration (AoforceNumericalIntegrationData): information about the
-                numerical integration in aoforce. Missing if from a numforce calculation.
-            rotational (AoforceRotationalData): analysis of rotational states in aoforce.
-            vibrational (AoforceVibrationalData): analysis of vibrational states in aoforce.
-            run (RunData): information about calculation running (e.g. timings, ...)
-            tm (TurbomoleData): information about the turbomole used for the calculation.
+            numerical_integration (AoforceNumericalIntegrationData): information
+                about the numerical integration in aoforce.
+                Missing if from a numforce calculation.
+            rotational (AoforceRotationalData): analysis of rotational states in
+                aoforce.
+            vibrational (AoforceVibrationalData): analysis of vibrational states
+                in aoforce.
+            run (RunData): information about calculation running (e.g. timings, ...).
+            tm (TurbomoleData): information about the turbomole used for
+                the calculation.
         """
         self.numerical_integration = numerical_integration
         self.rotational = rotational
@@ -416,8 +544,9 @@ class AoforceOutput(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of AoforceOutput from a parser based on the stdout
-        of a Turbomole executable.
+        Generate an instance of AoforceOutput from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -431,19 +560,22 @@ class AoforceOutput(BaseData):
         run = RunData.from_parser(parser)
         tm = TurbomoleData.from_parser(parser)
 
-        return cls(numerical_integration=ni, rotational=rot, vibrational=vib, run=run, tm=tm)
+        return cls(
+            numerical_integration=ni, rotational=rot, vibrational=vib, run=run, tm=tm
+        )
 
 
 class Ricc2Output(BaseData):
-    """
-    Object containing the data of the output of a ricc2 calculation.
-    """
+    """Object containing the data of the output of a ricc2 calculation."""
+
     def __init__(self, mp2, run, tm):
-        """
+        """Construct Ricc2Output object.
+
         Args:
             mp2 (MP2Results): MP2 results.
             run (RunData): information about calculation running (e.g. timings, ...)
-            tm (TurbomoleData): information about the turbomole used for the calculation.
+            tm (TurbomoleData): information about the turbomole used for
+                the calculation.
         """
         self.mp2 = mp2
         self.run = run
@@ -452,8 +584,9 @@ class Ricc2Output(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of Ricc2Output from a parser based on the stdout
-        of a Turbomole executable.
+        Generate an instance of Ricc2Output from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -470,13 +603,18 @@ class Ricc2Output(BaseData):
 
 class MP2Output(BaseData):
     """
-    Object containing the data of the output of an MP2 calculation, i.e. mpgrad, ricc2 (with proper MP2 options),
-    or pnoccsd (with proper MP2 options).
+    Object containing the data of the output of an MP2 calculation.
 
-    Note: Parsing of PNO-based MP2 calculations (i.e. performed with the pnoccsd program) is not (yet) supported.
+    Can be used for different MP2 calculation types, i.e. mpgrad, ricc2 (with proper
+    MP2 options), or pnoccsd (with proper MP2 options).
+
+    Note: Parsing of PNO-based MP2 calculations (i.e. performed with the pnoccsd
+    program) is not (yet) supported.
     """
+
     def __init__(self, info, results, geometry, basis, symmetry, cosmo, run, tm):
-        """
+        """Construct MP2Output object.
+
         Args:
             info (MP2Data): Information about MP2 calculation.
             results (MP2Results): Results of an MP2 calculation.
@@ -484,8 +622,9 @@ class MP2Output(BaseData):
             basis (BasisData): the basis used for the calculation.
             symmetry (SymmetryData): information about the symmetry of the molecule.
             cosmo (CosmoData): cosmo approximations and results.
-            run (RunData): information about calculation running (e.g. timings, ...)
-            tm (TurbomoleData): information about the turbomole used for the calculation.
+            run (RunData): information about calculation running (e.g. timings, ...).
+            tm (TurbomoleData): information about the turbomole used for
+                the calculation.
         """
         self.info = info
         self.results = results
@@ -499,8 +638,9 @@ class MP2Output(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of MP2Output from a parser based on the stdout
-        of a Turbomole executable.
+        Generate an instance of MP2Output from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -516,27 +656,39 @@ class MP2Output(BaseData):
         basis = BasisData.from_parser(parser)
         symmetry = SymmetryData.from_parser(parser)
         cosmo = CosmoData.from_parser(parser)
-        # TODO: fix parsing of Cosmo data in non-scf executables or add a separate parsing
+        # TODO: fix parsing of Cosmo data in non-scf executables or add a
+        #  separate parsing.
 
-        return cls(info=info, results=results, geometry=geometry,
-                   basis=basis, symmetry=symmetry, cosmo=cosmo, run=run, tm=tm)
+        return cls(
+            info=info,
+            results=results,
+            geometry=geometry,
+            basis=basis,
+            symmetry=symmetry,
+            cosmo=cosmo,
+            run=run,
+            tm=tm,
+        )
 
 
 class JobexOutput(BaseData):
     """
     Object containing the data of the output of the last step of a jobex calculation.
+
     Namely the outputs of the last energy, gradient and relax calculations stored in
     the "job.last" file.
     """
 
     def __init__(self, energy, gradient, relax):
-        """
+        """Construct JobexOutput object.
+
         Args:
             energy (ScfOutput): the output data of the energy calculation.
             gradient: the output data of the energy calculation. The type depends on
                 the type of calculation. Can be GradOutput, EgradOutput or coming from
                 other executables (e.g. Ricc2Output or MP2Output).
-            relax (RelaxOutput or StatptOutput): the output data of the relax calculation.
+            relax (RelaxOutput or StatptOutput): the output data of the
+                relax calculation.
         """
         self.energy = energy
         self.gradient = gradient
@@ -545,10 +697,11 @@ class JobexOutput(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of JobexOutput from a parser based on the output
-        contained in the "job.last" file generated by jobex. Splits the output
-        in the different types of executables and generates suitable objects
-        for them.
+        Generate an instance of JobexOutput from a parser.
+
+        The parser is based on the output contained in the "job.last" file generated
+        by jobex. Splits the output in the different types of executables and
+        generates suitable objects for them.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -556,7 +709,14 @@ class JobexOutput(BaseData):
         Returns:
             JobexOutput.
         """
-        exec_en, p_en, exec_grad, p_grad, exec_relax, p_relax = parser.get_split_jobex_parsers()
+        (
+            exec_en,
+            p_en,
+            exec_grad,
+            p_grad,
+            exec_relax,
+            p_relax,
+        ) = parser.get_split_jobex_parsers()
 
         energy = gradient = relax = None
         if exec_en in exec_to_out_obj:
@@ -585,7 +745,7 @@ exec_to_out_obj = {
     "relax": RelaxOutput,
     "statpt": StatptOutput,
     "aoforce": AoforceOutput,
-    "force": AoforceOutput,  # because when executed aoforce has the name "force" in the header.
+    "force": AoforceOutput,  # aoforce has the name "force" in the header.
     "mpgrad": MP2Output,
     "ricc2": Ricc2Output,
     "rimp2": MP2Output,

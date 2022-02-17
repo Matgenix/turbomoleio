@@ -1,0 +1,64 @@
+#[tool.poetry]
+#name = "turbomoleio"
+#version = "X.Y.Z"
+#description = "Turbomoleio is a package ."
+#authors = ["davidwaroquiers <david.waroquiers@matgenix.com>"]
+#license = "GPL V3"
+#packages = [
+#  { include = "turbomoleio", from = "src" }
+#]
+#
+#[tool.poetry.dependencies]
+#python = "^3.6.1"
+#pymatgen = ">=2020.1.10"
+#
+#[tool.poetry.dev-dependencies]
+#pytest = "^6.2.3"
+#pytest-cov = "^2.11.1"
+#coverage = {version = "^5.5", extras = ["toml"]}
+#pytest-mock = "^3.3.1"
+#pre-commit = "^2.9.3"
+#isort = "^5.6.4"
+#black = "^20.8b1"
+#flake8 = "^3.8.4"
+#pylint = "^2.6.0"
+#pydocstyle = "^6.1.1"
+#mypy = "^0.790"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+line_length = 88
+
+[tool.pytest.ini_options]
+minversion = "6.1.2"
+addopts = "--strict-markers --cov=turbomoleio -cov-config=pyproject.toml --cov-report html --cov-report term"
+markers = [
+    "unit: Unit tests on small portions of the code that do not require execution of external code.",
+    "integration: Integration tests that require running turbomole executables.",
+]
+
+# Coverage options
+[tool.coverage.run]
+source = ["turbomoleio"]
+#omit = [
+#    "*/test_*",
+#]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+]
+#fail_under = 100
+
+[tool.coverage.html]
+directory = "htmlcov"

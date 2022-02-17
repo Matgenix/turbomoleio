@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -26,11 +26,15 @@ is not repeated here. In this module only specific functions of the Data
 objects are tested.
 """
 import os
+
 import pytest
 
-from turbomoleio.output.data import TurbomoleData, ScfIterationData, AoforceVibrationalData
-from turbomoleio.testfiles.utils import has_matplotlib
-from turbomoleio.testfiles.utils import TM_VERSIONS
+from turbomoleio.output.data import (
+    AoforceVibrationalData,
+    ScfIterationData,
+    TurbomoleData,
+)
+from turbomoleio.testfiles.utils import TM_VERSIONS, has_matplotlib
 
 
 @pytest.mark.parametrize("tm_version", TM_VERSIONS)
@@ -56,7 +60,9 @@ def test_ScfIterationData(testdir, tm_version):
 
 
 def test_AoforceVibrationalData(testdir):
-    path = os.path.join(testdir, "outputs", "TM_v7.3", "aoforce", "aceton_full", "aoforce.log")
+    path = os.path.join(
+        testdir, "outputs", "TM_v7.3", "aoforce", "aceton_full", "aoforce.log"
+    )
     avd = AoforceVibrationalData.from_file(path)
 
     assert avd.n_negative_freqs(tol=0.1) == 1

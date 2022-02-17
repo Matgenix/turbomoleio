@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -24,14 +24,25 @@ import os
 import re
 import shutil
 import tempfile
-import numpy as np
 from fractions import Fraction
 
+import numpy as np
 import pytest
 
-from turbomoleio.core.control import Control, sdg, kdg, adg, cdg, mdgo, sdgo, cpc
-from turbomoleio.core.control import Energy, Gradient, Shells
-from turbomoleio.testfiles.utils import temp_dir, assert_MSONable, has_matplotlib
+from turbomoleio.core.control import (
+    Control,
+    Energy,
+    Gradient,
+    Shells,
+    adg,
+    cdg,
+    cpc,
+    kdg,
+    mdgo,
+    sdg,
+    sdgo,
+)
+from turbomoleio.testfiles.utils import assert_MSONable, has_matplotlib, temp_dir
 
 
 def check_equivalent_dg(dg1, dg2):
@@ -50,22 +61,22 @@ def check_equivalent_dg(dg1, dg2):
     dg1 = dg1.strip()
     dg2 = dg2.strip()
     s1 = set()
-    for l in dg1.splitlines():
-        l = l.strip()
-        if not l:
+    for line in dg1.splitlines():
+        line = line.strip()
+        if not line:
             continue
-        l = re.sub(r"\s+", " ", l)
-        m = re.search(r"^(.+?)\((.+?)\)", l)
+        line = re.sub(r"\s+", " ", line)
+        m = re.search(r"^(.+?)\((.+?)\)", line)
         f = m.group(2).replace(" ", "")
         s1.add((m.group(1), Fraction(f)))
 
     s2 = set()
-    for l in dg2.splitlines():
-        l = l.strip()
-        if not l:
+    for line in dg2.splitlines():
+        line = line.strip()
+        if not line:
             continue
-        l = re.sub(r"\s+", " ", l)
-        m = re.search(r"^(.+?)\((.+?)\)", l)
+        line = re.sub(r"\s+", " ", line)
+        m = re.search(r"^(.+?)\((.+?)\)", line)
         f = m.group(2).replace(" ", "")
         s2.add((m.group(1), Fraction(f)))
 
@@ -73,10 +84,11 @@ def check_equivalent_dg(dg1, dg2):
 
 
 class TestEnergy:
-
     def test_energy_scf(self, testdir, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
-            shutil.copy2(os.path.join(testdir, 'control', 'energy_test-energy'), 'energy')
+            shutil.copy2(
+                os.path.join(testdir, "control", "energy_test-energy"), "energy"
+            )
             energy = Energy.from_file()
             assert len(energy.scf) == 4
             assert energy.n_steps == 4
@@ -92,12 +104,14 @@ class TestEnergy:
             if has_matplotlib():
                 assert energy.plot(show=False)
 
-            energy_string = '      SCF               SCFKIN            SCFPOT\n' \
-                            '1   -10.48350884610    39.86550149370   -50.34901033980\n' \
-                            '2   -20.48350872544    38.86665278906   -59.35016151450\n' \
-                            '\n' \
-                            '3   -30.48350875500    37.86647200156   -68.34998075656\n' \
-                            '4   -40.48350875077    36.86649728669   -77.35000603747\n'
+            energy_string = (
+                "      SCF               SCFKIN            SCFPOT\n"
+                "1   -10.48350884610    39.86550149370   -50.34901033980\n"
+                "2   -20.48350872544    38.86665278906   -59.35016151450\n"
+                "\n"
+                "3   -30.48350875500    37.86647200156   -68.34998075656\n"
+                "4   -40.48350875077    36.86649728669   -77.35000603747\n"
+            )
             energy = Energy.from_string(energy_string)
             assert len(energy.scf) == 4
             assert energy.n_steps == 4
@@ -115,7 +129,7 @@ class TestEnergy:
 
     def test_energy_mp2(self, testdir, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
-            shutil.copy2(os.path.join(testdir, 'control', 'energy_test-mp2'), 'energy')
+            shutil.copy2(os.path.join(testdir, "control", "energy_test-mp2"), "energy")
             energy = Energy.from_file()
             assert len(energy.scf) == 1
             assert energy.scf[0] == pytest.approx(-75.93827460490)
@@ -132,13 +146,14 @@ class TestEnergy:
 
 
 class TestGradient:
-
     def test_gradient(self, testdir, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
-            shutil.copy2(os.path.join(testdir, 'control', 'gradient_test-gradient'), 'gradient')
+            shutil.copy2(
+                os.path.join(testdir, "control", "gradient_test-gradient"), "gradient"
+            )
             g = Gradient.from_file()
             assert len(g.molecules) == 6
-            assert g.gradients[0,1,0] == pytest.approx(-0.02705094211381)
+            assert g.gradients[0, 1, 0] == pytest.approx(-0.02705094211381)
             assert g.energies[-1] == pytest.approx(-76.3449460148)
             assert g.norms[1] == pytest.approx(0.013946816251742454)
             assert g.max_gradients[-1] == pytest.approx(3.8028925027729e-05)
@@ -160,7 +175,7 @@ class TestGradient:
         assert g.last_grad_norm is None
 
     def test_fail_parsing(self, testdir):
-        with open(os.path.join(testdir, 'control', 'gradient_test-gradient')) as f:
+        with open(os.path.join(testdir, "control", "gradient_test-gradient")) as f:
             grad = f.read()
 
         lines = grad.splitlines()
@@ -171,9 +186,17 @@ class TestGradient:
     def test_periodic(self, testdir, delete_tmp_dir):
         # 1 dimensional
         with temp_dir(delete_tmp_dir):
-            shutil.copy2(os.path.join(testdir, 'control', 'periodic_1D_C_chain.control'), "control")
-            shutil.copy2(os.path.join(testdir, 'control', 'periodic_1D_C_chain.energy'), "energy")
-            shutil.copy2(os.path.join(testdir, 'control', 'periodic_1D_C_chain.gradient'), "gradient")
+            shutil.copy2(
+                os.path.join(testdir, "control", "periodic_1D_C_chain.control"),
+                "control",
+            )
+            shutil.copy2(
+                os.path.join(testdir, "control", "periodic_1D_C_chain.energy"), "energy"
+            )
+            shutil.copy2(
+                os.path.join(testdir, "control", "periodic_1D_C_chain.gradient"),
+                "gradient",
+            )
             g = Gradient.from_file(filename="control")
             assert g.periodicity == 1
             assert g.lattice_vectors is not None
@@ -197,9 +220,18 @@ class TestGradient:
 
         # 2 dimensional
         with temp_dir(delete_tmp_dir):
-            shutil.copy2(os.path.join(testdir, 'control', 'periodic_2D_graphene.control'), "control")
-            shutil.copy2(os.path.join(testdir, 'control', 'periodic_2D_graphene.energy'), "energy")
-            shutil.copy2(os.path.join(testdir, 'control', 'periodic_2D_graphene.gradient'), "gradient")
+            shutil.copy2(
+                os.path.join(testdir, "control", "periodic_2D_graphene.control"),
+                "control",
+            )
+            shutil.copy2(
+                os.path.join(testdir, "control", "periodic_2D_graphene.energy"),
+                "energy",
+            )
+            shutil.copy2(
+                os.path.join(testdir, "control", "periodic_2D_graphene.gradient"),
+                "gradient",
+            )
             g = Gradient.from_file(filename="control")
             assert g.periodicity == 2
             assert g.lattice_vectors is not None
@@ -209,19 +241,33 @@ class TestGradient:
             assert len(g.lattice_vectors[0]) == 2
             assert len(g.lattice_vectors[0][0]) == 2
             assert g.lattice_vectors[0][0] == pytest.approx([4.66463026, 0.0])
-            assert g.lattice_vectors[0][1] == pytest.approx([-2.33231519083, 4.0396882697516])
+            assert g.lattice_vectors[0][1] == pytest.approx(
+                [-2.33231519083, 4.0396882697516]
+            )
             assert len(g.lattice_vectors[9]) == 2
             assert len(g.lattice_vectors[9][0]) == 2
             assert g.lattice_vectors[9][0] == pytest.approx([4.5809809753, 0.0])
-            assert g.lattice_vectors[9][1] == pytest.approx([-2.0545069412832, 4.0953069748706])
-            assert g.lattice_gradients[9][0] == pytest.approx([-1.62632065e-05, -5.49909640e-06])
-            assert g.lattice_gradients[9][1] == pytest.approx([1.04586218e-05, 6.97617028e-05])
+            assert g.lattice_vectors[9][1] == pytest.approx(
+                [-2.0545069412832, 4.0953069748706]
+            )
+            assert g.lattice_gradients[9][0] == pytest.approx(
+                [-1.62632065e-05, -5.49909640e-06]
+            )
+            assert g.lattice_gradients[9][1] == pytest.approx(
+                [1.04586218e-05, 6.97617028e-05]
+            )
 
         # 3 dimensional
         with temp_dir(delete_tmp_dir):
-            shutil.copy2(os.path.join(testdir, 'control', 'periodic_3D_HC.control'), "control")
-            shutil.copy2(os.path.join(testdir, 'control', 'periodic_3D_HC.energy'), "energy")
-            shutil.copy2(os.path.join(testdir, 'control', 'periodic_3D_HC.gradient'), "gradient")
+            shutil.copy2(
+                os.path.join(testdir, "control", "periodic_3D_HC.control"), "control"
+            )
+            shutil.copy2(
+                os.path.join(testdir, "control", "periodic_3D_HC.energy"), "energy"
+            )
+            shutil.copy2(
+                os.path.join(testdir, "control", "periodic_3D_HC.gradient"), "gradient"
+            )
             g = Gradient.from_file(filename="control")
             assert g.periodicity == 3
             assert g.lattice_vectors is not None
@@ -231,26 +277,45 @@ class TestGradient:
             assert len(g.lattice_vectors[0]) == 3
             assert len(g.lattice_vectors[0][0]) == 3
             assert g.lattice_vectors[0][0] == pytest.approx([5.09738357, 0.0, 0.0])
-            assert g.lattice_vectors[0][1] == pytest.approx([-2.7319912004445, 3.9245528516757, 0.0])
-            assert g.lattice_vectors[0][2] == pytest.approx([0.75633542716256, -1.6073467332536, 11.481850306654])
+            assert g.lattice_vectors[0][1] == pytest.approx(
+                [-2.7319912004445, 3.9245528516757, 0.0]
+            )
+            assert g.lattice_vectors[0][2] == pytest.approx(
+                [0.75633542716256, -1.6073467332536, 11.481850306654]
+            )
             assert len(g.lattice_vectors[9]) == 3
             assert len(g.lattice_vectors[9][0]) == 3
             assert g.lattice_vectors[9][0] == pytest.approx([4.7817678505, 0.0, 0.0])
-            assert g.lattice_vectors[9][1] == pytest.approx([-2.3276141683287, 4.1856654539183, 0.0])
-            assert g.lattice_vectors[9][2] == pytest.approx([0.89126099072162, -1.3162285716079, 11.50855367142])
+            assert g.lattice_vectors[9][1] == pytest.approx(
+                [-2.3276141683287, 4.1856654539183, 0.0]
+            )
+            assert g.lattice_vectors[9][2] == pytest.approx(
+                [0.89126099072162, -1.3162285716079, 11.50855367142]
+            )
             assert g.lattice_vectors[17][0] == pytest.approx([4.7537059886, 0.0, 0.0])
-            assert g.lattice_vectors[17][1] == pytest.approx([-2.2801435854351, 4.1747226082797, 0.0])
-            assert g.lattice_vectors[17][2] == pytest.approx([0.92551779449765, -1.3738823392983, 11.500943692659])
-            assert g.lattice_gradients[17][0] == pytest.approx([-2.31848114e-05, -1.33019726e-04,  8.75872366e-05])
-            assert g.lattice_gradients[17][1] == pytest.approx([1.26202299e-05, -2.91666006e-05, -1.75235859e-05])
-            assert g.lattice_gradients[17][2] == pytest.approx([7.47949755e-05,  9.05389095e-05, -4.96335880e-05])
+            assert g.lattice_vectors[17][1] == pytest.approx(
+                [-2.2801435854351, 4.1747226082797, 0.0]
+            )
+            assert g.lattice_vectors[17][2] == pytest.approx(
+                [0.92551779449765, -1.3738823392983, 11.500943692659]
+            )
+            assert g.lattice_gradients[17][0] == pytest.approx(
+                [-2.31848114e-05, -1.33019726e-04, 8.75872366e-05]
+            )
+            assert g.lattice_gradients[17][1] == pytest.approx(
+                [1.26202299e-05, -2.91666006e-05, -1.75235859e-05]
+            )
+            assert g.lattice_gradients[17][2] == pytest.approx(
+                [7.47949755e-05, 9.05389095e-05, -4.96335880e-05]
+            )
 
 
 class TestShells:
-
     def test_closed(self, testdir, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
-            shutil.copy2(os.path.join(testdir, 'control', 'control_test-subfiles'), "control")
+            shutil.copy2(
+                os.path.join(testdir, "control", "control_test-subfiles"), "control"
+            )
             with pytest.raises(ValueError):
                 Shells.from_file("alpha")
             s = Shells.from_file("closed")
@@ -273,7 +338,7 @@ class TestShells:
         alpha = """
  a1      1-3                                    ( 1 )
  b1      1                                      ( 1 )
- b2      1                                      ( 1 )        
+ b2      1                                      ( 1 )
         """
         s = Shells.from_string(alpha)
         assert len(s.states) == 5
@@ -298,7 +363,7 @@ class TestShells:
         alpha = """
 a1      1,3-5,7-8                              ( 1 )
 a1      9                                      ( 1 / 2 )
-b2      1-2,5,7,10-12                          ( 0.5 )        
+b2      1-2,5,7,10-12                          ( 0.5 )
        """
         s = Shells.from_string(alpha)
         assert len(s.states) == 14
@@ -313,10 +378,10 @@ b2      1-2,5,7,10-12                          ( 0.5 )
         assert check_equivalent_dg(alpha, s.to_datagroup())
 
     def test_fail_parse(self):
-        bad_shells="""
+        bad_shells = """
  a1      1-3                                    ( 1 )
  b1      1                                      ( 1 )
- a2        
+ a2
         """
         with pytest.raises(RuntimeError):
             Shells.from_string(bad_shells)
@@ -325,7 +390,7 @@ b2      1-2,5,7,10-12                          ( 0.5 )
         alpha_frac = """
 a1      1-3                                    ( 1 )
 b1      1                                      ( 1 )
-b2      1                                      ( 1 / 2 )        
+b2      1                                      ( 1 / 2 )
         """
         s = Shells.from_string(alpha_frac)
 
@@ -334,7 +399,7 @@ b2      1                                      ( 1 / 2 )
         alpha_float = """
         a1      1-3                                    ( 1 )
         b1      1                                      ( 1 )
-        b2      1                                      ( 0.5 )        
+        b2      1                                      ( 0.5 )
                 """
         s = Shells.from_string(alpha_float)
 
@@ -345,41 +410,50 @@ b2      1                                      ( 1 / 2 )
 class TestControl(object):
     """Testing of the Control object."""
 
-    @pytest.mark.parametrize('control_filename', ['control_test-Control'])
+    @pytest.mark.parametrize("control_filename", ["control_test-Control"])
     def test_from_file(self, control):
         """Testing instantiation."""
 
         # Check that we are actually getting an instance of Control
         assert isinstance(control, Control)
 
-        dg_list_ref = ['$title\n',
-                       '$operating system unix\n',
-                       '$symmetry c1\n',
-                       '$user-defined bonds    file=coord\n',
-                       '$coord    file=coord\n',
-                       '$optimize\n'
-                       ' internal   off\n'
-                       ' redundant  off\n'
-                       ' cartesian  on\n'
-                       ' global     off\n'
-                       ' basis      off\n',
-                       '$end\n']
+        dg_list_ref = [
+            "$title\n",
+            "$operating system unix\n",
+            "$symmetry c1\n",
+            "$user-defined bonds    file=coord\n",
+            "$coord    file=coord\n",
+            "$optimize\n"
+            " internal   off\n"
+            " redundant  off\n"
+            " cartesian  on\n"
+            " global     off\n"
+            " basis      off\n",
+            "$end\n",
+        ]
         assert control.dg_list == dg_list_ref
-        assert str(control) == ''.join(dg_list_ref)
+        assert str(control) == "".join(dg_list_ref)
         assert_MSONable(control)
 
         # Test to_file and from_file
         with tempfile.TemporaryDirectory() as tmpdir:
-            fname = os.path.join(tmpdir, 'control_test')
+            fname = os.path.join(tmpdir, "control_test")
             control.to_file(filename=fname)
             control_from_file = Control.from_file(filename=fname)
             assert control.dg_list == control_from_file.dg_list
 
-    @pytest.mark.parametrize('control_filename', ['control_test-Control'])
+    @pytest.mark.parametrize("control_filename", ["control_test-Control"])
     def test_add_cosmo(self, control):
         """Testing addition of Cosmo"""
-        control.add_cosmo(epsilon=0.1, nppa=1, nspa=1, disex=0.1,
-                          rsolv=0.1, routf=0.1, cavity="closed")
+        control.add_cosmo(
+            epsilon=0.1,
+            nppa=1,
+            nspa=1,
+            disex=0.1,
+            rsolv=0.1,
+            routf=0.1,
+            cavity="closed",
+        )
 
         dg = control.show_data_group("$cosmo")
         assert "epsilon" in dg
@@ -391,8 +465,10 @@ class TestControl(object):
 
     def test_energy(self, testdir, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
-            for fname in ['control', 'energy']:
-                source = os.path.join(testdir, 'control', '{}_test-subfiles'.format(fname))
+            for fname in ["control", "energy"]:
+                source = os.path.join(
+                    testdir, "control", "{}_test-subfiles".format(fname)
+                )
                 shutil.copy2(source, fname)
             cc = Control.from_file()
 
@@ -407,20 +483,28 @@ class TestControl(object):
 
     def test_gradient(self, testdir, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
-            shutil.copy2(os.path.join(testdir, 'control', 'control_test-subfiles'), "control")
-            shutil.copy2(os.path.join(testdir, 'control', 'gradient_test-gradient'), 'gradient')
+            shutil.copy2(
+                os.path.join(testdir, "control", "control_test-subfiles"), "control"
+            )
+            shutil.copy2(
+                os.path.join(testdir, "control", "gradient_test-gradient"), "gradient"
+            )
             c = Control.from_file()
             g = c.gradient
             assert len(g.molecules) == 6
-            assert g.gradients[0,1,0] == pytest.approx(-0.02705094211381)
+            assert g.gradients[0, 1, 0] == pytest.approx(-0.02705094211381)
 
             os.unlink("gradient")
             assert c.gradient is None
 
     def test_remove_energy(self, testdir, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
-            shutil.copy2(os.path.join(testdir, 'control', 'control_test-subfiles'), "control")
-            shutil.copy2(os.path.join(testdir, 'control', 'energy_test-energy'), "energy")
+            shutil.copy2(
+                os.path.join(testdir, "control", "control_test-subfiles"), "control"
+            )
+            shutil.copy2(
+                os.path.join(testdir, "control", "energy_test-energy"), "energy"
+            )
 
             c = Control.from_file()
             c.remove_last_energy()
@@ -442,7 +526,9 @@ class TestControl(object):
 
     def test_remove_energy_in_control(self, testdir, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
-            shutil.copy2(os.path.join(testdir, 'control', 'control_test-energy'), "control")
+            shutil.copy2(
+                os.path.join(testdir, "control", "control_test-energy"), "control"
+            )
 
             c = Control.from_file()
 
@@ -459,20 +545,24 @@ class TestControl(object):
 
     def test_remove_gradient(self, testdir, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
-            shutil.copy2(os.path.join(testdir, 'control', 'control_test-subfiles'), "control")
-            shutil.copy2(os.path.join(testdir, 'control', 'gradient_test-gradient'), "gradient")
+            shutil.copy2(
+                os.path.join(testdir, "control", "control_test-subfiles"), "control"
+            )
+            shutil.copy2(
+                os.path.join(testdir, "control", "gradient_test-gradient"), "gradient"
+            )
 
             c = Control.from_file()
             c.remove_last_gradient()
             g = Gradient.from_file("gradient")
             assert len(g.gradients) == 5
-            assert g.gradients[-1,0,2] == pytest.approx(-0.00021835002325094)
+            assert g.gradients[-1, 0, 2] == pytest.approx(-0.00021835002325094)
 
             c.remove_last_gradient(backup_suffix="_backup")
             assert os.path.isfile("gradient_backup")
             g = Gradient.from_file("gradient")
             assert len(g.gradients) == 4
-            assert g.gradients[-1,0,2] == pytest.approx(0.00047140511636532)
+            assert g.gradients[-1, 0, 2] == pytest.approx(0.00047140511636532)
 
             for i in range(4):
                 c.remove_last_gradient()
@@ -482,7 +572,9 @@ class TestControl(object):
 
     def test_remove_gradient_in_control(self, testdir, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
-            shutil.copy2(os.path.join(testdir, 'control', 'control_test-gradient'), "control")
+            shutil.copy2(
+                os.path.join(testdir, "control", "control_test-gradient"), "control"
+            )
 
             c = Control.from_file()
 
@@ -503,7 +595,7 @@ class TestControl(object):
         assert dg is not None
         assert "metric 2" in dg
 
-    @pytest.mark.parametrize('control_filename', ['control_test-Control'])
+    @pytest.mark.parametrize("control_filename", ["control_test-Control"])
     def test_disp(self, control):
 
         control.set_disp("DFT-D1")
@@ -534,11 +626,11 @@ class TestControl(object):
         with pytest.raises(ValueError):
             control.set_disp("wrong_value")
 
-    @pytest.mark.parametrize('control_filename', ['control_test-Control'])
+    @pytest.mark.parametrize("control_filename", ["control_test-Control"])
     def test_is_uhf(self, control):
         assert not control.is_uhf
 
-    @pytest.mark.parametrize('control_filename', ['control_test-subfiles'])
+    @pytest.mark.parametrize("control_filename", ["control_test-subfiles"])
     def test_get_shells(self, control):
         with pytest.raises(ValueError):
             control.get_shells("alpha")
@@ -550,15 +642,26 @@ class TestControl(object):
         c_empty = Control.empty()
         assert c_empty.get_charge() is None
         with temp_dir(delete_tmp_dir):
-            shutil.copy2(os.path.join(testdir, 'control', 'control_test-subfiles'), "control")
+            shutil.copy2(
+                os.path.join(testdir, "control", "control_test-subfiles"), "control"
+            )
             c = Control.from_file()
             assert c.get_charge() == 0
 
     def test_get_subfiles_list(self, testdir):
 
-        c = Control.from_file(os.path.join(testdir, 'control', 'control_test-subfiles'))
-        l = c.get_subfiles_list()
-        assert set(l) == {"basis", "twoint2", "forceapprox", "mos", "coord", "energy", "gradient", "twoint1"}
+        c = Control.from_file(os.path.join(testdir, "control", "control_test-subfiles"))
+        line = c.get_subfiles_list()
+        assert set(line) == {
+            "basis",
+            "twoint2",
+            "forceapprox",
+            "mos",
+            "coord",
+            "energy",
+            "gradient",
+            "twoint1",
+        }
 
     def test_cpc(self, testdir, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
@@ -566,8 +669,12 @@ class TestControl(object):
             c_empty.cpc("test_dir")
             assert os.path.isfile(os.path.join("test_dir", "control"))
 
-            shutil.copy2(os.path.join(testdir, 'control', 'control_test-subfiles'), "control")
-            shutil.copy2(os.path.join(testdir, 'control', 'gradient_test-gradient'), "gradient")
+            shutil.copy2(
+                os.path.join(testdir, "control", "control_test-subfiles"), "control"
+            )
+            shutil.copy2(
+                os.path.join(testdir, "control", "gradient_test-gradient"), "gradient"
+            )
 
             c = Control.from_file("control")
 
@@ -582,9 +689,8 @@ class TestControl(object):
             assert len(c_test.dg_list) > 1
 
 
-@pytest.mark.parametrize('control_filename', ['control_test-Control'])
+@pytest.mark.parametrize("control_filename", ["control_test-Control"])
 class TestDatagroupFunctions(object):
-
     def test_sdg(self, control_filepath, delete_tmp_dir):
 
         with temp_dir(delete_tmp_dir):
@@ -597,8 +703,7 @@ class TestDatagroupFunctions(object):
             shutil.copy2(control_filepath, "control")
             with open("control") as f:
                 s = f.read()
-                matches = re.findall(r"\$operating system unix",
-                                     s, re.MULTILINE)
+                matches = re.findall(r"\$operating system unix", s, re.MULTILINE)
                 assert matches == ["$operating system unix"]
 
             kdg("operating system", backup_file="control_backup")
@@ -606,14 +711,12 @@ class TestDatagroupFunctions(object):
 
             with open("control") as f:
                 s = f.read()
-                matches = re.findall(r"\$operating system unix",
-                                     s, re.MULTILINE)
+                matches = re.findall(r"\$operating system unix", s, re.MULTILINE)
                 assert matches == []
 
             with open("control_backup") as f:
                 s = f.read()
-                matches = re.findall(r"\$operating system unix",
-                                     s, re.MULTILINE)
+                matches = re.findall(r"\$operating system unix", s, re.MULTILINE)
                 assert matches == ["$operating system unix"]
 
     def test_adg(self, control_filepath, delete_tmp_dir):
@@ -644,8 +747,7 @@ class TestDatagroupFunctions(object):
             shutil.copy2(control_filepath, "control")
             with open("control") as f:
                 s = f.read()
-                matches = re.findall(r"\$operating system unix",
-                                     s, re.MULTILINE)
+                matches = re.findall(r"\$operating system unix", s, re.MULTILINE)
                 assert matches == ["$operating system unix"]
 
             cdg("operating system", "windows", backup_file="control_backup")
@@ -653,40 +755,36 @@ class TestDatagroupFunctions(object):
 
             with open("control") as f:
                 s = f.read()
-                matches = re.findall(r"\$operating system windows",
-                                     s, re.MULTILINE)
+                matches = re.findall(r"\$operating system windows", s, re.MULTILINE)
                 assert matches == ["$operating system windows"]
-                matches = re.findall(r"\$operating system unix",
-                                     s, re.MULTILINE)
+                matches = re.findall(r"\$operating system unix", s, re.MULTILINE)
                 assert matches == []
 
             with open("control_backup") as f:
                 s = f.read()
-                matches = re.findall(r"\$operating system unix",
-                                     s, re.MULTILINE)
+                matches = re.findall(r"\$operating system unix", s, re.MULTILINE)
                 assert matches == ["$operating system unix"]
-                matches = re.findall(r"\$operating system windows",
-                                     s, re.MULTILINE)
+                matches = re.findall(r"\$operating system windows", s, re.MULTILINE)
                 assert matches == []
 
     def test_mdgo(self, control_filepath, delete_tmp_dir):
 
         with temp_dir(delete_tmp_dir):
             shutil.copy2(control_filepath, "control")
-            options = {"internal": None,
-                       "redundant": None,
-                       "cartesian": "cartesian off",
-                       "global": None}
+            options = {
+                "internal": None,
+                "redundant": None,
+                "cartesian": "cartesian off",
+                "global": None,
+            }
             mdgo("optimize", options, backup_file="control_backup")
             assert os.path.isfile("control_backup")
 
             with open("control") as f:
                 s = f.read()
-                matches = re.findall(r"cartesian off",
-                                     s, re.MULTILINE)
+                matches = re.findall(r"cartesian off", s, re.MULTILINE)
                 assert matches == ["cartesian off"]
-                matches = re.findall(r"\$redundant",
-                                     s, re.MULTILINE)
+                matches = re.findall(r"\$redundant", s, re.MULTILINE)
                 assert matches == []
 
     def test_sdgo(self, control_filepath, delete_tmp_dir):
@@ -699,16 +797,22 @@ class TestDatagroupFunctions(object):
 
             os.makedirs("orig_dir")
 
-            shutil.copy2(os.path.join(testdir, 'control', 'control_test-subfiles'),
-                         os.path.join("orig_dir", "control"))
-            shutil.copy2(os.path.join(testdir, 'control', 'gradient_test-gradient'),
-                         os.path.join("orig_dir", "gradient"))
+            shutil.copy2(
+                os.path.join(testdir, "control", "control_test-subfiles"),
+                os.path.join("orig_dir", "control"),
+            )
+            shutil.copy2(
+                os.path.join(testdir, "control", "gradient_test-gradient"),
+                os.path.join("orig_dir", "gradient"),
+            )
 
             cpc("test_dir", control_dir="orig_dir")
             assert os.path.isfile(os.path.join("test_dir", "control"))
             assert os.path.isfile(os.path.join("test_dir", "gradient"))
 
-            shutil.copy2(os.path.join(testdir, 'control', 'control_test-subfiles'), "control")
+            shutil.copy2(
+                os.path.join(testdir, "control", "control_test-subfiles"), "control"
+            )
 
             cpc("test_dir2")
             assert os.path.isfile(os.path.join("test_dir2", "control"))

@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -20,23 +20,28 @@
 # along with turbomoleio (see ~turbomoleio/COPYING). If not,
 # see <https://www.gnu.org/licenses/>.
 
+"""Module for extracting and modifying electronic states."""
+
 import re
 import subprocess
-import numpy as np
 from collections import defaultdict
 from collections.abc import MutableSequence
 from copy import copy
 from fractions import Fraction
+
+import numpy as np
 from monty.json import MSONable
 from monty.os import cd
-from turbomoleio.core.symmetry import irrep_size
+
 from turbomoleio.core.control import Control
+from turbomoleio.core.symmetry import irrep_size
 
 
 def get_mos_energies(dg_string):
-    """
+    """Get the molecular orbital energies.
+
     Given the string of a mos datagroup or the content of the mos file
-    extracts the list of energies associated with each state.
+    this extracts the list of energies associated with each state.
     Each state is identified by its irreducible representation
     and the index relative that that irrep.
 
@@ -48,8 +53,11 @@ def get_mos_energies(dg_string):
         the irrep, the index relative to the irred and the
         energy.
     """
-    m = re.findall(r"^\s+(\d+)\s+([\w\'\"]+)\s+eigenvalue=([+-]?[0-9]*[.]?[0-9]+D[+-]\d{2})\s+",
-                   dg_string, re.MULTILINE)
+    m = re.findall(
+        r"^\s+(\d+)\s+([\w\'\"]+)\s+eigenvalue=([+-]?[0-9]*[.]?[0-9]+D[+-]\d{2})\s+",
+        dg_string,
+        re.MULTILINE,
+    )
 
     if not m:
         raise RuntimeError("No mos energies could be extracted")
@@ -65,6 +73,7 @@ def get_mos_energies(dg_string):
 class State(MSONable):
     """
     Object a single state of a calculation.
+
     Each state is identified by its irreducible representation,
     the index in the irrep, its spin, its occupation and the
     calculated eigenvalue.
@@ -73,7 +82,8 @@ class State(MSONable):
     """
 
     def __init__(self, eigenvalue, irrep, irrep_index, occupation, spin=None):
-        """
+        """Construct State object.
+
         Args:
             eigenvalue (float): the eigenvalue of the state
             irrep (str): the irreducible representation
@@ -89,8 +99,9 @@ class State(MSONable):
         self.spin = spin
 
     def __eq__(self, other):
-        """
-        Equal if all the attributes are the same
+        """Compare with another State object.
+
+        Two State objects are equal if all the attributes are the same.
 
         Args:
             other: another object
@@ -101,18 +112,26 @@ class State(MSONable):
         if not isinstance(other, self.__class__):
             return False
 
-        return self.eigenvalue == other.eigenvalue and self.irrep == other.irrep and \
-               self.irrep_index == other.irrep_index and self.occupation == other.occupation \
-               and self.spin == other.spin
+        return (
+            self.eigenvalue == other.eigenvalue
+            and self.irrep == other.irrep
+            and self.irrep_index == other.irrep_index
+            and self.occupation == other.occupation
+            and self.spin == other.spin
+        )
 
     def __str__(self):
+        """Get a string representation of the State object."""
         return "Eigenvalue: {}, irrep: {}, index: {}, spin: {}, occupation: {}".format(
-            self.eigenvalue, self.irrep, self.irrep_index, self.spin, self.occupation)
+            self.eigenvalue, self.irrep, self.irrep_index, self.spin, self.occupation
+        )
 
     @property
     def max_occupation(self):
         """
-        The maximum possible occupation for this state based on the irrep and the spin.
+        Get the maximum possible occupation for this state.
+
+        This depends on the irrep and spin of the system.
 
         Returns:
             int: the maximum occupation.
@@ -125,64 +144,83 @@ class State(MSONable):
 
     @property
     def has_fractional_occ(self):
-        """
-        True if the state is only fractionally occupied.
-        """
+        """Check if the state is only fractionally occupied."""
         return 0 < self.occupation < self.max_occupation
 
     def as_dict(self):
-        """
-        A JSON serializable dict representation of State.
-        """
+        """Get a JSON serializable dict representation of State."""
         occupation = (self.occupation.numerator, self.occupation.denominator)
-        d = {"eigenvalue": self.eigenvalue, "irrep": self.irrep, "irrep_index": self.irrep_index,
-             "occupation": occupation, "spin": self.spin, "@module": self.__class__.__module__,
-             "@class": self.__class__.__name__}
+        d = {
+            "eigenvalue": self.eigenvalue,
+            "irrep": self.irrep,
+            "irrep_index": self.irrep_index,
+            "occupation": occupation,
+            "spin": self.spin,
+            "@module": self.__class__.__module__,
+            "@class": self.__class__.__name__,
+        }
 
         return d
 
     @classmethod
     def from_dict(cls, d):
-        occupation = Fraction(numerator=d["occupation"][0], denominator=d["occupation"][1])
-        return cls(eigenvalue=d["eigenvalue"], irrep=d["irrep"], irrep_index=d["irrep_index"],
-                 occupation=occupation, spin=d["spin"])
+        """Generate object from JSON representation."""
+        occupation = Fraction(
+            numerator=d["occupation"][0], denominator=d["occupation"][1]
+        )
+        return cls(
+            eigenvalue=d["eigenvalue"],
+            irrep=d["irrep"],
+            irrep_index=d["irrep_index"],
+            occupation=occupation,
+            spin=d["spin"],
+        )
 
 
 class States(MSONable, MutableSequence):
     """
     A sequence of State, sorted in increasing order of energy.
+
     Describes the eigenstates of a molecule.
     """
 
     def __init__(self, states):
         """
-        Generates the instance. The states are sorted here.
+        Construct the States object.
+
+        The states are sorted here.
 
         Args:
             states (list): a list of State.
         """
-        self._states = sorted(states, key=lambda s: (s.eigenvalue, s.irrep, s.irrep_index, s.spin))
+        self._states = sorted(
+            states, key=lambda s: (s.eigenvalue, s.irrep, s.irrep_index, s.spin)
+        )
 
     def __getitem__(self, i):
+        """Get i-th state."""
         return self._states[i]
 
     def __setitem__(self, i, state):
+        """Set i-th state."""
         self._states[i] = state
 
     def __delitem__(self, i):
+        """Delete i-th state."""
         self._states.__delitem__(i)
 
     def __len__(self):
+        """Get the number of states."""
         return len(self._states)
 
     def insert(self, index, state):
+        """Insert state at the specified index."""
         self._states.insert(index, state)
 
     @staticmethod
     def _generate_states_lists(eigen_data, shells, spin=None):
         """
-        Helper function that generates a list of states for a specifc type
-        of shells.
+        Generate a list of states for a specific type of shells.
 
         Args:
             eigen_data (list): a list with the eigenvalues data. irrep, index in the
@@ -212,7 +250,7 @@ class States(MSONable, MutableSequence):
     @classmethod
     def from_file(cls, filename="control"):
         """
-        Generates the instance from a file (usually control)
+        Generate the instance from a file (usually control).
 
         Args:
             filename (str): name of the file
@@ -232,7 +270,9 @@ class States(MSONable, MutableSequence):
                 alpha_eigen = get_mos_energies(f.read())
             with open(c.show_subfile_fname("uhfmo_beta")) as f:
                 beta_eigen = get_mos_energies(f.read())
-            states.extend(cls._generate_states_lists(alpha_eigen, alpha_shells, spin="a"))
+            states.extend(
+                cls._generate_states_lists(alpha_eigen, alpha_shells, spin="a")
+            )
             states.extend(cls._generate_states_lists(beta_eigen, beta_shells, spin="b"))
         else:
             shells = c.get_shells("closed")
@@ -244,66 +284,58 @@ class States(MSONable, MutableSequence):
 
     @property
     def total_electrons(self):
-        """
-        Total numer of electrons. Can be a float if occupations are not integer.
+        """Get the total numer of electrons.
+
+        Can be a float if occupations are fractional.
         """
         return np.sum(self.occupations)
 
     @property
     def occupations(self):
-        """
-        List of all the occupations.
-        """
+        """Get the list of all the occupations."""
         return [s.occupation for s in self._states]
 
     @property
     def irreps(self):
-        """
-        List of all the irreducible representations
-        """
+        """Get the list of all the irreducible representations."""
         return [s.irrep for s in self._states]
 
     @property
     def irrep_indices(self):
-        """
-        List of all the indices of the irreducible representations.
-        """
+        """Get the list of all the indices of the irreducible representations."""
         return [s.irrep_index for s in self._states]
 
     @property
     def eigenvalues(self):
-        """
-        List of all the eigenvalues.
-        """
+        """Get the list of all the eigenvalues."""
         return [s.eigenvalue for s in self._states]
 
     @property
     def spins(self):
-        """
-        List of all the spins.
-        """
+        """Get the list of all the spins."""
         return [s.spin for s in self._states]
 
     @property
     def is_uhf(self):
-        """
-        True if uhf calculations (i.e. spins are not None), False otherwise.
-        """
+        """Determine whether the calculation is a UHF one."""
         return self._states[0].spin is not None
 
     def __str__(self):
+        """Get a string representation of the States object."""
         lines = [""]
         for s in self._states:
             spin = s.spin if s.spin is not None else " "
-            lines.append(" {}\t{}  {}\t{}\t\t{}".format(s.irrep, s.irrep_index, spin, s.occupation, s.eigenvalue))
+            lines.append(
+                " {}\t{}  {}\t{}\t\t{}".format(
+                    s.irrep, s.irrep_index, spin, s.occupation, s.eigenvalue
+                )
+            )
 
         return "\n".join(lines)
 
     @property
     def homo_index(self):
-        """
-        Index of the HOMO state.
-        """
+        """Get the index of the HOMO state."""
         occupied_indices = np.where(np.array(self.occupations) > 0)[0]
         if len(occupied_indices) == 0:
             raise RuntimeError("No occupied states present")
@@ -311,8 +343,8 @@ class States(MSONable, MutableSequence):
 
     @property
     def lumo_index(self):
-        """
-        Index of the LUMO state.
+        """Get the index of the LUMO state.
+
         None if no empty state is available.
         """
         unoccupied_indices = np.where(np.array(self.occupations) == 0)[0]
@@ -322,15 +354,13 @@ class States(MSONable, MutableSequence):
 
     @property
     def homo(self):
-        """
-        HOMO state.
-        """
+        """Get the HOMO state."""
         return self[self.homo_index]
 
     @property
     def lumo(self):
-        """
-        LUMO state.
+        """Get the LUMO state.
+
         None if no empty state is available.
         """
         lumo_index = self.lumo_index
@@ -340,12 +370,11 @@ class States(MSONable, MutableSequence):
 
     @property
     def gap(self):
-        """
-        Gap between the HOMO and the LUMO.
+        """Get the gap between the HOMO and the LUMO.
+
         Can be negative if a hole is present.
         None if no empty state is available.
         """
-
         lumo = self.lumo
         if lumo is None:
             return None
@@ -353,16 +382,12 @@ class States(MSONable, MutableSequence):
 
     @property
     def n_states(self):
-        """
-        Number of states.
-        """
+        """Get the number of states."""
         return len(self)
 
     @property
     def has_hole(self):
-        """
-        True if the system has a hole.
-        """
+        """Check if the system has a hole."""
         empty = False
         for occ in self.occupations:
             if occ == 0:
@@ -374,16 +399,17 @@ class States(MSONable, MutableSequence):
 
     @property
     def has_fractional_occ(self):
-        """
-        True if any of the states has a fractional occupation.
-        """
+        """Check if any of the states has a fractional occupation."""
         return any(s.has_fractional_occ for s in self._states)
 
-    def generate_lowest_filled_states(self, allow_fractional=None, only_occupied=False,
-                                      reorder_irrep_index=False):
+    def generate_lowest_filled_states(
+        self, allow_fractional=None, only_occupied=False, reorder_irrep_index=False
+    ):
         """
-        Creates a new States object filling the states from the lowest with
-        the current number of electrons.
+        Create a new States object with lowest states filled.
+
+        Using the current number of electrons, this fills the states starting from the
+        lowest ones in energy.
         This procedure can lead to fractional occupations even if initially
         not present because of states degeneracies. If not allowed an exception
         will be raised in this case.
@@ -419,7 +445,9 @@ class States(MSONable, MutableSequence):
                 new_s.occupation = Fraction(0)
             elif max_occ > remaining_electrons:
                 if not allow_fractional:
-                    raise RuntimeError("Fractional occupancies of states are not allowed.")
+                    raise RuntimeError(
+                        "Fractional occupancies of states are not allowed."
+                    )
                 new_s.occupation = Fraction(remaining_electrons)
             else:
                 new_s.occupation = Fraction(max_occ)
@@ -434,8 +462,9 @@ class States(MSONable, MutableSequence):
 
     def filter_states(self, spin=None, irrep=None):
         """
-        Generates a States instance with a subset of the State objects filtered
-        by spin and irrep.
+        Generate a States instance with a subset of the State objects.
+
+        The State objects are filtered by spin and irrep.
         Notice that the same instances of State as in the current object will
         be used.
 
@@ -463,7 +492,7 @@ class States(MSONable, MutableSequence):
 
     def get_shells(self, spin=None):
         """
-        Generates a Shells object with the occupied shells in the list of States.
+        Generate a Shells object with the occupied shells in the list of States.
 
         Args:
             spin (str): string describing the spin. Values allowed: "alpha",
@@ -484,27 +513,30 @@ class States(MSONable, MutableSequence):
                 occupations.append(s.occupation / irrep_size[s.irrep[0].upper()])
 
         from turbomoleio.core.control import Shells
+
         return Shells(shell_states, occupations)
 
     def as_dict(self):
-        """
-        A JSON serializable dict representation of States.
-        """
-        d = {"states": [s.as_dict() for s in self._states],
-             "@module": self.__class__.__module__,
-             "@class": self.__class__.__name__}
+        """Get a JSON serializable dict representation of States."""
+        d = {
+            "states": [s.as_dict() for s in self._states],
+            "@module": self.__class__.__module__,
+            "@class": self.__class__.__name__,
+        }
         return d
 
 
 class EigerOutput:
-    """
-    Class to read and store the output from the eiger command.
-    """
+    """Class to read and store the output from the eiger command."""
 
-    def __init__(self, eigenvalues, irreps, irrep_indices, occupations, spin, gap, nelec):
-        """
+    def __init__(
+        self, eigenvalues, irreps, irrep_indices, occupations, spin, gap, nelec
+    ):
+        """Construct the EigerOutput object.
+
         The lists should match among them and be sorted in ascending values with
         respect to the eigenvalues.
+
         Args:
             eigenvalues (list): the eigenvalues.
             irreps (list): the irreducible representations.
@@ -525,7 +557,7 @@ class EigerOutput:
     @classmethod
     def from_string(cls, string):
         """
-        Generates the object from the string of the output from eiger.
+        Generate the object from the string of the output from eiger.
 
         Args:
             string (str): the string of the output of eiger.
@@ -541,18 +573,22 @@ class EigerOutput:
         gap = None
         nelec = 0
         parse_states = False
-        r = re.compile(r"^\s*\d+.\s+([ab]*)\s+(\d+)\s+([^\s]*)\s+([\d.+\-]*)\s+([\d.+\-]+)\s+H")
-        for l in string.splitlines():
-            if "Gap" in l:
-                gap = float(l.split()[2])
-            if "Electrons=" in l:
-                nelec = float(l.split()[5].replace(",", ""))
+        r = re.compile(
+            r"^\s*\d+.\s+([ab]*)\s+(\d+)\s+([^\s]*)\s+([\d.+\-]*)\s+([\d.+\-]+)\s+H"
+        )
+        for line in string.splitlines():
+            if "Gap" in line:
+                gap = float(line.split()[2])
+            if "Electrons=" in line:
+                nelec = float(line.split()[5].replace(",", ""))
             if parse_states:
-                if not l.strip():
+                if not line.strip():
                     break
-                m = r.search(l)
+                m = r.search(line)
                 if not m:
-                    raise RuntimeError("Could not match regex for line: {}".format(l))
+                    raise RuntimeError(
+                        "Could not match regex for line: {}".format(line)
+                    )
                 s = m.group(1) if m.group(1) else None
                 spin.append(s)
                 irrep_indices.append(int(m.group(2)))
@@ -560,7 +596,7 @@ class EigerOutput:
                 occ = float(m.group(4)) if m.group(4) else 0
                 occupations.append(occ)
                 eigenvalues.append(float(m.group(5)))
-            if "Nr. " in l:
+            if "Nr. " in line:
                 parse_states = True
 
         return cls(eigenvalues, irreps, irrep_indices, occupations, spin, gap, nelec)
@@ -568,7 +604,7 @@ class EigerOutput:
     @classmethod
     def from_file(cls, filename):
         """
-        Generates the object from a file with the output from eiger.
+        Generate the object from a file with the output from eiger.
 
         Args:
             filename (str): the name of the file containing the output of eiger.
@@ -581,13 +617,14 @@ class EigerOutput:
 
     def compare_states(self, states, tol=1e-6):
         """
-        Compares the current values with a States object and checks that
-        the two are equivalent. Number are checked within the specified
-        tolerance.
+        Compare the current values with anoter States object.
+
+        This checks that the two are equivalent.
+        Numbers are checked within the specified tolerance.
 
         Args:
-            states (States): States object to be compared
-            tol (float): tolerance on the floating numbers
+            states (States): States object to be compared.
+            tol (float): tolerance on the floating numbers.
 
         Returns:
             None if the data are equivalent, otherwise a string describing the
@@ -602,8 +639,13 @@ class EigerOutput:
         if abs(self.nelec - states.total_electrons) > 0.01:
             return "number of electrons"
 
-        for sp, irrep, ind, occ, eig in zip(self.spin, self.irreps, self.irrep_indices,
-                                           self.occupations, self.eigenvalues):
+        for sp, irrep, ind, occ, eig in zip(
+            self.spin,
+            self.irreps,
+            self.irrep_indices,
+            self.occupations,
+            self.eigenvalues,
+        ):
             for s in states:
                 if s.irrep == irrep and s.irrep_index == ind and s.spin == sp:
                     if abs(s.occupation - occ) > tol:
@@ -612,18 +654,19 @@ class EigerOutput:
                         return "eigenvalue for state: {}".format(s)
                     break
             else:
-                return "no match for values: {} {} {} {} {}".format(sp, irrep, ind, occ, eig)
+                return "no match for values: {} {} {} {} {}".format(
+                    sp, irrep, ind, occ, eig
+                )
 
         return None
 
 
 class EigerRunner:
-    """
-    Class that runs the eiger executable,
-    """
+    """Class that runs the eiger executable."""
 
     def __init__(self, executable="eiger", data_path="."):
-        """
+        """Construct EigerRunner object.
+
         Args:
             executable (str): the eiger executable.
             data_path (str): path to where the TM data are stored.
@@ -634,18 +677,18 @@ class EigerRunner:
 
     def run(self):
         """
-        Runs eiger in the data_path directory
+        Run eiger in the data_path directory.
 
         Returns:
             None
         """
         with cd(self.data_path):
             result = subprocess.run([self.executable, "-a"], stdout=subprocess.PIPE)
-            self.out = result.stdout.decode('utf-8')
+            self.out = result.stdout.decode("utf-8")
 
     def get_eiger_output(self):
         """
-        Generates an EigerOutput instance from the output of eiger
+        Generate an EigerOutput instance from the output of eiger.
 
         Returns:
             EigerOutput
@@ -660,7 +703,7 @@ class EigerRunner:
 
     def to_file(self, filepath):
         """
-        Writes the output of eiger to a file.
+        Write the output of eiger to a file.
 
         Args:
             filepath (str): path to the file.

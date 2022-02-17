@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -22,22 +22,27 @@
 
 import pytest
 
-from turbomoleio.testfiles.utils import run_itest
 from turbomoleio.input.utils import get_define_template
-from turbomoleio.output.files import ScfOutput, Ricc2Output
+from turbomoleio.output.files import Ricc2Output, ScfOutput
+from turbomoleio.testfiles.utils import run_itest
 
-# structures = ['aceton', 'ch4', 'h2o', 'h3cbr', 'methanol', 'nh3', 'phenol', 'sf4', 'sih4']
-structures = ['h2o', 'nh3']
+# structures = ['aceton', 'ch4', 'h2o', 'h3cbr', 'methanol',
+#               'nh3', 'phenol', 'sf4', 'sih4']
+structures = ["h2o", "nh3"]
 
 
 @pytest.mark.integration
 class TestRimp2:
-
     @pytest.mark.parametrize("structure", structures)
     def test_run_ridft_rimp2(self, structure):
 
-        assert run_itest(["ridft", "rimp2"], get_define_template("ridft_rimp2"),
-                          structure, "ridft_rimp2_{}_std".format(structure), [ScfOutput, Ricc2Output])
+        assert run_itest(
+            ["ridft", "rimp2"],
+            get_define_template("ridft_rimp2"),
+            structure,
+            "ridft_rimp2_{}_std".format(structure),
+            [ScfOutput, Ricc2Output],
+        )
 
     def test_run_ridft_adc2(self):
 
@@ -47,9 +52,15 @@ class TestRimp2:
         define_opt["maxiter"] = 100
         define_opt["maxcor"] = 400
 
-        assert run_itest(["ridft", "rimp2"], define_opt, "nh3", "ridft_rimp2_nh3_adc2", [ScfOutput, None])
+        assert run_itest(
+            ["ridft", "rimp2"],
+            define_opt,
+            "nh3",
+            "ridft_rimp2_nh3_adc2",
+            [ScfOutput, None],
+        )
 
-    #FIXME according to TM: "CCSD(T) is no longer available in ricc2 : use ccsdf12"
+    # FIXME according to TM: "CCSD(T) is no longer available in ricc2 : use ccsdf12"
     # move it to another module?
     # @pytest.mark.parametrize("structure", structures)
     # def test_run_ridft_ccsdt(self, structure):
@@ -68,10 +79,17 @@ class TestRimp2:
         define_opt["use_f12"] = True
         # define_opt["use_f12*"] = True
 
-        assert run_itest(["ridft", "ricc2"], define_opt, structure,
-                         "ridft_ricc2_{}_f12".format(structure), [ScfOutput, Ricc2Output],
-                         datagroups_options={'ricc2': '\n   mp2 energy only',
-                                             'rir12': '\n   comaprox T+V'})
+        assert run_itest(
+            ["ridft", "ricc2"],
+            define_opt,
+            structure,
+            "ridft_ricc2_{}_f12".format(structure),
+            [ScfOutput, Ricc2Output],
+            datagroups_options={
+                "ricc2": "\n   mp2 energy only",
+                "rir12": "\n   comaprox T+V",
+            },
+        )
 
     @pytest.mark.parametrize("structure", structures)
     def test_run_ridft_f12x(self, structure):
@@ -80,9 +98,13 @@ class TestRimp2:
         define_opt["use_f12"] = False
         define_opt["use_f12*"] = True
 
-        assert run_itest(executables=["ridft", "rimp2"],
-                         define_options=define_opt,
-                         coord_filename=structure,
-                         control_reference_filename="ridft_rimp2_{}_f12*".format(structure),
-                         file_classes=[ScfOutput, Ricc2Output])
+        assert run_itest(
+            executables=["ridft", "rimp2"],
+            define_options=define_opt,
+            coord_filename=structure,
+            control_reference_filename="ridft_rimp2_{}_f12*".format(structure),
+            file_classes=[ScfOutput, Ricc2Output],
+        )
+
+
 # executables, define_options, coord_filename, control_reference_filename, file_classes

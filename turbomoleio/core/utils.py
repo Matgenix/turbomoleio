@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -20,24 +20,23 @@
 # along with turbomoleio (see ~turbomoleio/COPYING). If not,
 # see <https://www.gnu.org/licenses/>.
 
-"""
-Module containing miscellaneous utilities
-"""
+"""Module containing miscellaneous utilities."""
 
-from monty.tempfile import ScratchDir
-import pexpect.popen_spawn
 import signal
+
+import pexpect.popen_spawn
+from monty.tempfile import ScratchDir
+
 from turbomoleio.output.data import TurbomoleData
 
 
 def define_quit():
-    """Runs define but directly quits by sending "qq" interactively.
-    """
-    with open('define.log', 'wb') as logf:
-        spawn = pexpect.popen_spawn.PopenSpawn('define', timeout=2, logfile=logf)
+    """Run define but directly quits by sending "qq" interactively."""
+    with open("define.log", "wb") as logf:
+        spawn = pexpect.popen_spawn.PopenSpawn("define", timeout=2, logfile=logf)
         try:
             spawn.expect(["D E F I N E"])
-            spawn.sendline('qq')
+            spawn.sendline("qq")
         finally:
             if spawn.proc.poll() is None:
                 spawn.kill(sig=signal.SIGKILL)
@@ -49,7 +48,7 @@ def get_tm_version():
     This basically runs a define and exits at the very beginning and extracts
     the version from the header of the output.
     """
-    with ScratchDir('.'):
+    with ScratchDir("."):
         define_quit()
-        tm_data = TurbomoleData.from_file('define.log')
+        tm_data = TurbomoleData.from_file("define.log")
     return tm_data.version

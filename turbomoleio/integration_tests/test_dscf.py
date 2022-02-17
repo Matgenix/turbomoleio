@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -21,32 +21,41 @@
 # see <https://www.gnu.org/licenses/>.
 
 import os
+
 import pytest
 
-from turbomoleio.testfiles.utils import run_itest, get_tfp
 from turbomoleio.input.utils import get_define_template
 from turbomoleio.output.files import ScfOutput
+from turbomoleio.testfiles.utils import get_tfp, run_itest
 
-# structures = ['aceton', 'ch4', 'h2o', 'h3cbr', 'methanol', 'nh3', 'phenol', 'sf4', 'sih4']
-structures = ['h2o', 'nh3']
+# structures = ['aceton', 'ch4', 'h2o', 'h3cbr', 'methanol',
+#               'nh3', 'phenol', 'sf4', 'sih4']
+structures = ["h2o", "nh3"]
 
 disp_corrections = ["DFT-D1", "DFT-D2", "DFT-D3", "DFT-D3 BJ"]
 
 
 @pytest.mark.integration
 class TestDscf:
-
     @pytest.mark.parametrize("structure", structures)
     def test_run_dscf(self, structure):
 
-        assert run_itest("dscf", get_define_template("dscf"), structure, "dscf_{}_std".format(structure), ScfOutput)
+        assert run_itest(
+            "dscf",
+            get_define_template("dscf"),
+            structure,
+            "dscf_{}_std".format(structure),
+            ScfOutput,
+        )
 
     @pytest.mark.parametrize("structure", structures)
     def test_run_dscf_ired(self, structure):
         define_opt = get_define_template("dscf")
         define_opt["ired"] = True
 
-        assert run_itest("dscf", define_opt, structure, "dscf_{}_ired".format(structure), ScfOutput)
+        assert run_itest(
+            "dscf", define_opt, structure, "dscf_{}_ired".format(structure), ScfOutput
+        )
 
     @pytest.mark.parametrize("structure", structures)
     def test_run_dscf_hf(self, structure):
@@ -60,7 +69,9 @@ class TestDscf:
         define_opt["scfconv"] = 6
         define_opt["title"] = None
 
-        assert run_itest("dscf", define_opt, structure, "dscf_{}_hf".format(structure), ScfOutput)
+        assert run_itest(
+            "dscf", define_opt, structure, "dscf_{}_hf".format(structure), ScfOutput
+        )
 
     def test_run_dscf_usemo(self):
         """
@@ -77,7 +88,8 @@ class TestDscf:
     # TODO check if alpha/beta for usemo are needed
     # def test_run_dscf_usemo_alpha(self):
     #     """
-    #     Tests the usemo functionalities with alpha and beta files in the case of unpaired electrons
+    #     Tests the usemo functionalities with alpha and
+    #     beta files in the case of unpaired electrons
     #     """
     #
     #     define_opt = get_define_template("dscf")
@@ -113,7 +125,9 @@ class TestDscf:
         define_opt["unpaired_electrons"] = 1
         define_opt["copymo"] = os.path.join(get_tfp(), "mo", "mos_nh3")
 
-        assert run_itest("dscf", define_opt, "nh3", "dscf_nh3_copymo_mos_unpaired", ScfOutput)
+        assert run_itest(
+            "dscf", define_opt, "nh3", "dscf_nh3_copymo_mos_unpaired", ScfOutput
+        )
 
     def test_run_dscf_copymo_alpha_unpaired(self):
         """
@@ -127,16 +141,29 @@ class TestDscf:
         define_opt["unpaired_electrons"] = 1
         define_opt["copymo"] = os.path.join(get_tfp(), "mo", "alpha_beta_nh3")
 
-        assert run_itest("dscf", define_opt, "nh3", "dscf_nh3_copymo_alpha_unpaired", ScfOutput)
+        assert run_itest(
+            "dscf", define_opt, "nh3", "dscf_nh3_copymo_alpha_unpaired", ScfOutput
+        )
 
     @pytest.mark.parametrize("structure", structures)
     def test_run_dscf_cosmo(self, structure):
 
         define_opt = get_define_template("dscf")
         define_opt["use_cosmo"] = True
-        define_opt.update({"epsilon": 60.0, "nppa": 92, "nspa": None, "disex": 0, "rsolv": 1.3,
-         "routf": None, "cavity": "open"})
-        assert run_itest("dscf", define_opt, structure, "dscf_{}_cosmo".format(structure), ScfOutput)
+        define_opt.update(
+            {
+                "epsilon": 60.0,
+                "nppa": 92,
+                "nspa": None,
+                "disex": 0,
+                "rsolv": 1.3,
+                "routf": None,
+                "cavity": "open",
+            }
+        )
+        assert run_itest(
+            "dscf", define_opt, structure, "dscf_{}_cosmo".format(structure), ScfOutput
+        )
 
     @pytest.mark.parametrize("disp", disp_corrections)
     def test_run_dscf_disp(self, disp):

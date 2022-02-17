@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -21,31 +21,35 @@
 # see <https://www.gnu.org/licenses/>.
 
 """
-This module contains the object and functions to interact directly with a
-control file. Based on the DataGroups class.
+Module with objects and functions to interact directly with a control file.
+
+It also contains other objects related to the control file, e.g. gradient,
+energy, etc ...
 """
 
-import re
 import os
+import re
 import shutil
-import numpy as np
-from fractions import Fraction
 from collections import defaultdict
+from fractions import Fraction
 
+import numpy as np
 from monty.json import MSONable
-from monty.os import makedirs_p, cd
+from monty.os import cd, makedirs_p
 from pymatgen.util.plotting import add_fig_kwargs, get_ax_fig_plt
+
+from turbomoleio.core.base import get_mol_and_indices_frozen
 from turbomoleio.core.datagroups import DataGroups
-from turbomoleio.core.symmetry import irrep_size
 from turbomoleio.core.molecule import MoleculeSystem
 from turbomoleio.core.periodic import PeriodicSystem
-from turbomoleio.core.base import get_mol_and_indices_frozen
+from turbomoleio.core.symmetry import irrep_size
 
 
 class Defaults:
     """
-    Class collecting default values used by TM executables when not
-    present in the control file.
+    Class collecting default values used by TM executables.
+
+    When some values are not present in the control file, some defaults are used.
     """
 
     METRIC = 3
@@ -54,11 +58,12 @@ class Defaults:
 class Energy(MSONable):
     """
     Represents the "energy" data group of TurboMole.
+
     Usually stored in the "energy" file or directly in the control file.
     """
 
     def __init__(self, scf=None, scfkin=None, scfpot=None, mp2=None):
-        """
+        """Construct Energy object.
 
         Args:
             scf (list): energies from scf calculations.
@@ -79,7 +84,7 @@ class Energy(MSONable):
     @classmethod
     def from_string(cls, string):
         """
-        Creates Energy object reading from a string.
+        Create Energy object reading from a string.
 
         Args:
             string (str): the string of the "energy" datagroup.
@@ -90,14 +95,14 @@ class Energy(MSONable):
         for h in h_ind.keys():
             try:
                 h_ind[h] = header_sp.index(h) + 1
-            except:
+            except:  # noqa: E722
                 pass
         scf = []
         scfkin = []
         scfpot = []
         mp2 = [] if h_ind["MP2"] is not None else None
-        for l in energy_dg_sp[1:]:
-            lsp = l.split()
+        for line in energy_dg_sp[1:]:
+            lsp = line.split()
             if not lsp:
                 continue
             scf.append(float(lsp[h_ind["SCF"]]))
@@ -108,8 +113,8 @@ class Energy(MSONable):
         return cls(scf=scf, scfkin=scfkin, scfpot=scfpot, mp2=mp2)
 
     @classmethod
-    def from_file(cls, filename='energy'):
-        """Creates Energy object reading from a given file.
+    def from_file(cls, filename="energy"):
+        """Create Energy object reading from a given file.
 
         Args:
             filename (str): Name of the file from which this Energy object
@@ -118,21 +123,22 @@ class Energy(MSONable):
             RuntimeError: if the energy file comes from a subfile and is missing.
         """
         dg = DataGroups.from_file(filename)
-        string = dg.show_data_group("energy", show_from_subfile=True, raise_if_missing_subfile=True)
+        string = dg.show_data_group(
+            "energy", show_from_subfile=True, raise_if_missing_subfile=True
+        )
         return cls.from_string(string)
 
     @property
     def n_steps(self):
-        """
-        The number of steps present.
-        """
+        """Get the number of steps present."""
         return len(self.scf)
 
     @property
     def delta_e(self):
         """
-        The variation of the total energy in the last step.
-        None if less than 2 steps presents.
+        Get the variation of the total energy in the last step.
+
+        This is None if less than 2 steps are present.
         """
         if self.n_steps < 2:
             return None
@@ -151,7 +157,6 @@ class Energy(MSONable):
         Returns:
             A matplotlib Figure
         """
-
         ax, fig, plt = get_ax_fig_plt(ax=ax)
 
         ax.plot(range(self.n_steps), self.total, **kwargs)
@@ -164,12 +169,21 @@ class Energy(MSONable):
 class Gradient(MSONable):
     """
     Represents the "grad" data group of TurboMole.
+
     Usually stored in the "gradient" file or directly in the control file.
     """
 
-    def __init__(self, gradients=None, energies=None, molecules=None,
-                 periodicity=0, lattice_vectors=None, lattice_gradients=None):
-        """
+    def __init__(
+        self,
+        gradients=None,
+        energies=None,
+        molecules=None,
+        periodicity=0,
+        lattice_vectors=None,
+        lattice_gradients=None,
+    ):
+        """Construct Gradient object.
+
         Args:
             gradients (list): gradients for all the steps and all the atoms
                 with shape nsteps*natoms*3.
@@ -198,7 +212,7 @@ class Gradient(MSONable):
     @classmethod
     def from_string(cls, string, lattice_string=None):
         """
-        Creates Gradient object reading from a given file.
+        Create Gradient object reading from a given file.
 
         Args:
             string (str): the string of the "grad" datagroup.
@@ -221,7 +235,9 @@ class Gradient(MSONable):
 
             lattice_vectors = []
             lattice_gradients = []
-            gradlatt_energies = []  # used to double check with energy from grad datagroup
+            gradlatt_energies = (
+                []
+            )  # used to double check with energy from grad datagroup
 
             for c in lattice_cycles:
                 lines = c.splitlines()
@@ -232,18 +248,18 @@ class Gradient(MSONable):
                 periodicity = len(lines[1].split())
                 lv = []
                 latstring = []
-                for l in lines[1:1+periodicity]:
-                    l = l.replace("D", "E")
-                    lv.append([float(sp) for sp in l.split()])
+                for line in lines[1 : 1 + periodicity]:
+                    line = line.replace("D", "E")
+                    lv.append([float(sp) for sp in line.split()])
                 for lvline in lv:
-                    latstring.append(' '.join([str(ll) for ll in lvline]))
-                latstring = '\n'.join(latstring)
+                    latstring.append(" ".join([str(ll) for ll in lvline]))
+                latstring = "\n".join(latstring)
                 lattice_strings.append(latstring)
                 lattice_vectors.append(np.array(lv))
                 lg = []
-                for l in lines[1+periodicity:1+2*periodicity]:
-                    l = l.replace("D", "E")
-                    lg.append([float(sp) for sp in l.split()])
+                for line in lines[1 + periodicity : 1 + 2 * periodicity]:
+                    line = line.replace("D", "E")
+                    lg.append([float(sp) for sp in line.split()])
                 lattice_gradients.append(np.array(lg))
 
         for ic, c in enumerate(cycles):
@@ -253,19 +269,23 @@ class Gradient(MSONable):
             energies.append(float(match.group(1)))
             coordinates = []
             grad = []
-            for l in lines[1:]:
-                l = l.replace("D", "E")
-                lsp = l.split()
+            for line in lines[1:]:
+                line = line.replace("D", "E")
+                lsp = line.split()
                 if not lsp:
                     continue
 
                 # can be with or without frozen indices
                 if len(lsp) == 4 or len(lsp) == 5:
-                    coordinates.append(l)
+                    coordinates.append(line)
                 elif len(lsp) == 3:
                     grad.append([float(g) for g in lsp])
                 else:
-                    raise RuntimeError("Encountered line with unexpected number of tokens: {}".format(l))
+                    raise RuntimeError(
+                        "Encountered line with unexpected number of tokens: {}".format(
+                            line
+                        )
+                    )
 
             gradients.append(grad)
             if periodicity == 0:
@@ -275,18 +295,27 @@ class Gradient(MSONable):
                 struct, fi = get_mol_and_indices_frozen(
                     "\n".join(coordinates),
                     lattice_string=lattice_strings[ic],
-                    periodic_string=f'{periodicity}'
+                    periodic_string=f"{periodicity}",
                 )
-                molecules.append(PeriodicSystem(structure=struct, frozen_indices=fi, periodicity=periodicity))
+                molecules.append(
+                    PeriodicSystem(
+                        structure=struct, frozen_indices=fi, periodicity=periodicity
+                    )
+                )
 
-        return cls(gradients=gradients, energies=energies, molecules=molecules,
-                   periodicity=periodicity,
-                   lattice_vectors=lattice_vectors, lattice_gradients=lattice_gradients)
+        return cls(
+            gradients=gradients,
+            energies=energies,
+            molecules=molecules,
+            periodicity=periodicity,
+            lattice_vectors=lattice_vectors,
+            lattice_gradients=lattice_gradients,
+        )
 
     @classmethod
-    def from_file(cls, filename='gradient'):
+    def from_file(cls, filename="gradient"):
         """
-        Creates Gradient object reading from a given file.
+        Create Gradient object reading from a given file.
 
         Note: For periodic systems, the lattice gradients are usually either
             in the control file directly or in a different file. One option
@@ -299,37 +328,34 @@ class Gradient(MSONable):
                 should be read, default is "gradient".
         """
         dg = DataGroups.from_file(filename)
-        string = dg.show_data_group("grad", show_from_subfile=True, raise_if_missing_subfile=True)
-        lattice_string = dg.show_data_group("gradlatt", show_from_subfile=True,
-                                            raise_if_missing_subfile=True)
+        string = dg.show_data_group(
+            "grad", show_from_subfile=True, raise_if_missing_subfile=True
+        )
+        lattice_string = dg.show_data_group(
+            "gradlatt", show_from_subfile=True, raise_if_missing_subfile=True
+        )
         return cls.from_string(string, lattice_string=lattice_string)
 
     @property
     def norms(self):
-        """
-        Total norm of the gradients for each step.
-        """
-        return np.linalg.norm(self.gradients, axis=(1,2))
+        """Get total norm of the gradients for each step."""
+        return np.linalg.norm(self.gradients, axis=(1, 2))
 
     @property
     def max_gradients(self):
-        """
-        Norms of the largest gradients for each step.
-        """
+        """Get norms of the largest gradients for each step."""
         return np.max(np.linalg.norm(self.gradients, axis=(2)), axis=1)
 
     @property
     def n_steps(self):
-        """
-        The number of steps present.
-        """
+        """Get the number of steps present."""
         return len(self.gradients)
 
     @property
     def last_grad_norm(self):
-        """
-        The value of the last gradient norm.
-        None if no steps presents.
+        """Get the value of the last gradient norm.
+
+        This is None if no step is present.
         """
         if self.n_steps == 0:
             return None
@@ -338,9 +364,9 @@ class Gradient(MSONable):
 
     @property
     def last_grad_max(self):
-        """
-        The value of the maximum value of the gradient in the last step.
-        None if no steps presents.
+        """Get the value of the maximum value of the gradient in the last step.
+
+        This is None if no step is present.
         """
         if self.n_steps == 0:
             return None
@@ -358,7 +384,6 @@ class Gradient(MSONable):
         Returns:
             A matplotlib Figure
         """
-
         import matplotlib.pyplot as plt
 
         fig = plt.figure()
@@ -377,6 +402,7 @@ class Gradient(MSONable):
 class Shells(MSONable):
     """
     Object describing the occupation of a type of shells.
+
     It can map $closed shells, $alpha shells and $beta shells
     ($open shells not supported).
     Handles integer, fractional and floating point occupations.
@@ -385,7 +411,8 @@ class Shells(MSONable):
     """
 
     def __init__(self, states, occupations):
-        """
+        """Construct Shells object.
+
         Args:
             states (list): list of tuples (irrep, irrep_index) with the occupied
                 states for each.
@@ -397,7 +424,8 @@ class Shells(MSONable):
     @classmethod
     def from_string(cls, string):
         """
-        Generates an instance of Shells from a string.
+        Generate an instance of Shells from a string.
+
         Examples of a string:
 
         .. code-block:: text
@@ -420,18 +448,20 @@ class Shells(MSONable):
         # and floats (e.g.: 0.833473)
         r = r"^\s*([\w\'\"]+)\s+([\d\-\s,]+)\s+\(([.\s\d/]+)\)"
 
-        for l in string.splitlines():
-            l = l.strip()
-            if not l:
+        for line in string.splitlines():
+            line = line.strip()
+            if not line:
                 continue
 
-            match = re.search(r, l)
+            match = re.search(r, line)
             if match is None:
-                raise RuntimeError("Could not match occupation regex for line: {}".format(l))
+                raise RuntimeError(
+                    "Could not match occupation regex for line: {}".format(line)
+                )
 
             irrep = match.group(1)
-            # states could be a string of the form "1-3,5-8,12" with "-" defining intervals
-            # and "," separating groups.
+            # states could be a string of the form "1-3,5-8,12" with "-" defining
+            # intervals and "," separating groups.
             states_str = match.group(2)
             irrep_occupation = Fraction(match.group(3).replace(" ", ""))
             states_per_irrep = []
@@ -451,8 +481,7 @@ class Shells(MSONable):
     @classmethod
     def from_file(cls, shells_type, filename="control"):
         """
-        Generates an instance of Shells from a file containing
-        the datagroup.
+        Generate an instance of Shells from a file containing the datagroup.
 
         Args:
             shells_type (str): the type of shell. The supported type are
@@ -465,25 +494,23 @@ class Shells(MSONable):
         Raises:
             ValueError: if the shell of the specified type is not present
         """
-
         dg = DataGroups.from_file(filename)
         string = dg.show_data_group("{} shells".format(shells_type))
         if not string:
-            raise ValueError("No shells of type {} if file {}".format(shells_type, filename))
+            raise ValueError(
+                "No shells of type {} if file {}".format(shells_type, filename)
+            )
 
         return cls.from_string(string)
 
     @property
     def irreps(self):
-        """
-        Set of irreducible representations.
-        """
+        """Get the set of irreducible representations."""
         return set(s[0] for s in self.states)
 
     @property
     def total_electrons(self):
-        """
-        Total number of electrons present in all the shells.
+        """Get the total number of electrons present in all the shells.
 
         Returns:
             Fraction: the total number of electrons.
@@ -498,7 +525,7 @@ class Shells(MSONable):
 
     def to_datagroup(self):
         """
-        Generates a string that can be used to set the datagroup in control.
+        Generate a string that can be used to set the datagroup in control.
 
         Returns:
              The string of the data group.
@@ -511,7 +538,9 @@ class Shells(MSONable):
 
         # sort to make output reproducible and more easily readable
         for irrep in sorted(dg_dict.keys()):
-            for occ, states in sorted(dg_dict[irrep].items(), key=lambda x: np.min(x[1])):
+            for occ, states in sorted(
+                dg_dict[irrep].items(), key=lambda x: np.min(x[1])
+            ):
 
                 states = sorted(states)
                 # add one fictitious state to trigger the addition of the last step
@@ -532,14 +561,14 @@ class Shells(MSONable):
                     str_occ = str(occ.numerator)
                 else:
                     str_occ = "{} / {}".format(occ.numerator, occ.denominator)
-                lines.append(" {0}      {1:<37} ( {2} )".format(irrep, group_str, str_occ))
+                lines.append(
+                    " {0}      {1:<37} ( {2} )".format(irrep, group_str, str_occ)
+                )
 
         return "\n" + "\n".join(lines)
 
     def as_dict(self):
-        """
-        A JSON serializable dict representation of Shells.
-        """
+        """Get a JSON serializable dict representation of Shells."""
         occupations = [(o.numerator, o.denominator) for o in self.occupations]
         d = dict(states=self.states, occupations=occupations)
 
@@ -548,7 +577,7 @@ class Shells(MSONable):
     @classmethod
     def from_dict(cls, d):
         """
-        Generates an instance of Shell from a JSON serialized representation.
+        Generate an instance of Shell from a JSON serialized representation.
 
         Args:
             d (dict): the dictionary with the data to initialize Shells
@@ -556,7 +585,9 @@ class Shells(MSONable):
         Returns:
              A Shells instance
         """
-        occupations = [Fraction(numerator=o[0], denominator=o[1]) for o in d["occupations"]]
+        occupations = [
+            Fraction(numerator=o[0], denominator=o[1]) for o in d["occupations"]
+        ]
         return cls(states=d["states"], occupations=occupations)
 
 
@@ -571,7 +602,7 @@ class Control(DataGroups):
     """
 
     def __init__(self, string=None, dg_list=None):
-        """Initializes a `Control` class.
+        """Initialize a `Control` class.
 
         Args:
             string: The control string (in the data group format).
@@ -581,8 +612,8 @@ class Control(DataGroups):
         super(Control, self).__init__(string=string, dg_list=dg_list)
 
     @classmethod
-    def from_file(cls, filename='control'):
-        """Creates Control object reading from a given file.
+    def from_file(cls, filename="control"):
+        """Create Control object reading from a given file.
 
         Args:
             filename (str): Name of the file from which this Control object
@@ -590,8 +621,9 @@ class Control(DataGroups):
         """
         return super().from_file(filename=filename)
 
-    def to_file(self, filename='control'):
-        """Writes this Control object to a file.
+    def to_file(self, filename="control"):
+        """Write this Control object to a file.
+
         If the file exists it will be overwritten.
 
         Args:
@@ -600,28 +632,40 @@ class Control(DataGroups):
         """
         super(Control, self).to_file(filename=filename)
 
-    def add_cosmo(self, epsilon=None, nppa=None, nspa=None, disex=None, rsolv=None, routf=None, cavity=None,
-                  use_old_amat=None):
+    def add_cosmo(
+        self,
+        epsilon=None,
+        nppa=None,
+        nspa=None,
+        disex=None,
+        rsolv=None,
+        routf=None,
+        cavity=None,
+        use_old_amat=None,
+    ):
         """
-        Adds the $cosmo datagroup to the control, using the keywords to set the cosmo options.
+        Add the $cosmo datagroup to the control.
+
+        The keywords are used to set the cosmo options.
         If None all the options will not be written to the control file.
 
         Args:
-            epsilon (float): permittivity used for scaling of the screening charges
-            nppa (int): number of basis grid points per atom
-            nspa (int): number of segments per atom
-            disex (float): distance threshold for A matrix elements (Angstrom)
-            rsolv (float): distance to outer solvent sphere for cavity construction (Angstrom)
-            routf (float): factor for outer cavity construction in the outlying charge correction
-            cavity (str): acceptable values are "open" (leave untidy seams between atoms) and
-                "closed" (pave intersection seams with segments)
-            use_old_amat (bool): if True adds the ``use_old_amat`` to the ``$cosmo`` datagroup,
-                i.e. uses A matrix setup of TURBOMOLE 5.7.
+            epsilon (float): permittivity used for scaling of the screening charges.
+            nppa (int): number of basis grid points per atom.
+            nspa (int): number of segments per atom.
+            disex (float): distance threshold for A matrix elements (Angstrom).
+            rsolv (float): distance to outer solvent sphere for cavity
+                construction (Angstrom).
+            routf (float): factor for outer cavity construction in the outlying
+                charge correction.
+            cavity (str): acceptable values are "open" (leave untidy seams between
+                atoms) and "closed" (pave intersection seams with segments).
+            use_old_amat (bool): if True adds the ``use_old_amat`` to the ``$cosmo``
+                datagroup, i.e. uses A matrix setup of TURBOMOLE 5.7.
 
         Returns:
             None
         """
-
         cosmo_lines = [""]
 
         if epsilon is not None:
@@ -643,57 +687,66 @@ class Control(DataGroups):
 
         self.cdg("$cosmo", "\n".join(cosmo_lines))
 
-        self.cdg("$cosmo_out", ' = out.cosmo')
+        self.cdg("$cosmo_out", " = out.cosmo")
 
     @classmethod
     def from_metric(cls, metric):
         """
-        Generates a new Control containing the value of the metric in $redund_inp
+        Generate a new Control from a given metric.
+
+        The new Control object contains the metric in $redund_inp
         and an empty $coord.
 
         Args:
-            metric (int): the value of the metric
+            metric (int): the value of the metric.
         """
         metric_str = "$redund_inp\n    metric {}\n$coord\n$end".format(metric)
         return cls(string=metric_str)
 
     @property
     def energy(self):
+        """Get an Energy object with the data from the $energy data group.
+
+        This is None if the datagroup is absent/empty or if the file is missing.
         """
-        An Energy object with the data from the $energy data group.
-        None if the datagroup is absent/empty or if the file is missing.
-        """
-        energy_data_block = self.show_data_group('$energy', show_from_subfile=True, default="")
+        energy_data_block = self.show_data_group(
+            "$energy", show_from_subfile=True, default=""
+        )
         if not energy_data_block.strip() or "file=" in energy_data_block:
             return None
         return Energy.from_string(string=energy_data_block)
 
     @property
     def gradient(self):
+        """Get a Gradient object with the data from the $grad data group.
+
+        This is None if the datagroup is absent/empty or if the file is missing.
         """
-        A Gradient object with the data from the $grad data group.
-        None if the datagroup is absent/empty or if the file is missing.
-        """
-        grad_data_block = self.show_data_group('$grad', show_from_subfile=True, default="")
+        grad_data_block = self.show_data_group(
+            "$grad", show_from_subfile=True, default=""
+        )
         if not grad_data_block.strip() or "file=" in grad_data_block:
             return None
-        gradlatt_data_block = self.show_data_group('$gradlatt', show_from_subfile=True,
-                                                   raise_if_missing_subfile=True)
-        return Gradient.from_string(string=grad_data_block, lattice_string=gradlatt_data_block)
+        gradlatt_data_block = self.show_data_group(
+            "$gradlatt", show_from_subfile=True, raise_if_missing_subfile=True
+        )
+        return Gradient.from_string(
+            string=grad_data_block, lattice_string=gradlatt_data_block
+        )
 
     def set_disp(self, dispersion_correction):
         """
-        Sets the dispersion correction.
+        Set the dispersion correction.
 
         Args:
-            dispersion_correction (str): the name of the method used for the dispersion correction.
-                Supported values are "DFT-D1", "DFT-D2" "DFT-D3" and "DFT-D3 BJ", case insensitive.
-                If None all the "disp" datagroup will be eliminated.
+            dispersion_correction (str): the name of the method used for the
+                dispersion correction. Supported values are "DFT-D1", "DFT-D2",
+                "DFT-D3" and "DFT-D3 BJ", case insensitive. If None all the "disp"
+                datagroup will be eliminated.
 
         Returns:
             None
         """
-
         for dg in ("olddisp", "disp", "disp3"):
             self.kill_data_group(dg, strict=True)
 
@@ -711,12 +764,18 @@ class Control(DataGroups):
         elif dispersion_correction == "dft-d3 bj":
             self.add_data_group("disp3", "bj")
         else:
-            raise ValueError("Unsupported value for dispersion_correction: {}".format(dispersion_correction))
+            raise ValueError(
+                "Unsupported value for dispersion_correction: {}".format(
+                    dispersion_correction
+                )
+            )
 
     def remove_last_energy(self, filename="control", backup_suffix=None):
         """
-        Removes last energy step from the energy data group and writes it to
-        the correct file, depending on the original location of the data group.
+        Remove last energy step from the energy data group.
+
+        In addition to removing the last energy step, it writes the energy data
+        group to the correct file, depending on the original location of the data group.
         N.B. if the energies are in control and not in an external file, this
         will call the to_file of the current instance of Control. If other
         modifications have been done to the dg_list will be written to the
@@ -733,37 +792,43 @@ class Control(DataGroups):
             RuntimeError: if there is no energy step to be removed or if energy
                 file is missing.
         """
-        energy_dg =  self.show_data_group("energy", default="", show_from_subfile=True)
+        energy_dg = self.show_data_group("energy", default="", show_from_subfile=True)
 
         energy_dg_sp = energy_dg.split("\n")
         if len(energy_dg_sp) < 3:
             raise RuntimeError('No energy to remove in the "energy" data group.')
         energy_dg_sp.pop(-2)
-        new_energy_dg_sp = '\n'.join(energy_dg_sp)
+        new_energy_dg_sp = "\n".join(energy_dg_sp)
 
         block_data = self.show_data_group("energy", default="", show_from_subfile=False)
 
-        dg_filename = self._get_subfile_fname(block_data, raise_if_regular_and_subfile=False)
+        dg_filename = self._get_subfile_fname(
+            block_data, raise_if_regular_and_subfile=False
+        )
 
         if dg_filename:
             dg = DataGroups.from_file(dg_filename)
             dg.change_data_group("energy", new_energy_dg_sp)
             if backup_suffix:
-                shutil.copy2(dg_filename, dg_filename+backup_suffix)
+                shutil.copy2(dg_filename, dg_filename + backup_suffix)
             dg.to_file(dg_filename)
         elif not filename:
-            raise ValueError("The datagroup is in the current file. An output filename"
-                             "should be specified.")
+            raise ValueError(
+                "The datagroup is in the current file. An output filename"
+                "should be specified."
+            )
         else:
             self.change_data_group("energy", new_energy_dg_sp)
             if backup_suffix:
-                shutil.copy2(filename, filename+backup_suffix)
+                shutil.copy2(filename, filename + backup_suffix)
             self.to_file(filename)
 
     def remove_last_gradient(self, filename="control", backup_suffix=None):
         """
-        Removes last gradient step from the grad data group and writes it to
-        the correct file, depending on the original location of the data group.
+        Remove last gradient step from the grad data group.
+
+        In addition to removing the last gradient step, it writes the grad data
+        group to the correct file, depending on the original location of the data group.
         N.B. if the gradients are in control and not in an external file, this
         will call the to_file of the current instance of Control. If other
         modifications have been done to the dg_list will be written to the
@@ -780,7 +845,7 @@ class Control(DataGroups):
             RuntimeError: if there is no gradient step to be removed or if
                 gradient file is missing.
         """
-        grad_dg =  self.show_data_group("grad", default="", show_from_subfile=True)
+        grad_dg = self.show_data_group("grad", default="", show_from_subfile=True)
 
         if "cycle" not in grad_dg:
             raise RuntimeError('No gradient to remove in the "grad" data group.')
@@ -791,26 +856,30 @@ class Control(DataGroups):
 
         block_data = self.show_data_group("grad", default="", show_from_subfile=False)
 
-        dg_filename = self._get_subfile_fname(block_data, raise_if_regular_and_subfile=False)
+        dg_filename = self._get_subfile_fname(
+            block_data, raise_if_regular_and_subfile=False
+        )
 
         if dg_filename:
             dg = DataGroups.from_file(dg_filename)
             dg.change_data_group("grad", new_grad_dg)
             if backup_suffix:
-                shutil.copy2(dg_filename, dg_filename+backup_suffix)
+                shutil.copy2(dg_filename, dg_filename + backup_suffix)
             dg.to_file(dg_filename)
         elif not filename:
-            raise ValueError("The datagroup is in the current file. An output filename"
-                             "should be specified.")
+            raise ValueError(
+                "The datagroup is in the current file. An output filename"
+                "should be specified."
+            )
         else:
             self.change_data_group("grad", new_grad_dg)
             if backup_suffix:
-                shutil.copy2(filename, filename+backup_suffix)
+                shutil.copy2(filename, filename + backup_suffix)
             self.to_file(filename)
 
     def get_shells(self, shells_type):
-        """
-        Extract a Shell object for a specific type of shell.
+        """Extract a Shell object for a specific type of shell.
+
         Args:
             shells_type: the type of shell. Can be "closed", "alpha" or "beta".
 
@@ -825,9 +894,7 @@ class Control(DataGroups):
 
     @property
     def is_uhf(self):
-        """
-        True if the $uhf datagroup is present in control.
-        """
+        """Determine if the $uhf datagroup is present in control."""
         return self.show_data_group("uhf") is not None
 
     def get_charge(self):
@@ -845,16 +912,17 @@ class Control(DataGroups):
 
     def get_subfiles_list(self):
         """
-        Extracts the list of files referenced in the datagroups with
-        "file=xxx" and "file xxx".
+        Extract the list of files referenced in the datagroups with "file directives".
+
+        Files directives are of the form "file=xxx" or "file xxx".
 
         Returns:
             list: list of files referenced in the datagroups.
         """
         files = set()
         for dg in self.dg_list:
-            for l in dg.splitlines():
-                m = re.search(" file[ =](.*)", l)
+            for line in dg.splitlines():
+                m = re.search(" file[ =](.*)", line)
                 if m:
                     files.add(m.group(1).strip())
 
@@ -862,8 +930,9 @@ class Control(DataGroups):
 
     def cpc(self, dest_dir, force_overwrite=False):
         """
-        Copies the control file and all files referenced here.
-        Creates the destination folder if not already existing.
+        Copy the control file and all files referenced here.
+
+        This creates the destination folder if not already existing.
 
         Args:
             dest_dir (str): path to the destination folder.
@@ -879,13 +948,16 @@ class Control(DataGroups):
         for fn in self.get_subfiles_list():
             dest_file_path = os.path.join(dest_dir, fn)
             # copy only if the file exists
-            if os.path.isfile(fn) and (not os.path.isfile(dest_file_path) or force_overwrite):
+            if os.path.isfile(fn) and (
+                not os.path.isfile(dest_file_path) or force_overwrite
+            ):
                 shutil.copy2(fn, dest_file_path)
 
 
 def kdg(data_group, filepath="control", strict=True, backup_file=None):
     """
-    Function that removes `data_group` from the control file specified by the path.
+    Remove `data_group` from the control file specified by the path.
+
     Comments and empty lines will be removed. The file will be overwritten.
 
     Args:
@@ -899,7 +971,6 @@ def kdg(data_group, filepath="control", strict=True, backup_file=None):
     Returns:
         None
     """
-
     if backup_file:
         shutil.copy2(filepath, backup_file)
     c = Control.from_file(filepath)
@@ -907,13 +978,18 @@ def kdg(data_group, filepath="control", strict=True, backup_file=None):
     c.to_file(filepath)
 
 
-def sdg(data_group, filepath="control", default=None,
-        show_from_subfile=True,
-        raise_if_multiple_subfiles=False,
-        raise_if_missing_subfile=False,
-        raise_if_regular_and_subfile=False):
+def sdg(
+    data_group,
+    filepath="control",
+    default=None,
+    show_from_subfile=True,
+    raise_if_multiple_subfiles=False,
+    raise_if_missing_subfile=False,
+    raise_if_regular_and_subfile=False,
+):
     """
-    Function that shows the `data_group` from the control file specified by the path.
+    Show the `data_group` from the control file specified by the path.
+
     Comments and empty lines will be removed.
     If the filepath is a full path (i.e. not just a file name), it will change
     directory to the specified one, so that the subfiles are correctly read.
@@ -940,23 +1016,26 @@ def sdg(data_group, filepath="control", default=None,
     Returns:
         str: the value of the selected datagroup. None if `no data_group` is found.
     """
-
     # cd to the directory so that the referenced subfiles are working
     dirname = os.path.dirname(filepath) or os.getcwd()
     with cd(dirname):
         c = Control.from_file(filepath)
-        str_dg = c.sdg(data_group, default=default,
-                       show_from_subfile=show_from_subfile,
-                       raise_if_multiple_subfiles=raise_if_multiple_subfiles,
-                       raise_if_missing_subfile=raise_if_missing_subfile,
-                       raise_if_regular_and_subfile=raise_if_regular_and_subfile)
+        str_dg = c.sdg(
+            data_group,
+            default=default,
+            show_from_subfile=show_from_subfile,
+            raise_if_multiple_subfiles=raise_if_multiple_subfiles,
+            raise_if_missing_subfile=raise_if_missing_subfile,
+            raise_if_regular_and_subfile=raise_if_regular_and_subfile,
+        )
 
     return str_dg
 
 
 def adg(data_group, data_block, filepath="control", backup_file=None):
     """
-    Function that adds `data_group` with `data_block` from the control file specified by the path.
+    Add `data_group` with `data_block` from the control file specified by the path.
+
     Comments and empty lines will be removed. The file will be overwritten.
 
     Args:
@@ -973,7 +1052,6 @@ def adg(data_group, data_block, filepath="control", backup_file=None):
     Raises:
             RuntimeError: if data_group already exists.
     """
-
     if backup_file:
         shutil.copy2(filepath, backup_file)
     c = Control.from_file(filepath)
@@ -983,8 +1061,9 @@ def adg(data_group, data_block, filepath="control", backup_file=None):
 
 def cdg(data_group, data_block, filepath="control", backup_file=None):
     """
-    Function that replaces an existing `data_group` with `data_block` from the control file specified
-    by the path. Comments and empty lines will be removed. The file will be overwritten.
+    Replace an existing `data_group` with `data_block` from the control file.
+
+    Comments and empty lines will be removed. The file will be overwritten.
 
     If `data_block` is None it is equivalent to kdg. To set a data group with no
     explicit value use and empty string for `data_block` (e.g. to add $uhf the input
@@ -1002,7 +1081,6 @@ def cdg(data_group, data_block, filepath="control", backup_file=None):
         None
 
     """
-
     if backup_file:
         shutil.copy2(filepath, backup_file)
     c = Control.from_file(filepath)
@@ -1012,8 +1090,10 @@ def cdg(data_group, data_block, filepath="control", backup_file=None):
 
 def mdgo(data_group, options, filepath="control", backup_file=None):
     """
-    Function that, given a data group that allows several options on separate
-    line (e.g. $dft), updates the values of the options according to the
+    Modify a data group option.
+
+    Given a data group that allows several options on separate lines (e.g. $dft),
+    this function updates the values of the options according to the
     dictionary provided.
     The option dictionary should have the form:
 
@@ -1046,7 +1126,6 @@ def mdgo(data_group, options, filepath="control", backup_file=None):
         None
 
     """
-
     if backup_file:
         shutil.copy2(filepath, backup_file)
     c = Control.from_file(filepath)
@@ -1056,6 +1135,8 @@ def mdgo(data_group, options, filepath="control", backup_file=None):
 
 def sdgo(data_group, option, filepath="control", default=None):
     """
+    Show the option of a given data group.
+
     Given a data group that allows several options on separate line
     (e.g. $dft), returns the value of the option provided.
 
@@ -1075,16 +1156,15 @@ def sdgo(data_group, option, filepath="control", default=None):
     Returns:
         str: The value of the option.
     """
-
     c = Control.from_file(filepath)
     return c.sdgo(data_group, option=option, default=default)
 
 
 def cpc(dest_dir, force_overwrite=False, control_dir=None):
     """
-    Copies a control file from the specified folder and all files
-    referenced there to the destination folder.
-    Creates the destination folder if not already existing.
+    Copy a control file and its referenced files to another folder.
+
+    The destination folder is created if it does not already exists.
 
     Args:
         dest_dir (str): path to the destination folder.

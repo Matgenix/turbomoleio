@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -20,16 +20,14 @@
 # along with turbomoleio (see ~turbomoleio/COPYING). If not,
 # see <https://www.gnu.org/licenses/>.
 
-"""
-Module with the main parsing utilities for the stdout of Turbomole executables.
-"""
+"""Module with the main parsing utilities for the stdout of Turbomole executables."""
 
-import re
 import datetime
-import numpy as np
+import re
 from collections import namedtuple
-from monty.functools import lazy_property
 
+import numpy as np
+from monty.functools import lazy_property
 
 # common pattern for regex
 date_format = "%Y-%m-%d %H:%M:%S.%f"
@@ -48,73 +46,164 @@ asterisks_re = re.compile(r"\*+")
 # NB This should be updated if other standard xc functionals are added to TM.
 functional_strings = {
     "s-vwn": r"Slater.+?Dirac.+?exchange.+?with.+?VWN.+?corr\..+?functional",
-    "s-vwn_Gaussian": r"Slater.+?Dirac.+?exchange.+?with.+?VWN.+?corr\.functional.+?\(fit.+?III.+?as.+?in.+?Gaussian\)",
+    "s-vwn_Gaussian": r"Slater.+?Dirac.+?exchange.+?with.+?VWN.+?"
+    r"corr\.functional.+?\(fit.+?III.+?as.+?in.+?Gaussian\)",
     "pwlda": r"Slater.+?Dirac.+?exchange.+?with.+?PW.+?LDA.+?corr\..+?functional",
-    "b-lyp": r"B\-LYP.+?functional.+?exchange\:.+?LDA.+?\+.+?Becke.+?\(B88\).+?correlation\:.+?Lee\-Yang\-Parr.+?\(LYP\)",
-    "b-vwn": r"B\-VWN.+?functional.+?exchange\:.+?LDA.+?\+.+?Becke.+?\(B88\).+?correlation\:.+?LDA.+?\(VWN\)",
-    "b-p": r"B\-P86.+?functional.+?exchange\:.+?LDA.+?\+.+?Becke.+?\(B88\).+?correlation\:.+?LDA.+?\(VWN\).+?\+.+?Perdew.+?\(P86\)",
-    "pbe": r"PBE.+?functional.+?exchange\:.+?LDA.+?\+.+?PBE.+?correlation\:.+?LDA.+?\(PW\).+?\+.+?PBE",
-    "tpss": r"TPSS.+?meta\-GGA.+?functional.+?exchange\:.+?LDA.+?\+.+?TPSS.+?correlation\:.+?LDA.+?\(PW\).+?\+.+?TPSS",
-    "bh-lyp": r"Becke\-Half\-and\-Half\-LYP.+?hybrid.+?functional\:.+?BH\-LYP.+?exchange\:.+?1\/2.+?\(LDA.+?\+.+?Becke.+?\(B88\)\).+?\+.+?1\/2.+?HF.+?correlation\:.+?Lee\-Yang\-Parr.+?\(LYP\)",
-    "b3-lyp": r"Becke\-3\-Parameter.+?hybrid.+?functional\:.+?B3\-LYP.+?exchange\:.+?0\.8\*LDA.+?\+.+?0\.72\*B88.+?\+.+?0\.2\*HF.+?correlation\:.+?0\.19\*LDA\(VWN\).+?\+.+?0\.81\*LYP",
-    "b3-lyp_Gaussian": r"Becke\-3\-Parameter.+?hybrid.+?functional\:.+?B3\-LYP.+?exchange\:.+?0\.8\*LDA.+?\+.+?0\.72\*B88.+?\+.+?0\.2\*HF.+?correlation\:.+?0\.19\*LDA\(VWNIII\).+?\+.+?0\.81\*LYP.+?\(VWNIII.+?fit.+?as.+?in.+?Gaussian\)",
-    "pbe0": r"PBE0.+?hybrid.+?functional.+?exchange\:.+?3\/4.+?\(LDA\+PBE\).+?\+.+?1\/4.+?HF.+?correlation\:.+?LDA.+?\(PW\).+?\+.+?PBE",
-    "tpssh": r"TPSS.+?global.+?hybrid.+?functional.+?exchange\:.+?9\/10.+?\(LDA\+TPSS\).+?\+.+?1\/10.+?HF.+?correlation\:.+?LDA.+?\(PW\).+?\+.+?TPSS",
-    "pw6b95": r"PW6B95.+?global.+?meta.+?hybrid.+?functional.+?code.+?by.+?Stefan.+?Grimme\,.+?University.+?of.+?Muenster.+?Zhao.+?and.+?Truhlar\,.+?J.+?Phys.+?Chem.+?A\,.+?109\,.+?25\,.+?2005\,.+?5656\.",
-    "m06": r"M06.+?meta\-GGA.+?functional.+?Truhlar.+?functional.+?with.+?27\%.+?HF.+?exchange.+?USING.+?XCfun.+?library\,.+?see.+?documentation.+?XCFun.+?library.+?is.+?being.+?used\,.+?version\:.+?1\.99000000000000.+?XCFun.+?DFT.+?library.+?Copyright.+?2009\-2011.+?Ulf.+?Ekstrom.+?and.+?contributors\..+?See.+?http\:\/\/admol\.org\/xcfun.+?for.+?more.+?information\..+?This.+?is.+?free.+?software\;.+?see.+?the.+?source.+?code.+?for.+?copying.+?conditions\..+?There.+?is.+?ABSOLUTELY.+?NO.+?WARRANTY\;.+?not.+?even.+?for.+?MERCHANTABILITY.+?or.+?FITNESS.+?FOR.+?A.+?PARTICULAR.+?PURPOSE\..+?For.+?details.+?see.+?the.+?documentation\..+?Scientific.+?users.+?of.+?this.+?library.+?should.+?cite.+?U\..+?Ekstrom\,.+?L\..+?Visscher\,.+?R\..+?Bast\,.+?A\..+?J\..+?Thorvaldsen.+?and.+?K\..+?Ruud\;.+?J\.Chem\.Theor\.Comp\..+?2010\,.+?DOI\:.+?10\.1021\/ct100117s.+?XCFun.+?uses.+?functional\:.+?m06",
-    "m06-l": r"M06\-L.+?meta\-GGA.+?functional.+?Truhlar.+?functional.+?without.+?HF.+?exchange.+?USING.+?XCfun.+?library\,.+?see.+?documentation.+?XCFun.+?library.+?is.+?being.+?used\,.+?version\:.+?1\.99000000000000.+?XCFun.+?DFT.+?library.+?Copyright.+?2009\-2011.+?Ulf.+?Ekstrom.+?and.+?contributors\..+?See.+?http\:\/\/admol\.org\/xcfun.+?for.+?more.+?information\..+?This.+?is.+?free.+?software\;.+?see.+?the.+?source.+?code.+?for.+?copying.+?conditions\..+?There.+?is.+?ABSOLUTELY.+?NO.+?WARRANTY\;.+?not.+?even.+?for.+?MERCHANTABILITY.+?or.+?FITNESS.+?FOR.+?A.+?PARTICULAR.+?PURPOSE\..+?For.+?details.+?see.+?the.+?documentation\..+?Scientific.+?users.+?of.+?this.+?library.+?should.+?cite.+?U\..+?Ekstrom\,.+?L\..+?Visscher\,.+?R\..+?Bast\,.+?A\..+?J\..+?Thorvaldsen.+?and.+?K\..+?Ruud\;.+?J\.Chem\.Theor\.Comp\..+?2010\,.+?DOI\:.+?10\.1021\/ct100117s.+?XCFun.+?uses.+?functional\:.+?m06l",
-    "m06-2x": r"M06\-2X.+?meta\-GGA.+?functional.+?Truhlar.+?functional.+?with.+?54\%.+?HF.+?exchange.+?USING.+?XCfun.+?library\,.+?see.+?documentation.+?XCFun.+?library.+?is.+?being.+?used\,.+?version\:.+?1\.99000000000000.+?XCFun.+?DFT.+?library.+?Copyright.+?2009\-2011.+?Ulf.+?Ekstrom.+?and.+?contributors\..+?See.+?http\:\/\/admol\.org\/xcfun.+?for.+?more.+?information\..+?This.+?is.+?free.+?software\;.+?see.+?the.+?source.+?code.+?for.+?copying.+?conditions\..+?There.+?is.+?ABSOLUTELY.+?NO.+?WARRANTY\;.+?not.+?even.+?for.+?MERCHANTABILITY.+?or.+?FITNESS.+?FOR.+?A.+?PARTICULAR.+?PURPOSE\..+?For.+?details.+?see.+?the.+?documentation\..+?Scientific.+?users.+?of.+?this.+?library.+?should.+?cite.+?U\..+?Ekstrom\,.+?L\..+?Visscher\,.+?R\..+?Bast\,.+?A\..+?J\..+?Thorvaldsen.+?and.+?K\..+?Ruud\;.+?J\.Chem\.Theor\.Comp\..+?2010\,.+?DOI\:.+?10\.1021\/ct100117s.+?XCFun.+?uses.+?functional\:.+?m062x",
-    "lhf": r"Localized.+?Hartree\-Fock.+?Methods\:.+?F\..+?Della.+?Sala.+?and.+?A\..+?Goerling\,.+?J\..+?Chem\..+?Phys\..+?115\,.+?5718.+?\(2001\).+?F\..+?Della.+?Sala.+?and.+?A\..+?Goerling\,.+?J\..+?Chem\..+?Phys\..+?116\,.+?5374.+?\(2002\)",
-    "oep": r"Exact\-Exchange.+?Optimized.+?Effective.+?Potential.+?Method\:.+?Hesselmann\,.+?A\.\,.+?Goetz\,.+?A\.\,.+?Della.+?Sala\,.+?F\.\,.+?Goerling\,.+?A\.\,.+?J\..+?Chem\..+?Phys\.\,.+?127.+?\(2007\)\,.+?054102",
-    "b97-d": r"exchange\:.+?B97GGA.+?vdW.+?refit.+?correlation\:.+?\".+?\".+?\".+?S\..+?Grimme\,.+?J\.Comput\..+?Chem\..+?27\,.+?\(2006\)\,.+?1787\-1799",
-    "pbeh-3c": r"PBE0.+?modified.+?by.+?S\..+?Grimme.+?for.+?D3.+?and.+?gCP.+?exchange\:.+?PBE.+?\(kappa\=1\.0245\,.+?mu\=0\.12345679\).+?correlation\:.+?LDA.+?\(PW\).+?\+.+?PBE",
-    "b97-3c": r"exchange\:.+?B97GGA.+?vdW.+?refit.+?correlation\:.+?\".+?\".+?\".+?S\..+?Grimme\,.+?modifications.+?B97\-3c.+?\(2016\)",
-    "lh07t-svwn": r"Lh07t\-SVWN.+?local.+?hybrid.+?functional.+?Local.+?hybrid.+?semi\-numerical.+?integral.+?thresholds\:.+?S\-junctions.+?\:.+?0\.10E\-05.+?P\-junctions.+?\:.+?0\.10E\-05",
-    "lh07s-svwn": r"Lh07s\-SVWN.+?local.+?hybrid.+?functional.+?Local.+?hybrid.+?semi\-numerical.+?integral.+?thresholds\:.+?S\-junctions.+?\:.+?0\.10E\-05.+?P\-junctions.+?\:.+?0\.10E\-05",
-    "lh12ct-ssirpw92": r"Lh12ct\-SsirPW92.+?local.+?hybrid.+?functional.+?Local.+?hybrid.+?semi\-numerical.+?integral.+?thresholds\:.+?S\-junctions.+?\:.+?0\.10E\-05.+?P\-junctions.+?\:.+?0\.10E\-05",
-    "lh12ct-ssifpw92": r"Lh12ct\-SsifPW92.+?local.+?hybrid.+?functional.+?Local.+?hybrid.+?semi\-numerical.+?integral.+?thresholds\:.+?S\-junctions.+?\:.+?0\.10E\-05.+?P\-junctions.+?\:.+?0\.10E\-05",
-    "lh14t-calpbe": r"Lh14t\-calPBE.+?local.+?hybrid.+?functional.+?Local.+?hybrid.+?semi\-numerical.+?integral.+?thresholds\:.+?S\-junctions.+?\:.+?0\.10E\-05.+?P\-junctions.+?\:.+?0\.10E\-05",
-    "b2-plyp": r"Hybrid.+?part.+?of.+?B2\-PLYP.+?double.+?hybrid.+?functional.+?exchange\:.+?0\.47\(LDA.+?\+.+?Becke.+?\(B88\)\).+?\+.+?0\.53.+?HF.+?correlation\:.+?0\.73.+?LYP.+?\+.+?0\.27.+?PT2.+?\(MP2.+?program\).+?S\..+?Grimme\,.+?JCP.+?124\,.+?\(2006\)\,.+?034108\-16"
+    "b-lyp": r"B\-LYP.+?functional.+?exchange\:.+?LDA.+?\+.+?Becke.+?\(B88\).+?"
+    r"correlation\:.+?Lee\-Yang\-Parr.+?\(LYP\)",
+    "b-vwn": r"B\-VWN.+?functional.+?exchange\:.+?LDA.+?\+.+?Becke.+?\(B88\).+?"
+    r"correlation\:.+?LDA.+?\(VWN\)",
+    "b-p": r"B\-P86.+?functional.+?exchange\:.+?LDA.+?\+.+?Becke.+?\(B88\).+?"
+    r"correlation\:.+?LDA.+?\(VWN\).+?\+.+?Perdew.+?\(P86\)",
+    "pbe": r"PBE.+?functional.+?exchange\:.+?LDA.+?\+.+?PBE.+?correlation\:.+?"
+    r"LDA.+?\(PW\).+?\+.+?PBE",
+    "tpss": r"TPSS.+?meta\-GGA.+?functional.+?exchange\:.+?LDA.+?\+.+?TPSS.+?"
+    r"correlation\:.+?LDA.+?\(PW\).+?\+.+?TPSS",
+    "bh-lyp": r"Becke\-Half\-and\-Half\-LYP.+?hybrid.+?functional\:.+?BH\-LYP.+?"
+    r"exchange\:.+?1\/2.+?\(LDA.+?\+.+?Becke.+?\(B88\)\).+?\+.+?1\/2.+?HF.+?"
+    r"correlation\:.+?Lee\-Yang\-Parr.+?\(LYP\)",
+    "b3-lyp": r"Becke\-3\-Parameter.+?hybrid.+?functional\:.+?B3\-LYP.+?"
+    r"exchange\:.+?0\.8\*LDA.+?\+.+?0\.72\*B88.+?\+.+?0\.2\*HF.+?"
+    r"correlation\:.+?0\.19\*LDA\(VWN\).+?\+.+?0\.81\*LYP",
+    "b3-lyp_Gaussian": r"Becke\-3\-Parameter.+?hybrid.+?functional\:.+?B3\-LYP.+?"
+    r"exchange\:.+?0\.8\*LDA.+?\+.+?0\.72\*B88.+?\+.+?0\.2\*"
+    r"HF.+?correlation\:.+?0\.19\*LDA\(VWNIII\).+?\+.+?0\.81\*"
+    r"LYP.+?\(VWNIII.+?fit.+?as.+?in.+?Gaussian\)",
+    "pbe0": r"PBE0.+?hybrid.+?functional.+?"
+    r"exchange\:.+?3\/4.+?\(LDA\+PBE\).+?\+.+?1\/4.+?HF.+?"
+    r"correlation\:.+?LDA.+?\(PW\).+?\+.+?PBE",
+    "tpssh": r"TPSS.+?global.+?hybrid.+?functional.+?"
+    r"exchange\:.+?9\/10.+?\(LDA\+TPSS\).+?\+.+?1\/10.+?HF.+?"
+    r"correlation\:.+?LDA.+?\(PW\).+?\+.+?TPSS",
+    "pw6b95": r"PW6B95.+?global.+?meta.+?hybrid.+?functional.+?code.+?by.+?"
+    r"Stefan.+?Grimme\,.+?University.+?of.+?Muenster.+?"
+    r"Zhao.+?and.+?Truhlar\,.+?"
+    r"J.+?Phys.+?Chem.+?A\,.+?109\,.+?25\,.+?2005\,.+?5656\.",
+    "m06": r"M06.+?meta\-GGA.+?functional.+?Truhlar.+?functional.+?with.+?27\%.+?HF.+?"
+    r"exchange.+?USING.+?XCfun.+?library\,.+?see.+?documentation.+?"
+    r"XCFun.+?library.+?is.+?being.+?used\,.+?version\:.+?1\.99000000000000.+?"
+    r"XCFun.+?DFT.+?library.+?Copyright.+?2009\-2011.+?"
+    r"Ulf.+?Ekstrom.+?and.+?contributors\..+?See.+?"
+    r"http\:\/\/admol\.org\/xcfun.+?for.+?more.+?information\..+?"
+    r"This.+?is.+?free.+?software\;.+?see.+?the.+?source.+?code.+?"
+    r"for.+?copying.+?conditions\..+?There.+?is.+?ABSOLUTELY.+?NO.+?"
+    r"WARRANTY\;.+?not.+?even.+?for.+?MERCHANTABILITY.+?or.+?FITNESS.+?"
+    r"FOR.+?A.+?PARTICULAR.+?PURPOSE\..+?For.+?details.+?"
+    r"see.+?the.+?documentation\..+?Scientific.+?users.+?of.+?this.+?"
+    r"library.+?should.+?cite.+?U\..+?Ekstrom\,.+?L\..+?Visscher\,.+?R\..+?"
+    r"Bast\,.+?A\..+?J\..+?Thorvaldsen.+?and.+?K\..+?Ruud\;.+?"
+    r"J\.Chem\.Theor\.Comp\..+?2010\,.+?DOI\:.+?10\.1021\/ct100117s.+?"
+    r"XCFun.+?uses.+?functional\:.+?m06",
+    "m06-l": r"M06\-L.+?meta\-GGA.+?functional.+?Truhlar.+?functional.+?without.+?"
+    r"HF.+?exchange.+?USING.+?XCfun.+?library\,.+?see.+?documentation.+?"
+    r"XCFun.+?library.+?is.+?being.+?used\,.+?"
+    r"version\:.+?1\.99000000000000.+?XCFun.+?DFT.+?library.+?"
+    r"Copyright.+?2009\-2011.+?Ulf.+?Ekstrom.+?and.+?contributors\..+?"
+    r"See.+?http\:\/\/admol\.org\/xcfun.+?for.+?more.+?information\..+?"
+    r"This.+?is.+?free.+?software\;.+?see.+?the.+?source.+?code.+?"
+    r"for.+?copying.+?conditions\..+?There.+?is.+?ABSOLUTELY.+?NO.+?"
+    r"WARRANTY\;.+?not.+?even.+?for.+?MERCHANTABILITY.+?or.+?FITNESS.+?"
+    r"FOR.+?A.+?PARTICULAR.+?PURPOSE\..+?For.+?details.+?see.+?the.+?"
+    r"documentation\..+?Scientific.+?users.+?of.+?this.+?library.+?should.+?"
+    r"cite.+?U\..+?Ekstrom\,.+?L\..+?Visscher\,.+?R\..+?Bast\,.+?A\..+?J\..+?"
+    r"Thorvaldsen.+?and.+?K\..+?Ruud\;.+?J\.Chem\.Theor\.Comp\..+?2010\,.+?"
+    r"DOI\:.+?10\.1021\/ct100117s.+?XCFun.+?uses.+?functional\:.+?m06l",
+    "m06-2x": r"M06\-2X.+?meta\-GGA.+?functional.+?Truhlar.+?functional.+?"
+    r"with.+?54\%.+?HF.+?exchange.+?USING.+?XCfun.+?library\,.+?see.+?"
+    r"documentation.+?XCFun.+?library.+?is.+?being.+?used\,.+?"
+    r"version\:.+?1\.99000000000000.+?XCFun.+?DFT.+?library.+?"
+    r"Copyright.+?2009\-2011.+?Ulf.+?Ekstrom.+?and.+?contributors\..+?"
+    r"See.+?http\:\/\/admol\.org\/xcfun.+?for.+?more.+?information\..+?"
+    r"This.+?is.+?free.+?software\;.+?see.+?the.+?source.+?code.+?"
+    r"for.+?copying.+?conditions\..+?There.+?is.+?ABSOLUTELY.+?"
+    r"NO.+?WARRANTY\;.+?not.+?even.+?for.+?MERCHANTABILITY.+?or.+?"
+    r"FITNESS.+?FOR.+?A.+?PARTICULAR.+?PURPOSE\..+?For.+?details.+?"
+    r"see.+?the.+?documentation\..+?Scientific.+?users.+?of.+?this.+?"
+    r"library.+?should.+?cite.+?U\..+?Ekstrom\,.+?L\..+?Visscher\,.+?R\..+?"
+    r"Bast\,.+?A\..+?J\..+?Thorvaldsen.+?and.+?K\..+?Ruud\;.+?"
+    r"J\.Chem\.Theor\.Comp\..+?2010\,.+?DOI\:.+?10\.1021\/ct100117s.+?"
+    r"XCFun.+?uses.+?functional\:.+?m062x",
+    "lhf": r"Localized.+?Hartree\-Fock.+?Methods\:.+?F\..+?"
+    r"Della.+?Sala.+?and.+?A\..+?Goerling\,.+?"
+    r"J\..+?Chem\..+?Phys\..+?115\,.+?5718.+?\(2001\).+?"
+    r"F\..+?Della.+?Sala.+?and.+?A\..+?Goerling\,.+?"
+    r"J\..+?Chem\..+?Phys\..+?116\,.+?5374.+?\(2002\)",
+    "oep": r"Exact\-Exchange.+?Optimized.+?Effective.+?Potential.+?Method\:.+?"
+    r"Hesselmann\,.+?A\.\,.+?Goetz\,.+?A\.\,.+?Della.+?Sala\,.+?"
+    r"F\.\,.+?Goerling\,.+?A\.\,.+?"
+    r"J\..+?Chem\..+?Phys\.\,.+?127.+?\(2007\)\,.+?054102",
+    "b97-d": r"exchange\:.+?B97GGA.+?vdW.+?refit.+?"
+    r"correlation\:.+?\".+?\".+?\".+?S\..+?Grimme\,.+?"
+    r"J\.Comput\..+?Chem\..+?27\,.+?\(2006\)\,.+?1787\-1799",
+    "pbeh-3c": r"PBE0.+?modified.+?by.+?S\..+?Grimme.+?for.+?D3.+?and.+?gCP.+?"
+    r"exchange\:.+?PBE.+?\(kappa\=1\.0245\,.+?mu\=0\.12345679\).+?"
+    r"correlation\:.+?LDA.+?\(PW\).+?\+.+?PBE",
+    "b97-3c": r"exchange\:.+?B97GGA.+?vdW.+?refit.+?"
+    r"correlation\:.+?\".+?\".+?\".+?S\..+?Grimme\,.+?"
+    r"modifications.+?B97\-3c.+?\(2016\)",
+    "lh07t-svwn": r"Lh07t\-SVWN.+?local.+?hybrid.+?functional.+?Local.+?hybrid.+?"
+    r"semi\-numerical.+?integral.+?thresholds\:.+?"
+    r"S\-junctions.+?\:.+?0\.10E\-05.+?P\-junctions.+?\:.+?0\.10E\-05",
+    "lh07s-svwn": r"Lh07s\-SVWN.+?local.+?hybrid.+?functional.+?"
+    r"Local.+?hybrid.+?semi\-numerical.+?integral.+?thresholds\:.+?"
+    r"S\-junctions.+?\:.+?0\.10E\-05.+?P\-junctions.+?\:.+?0\.10E\-05",
+    "lh12ct-ssirpw92": r"Lh12ct\-SsirPW92.+?local.+?hybrid.+?functional.+?"
+    r"Local.+?hybrid.+?semi\-numerical.+?integral.+?thresholds\:.+?"
+    r"S\-junctions.+?\:.+?0\.10E\-05.+?"
+    r"P\-junctions.+?\:.+?0\.10E\-05",
+    "lh12ct-ssifpw92": r"Lh12ct\-SsifPW92.+?local.+?hybrid.+?functional.+?"
+    r"Local.+?hybrid.+?semi\-numerical.+?integral.+?thresholds\:.+?"
+    r"S\-junctions.+?\:.+?0\.10E\-05.+?"
+    r"P\-junctions.+?\:.+?0\.10E\-05",
+    "lh14t-calpbe": r"Lh14t\-calPBE.+?local.+?hybrid.+?functional.+?"
+    r"Local.+?hybrid.+?semi\-numerical.+?integral.+?thresholds\:.+?"
+    r"S\-junctions.+?\:.+?0\.10E\-05.+?P\-junctions.+?\:.+?0\.10E\-05",
+    "b2-plyp": r"Hybrid.+?part.+?of.+?B2\-PLYP.+?double.+?hybrid.+?functional.+?"
+    r"exchange\:.+?0\.47\(LDA.+?\+.+?Becke.+?\(B88\)\).+?\+.+?0\.53.+?"
+    r"HF.+?correlation\:.+?0\.73.+?LYP.+?\+.+?0\.27.+?PT2.+?\
+               (MP2.+?program\).+?S\..+?Grimme\,.+?"
+    r"JCP.+?124\,.+?\(2006\)\,.+?034108\-16",
 }
 
 
 # type of xc functionals
 # NB This should be updated if other standard xc functionals are added to TM.
 functional_types = {
-    's-vwn': 'LDA',
-    's-vwn_Gaussian': 'LDA',
-    'pwlda': 'LDA',
-    'b-lyp': 'GGA',
-    'b-vwn': 'GGA',
-    'b-p': 'GGA',
-    'pbe': 'GGA',
-    'tpss': 'MGGA',
-    'bh-lyp': 'HYB',
-    'b3-lyp': 'HYB',
-    'b3-lyp_Gaussian': 'HYB',
-    'pbe0': 'HYB',
-    'tpssh': 'MHYB',
-    'pw6b95': 'MHYB',
-    'm06': 'MHYB',
-    'm06-l': 'MGGA',
-    'm06-2x': 'MHYB',
-    'lhf': 'ODFT',
-    'oep': 'ODFT',
-    'b97-d': 'GGA',
-    'pbeh-3c': 'HYB',
-    'b97-3c': 'GGA',
-    'lh07t-svwn': 'LHYB',
-    'lh07s-svwn': 'LHYB',
-    'lh12ct-ssirpw92': 'LHYB',
-    'lh12ct-ssifpw92': 'LHYB',
-    'lh14t-calpbe': 'LHYB',
-    'b2-plyp': 'DHYB'
+    "s-vwn": "LDA",
+    "s-vwn_Gaussian": "LDA",
+    "pwlda": "LDA",
+    "b-lyp": "GGA",
+    "b-vwn": "GGA",
+    "b-p": "GGA",
+    "pbe": "GGA",
+    "tpss": "MGGA",
+    "bh-lyp": "HYB",
+    "b3-lyp": "HYB",
+    "b3-lyp_Gaussian": "HYB",
+    "pbe0": "HYB",
+    "tpssh": "MHYB",
+    "pw6b95": "MHYB",
+    "m06": "MHYB",
+    "m06-l": "MGGA",
+    "m06-2x": "MHYB",
+    "lhf": "ODFT",
+    "oep": "ODFT",
+    "b97-d": "GGA",
+    "pbeh-3c": "HYB",
+    "b97-3c": "GGA",
+    "lh07t-svwn": "LHYB",
+    "lh07s-svwn": "LHYB",
+    "lh12ct-ssirpw92": "LHYB",
+    "lh12ct-ssifpw92": "LHYB",
+    "lh14t-calpbe": "LHYB",
+    "b2-plyp": "DHYB",
 }
 
 
 def convert_float(f):
     """
-    Helper function to convert a float from the output.
+    Convert a float from the output.
+
     Handles simple float and exponential notation with D and E
     (e.g 11.23 1.123E+01 1.123D+01).
     Returns None if the string is composed of only asterisks,
@@ -134,7 +223,8 @@ def convert_float(f):
 
 def convert_int(i):
     """
-    Helper function to convert an int from the output.
+    Convert an int from the output.
+
     Returns None if the string is composed of only asterisks,
     as it might be in case of formatting problems in fortran.
 
@@ -150,31 +240,30 @@ def convert_int(i):
     return int(i)
 
 
-def convert_time_string(l):
+def convert_time_string(line):
     """
-    Helper function to convert the string of the cpu and wall time given in the
-    Turbomole outputs to seconds.
+    Convert the cpu and wall time string given in the Turbomole outputs to seconds.
 
-    Example: 2 days 1 hours 12 minutes and 55 seconds
+    Example: 2 days 1 hours 12 minutes and 55 seconds.
 
     Args:
-        l (str): the line with the timings.
+        line (str): the line with the timings.
 
     Returns:
         float: the value of the time in seconds.
     """
-    split = l.split()
+    split = line.split()
 
     time = 0
     for i, s in enumerate(split):
         if s == "days":
-            time += float(split[i-1]) * 86400
+            time += float(split[i - 1]) * 86400
         if s == "hours":
-            time += float(split[i-1]) * 3600
+            time += float(split[i - 1]) * 3600
         if s == "minutes":
-            time += float(split[i-1]) * 60
+            time += float(split[i - 1]) * 60
         if s == "seconds":
-            time += float(split[i-1])
+            time += float(split[i - 1])
 
     return time
 
@@ -195,25 +284,22 @@ class Parser:
     """
 
     def __init__(self, string):
-        """
+        """Construct Parser object.
 
         Args:
             string (str): the string of the output from Turbomole.
         """
-
         self._string = string
 
     @property
     def string(self):
-        """
-        The string given as an input.
-        """
+        """Get the string given as an input."""
         return self._string
 
     @classmethod
     def from_file(cls, filepath, check_all_done=True):
         """
-        Generates an instance from a file path.
+        Generate an instance from a file path.
 
         Args:
             filepath (str): path to the output file to read.
@@ -223,40 +309,45 @@ class Parser:
         Returns:
             an instance of Parser.
         """
-
         try:
-            with open(filepath, 'r') as f:
+            with open(filepath, "r") as f:
                 string = f.read()
         except UnicodeDecodeError:
-            with open(filepath, 'r', errors='ignore') as f:
+            with open(filepath, "r", errors="ignore") as f:
                 string = f.read()
 
         if check_all_done and string.rfind("all done") < 0:
-            raise ValueError("The string does not contain data for a completed calculation")
+            raise ValueError(
+                "The string does not contain data for a completed calculation"
+            )
 
         return cls(string=string)
 
     @lazy_property
     def all_done(self):
-        """
-        True if "all done" is present in the string.
-        """
+        """Check if "all done" is present in the string."""
         return self.string.rfind("all done") >= 0
 
     @lazy_property
     def header(self):
         """
-        The information contained in the header of the output, like the TM version and timings.
+        Extract the information contained in the header of the output.
+
+        The header contains information such as the TM version and timings.
         Valid for all the TM executables.
 
         Returns:
-            dict with "executable" name, "host" of execution, "tm_version", "tm_build", "start_time".
+            dict with "executable" name, "host" of execution, "tm_version",
+                "tm_build", "start_time".
         """
         # Example string parsed here:
         #  escf (node001) : TURBOMOLE V7.3 ( 22118 ) 1 Jul 2018 at 20:38:15
         #  Copyright (C) 2018 TURBOMOLE GmbH, Karlsruhe
         #    2018-11-13 09:30:15.283
-        r = r"^.*?([\w]+)\s+\((.*?)\).*?TURBOMOLE(.*?)(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d{3})"
+        r = (
+            r"^.*?([\w]+)\s+\((.*?)\).*?"
+            r"TURBOMOLE(.*?)(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d{3})"
+        )
         match = re.search(r, self.string, re.DOTALL)
         if not match:
             return None
@@ -265,8 +356,8 @@ class Parser:
         # In this case turbomole version and build will be set to None.
         # For example it may be:
         # escf (node001) : TURBOMOLE rev. compiled 1 Jul 2018 at 20:38:15
-        r_version = r'V([\d\.]+\d)\s+.*'
-        r_build = r'V[\d\.]+\d\s+\((.*)\)'
+        r_version = r"V([\d\.]+\d)\s+.*"
+        r_build = r"V[\d\.]+\d\s+\((.*)\)"
         match_version = re.search(r_version, match.group(3).strip())
         match_build = re.search(r_build, match.group(3).strip())
         if match_version:
@@ -274,22 +365,27 @@ class Parser:
         else:
             tm_version = None
         if match_build:
-            tm_build = match_build.group(1).strip() or None  # When the build info inside the parenthesis is empty
+            tm_build = (
+                match_build.group(1).strip() or None
+            )  # When the build info inside the parenthesis is empty
         else:
             tm_build = None
 
-        d = dict(executable=match.group(1),
-                 host=match.group(2).strip(),
-                 tm_version=tm_version,
-                 tm_build=tm_build,
-                 start_time=datetime.datetime.strptime(match.group(4), date_format))
+        d = dict(
+            executable=match.group(1),
+            host=match.group(2).strip(),
+            tm_version=tm_version,
+            tm_build=tm_build,
+            start_time=datetime.datetime.strptime(match.group(4), date_format),
+        )
 
         return d
 
     @lazy_property
     def centers(self):
         """
-        Center of mass and center of charge values.
+        Extract the center of mass and center of charge values.
+
         Valid for most of the TM executables (including the scf, escf, grad).
 
         Returns:
@@ -297,26 +393,27 @@ class Parser:
         """
         d = dict(center_of_mass=None, center_of_charge=None)
 
-        r = r"center of nuclear mass[\s:]*" + (r"\s*("+float_number_re+r")")*3
+        r = r"center of nuclear mass[\s:]*" + (r"\s*(" + float_number_re + r")") * 3
 
         match = re.search(r, self.string)
 
         if match:
-            d["center_of_mass"] = [convert_float(match.group(i)) for i in range(1,4)]
+            d["center_of_mass"] = [convert_float(match.group(i)) for i in range(1, 4)]
 
-        r = r"center of nuclear charge[\s:]*" + (r"\s*("+float_number_re+r")")*3
+        r = r"center of nuclear charge[\s:]*" + (r"\s*(" + float_number_re + r")") * 3
 
         match = re.search(r, self.string)
 
         if match:
-            d["center_of_charge"] = [convert_float(match.group(i)) for i in range(1,4)]
+            d["center_of_charge"] = [convert_float(match.group(i)) for i in range(1, 4)]
 
         return d
 
     @lazy_property
     def coordinates(self):
         """
-        Coordinates, species and charges of the atoms.
+        Extract the coordinates, species and charges of the atoms.
+
         Valid for most of the TM executables (including the scf, escf, grad).
 
         Returns:
@@ -330,7 +427,10 @@ class Parser:
         #                     atomic coordinates            atom    charge  isotop
         #           0.00000000    0.00000000    1.00000000    h      1.000     0
         #           0.00000000    0.00000000   -1.00000000    h      1.000     0
-        r = r"atomic coordinates\s+atom\s+charge\s+isotop\s+(.+?)\s+center of nuclear mass"
+        r = (
+            r"atomic coordinates\s+atom\s+charge\s+isotop\s+(.+?)\s+"
+            r"center of nuclear mass"
+        )
 
         match = re.search(r, self.string, re.DOTALL)
         if not match:
@@ -341,12 +441,12 @@ class Parser:
         charges = []
         isotopes = []
 
-        for l in match.group(1).splitlines():
-            l = l.strip()
-            if not l:
+        for line in match.group(1).splitlines():
+            line = line.strip()
+            if not line:
                 continue
 
-            split = l.split()
+            split = line.split()
             coords.append([convert_float(f) for f in split[:3]])
             species.append(split[3])
             charges.append(convert_float(split[4]))
@@ -357,8 +457,9 @@ class Parser:
     @lazy_property
     def basis(self):
         """
-        Data of the basis used for the calculation. Also the auxiliary base in
-        case of RI.
+        Extract the data of the basis used for the calculation.
+
+        It also contains the auxiliary basis in case of RI.
         Valid for most of the TM executables (including the scf, escf, grad).
 
         Returns:
@@ -366,7 +467,8 @@ class Parser:
             basis as values, "aux_basis_per_specie" the same for auxiliary basis,
             "number_scf_basis_func" and "number_scf_aux_basis_func".
         """
-        # See a test file as an example. Information parsed from the section starting with:
+        # See a test file as an example. Information parsed from the section
+        # starting with:
         #      +--------------------------------------------------+
         #      |               basis set information              |
         #      +--------------------------------------------------+
@@ -390,36 +492,41 @@ class Parser:
 
         basis_per_specie = {}
         if match_atoms:
-            for l in match_atoms.group(1).splitlines():
-                l = l.strip()
-                if not l:
+            for line in match_atoms.group(1).splitlines():
+                line = line.strip()
+                if not line:
                     continue
 
-                l_split = l.split()
+                l_split = line.split()
                 basis_per_specie[l_split[0]] = l_split[4]
 
-        # For ridft can be present the section starting with "RI-J AUXILIARY BASIS SET information".
+        # For ridft can be present the section starting
+        # with "RI-J AUXILIARY BASIS SET information".
         r_atoms_aux = r"RI-J[K]? AUXILIARY BASIS SET.*?" + r_atoms
 
         match_atoms_aux = re.search(r_atoms_aux, basis_string, re.DOTALL)
 
         aux_basis_per_specie = {}
         if match_atoms_aux:
-            for l in match_atoms_aux.group(1).splitlines():
-                l = l.strip()
-                if not l:
+            for line in match_atoms_aux.group(1).splitlines():
+                line = line.strip()
+                if not line:
                     continue
-                l_split = l.split()
+                l_split = line.split()
                 aux_basis_per_specie[l_split[0]] = l_split[4]
 
-        # search the total number of basis function. This should be present at maximum two
-        # one for the standard basis and one for the auxiliary.
-        list_n_basis_func = re.findall(r"total number of SCF-basis functions[\s:]+?(\d+)", basis_string)
+        # search the total number of basis function. This should be present at
+        # maximum twice: one for the standard basis and one for the auxiliary.
+        list_n_basis_func = re.findall(
+            r"total number of SCF-basis functions[\s:]+?(\d+)", basis_string
+        )
 
         len_n_basis = len(list_n_basis_func)
         if len_n_basis > 2:
-            raise RuntimeError("Found {} instances of 'total number of SCF-basis functions', while "
-                               "expecting at most 2.".format(len_n_basis))
+            raise RuntimeError(
+                "Found {} instances of 'total number of SCF-basis functions', while "
+                "expecting at most 2.".format(len_n_basis)
+            )
 
         if len_n_basis > 0:
             number_scf_basis_func = convert_int(list_n_basis_func[0])
@@ -431,24 +538,29 @@ class Parser:
         else:
             number_scf_aux_basis_func = None
 
-        d = dict(basis_per_specie=basis_per_specie,
-                 aux_basis_per_specie=aux_basis_per_specie,
-                 number_scf_basis_func=number_scf_basis_func,
-                 number_scf_aux_basis_func=number_scf_aux_basis_func)
+        d = dict(
+            basis_per_specie=basis_per_specie,
+            aux_basis_per_specie=aux_basis_per_specie,
+            number_scf_basis_func=number_scf_basis_func,
+            number_scf_aux_basis_func=number_scf_aux_basis_func,
+        )
         return d
 
     @lazy_property
     def symmetry(self):
         """
-        Information about the symmetry of the molecule and the irreducible representations.
-        Valid for all the TM executables (in some case only a part of the information might
-        be available).
+        Extract the symmetry of the molecule and the irreducible representations.
+
+        Valid for all the TM executables (in some case only a part of the
+        information might be available).
 
         Returns:
-            dict with symmetry "symbol", "n_reps" and list of representation symbols "reps".
+            dict with symmetry "symbol", "n_reps" and list of representation
+            symbols "reps".
         """
-
-        match_symm = re.search(r"symmetry group of the molecule[\s:]+?([\w]+)", self.string)
+        match_symm = re.search(
+            r"symmetry group of the molecule[\s:]+?([\w]+)", self.string
+        )
         if match_symm:
             mol_sym_group = match_symm.group(1)
         else:
@@ -458,10 +570,17 @@ class Parser:
         match_reps = re.search(r"there are\s+(\d+)\s+real representations", self.string)
         if match_reps:
             n_reps = convert_int(match_reps.group(1))
-            match_reps = re.search(r"there are\s+\d+\s+real representations\s*:(\s+[\w\'\"]+){"+str(n_reps)+"}",
-                                   self.string, re.MULTILINE)
+            match_reps = re.search(
+                r"there are\s+\d+\s+real representations\s*:(\s+[\w\'\"]+){"
+                + str(n_reps)
+                + "}",
+                self.string,
+                re.MULTILINE,
+            )
             if not match_reps:
-                raise RuntimeError("Could not parse correctly the list of representations")
+                raise RuntimeError(
+                    "Could not parse correctly the list of representations"
+                )
             reps = match_reps.group().split()[-n_reps:]
         else:
             n_reps = None
@@ -470,22 +589,23 @@ class Parser:
         if all(x is None for x in (mol_sym_group, n_reps, reps)):
             return None
 
-        d = dict(symbol=mol_sym_group,
-                 n_reps=n_reps,
-                 reps=reps)
+        d = dict(symbol=mol_sym_group, n_reps=n_reps, reps=reps)
 
         return d
 
     @lazy_property
     def cosmo_header(self):
         """
-        Information from the header of the cosmo section (area and volume)
-        when cosmo is activated. Valid for scf and escf/egrad.
+        Extract the information from the header of the cosmo section (area and volume).
+
+        Should return None if cosmo is not activated.
+        Valid for scf and escf/egrad.
 
         Returns:
             dict with "area" and "volume".
         """
-        # See a test file as an example. Selects the section of the cosmo header starting with:
+        # See a test file as an example. Selects the section of the cosmo header
+        # starting with:
         # ==============================================================================
         #                       COSMO switched on
         # ==============================================================================
@@ -496,21 +616,21 @@ class Parser:
         if match is None:
             return None
 
-        d = dict(area=None,
-                 volume=None)
+        d = dict(area=None, volume=None)
 
-        for l in match.group().splitlines():
-            if "area" in l:
-                d["area"] = convert_float(l.split()[-1])
-            elif "volume" in l:
-                d["volume"] = convert_float(l.split()[-1])
+        for line in match.group().splitlines():
+            if "area" in line:
+                d["area"] = convert_float(line.split()[-1])
+            elif "volume" in line:
+                d["volume"] = convert_float(line.split()[-1])
 
         return d
 
     @lazy_property
     def density_functional_data(self):
         """
-        Information relative to DFT calculations (xf functional and grids).
+        Extract the information relative to DFT calculations (xf functional and grids).
+
         Valid for scf, gradient and relax executables.
 
         Returns:
@@ -518,7 +638,8 @@ class Parser:
             "functional_name", "functional_type", the version of "xcfun",
             "spherical_gridsize, number of "gridpoints" for spherical integration.
         """
-        # See a test file as an example. Selects the section of dft information starting with:
+        # See a test file as an example. Selects the section of dft information
+        # starting with:
         #           ------------------
         #           density functional
         #           ------------------
@@ -531,16 +652,22 @@ class Parser:
 
         dft_string = match.group()
 
-        d = dict(functional_msg=None,
-                 functional_name=None,
-                 functional_type=None,
-                 xcfun=None,
-                 spherical_gridsize=None,
-                 gridpoints=None)
+        d = dict(
+            functional_msg=None,
+            functional_name=None,
+            functional_type=None,
+            xcfun=None,
+            spherical_gridsize=None,
+            gridpoints=None,
+        )
 
         # capture the part with the message describing the xc functional.
-        # "iterations will be done with small grid" is present only for modified grids (e.g. m3)
-        r_func = r"--\s+(.*?)\s*(iterations will be done with small grid|spherical integration)"
+        # "iterations will be done with small grid" is present only for
+        # modified grids (e.g. m3)
+        r_func = (
+            r"--\s+(.*?)\s*(iterations will be done with "
+            r"small grid|spherical integration)"
+        )
 
         if "USE AT YOUR OWN RISK" not in dft_string:
             func_match = re.search(r_func, dft_string, re.DOTALL)
@@ -549,7 +676,8 @@ class Parser:
             # The messages have been extracted for all the standard types available
             # in define. Notice that if further xc functional need be parsed, the
             # functional_strings dictionary should be updated accordingly.
-            # Also arbitrary mix will be ignored (when "USE AT YOUR OWN RISK" is present).
+            # Also arbitrary mix will be ignored (when "USE AT YOUR OWN RISK"
+            # is present).
             if func_match:
                 func_msg = func_match.group(1).strip()
                 d["functional_msg"] = func_msg
@@ -560,26 +688,28 @@ class Parser:
                         d["functional_type"] = functional_types[func_name]
                         break
 
-        for l in dft_string.splitlines():
-            if "XCFun" in l and "version" in l:
-                d["xcfun"] = l.split()[-1]
+        for line in dft_string.splitlines():
+            if "XCFun" in line and "version" in line:
+                d["xcfun"] = line.split()[-1]
 
-            if "spherical gridsize" in l:
-                d["spherical_gridsize"] = convert_int(l.split()[-1])
+            if "spherical gridsize" in line:
+                d["spherical_gridsize"] = convert_int(line.split()[-1])
 
-            if "i.e. gridpoints" in l:
-                d["gridpoints"] = convert_int(l.split()[-1])
+            if "i.e. gridpoints" in line:
+                d["gridpoints"] = convert_int(line.split()[-1])
 
         return d
 
     @lazy_property
     def rij_info(self):
         """
-        Information about RI. Valid for ridft and escf/egrad.
+        Extract information about RI.
+
+        Valid for ridft and escf/egrad.
 
         Returns:
-            dict with "marij" to True if marij calculation, "rij_memory", "rik" to True if $rik
-            and "ricore" memory in MB.
+            dict with "marij" to True if marij calculation, "rij_memory",
+            "rik" to True if $rik and "ricore" memory in MB.
         """
         # Parses the section that can start with RI, RI-J or RI-JK
         #            ------------------------
@@ -587,28 +717,27 @@ class Parser:
         #            ------------------------
         r = r"RI[\-JK]* - INFORMATION.*?Memory allocated for.*?$"
 
-        match = re.search(r, self.string, re.DOTALL|re.MULTILINE)
+        match = re.search(r, self.string, re.DOTALL | re.MULTILINE)
 
         if match is None:
             return None
 
         match_str = match.group()
 
-        d = dict(marij=False,
-                 rij_memory=None,
-                 rik=False,
-                 ricore=None)
+        d = dict(marij=False, rij_memory=None, rik=False, ricore=None)
 
-        for l in match_str.splitlines():
-            if "Multipole Accelerated RI-J" in l:
+        for line in match_str.splitlines():
+            if "Multipole Accelerated RI-J" in line:
                 d["marij"] = True
 
             # stopping at "RI" should match the line for both ridft and escf
-            if "Memory allocated for RI" in l:
-                d["rij_memory"] = convert_int(l.split()[-2])
+            if "Memory allocated for RI" in line:
+                d["rij_memory"] = convert_int(line.split()[-2])
 
-        match_rik_1 = re.search("BLOCKING OF .*?MOS FOR RI-K", self.string, re.DOTALL) is not None # ridft
-        match_rik_2 = "FOUND RI-K FLAG" in self.string # escf
+        match_rik_1 = (
+            re.search("BLOCKING OF .*?MOS FOR RI-K", self.string, re.DOTALL) is not None
+        )  # ridft
+        match_rik_2 = "FOUND RI-K FLAG" in self.string  # escf
         d["rik"] = match_rik_1 or match_rik_2
 
         # ricore in ridft (is in another section)
@@ -628,13 +757,14 @@ class Parser:
     @lazy_property
     def dftd(self):
         """
-        Information about dispersion correction in dft.
+        Extract information about dispersion correction in dft.
+
         Valid for scf executables.
 
         Returns:
-            dict with the type of "correction" (string) and the value of correction "en_corr".
+            dict with the type of "correction" (string) and the value of
+            correction "en_corr".
         """
-
         # assume that the DFT-D part is between these two sections
         r = r"nuclear repulsion energy(.*?)-S,T\+V- integrals"
 
@@ -648,17 +778,20 @@ class Parser:
         if "DFT-D" not in match_str:
             return None
 
-        d = dict(correction=None,
-                 en_corr=None)
+        d = dict(correction=None, en_corr=None)
 
-        # The output changes depending on the type of correction. Is not always mentioned.
+        # The output changes depending on the type of correction.
+        # Is not always mentioned.
         # For D1 and D2 should be deduced from the value of the damping.
         if "DFT-D V3(BJ)" in match_str:
             d["correction"] = "D3-BJ"
         elif "DFT-D V3" in match_str:
             d["correction"] = "D3"
         else:
-            damp_l = re.search(r"exponent of damping function \(d\)\s+(" + float_number_re + r")", match_str)
+            damp_l = re.search(
+                r"exponent of damping function \(d\)\s+(" + float_number_re + r")",
+                match_str,
+            )
             if damp_l:
                 damp_val = convert_float(damp_l.group(1))
                 if damp_val == 20:
@@ -666,7 +799,10 @@ class Parser:
                 elif damp_val == 23:
                     d["correction"] = "D1"
 
-        corr_l = re.search(r"empirical dispersive energy correction[\s=]+(" + float_number_re + r")", match_str)
+        corr_l = re.search(
+            r"empirical dispersive energy correction[\s=]+(" + float_number_re + r")",
+            match_str,
+        )
 
         if corr_l:
             d["en_corr"] = convert_float(corr_l.group(1))
@@ -676,15 +812,18 @@ class Parser:
     @lazy_property
     def pre_scf_run(self):
         """
-        Information extracted about the scf calculation printed before running
-        the scf loop. Valid only for scf executables.
+        Extract "pre-scf loop" information extracted about the scf calculation.
+
+        The information extracted is printed before running the scf loop.
+
+        Valid only for scf executables.
 
         Returns:
-            dict with "diis" True if activated, diis_error_vect", "conv_tot_en", "conv_one_e_en",
-            "virtual_orbital_shift_on", "virtual_orbital_shift_limit", "orbital_characterization",
+            dict with "diis" True if activated, diis_error_vect", "conv_tot_en",
+            "conv_one_e_en", "virtual_orbital_shift_on",
+            "virtual_orbital_shift_limit", "orbital_characterization",
             "restart_file", "n_occupied_orbitals".
         """
-
         # large portion to include several sections
         r = r"basis set information(.*?)ITERATION  ENERGY"
 
@@ -695,64 +834,68 @@ class Parser:
 
         match_str = match.group(1)
 
-        d = dict(diis=False,
-                 diis_error_vect=None,
-                 conv_tot_en=None,
-                 conv_one_e_en=None,
-                 virtual_orbital_shift_on=False,
-                 virtual_orbital_shift_limit=None,
-                 orbital_characterization=None,
-                 restart_file=None,
-                 n_occupied_orbitals=None)
+        d = dict(
+            diis=False,
+            diis_error_vect=None,
+            conv_tot_en=None,
+            conv_one_e_en=None,
+            virtual_orbital_shift_on=False,
+            virtual_orbital_shift_limit=None,
+            orbital_characterization=None,
+            restart_file=None,
+            n_occupied_orbitals=None,
+        )
 
-        # analyze the string line by line to find those corresponding to the values to parse.
-        for l in match_str.splitlines():
-            if "DIIS switched on" in l:
+        # analyze the string line by line to find those corresponding to the
+        # values to parse.
+        for line in match_str.splitlines():
+            if "DIIS switched on" in line:
                 d["diis"] = True
-                d["diis_error_vect"] = l.split()[-1]
+                d["diis_error_vect"] = line.split()[-1]
 
-            if "increment of total energy" in l:
-                d["conv_tot_en"] = convert_float(l.split()[-1])
+            if "increment of total energy" in line:
+                d["conv_tot_en"] = convert_float(line.split()[-1])
 
-            if "increment of one-electron energy" in l:
-                d["conv_one_e_en"] = convert_float(l.split()[-1])
+            if "increment of one-electron energy" in line:
+                d["conv_one_e_en"] = convert_float(line.split()[-1])
 
-            if "automatic virtual orbital shift switched on" in l:
+            if "automatic virtual orbital shift switched on" in line:
                 d["virtual_orbital_shift_on"] = True
 
-            if "shift if e(lumo)-e(homo)" in l:
-                d["virtual_orbital_shift_limit"] = convert_float(l.split()[-1])
+            if "shift if e(lumo)-e(homo)" in line:
+                d["virtual_orbital_shift_limit"] = convert_float(line.split()[-1])
 
-            if "orbital characterization" in l:
-                d["orbital_characterization"] = l.split()[-1]
+            if "orbital characterization" in line:
+                d["orbital_characterization"] = line.split()[-1]
 
-            if "DSCF restart information will be dumped onto file" in l:
-                d["restart_file"] = l.split()[-1]
+            if "DSCF restart information will be dumped onto file" in line:
+                d["restart_file"] = line.split()[-1]
 
-            if "number of occupied orbitals" in l:
-                d["n_occupied_orbitals"] = convert_int(l.split()[-1])
+            if "number of occupied orbitals" in line:
+                d["n_occupied_orbitals"] = convert_int(line.split()[-1])
 
         return d
 
     @lazy_property
     def scf_iterations(self):
         """
-        Data for each iteration of the scf loop.
+        Extract the data for each iteration of the scf loop.
+
         Valid only for scf executables.
 
         Returns:
-            dict with the list of values extracted for each scf step "energies", "dampings".
-            The value of the "first_index" and "n_steps". "converged" True if the calculation is converged.
+            dict with the list of values extracted for each scf step
+            "energies", "dampings". The value of the "first_index" and "n_steps".
+            "converged" True if the calculation is converged.
         """
-
         # parsing an iteration of a block like:
         #                                               current damping :  0.700
-        #  ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     RMS[dD(SAO)]   TOL
-        #    1  -76.143808666911    -124.43866883     38.987705388    0.000D+00 0.175D-08
+        #  ITERATION  ENERGY         1e-ENERGY       2e-ENERGY    RMS[dD(SAO)]   TOL
+        #    1  -76.143808666911   -124.43866883    38.987705388   0.000D+00 0.175D-08
 
         std_float = r"\s+(" + float_number_re + ")"
         d_float = r"\s+(" + float_number_d_re + ")"
-        r = r"^\s*(\d+)" + std_float*3 + d_float*2+r"\s*$"
+        r = r"^\s*(\d+)" + std_float * 3 + d_float * 2 + r"\s*$"
 
         match_l = re.findall(r, self.string, re.MULTILINE)
 
@@ -761,34 +904,38 @@ class Parser:
 
         iter_indices = []
         energies = []
-        for l in match_l:
-            iter_indices.append(convert_int(l[0]))
-            energies.append(convert_float(l[1]))
+        for line in match_l:
+            iter_indices.append(convert_int(line[0]))
+            energies.append(convert_float(line[1]))
 
         # dscf has a ":" while ridft as a "="
-        dampings = re.findall(r"current damping[\s:=]+"+std_float, self.string)
+        dampings = re.findall(r"current damping[\s:=]+" + std_float, self.string)
         if dampings:
             dampings = [convert_float(d) for d in dampings]
 
         converged = "convergence criteria satisfied after " in self.string
 
-        d = dict(energies=energies,
-                 first_index=iter_indices[0],
-                 n_steps=len(iter_indices),
-                 dampings=dampings,
-                 converged=converged)
+        d = dict(
+            energies=energies,
+            first_index=iter_indices[0],
+            n_steps=len(iter_indices),
+            dampings=dampings,
+            converged=converged,
+        )
 
         return d
 
     @lazy_property
     def scf_energies(self):
         """
-        Final energies for scf calculation.
+        Extract the final energies for scf calculation.
+
         Valid only for scf executables.
 
         Returns:
-            dict with the energy and its contributions: "total_energy", "kinetic_energy",
-            "potential_energy", "virial_theorem", "wavefunction_norm".
+            dict with the energy and its contributions: "total_energy",
+            "kinetic_energy", "potential_energy", "virial_theorem",
+            "wavefunction_norm".
         """
         # Parsing the section:
         #              ------------------------------------------
@@ -806,16 +953,18 @@ class Parser:
         if match is None:
             return None
 
-        d = dict(total_energy=None,
-                 kinetic_energy=None,
-                 potential_energy=None,
-                 virial_theorem=None,
-                 wavefunction_norm=None)
+        d = dict(
+            total_energy=None,
+            kinetic_energy=None,
+            potential_energy=None,
+            virial_theorem=None,
+            wavefunction_norm=None,
+        )
 
-        for l in match.group().splitlines():
+        for line in match.group().splitlines():
             for k in d.keys():
-                if " ".join(k.split("_")) in l:
-                    d[k] = convert_float(l.split()[-2])
+                if " ".join(k.split("_")) in line:
+                    d[k] = convert_float(line.split()[-2])
                     break
 
         return d
@@ -823,12 +972,12 @@ class Parser:
     @lazy_property
     def riper_scf_energies(self):
         """
-        Final energies for scf calculation with riper executable.
+        Extract the final energies for scf calculation with riper executable.
 
         Returns:
-            dict with the energy and its contributions: "total_energy", "kinetic_energy",
-            "coulomb_energy", "xc_energy", "ts_energy", "free_energy"
-            and "sigma0_energy".
+            dict with the energy and its contributions: "total_energy",
+            "kinetic_energy", "coulomb_energy", "xc_energy", "ts_energy",
+            "free_energy" and "sigma0_energy".
         """
         # Parsing the section:
         #               +--------------------------------------------------+
@@ -843,9 +992,8 @@ class Parser:
         #               | FREE  ENERGY         =         -76.2189128032    |
         #               | ENERGY (sigma->0)    =         -76.2189128032    |
         #               +--------------------------------------------------+
-
-        # Note that "FINAL ENERGIES" is needed here because the rest of the table is also
-        # provided for each scf iteration.
+        # Note that "FINAL ENERGIES" is needed here because the rest of the table is
+        # also provided for each scf iteration.
         r = r"FINAL ENERGIES\s+\|\s+\+-{50,}\+\s+\|\s+KINETIC ENERGY(.*?)\+-{50,}\+"
 
         match = re.search(r, self.string, re.DOTALL)
@@ -853,50 +1001,60 @@ class Parser:
         if match is None:
             return None
 
-        d = dict(total_energy=None,
-                 kinetic_energy=None,
-                 coulomb_energy=None,
-                 xc_energy=None,
-                 ts_energy=None,
-                 free_energy=None,
-                 sigma0_energy=None)
+        d = dict(
+            total_energy=None,
+            kinetic_energy=None,
+            coulomb_energy=None,
+            xc_energy=None,
+            ts_energy=None,
+            free_energy=None,
+            sigma0_energy=None,
+        )
 
-        for l in match.group().splitlines():
-            if 'KINETIC ENERGY' in l:
-                d['kinetic_energy'] = convert_float(l.split('=')[1].split()[-2])
-            elif 'COULOMB ENERGY' in l:
-                d['coulomb_energy'] = convert_float(l.split('=')[1].split()[-2])
-            elif 'EXCH. & CORR. ENERGY' in l:
-                d['xc_energy'] = convert_float(l.split('=')[1].split()[-2])
-            elif 'TOTAL ENERGY' in l:
-                d['total_energy'] = convert_float(l.split('=')[1].split()[-2])
-            elif 'T*S' in l:
-                d['ts_energy'] = convert_float(l.split('=')[1].split()[-2])
-            elif 'FREE  ENERGY' in l:
-                d['free_energy'] = convert_float(l.split('=')[1].split()[-2])
-            elif 'ENERGY (sigma->0)' in l:
-                d['sigma0_energy'] = convert_float(l.split('=')[1].split()[-2])
+        for line in match.group().splitlines():
+            if "KINETIC ENERGY" in line:
+                d["kinetic_energy"] = convert_float(line.split("=")[1].split()[-2])
+            elif "COULOMB ENERGY" in line:
+                d["coulomb_energy"] = convert_float(line.split("=")[1].split()[-2])
+            elif "EXCH. & CORR. ENERGY" in line:
+                d["xc_energy"] = convert_float(line.split("=")[1].split()[-2])
+            elif "TOTAL ENERGY" in line:
+                d["total_energy"] = convert_float(line.split("=")[1].split()[-2])
+            elif "T*S" in line:
+                d["ts_energy"] = convert_float(line.split("=")[1].split()[-2])
+            elif "FREE  ENERGY" in line:
+                d["free_energy"] = convert_float(line.split("=")[1].split()[-2])
+            elif "ENERGY (sigma->0)" in line:
+                d["sigma0_energy"] = convert_float(line.split("=")[1].split()[-2])
 
         return d
 
     @lazy_property
     def cosmo_results(self):
         """
-        Results of cosmo.
+        Extract the results of cosmo.
+
         Valid only for scf executables.
 
         Returns:
-            dict with several subdictionaries: "parameters" ("nppa", "nspa", "nsph", "npspher", "disex", "disex2",
-            "rsolv", "routf", "phsran", "ampran", "cavity", "epsilon", "refind", "fepsi"), "screening_charge"
-            ("cosmo", "correction", "total"), "energies" ("total_energy", "total_energy_oc_corr",
-            "dielectric_energy", "dielectric_energy_oc_corr"), "element_radius" ("radius, "sites").
+            dict with several subdictionaries: "parameters" ("nppa", "nspa", "nsph",
+            "npspher", "disex", "disex2", "rsolv", "routf", "phsran", "ampran",
+            "cavity", "epsilon", "refind", "fepsi"), "screening_charge"
+            ("cosmo", "correction", "total"), "energies"
+            ("total_energy", "total_energy_oc_corr", "dielectric_energy",
+            "dielectric_energy_oc_corr"), "element_radius" ("radius, "sites").
         """
         # See test file for an example. Parses the section starting with:
         #  ==============================================================================
         #                                   COSMO RESULTS
         #  ==============================================================================
-        # and splits in block for the section "CAVITY VOLUME/AREA", "SCREENING CHARGE", "ENERGIES", "ELEMENT RADIUS"
-        r = r"COSMO RESULTS\s*(===)+.*?PARAMETER:(.*?)CAVITY VOLUME/AREA(.*?)SCREENING CHARGE:(.*?)ENERGIES(.*?)ELEMENT RADIUS \[A\]: ATOM LIST(.*?)(===)+"
+        # and splits in block for the section "CAVITY VOLUME/AREA", "SCREENING CHARGE",
+        # "ENERGIES", "ELEMENT RADIUS"
+        r = (
+            r"COSMO RESULTS\s*(===)+.*?PARAMETER:(.*?)CAVITY VOLUME/AREA(.*?)"
+            r"SCREENING CHARGE:(.*?)ENERGIES(.*?)"
+            r"ELEMENT RADIUS \[A\]: ATOM LIST(.*?)(===)+"
+        )
 
         match = re.search(r, self.string, re.DOTALL)
 
@@ -906,90 +1064,105 @@ class Parser:
         # In this section a list of keyword_name: value are parsed, one for each line.
         # this dictionary allows to loop over all the lines and cast the value to the
         # correct type.
-        key_types_parameters = dict(nppa=int,
-                                    nspa=int,
-                                    nsph=int,
-                                    nps=int,
-                                    npspher=int,
-                                    disex=float,
-                                    disex2=float,
-                                    rsolv=float,
-                                    routf=float,
-                                    phsran=float,
-                                    ampran=float,
-                                    cavity=str,
-                                    epsilon=str,
-                                    refind=float,
-                                    fepsi=float)
+        key_types_parameters = dict(
+            nppa=int,
+            nspa=int,
+            nsph=int,
+            nps=int,
+            npspher=int,
+            disex=float,
+            disex2=float,
+            rsolv=float,
+            routf=float,
+            phsran=float,
+            ampran=float,
+            cavity=str,
+            epsilon=str,
+            refind=float,
+            fepsi=float,
+        )
 
         d_parameters = {k: None for k in key_types_parameters.keys()}
 
-        for l in match.group(2).splitlines():
+        for line in match.group(2).splitlines():
             for k, t in key_types_parameters.items():
                 # NB here the regex is tailored to explicitly capture the string that
                 # need to be parsed. For example:
                 # disex2: 3538.50
                 # rsolv [A]: 1.3000
                 # if more are added the regex may need an update.
-                if re.search(k+r"[\s\[A\]]*:", l):
-                    d_parameters[k] = t(l.split()[-1])
+                if re.search(k + r"[\s\[A\]]*:", line):
+                    d_parameters[k] = t(line.split()[-1])
                     break
 
-        d_screening = dict(cosmo=None,
-                           correction=None,
-                           total=None)
+        d_screening = dict(cosmo=None, correction=None, total=None)
 
-        for l in match.group(4).splitlines():
-            if "cosmo" in l:
-                d_screening["cosmo"] = convert_float(l.split()[-1])
-            if "correction" in l:
-                d_screening["correction"] = convert_float(l.split()[-1])
-            if "total" in l:
-                d_screening["total"] = convert_float(l.split()[-1])
+        for line in match.group(4).splitlines():
+            if "cosmo" in line:
+                d_screening["cosmo"] = convert_float(line.split()[-1])
+            if "correction" in line:
+                d_screening["correction"] = convert_float(line.split()[-1])
+            if "total" in line:
+                d_screening["total"] = convert_float(line.split()[-1])
 
-        d_energies = dict(total_energy=None,
-                          total_energy_oc_corr=None,
-                          dielectric_energy=None,
-                          dielectric_energy_oc_corr=None)
+        d_energies = dict(
+            total_energy=None,
+            total_energy_oc_corr=None,
+            dielectric_energy=None,
+            dielectric_energy_oc_corr=None,
+        )
 
-        for l in match.group(5).splitlines():
-            if re.search(r"Total energy\s*=", l):
-                d_energies["total_energy"] = convert_float(l.split()[-1])
-            if re.search(r"Total energy \+ OC corr\.\s*=",l):
-                d_energies["total_energy_oc_corr"] = convert_float(l.split()[-1])
-            if re.search(r"Dielectric energy\s*=", l):
-                d_energies["dielectric_energy"] = convert_float(l.split()[-1])
-            if re.search(r"Diel\. energy \+ OC corr\.\s+=", l):
-                d_energies["dielectric_energy_oc_corr"] = convert_float(l.split()[-1])
+        for line in match.group(5).splitlines():
+            if re.search(r"Total energy\s*=", line):
+                d_energies["total_energy"] = convert_float(line.split()[-1])
+            if re.search(r"Total energy \+ OC corr\.\s*=", line):
+                d_energies["total_energy_oc_corr"] = convert_float(line.split()[-1])
+            if re.search(r"Dielectric energy\s*=", line):
+                d_energies["dielectric_energy"] = convert_float(line.split()[-1])
+            if re.search(r"Diel\. energy \+ OC corr\.\s+=", line):
+                d_energies["dielectric_energy_oc_corr"] = convert_float(
+                    line.split()[-1]
+                )
 
         d_element_radius = {}
 
-        for l in match.group(6).splitlines():
-            if not l.strip():
+        for line in match.group(6).splitlines():
+            if not line.strip():
                 continue
 
-            split = l.split()
-            # list of sites are separated by "," and can be defined as intervals with "-"
-            # example: 1,3-5,7
+            split = line.split()
+            # list of sites are separated by "," and can be defined as
+            # intervals with "-". Example: 1,3-5,7
             sites = []
             for s in split[2].split(","):
                 if "-" in s:
                     sites_split = s.split("-")
-                    sites.extend(range(convert_int(sites_split[0]), convert_int(sites_split[1]) + 1))
+                    sites.extend(
+                        range(
+                            convert_int(sites_split[0]), convert_int(sites_split[1]) + 1
+                        )
+                    )
                 else:
                     sites.append(convert_int(s))
-            d_element_radius[split[0]] = {"radius": convert_float(split[1].replace(":", "")),
-                                          "sites": sites}
+            d_element_radius[split[0]] = {
+                "radius": convert_float(split[1].replace(":", "")),
+                "sites": sites,
+            }
 
-        d = dict(parameters=d_parameters, screening_charge=d_screening,
-                 energies=d_energies, element_radius=d_element_radius)
+        d = dict(
+            parameters=d_parameters,
+            screening_charge=d_screening,
+            energies=d_energies,
+            element_radius=d_element_radius,
+        )
 
         return d
 
     @lazy_property
     def electrostatic_moments(self):
         """
-        Information about the electrostatic moment (dipole and quadrupole).
+        Extract the information about the electrostatic moment (dipole and quadrupole).
+
         Valid only for scf executables.
 
         Returns:
@@ -999,9 +1172,12 @@ class Parser:
         #  ==============================================================================
         #                            electrostatic moments
         #  ==============================================================================
-        r = r"electrostatic moments\s*(==)+.*?charge\s*-+(.*?)-+\s*dipole moment(.*?)" \
+        r = (
+            r"electrostatic moments\s*(==)+.*?charge\s*-+(.*?)-+\s*dipole moment(.*?)"
             r"quadrupole moment(.*?anisotropy=\s*" + float_number_all_re + r")"
-        # does not stop at "============" since there might be the PABOON section before that.
+        )
+        # does not stop at "============" since there might be the
+        # PABOON section before that.
 
         match = re.search(r, self.string, re.DOTALL)
 
@@ -1010,47 +1186,47 @@ class Parser:
 
         d = {"unrestricted_electrons": None}
 
-        for l in match.group(2).splitlines():
-            if not l.strip():
+        for line in match.group(2).splitlines():
+            if not line.strip():
                 continue
-            elif "a-b" in l:
-                d["unrestricted_electrons"] = convert_float(l.split()[-1])
+            elif "a-b" in line:
+                d["unrestricted_electrons"] = convert_float(line.split()[-1])
             else:
-                d["charge"] = convert_float(l.split()[-1])
+                d["charge"] = convert_float(line.split()[-1])
 
         dipole = [0, 0, 0]
         d_dipole = {}
-        for l in match.group(3).splitlines():
-            if " x " in l:
-                dipole[0] = convert_float(l.split()[-1])
-            elif " y " in l:
-                dipole[1] = convert_float(l.split()[-1])
-            elif " z " in l:
-                dipole[2] = convert_float(l.split()[-1])
-            elif "| dipole moment |" in l:
-                d_dipole["norm"] = convert_float(l.split()[5])
+        for line in match.group(3).splitlines():
+            if " x " in line:
+                dipole[0] = convert_float(line.split()[-1])
+            elif " y " in line:
+                dipole[1] = convert_float(line.split()[-1])
+            elif " z " in line:
+                dipole[2] = convert_float(line.split()[-1])
+            elif "| dipole moment |" in line:
+                d_dipole["norm"] = convert_float(line.split()[5])
 
         d_dipole["moment"] = dipole
 
-        quadrupole = np.zeros((3,3))
+        quadrupole = np.zeros((3, 3))
         d_quadrupole = {}
-        for l in match.group(4).splitlines():
-            if " xx " in l:
-                quadrupole[0, 0] = convert_float(l.split()[-1])
-            elif " yy " in l:
-                quadrupole[1, 1] = convert_float(l.split()[-1])
-            elif " zz " in l:
-                quadrupole[2, 2] = convert_float(l.split()[-1])
-            elif " xy " in l:
-                quadrupole[0, 1] = quadrupole[1, 0] = convert_float(l.split()[-1])
-            elif " xz " in l:
-                quadrupole[0, 2] = quadrupole[2, 0] = convert_float(l.split()[-1])
-            elif " yz " in l:
-                quadrupole[1, 2] = quadrupole[2, 1] = convert_float(l.split()[-1])
-            elif "trace=" in l:
-                d_quadrupole["trace"] = 3 * convert_float(l.split()[-1])
-            elif "anisotropy" in l:
-                d_quadrupole["anisotropy"] = convert_float(l.split()[-1])
+        for line in match.group(4).splitlines():
+            if " xx " in line:
+                quadrupole[0, 0] = convert_float(line.split()[-1])
+            elif " yy " in line:
+                quadrupole[1, 1] = convert_float(line.split()[-1])
+            elif " zz " in line:
+                quadrupole[2, 2] = convert_float(line.split()[-1])
+            elif " xy " in line:
+                quadrupole[0, 1] = quadrupole[1, 0] = convert_float(line.split()[-1])
+            elif " xz " in line:
+                quadrupole[0, 2] = quadrupole[2, 0] = convert_float(line.split()[-1])
+            elif " yz " in line:
+                quadrupole[1, 2] = quadrupole[2, 1] = convert_float(line.split()[-1])
+            elif "trace=" in line:
+                d_quadrupole["trace"] = 3 * convert_float(line.split()[-1])
+            elif "anisotropy" in line:
+                d_quadrupole["anisotropy"] = convert_float(line.split()[-1])
 
         d_quadrupole["moment"] = quadrupole.tolist()
 
@@ -1062,7 +1238,8 @@ class Parser:
     @lazy_property
     def timings(self):
         """
-        Cpu and wall time for the calculation.
+        Extract the cpu and wall time for the calculation.
+
         Valid for all the Turbomole executables.
 
         Returns:
@@ -1076,22 +1253,25 @@ class Parser:
         if not match:
             return None
 
-        d = dict(cpu_time=None,
-                 wall_time=None,
-                 end_time=datetime.datetime.strptime(match.group(2), date_format))
+        d = dict(
+            cpu_time=None,
+            wall_time=None,
+            end_time=datetime.datetime.strptime(match.group(2), date_format),
+        )
 
-        for l in match.group(1).splitlines():
-            if "cpu-time" in l:
-                d["cpu_time"] = convert_time_string(l.split(":")[1])
-            if "wall-time" in l:
-                d["wall_time"] = convert_time_string(l.split(":")[1])
+        for line in match.group(1).splitlines():
+            if "cpu-time" in line:
+                d["cpu_time"] = convert_time_string(line.split(":")[1])
+            if "wall-time" in line:
+                d["wall_time"] = convert_time_string(line.split(":")[1])
 
         return d
 
     @lazy_property
     def s2(self):
         """
-        Value S^2 of the spin.
+        Extract the value S^2 of the spin.
+
         Valid only for scf executables.
 
         Returns:
@@ -1109,14 +1289,13 @@ class Parser:
 
     @lazy_property
     def is_uhf(self):
-        """
-        True if UHF calculation.
+        """Determine if the calculation is a UHF one.
+
         Valid for scf, gradient and escf executables.
 
         Returns:
             bool.
         """
-
         # "mode" appears in dscf and escf, while "modus" in ridft and grad.
         is_uhf = re.search("UHF (mode|modus) switched on", self.string) is not None
         return is_uhf
@@ -1124,14 +1303,14 @@ class Parser:
     @lazy_property
     def fermi(self):
         """
-        Information about smearing of occupations.
+        Extract the information about smearing of occupations.
+
         Valid only for scf executables.
 
         Returns:
-            dict with "initial_elec_temp", "final_elec_temp", "annealing_homo_lumo_gap_limit",
-            "smearing_de_limit".
+            dict with "initial_elec_temp", "final_elec_temp",
+            "annealing_homo_lumo_gap_limit", "smearing_de_limit".
         """
-
         # parses the section:
         #     Fermi smearing switched on
         #       Initial electron temperature:   500.00
@@ -1140,63 +1319,70 @@ class Parser:
         #        Annealing if HOMO-LUMO gap <  0.2E+00
         #       Smearing switched off if DE <  0.1E-02
 
-        # this shows up before the start of the scf iterations. Since the beginning of that
-        # may change (at least depending if it's a new calculation or a restart)
-        # the end of the regex is on the last line and the value.
-        r = r"Fermi smearing switched on.*?Smearing switched off if DE\s+<\s+" + float_number_e_re
+        # this shows up before the start of the scf iterations. Since the beginning
+        # of that may change (at least depending if it's a new calculation or a
+        # restart) the end of the regex is on the last line and the value.
+        r = (
+            r"Fermi smearing switched on.*?Smearing switched off if DE\s+<\s+"
+            + float_number_e_re
+        )
 
         match = re.search(r, self.string, re.DOTALL)
 
         if not match:
             return None
 
-        d = dict(initial_elec_temp=None,
-                 final_elec_temp=None,
-                 annealing_homo_lumo_gap_limit=None,
-                 smearing_de_limit=None)
+        d = dict(
+            initial_elec_temp=None,
+            final_elec_temp=None,
+            annealing_homo_lumo_gap_limit=None,
+            smearing_de_limit=None,
+        )
 
-        for l in match.group().splitlines():
-            if "Initial electron temperature" in l:
-                d["initial_elec_temp"] = convert_float(l.split()[-1])
-            if "Final electron temperature" in l:
-                d["final_elec_temp"] = convert_float(l.split()[-1])
-            if "Annealing factor" in l:
-                d["annealing_factor"] = convert_float(l.split()[-1])
-            if "Annealing if HOMO-LUMO gap" in l:
-                d["annealing_homo_lumo_gap_limit"] = convert_float(l.split()[-1])
-            if "Smearing switched off if DE" in l:
-                d["smearing_de_limit"] = convert_float(l.split()[-1])
+        for line in match.group().splitlines():
+            if "Initial electron temperature" in line:
+                d["initial_elec_temp"] = convert_float(line.split()[-1])
+            if "Final electron temperature" in line:
+                d["final_elec_temp"] = convert_float(line.split()[-1])
+            if "Annealing factor" in line:
+                d["annealing_factor"] = convert_float(line.split()[-1])
+            if "Annealing if HOMO-LUMO gap" in line:
+                d["annealing_homo_lumo_gap_limit"] = convert_float(line.split()[-1])
+            if "Smearing switched off if DE" in line:
+                d["smearing_de_limit"] = convert_float(line.split()[-1])
 
         return d
 
     @lazy_property
     def integral(self):
         """
-        Thresholds for integrals.
+        Extract the thresholds for integrals.
+
         Valid for scf, gradient and escf executables.
 
         Returns:
             dict with "integral_neglect_threshold", "thize", "thime".
         """
-
         # parses the section
         #  integral neglect threshold       :  0.18E-08
         #  integral storage threshold THIZE :  0.10E-04
         #  integral storage threshold THIME :         5
 
-        d = dict(integral_neglect_threshold=None,
-                 thize=None,
-                 thime=None)
+        d = dict(integral_neglect_threshold=None, thize=None, thime=None)
 
         match = re.search(r"integral neglect threshold.*?$", self.string, re.MULTILINE)
         if match is not None:
             d["integral_neglect_threshold"] = convert_float(match.group().split()[-1])
 
-        match = re.search(r"integral storage threshold THIZE.*?$", self.string, re.MULTILINE)
+        match = re.search(
+            r"integral storage threshold THIZE.*?$", self.string, re.MULTILINE
+        )
         if match is not None:
             d["thize"] = convert_float(match.group().split()[-1])
 
-        match = re.search(r"integral storage threshold THIME.*?$", self.string, re.MULTILINE)
+        match = re.search(
+            r"integral storage threshold THIME.*?$", self.string, re.MULTILINE
+        )
         if match is not None:
             d["thime"] = convert_int(match.group().split()[-1])
 
@@ -1208,18 +1394,22 @@ class Parser:
     @lazy_property
     def pre_escf_run(self):
         """
-        Information extracted about the escf calculation printed before running
-        the escf iterations. Valid for escf and egrad executables.
+        Extract the "pre-escf iterations" information about the escf calculation.
+
+        This information is printed before running the escf iterations.
+        Valid for escf and egrad executables.
 
         Returns:
-            dict with "calc_type", "residuum_convergence_criterium", "n_occupied_orbitals",
-            "orbital_characterization", "max_davidson_iter", "machine_precision", "max_core_mem",
+            dict with "calc_type", "residuum_convergence_criterium",
+            "n_occupied_orbitals", "orbital_characterization", "max_davidson_iter",
+            "machine_precision", "max_core_mem",
             "max_cao_basis_vectors", "max_treated_vectors", "irrep_data".
         """
-        # See test files for examples. The values spread over a relatively large number of lines
-        # and the lines are matched individually.
+        # See test files for examples. The values spread over a relatively
+        # large number of lines and the lines are matched individually.
 
-        # large portion of the code considered to accomodate the various pieces of information.
+        # large portion of the code considered to accommodate the various
+        # pieces of information.
         r = r"basis set information.+Iteration\s+IRREP\s+Converged"
 
         match = re.search(r, self.string, re.DOTALL)
@@ -1229,24 +1419,30 @@ class Parser:
 
         match_str = match.group()
 
-        d = dict(calc_type=None,
-                 residuum_convergence_criterium=None,
-                 n_occupied_orbitals=None,
-                 orbital_characterization=None,
-                 max_davidson_iter=None,
-                 machine_precision=None,
-                 max_core_mem=None,
-                 max_cao_basis_vectors=None,
-                 max_treated_vectors=None,
-                 irrep_data=None)
+        d = dict(
+            calc_type=None,
+            residuum_convergence_criterium=None,
+            n_occupied_orbitals=None,
+            orbital_characterization=None,
+            max_davidson_iter=None,
+            machine_precision=None,
+            max_core_mem=None,
+            max_cao_basis_vectors=None,
+            max_treated_vectors=None,
+            irrep_data=None,
+        )
 
         match = re.search(r"^(.*)[\-\s]CALCULATION\s+", match_str, re.MULTILINE)
         if match is not None:
-            d["calc_type"] =match.group(1).strip()
+            d["calc_type"] = match.group(1).strip()
 
-        match = re.search(r"residuum convergence criterium.*?$", match_str, re.MULTILINE)
+        match = re.search(
+            r"residuum convergence criterium.*?$", match_str, re.MULTILINE
+        )
         if match is not None:
-            d["residuum_convergence_criterium"] = convert_float(match.group().split()[-1])
+            d["residuum_convergence_criterium"] = convert_float(
+                match.group().split()[-1]
+            )
 
         match = re.search(r"number of occupied orbitals.*?$", match_str, re.MULTILINE)
         if match is not None:
@@ -1256,11 +1452,13 @@ class Parser:
         if match is not None:
             d["orbital_characterization"] = match.group().split()[-1]
 
-        match = re.search(r"maximum number of Davidson iterations set to.*?$", match_str, re.MULTILINE)
+        match = re.search(
+            r"maximum number of Davidson iterations set to.*?$", match_str, re.MULTILINE
+        )
         if match is not None:
             d["max_davidson_iter"] = convert_int(match.group().split()[-1])
 
-        match = re.search(r"machine precision.*?$", match_str,re.MULTILINE)
+        match = re.search(r"machine precision.*?$", match_str, re.MULTILINE)
         if match is not None:
             d["machine_precision"] = convert_float(match.group().split()[-1])
 
@@ -1272,20 +1470,30 @@ class Parser:
         if match is not None:
             d["max_cao_basis_vectors"] = convert_int(match.group(1))
 
-        match = re.search(r"maximum number of simultaneously treated vectors.*?$", match_str, re.MULTILINE)
+        match = re.search(
+            r"maximum number of simultaneously treated vectors.*?$",
+            match_str,
+            re.MULTILINE,
+        )
         if match is not None:
             d["max_treated_vectors"] = convert_int(match.group().split()[-1])
 
-        r = r"IRREP\s+tensor\s+space\s+dimension\s+number\s+of\s+roots(.+)maximum number of Davidson"
+        r = (
+            r"IRREP\s+tensor\s+space\s+dimension\s+number\s+of\s+roots(.+)"
+            r"maximum number of Davidson"
+        )
         match = re.search(r, match_str, re.DOTALL)
         if match is not None:
             irrep_data = {}
-            for l in match.group(1).splitlines():
-                l = l.strip()
-                if not l:
+            for line in match.group(1).splitlines():
+                line = line.strip()
+                if not line:
                     continue
-                split = l.split()
-                irrep_data[split[0]] = {'tensor_space_dim': convert_int(split[1]), 'n_roots': convert_int(split[2])}
+                split = line.split()
+                irrep_data[split[0]] = {
+                    "tensor_space_dim": convert_int(split[1]),
+                    "n_roots": convert_int(split[2]),
+                }
 
             d["irrep_data"] = irrep_data
 
@@ -1294,12 +1502,15 @@ class Parser:
     @lazy_property
     def escf_iterations(self):
         """
-        Data for each iteration of the escf loop.
+        Extract the data for each iteration of the escf loop.
+
         Valid for escf and egrad executables.
 
         Returns:
-            dict "converged" to True if the calculation is converged and a list of "steps". One element of the list for
-                each escf step. One element of the sublist for each irrep. The inner list contains the convergence information:
+            dict "converged" to True if the calculation is converged and a list
+                of "steps". One element of the list for each escf step.
+                One element of the sublist for each irrep. The inner list contains
+                the convergence information:
                 [name of the irrep, number of converged roots, euclidean residual norm].
         """
         # splits the different iterations, parsing the section starting with
@@ -1309,7 +1520,10 @@ class Parser:
         #     1       a1       0        3.367862225107080D-01
         #             a2       9        6.722471267583007D-14
 
-        r = r"Iteration\s+IRREP\s+Converged\s+Max\.\s+Euclidean\s+roots\s+residual\s+norm\s+(.*?)(converged|Warning)"
+        r = (
+            r"Iteration\s+IRREP\s+Converged\s+Max\.\s+Euclidean\s+roots\s+"
+            r"residual\s+norm\s+(.*?)(converged|Warning)"
+        )
         match = re.search(r, self.string, re.DOTALL)
 
         if not match:
@@ -1324,12 +1538,12 @@ class Parser:
 
         iter_steps_list = []
         iter_step = None
-        for l in iter_str.splitlines():
-            l = l.strip()
-            if not l:
+        for line in iter_str.splitlines():
+            line = line.strip()
+            if not line:
                 continue
 
-            split = l.split()
+            split = line.split()
             if len(split) == 4:
                 if iter_step is not None:
                     iter_steps_list.append(iter_step)
@@ -1337,21 +1551,21 @@ class Parser:
             elif len(split) == 3:
                 iter_step.append(convert_line(split))
             else:
-                raise RuntimeError("wrong line {} in escf iterations".format(l))
+                raise RuntimeError("wrong line {} in escf iterations".format(line))
         if iter_step:
             iter_steps_list.append(iter_step)
 
         converged = "converged" in match.group(2)
 
-        d = dict(steps=iter_steps_list,
-                 converged=converged)
+        d = dict(steps=iter_steps_list, converged=converged)
 
         return d
 
     @lazy_property
     def escf_gs_total_en(self):
         """
-        Value of the final total energy of escf.
+        Extract the value of the final total energy of escf.
+
         Valid for escf and egrad executables.
 
         Returns:
@@ -1360,7 +1574,7 @@ class Parser:
         # Parses:
         #                             Ground state
         #  Total energy:                           -76.34301407423000
-        r = r"Ground\s+state\s+Total\s+energy:\s+("+float_number_re+r")"
+        r = r"Ground\s+state\s+Total\s+energy:\s+(" + float_number_re + r")"
 
         match = re.search(r, self.string, re.DOTALL)
 
@@ -1372,13 +1586,15 @@ class Parser:
     @lazy_property
     def escf_excitations(self):
         """
-        All the values for each calculated excitation.
+        Extract all the values for each calculated excitation.
+
         Valid for escf and egrad executables.
 
         Returns:
-            dict with name of irreps as keywords and list of excitations as values. For each excitation
-            a dict with: "tot_en", "osc_stre", "rot_stre", "dominant_contributions" (list of contributions),
-            "moments_columns" (list of dicts value of electric and magnetic moment for each column).
+            dict with name of irreps as keywords and list of excitations as values.
+            For each excitation, a dict with: "tot_en", "osc_stre", "rot_stre",
+            "dominant_contributions" (list of contributions), "moments_columns"
+            (list of dicts value of electric and magnetic moment for each column).
         """
         # See test files for example. Splits the sections for each irrep delimited by
         #  ==============================================================================
@@ -1386,7 +1602,11 @@ class Parser:
         #                               I R R E P   a1
         #
         #  ==============================================================================
-        r = r"={3,}\s+I R R E P\s+["+ irrep_re_group +r"]+\s+={3,}.*?(?=={3,}|SUMMARY|-{5,})"
+        r = (
+            r"={3,}\s+I R R E P\s+["
+            + irrep_re_group
+            + r"]+\s+={3,}.*?(?=={3,}|SUMMARY|-{5,})"
+        )
 
         match_irreps = re.findall(r, self.string, re.DOTALL)
 
@@ -1397,7 +1617,11 @@ class Parser:
 
         # Splits the excitations for each irrep. For example a group starting with:
         #                          1 singlet a1 excitation
-        exc_head_group = r"^\s+\d+\s+(?:singlet\s+|triplet\s+|)[" + irrep_re_group + r"]+?\s+excitation"
+        exc_head_group = (
+            r"^\s+\d+\s+(?:singlet\s+|triplet\s+|)["
+            + irrep_re_group
+            + r"]+?\s+excitation"
+        )
         r_excited = exc_head_group + r".*?(?=" + exc_head_group + r"|\Z)"
         regex_excited = re.compile(r_excited, re.DOTALL | re.MULTILINE)
 
@@ -1410,7 +1634,11 @@ class Parser:
         #     velocity representation:             0.1689055727340166
         #     length representation:               0.7845154315911747E-01
         #     mixed representation:                0.1151125659046751
-        r_osc = r"Oscillator strength.*?length representation:\s+(" + float_number_all_re + r")"
+        r_osc = (
+            r"Oscillator strength.*?length representation:\s+("
+            + float_number_all_re
+            + r")"
+        )
         regex_osc = re.compile(r_osc, re.DOTALL)
 
         # Parses:
@@ -1419,20 +1647,30 @@ class Parser:
         #     velocity rep. / 10^(-40)erg*cm^3:     0.000000000000000
         #     length representation:                0.000000000000000
         #     length rep. / 10^(-40)erg*cm^3:       0.000000000000000
-        r_rot = r"Rotatory strength.*?length representation:\s+(" + float_number_all_re + r")"
+        r_rot = (
+            r"Rotatory strength.*?length representation:\s+("
+            + float_number_all_re
+            + r")"
+        )
         regex_rot = re.compile(r_rot, re.DOTALL)
 
         # Parses the dominant contributions. Example:
         #  Dominant contributions:
-        #       occ. orbital   energy / eV   virt. orbital     energy / eV   |coeff.|^2*100
-        #         3 a1             -8.44           4 a1              0.92       99.2
+        #     occ. orbital  energy / eV  virt. orbital    energy / eV   |coeff.|^2*100
+        #       3 a1            -8.44          4 a1             0.92       99.2
         #
         # Different points to stop depending on singlet, triplet or uhf.
-        r_dom_contrib = r"Dominant contributions:\s+.*?coeff\.\|\^2\*100\s+(.*?)(?=Change of electron number|<|S\^2|1st)"
+        r_dom_contrib = (
+            r"Dominant contributions:\s+.*?coeff\.\|\^2\*100\s+(.*?)(?="
+            r"Change of electron number|<|S\^2|1st)"
+        )
         regex_dom_contrib = re.compile(r_dom_contrib, re.DOTALL | re.MULTILINE)
 
         # The following parse the section with the electric and magnetic moments
-        r_elec_dip = r"Electric transition dipole moment \(length rep\.\):(.*?)Magnetic transition"
+        r_elec_dip = (
+            r"Electric transition dipole moment "
+            r"\(length rep\.\):(.*?)Magnetic transition"
+        )
         regec_elec_dip = re.compile(r_elec_dip, re.DOTALL)
 
         r_mag_dip = r"Magnetic transition dipole moment / i:(.*?)Electric quadrupole"
@@ -1449,16 +1687,20 @@ class Parser:
 
             match_excitations = regex_excited.findall(irrep_group)
             if not match_excitations:
-                raise RuntimeError("Could not extract the single excitation contributions")
+                raise RuntimeError(
+                    "Could not extract the single excitation contributions"
+                )
 
             single_excitations_list = []
             # loop over the excitations
             for exc_group in match_excitations:
-                exc_data = dict(tot_en=None,
-                                osc_stre=None,
-                                rot_stre=None,
-                                dominant_contributions=None,
-                                moments_columns=None)
+                exc_data = dict(
+                    tot_en=None,
+                    osc_stre=None,
+                    rot_stre=None,
+                    dominant_contributions=None,
+                    moments_columns=None,
+                )
 
                 match_tot_en = regex_tot_en.search(exc_group)
                 if match_tot_en:
@@ -1476,29 +1718,64 @@ class Parser:
                 if match_dominant:
                     dominant_contributions = []
                     # loop over dominant contributions to the excitation
-                    for l in match_dominant.group(1).splitlines():
-                        l = l.strip()
-                        if not l:
+                    for line in match_dominant.group(1).splitlines():
+                        line = line.strip()
+                        if not line:
                             continue
-                        s = l.split()
-                        # there could be 7 or 9 columns depending if it is a rhf or uhf, respectively.
+                        s = line.split()
+                        # there could be 7 or 9 columns depending if it is a rhf
+                        # or uhf, respectively.
                         if len(s) == 7:
-                            occ_orb = dict(index=convert_int(s[0]), irrep=s[1], energy=convert_float(s[2]), spin=None)
-                            virt_orb = dict(index=convert_int(s[3]), irrep=s[4], energy=convert_float(s[5]), spin=None)
-                            dominant_contributions.append(dict(occ_orb=occ_orb, virt_orb=virt_orb,
-                                                               coeff=convert_float(s[6])))
+                            occ_orb = dict(
+                                index=convert_int(s[0]),
+                                irrep=s[1],
+                                energy=convert_float(s[2]),
+                                spin=None,
+                            )
+                            virt_orb = dict(
+                                index=convert_int(s[3]),
+                                irrep=s[4],
+                                energy=convert_float(s[5]),
+                                spin=None,
+                            )
+                            dominant_contributions.append(
+                                dict(
+                                    occ_orb=occ_orb,
+                                    virt_orb=virt_orb,
+                                    coeff=convert_float(s[6]),
+                                )
+                            )
                         elif len(s) == 9:
-                            occ_orb = dict(index=convert_int(s[0]), irrep=s[1], energy=convert_float(s[3]), spin=s[2])
-                            virt_orb = dict(index=convert_int(s[4]), irrep=s[5], energy=convert_float(s[7]), spin=s[6])
-                            dominant_contributions.append(dict(occ_orb=occ_orb, virt_orb=virt_orb,
-                                                               coeff=convert_float(s[8])))
+                            occ_orb = dict(
+                                index=convert_int(s[0]),
+                                irrep=s[1],
+                                energy=convert_float(s[3]),
+                                spin=s[2],
+                            )
+                            virt_orb = dict(
+                                index=convert_int(s[4]),
+                                irrep=s[5],
+                                energy=convert_float(s[7]),
+                                spin=s[6],
+                            )
+                            dominant_contributions.append(
+                                dict(
+                                    occ_orb=occ_orb,
+                                    virt_orb=virt_orb,
+                                    coeff=convert_float(s[8]),
+                                )
+                            )
                         else:
-                            raise RuntimeError("error while parsing line of escf dominant contribution: {}".format(l))
+                            raise RuntimeError(
+                                "error while parsing line of escf dominant "
+                                "contribution: {}".format(line)
+                            )
 
                     exc_data["dominant_contributions"] = dominant_contributions
 
                 # Depending on the irrep there might be more "columns" with the dipole
-                # and quadrupole values. Generate a list of dictionaries with these data.
+                # and quadrupole values. Generate a list of dictionaries with
+                # these data.
                 moments_columns = []
                 if " column" in exc_group:
                     columns_to_parse = exc_group.split(" column")[1:]
@@ -1511,20 +1788,20 @@ class Parser:
                     match_elec_dip = regec_elec_dip.search(str_c)
                     if match_elec_dip:
                         el_dip = []
-                        for l in match_elec_dip.group(1).splitlines():
-                            l = l.strip()
-                            if l and l[0] in ("x", "y", "z"):
-                                el_dip.append(convert_float(l.split()[1]))
+                        for line in match_elec_dip.group(1).splitlines():
+                            line = line.strip()
+                            if line and line[0] in ("x", "y", "z"):
+                                el_dip.append(convert_float(line.split()[1]))
 
                         moments_data["electric_dipole"] = el_dip
 
                     match_mag_dip = regec_mag_dip.search(str_c)
                     if match_mag_dip:
                         mag_dip = []
-                        for l in match_mag_dip.group(1).splitlines():
-                            l = l.strip()
-                            if l and l[0] in ("x", "y", "z"):
-                                mag_dip.append(convert_float(l.split()[1]))
+                        for line in match_mag_dip.group(1).splitlines():
+                            line = line.strip()
+                            if line and line[0] in ("x", "y", "z"):
+                                mag_dip.append(convert_float(line.split()[1]))
 
                         moments_data["magnetic_dipole"] = mag_dip
 
@@ -1532,22 +1809,28 @@ class Parser:
                     if match_elec_quad:
                         quadrupole = np.zeros((3, 3))
                         d_quadrupole = {}
-                        for l in match_elec_quad.group(1).splitlines():
-                            s = l.split()
-                            if " xx " in l:
+                        for line in match_elec_quad.group(1).splitlines():
+                            s = line.split()
+                            if " xx " in line:
                                 quadrupole[0, 0] = convert_float(s[1])
-                            elif " yy " in l:
+                            elif " yy " in line:
                                 quadrupole[1, 1] = convert_float(s[1])
                                 d_quadrupole["trace"] = 3 * convert_float(s[-1])
-                            elif " zz " in l:
+                            elif " zz " in line:
                                 quadrupole[2, 2] = convert_float(s[1])
-                            elif " xy " in l:
-                                quadrupole[0, 1] = quadrupole[1, 0] = convert_float(s[1])
-                            elif " xz " in l:
-                                quadrupole[0, 2] = quadrupole[2, 0] = convert_float(s[1])
+                            elif " xy " in line:
+                                quadrupole[0, 1] = quadrupole[1, 0] = convert_float(
+                                    s[1]
+                                )
+                            elif " xz " in line:
+                                quadrupole[0, 2] = quadrupole[2, 0] = convert_float(
+                                    s[1]
+                                )
                                 d_quadrupole["anisotropy"] = convert_float(s[-1])
-                            elif " yz " in l:
-                                quadrupole[1, 2] = quadrupole[2, 1] = convert_float(s[1])
+                            elif " yz " in line:
+                                quadrupole[1, 2] = quadrupole[2, 1] = convert_float(
+                                    s[1]
+                                )
 
                         d_quadrupole["moment"] = quadrupole.tolist()
                         moments_data["electric_quadrupole"] = d_quadrupole
@@ -1567,7 +1850,8 @@ class Parser:
     @lazy_property
     def rdgrad_memory(self):
         """
-        Memory allocated for rdgrad.
+        Extract the memory allocated for rdgrad.
+
         Valid for rdgrad.
 
         Returns:
@@ -1586,12 +1870,13 @@ class Parser:
     @lazy_property
     def gradient(self):
         """
-        Values of the gradients and dielectric data.
+        Extract the values of the gradients and dielectric data.
+
         Valid for gradient executables.
 
         Returns:
-            dict with "gradients", a matrix of shape (natoms, 3) containing the values of
-                the cartesian gradients, and "dielectric".
+            dict with "gradients", a matrix of shape (natoms, 3) containing the
+            values of the cartesian gradients, and "dielectric".
         """
         # Parse the section starting with:
         #           ------------------------------------------------
@@ -1616,7 +1901,7 @@ class Parser:
 
         gradients = [[], [], []]
         for i, d in enumerate(["x", "y", "z"]):
-            match = re.findall(r"dE/d"+d+r"(.*?)$", grad_str, re.MULTILINE)
+            match = re.findall(r"dE/d" + d + r"(.*?)$", grad_str, re.MULTILINE)
             for g_vals in match:
                 g = [convert_float(f) for f in g_vals.split()]
                 gradients[i].extend(g)
@@ -1627,19 +1912,19 @@ class Parser:
         #  exx =      -0.076690 eyy =       0.000000 ezz =      -0.045091
         #  eyz =       0.000000 exz =      -0.000000 exy =       0.000000
 
-        dielectric = np.zeros((3,3))
+        dielectric = np.zeros((3, 3))
 
-        for l in grad_str.splitlines():
-            if "exx" in l:
-                s = l.split()
-                dielectric[0,0] = convert_float(s[2])
-                dielectric[1,1] = convert_float(s[5])
-                dielectric[2,2] = convert_float(s[8])
-            elif "eyz" in l:
-                s = l.split()
-                dielectric[1,2] = dielectric[2,1] = convert_float(s[2])
-                dielectric[0,2] = dielectric[2,0] = convert_float(s[5])
-                dielectric[0,1] = dielectric[1,0] = convert_float(s[8])
+        for line in grad_str.splitlines():
+            if "exx" in line:
+                s = line.split()
+                dielectric[0, 0] = convert_float(s[2])
+                dielectric[1, 1] = convert_float(s[5])
+                dielectric[2, 2] = convert_float(s[8])
+            elif "eyz" in line:
+                s = line.split()
+                dielectric[1, 2] = dielectric[2, 1] = convert_float(s[2])
+                dielectric[0, 2] = dielectric[2, 0] = convert_float(s[5])
+                dielectric[0, 1] = dielectric[1, 0] = convert_float(s[8])
 
         grad_data["dielectric"] = dielectric.tolist()
 
@@ -1648,7 +1933,8 @@ class Parser:
     @lazy_property
     def egrad_excited_state(self):
         """
-        Information about the excited state chosen for optimization in egrad.
+        Extract the information about the excited state chosen for optimization.
+
         Valid only for egrad.
 
         Returns:
@@ -1670,12 +1956,14 @@ class Parser:
     @lazy_property
     def statpt_info(self):
         """
-        Initial information provided in statpt.
+        Extract the initial information provided in statpt.
+
         Valid only for statpt.
 
         Returns:
-            dict with "max_trust_radius", "min_trust_radius", "init_trust_radius", "min_grad_norm_for_gdiis",
-            "prev_steps_for_gdiis", "hessian_update_method", "thr_energy_change", "thr_max_displ", "thr_max_grad",
+            dict with "max_trust_radius", "min_trust_radius", "init_trust_radius",
+            "min_grad_norm_for_gdiis", "prev_steps_for_gdiis", "hessian_update_method",
+            "thr_energy_change", "thr_max_displ", "thr_max_grad",
             "thr_rms_displ", "thr_rms_grad", "use_defaults", "final_step_radius".
         """
         # See test files for examples. Parses the block starting with:
@@ -1683,46 +1971,50 @@ class Parser:
         r = r"Stationary point options[\s\*]{60,}(.+?)\*{60,}"
         match = re.search(r, self.string, re.DOTALL)
 
-        data = dict(max_trust_radius=None,
-                    min_trust_radius=None,
-                    init_trust_radius=None,
-                    min_grad_norm_for_gdiis=None,
-                    prev_steps_for_gdiis=None,
-                    hessian_update_method=None,
-                    thr_energy_change=None,
-                    thr_max_displ=None,
-                    thr_max_grad=None,
-                    thr_rms_displ=None,
-                    thr_rms_grad=None,
-                    use_defaults=False,
-                    final_step_radius=None)
+        data = dict(
+            max_trust_radius=None,
+            min_trust_radius=None,
+            init_trust_radius=None,
+            min_grad_norm_for_gdiis=None,
+            prev_steps_for_gdiis=None,
+            hessian_update_method=None,
+            thr_energy_change=None,
+            thr_max_displ=None,
+            thr_max_grad=None,
+            thr_rms_displ=None,
+            thr_rms_grad=None,
+            use_defaults=False,
+            final_step_radius=None,
+        )
 
         if match:
-            for l in match.group(1).splitlines():
-                if "Maximum allowed trust radius" in l:
-                    data["max_trust_radius"] = convert_float(l.split()[-1])
-                if "Minimum allowed trust radius" in l:
-                    data["min_trust_radius"] = convert_float(l.split()[-1])
-                if "Initial trust radius" in l:
-                    data["init_trust_radius"] = convert_float(l.split()[-1])
-                if "GDIIS used if gradient norm" in l:
-                    data["min_grad_norm_for_gdiis"] = convert_float(l.split()[-1])
-                if "Number of previous steps for GDIIS" in l:
-                    data["prev_steps_for_gdiis"] = convert_int(l.split()[-1])
-                if "Hessian update method" in l:
-                    data["hessian_update_method"] = l.split()[-1]
-                if "Threshold for energy change" in l:
-                    data["thr_energy_change"] = convert_float(l.split()[-1])
-                if "Threshold for max displacement element" in l:
-                    data["thr_max_displ"] = convert_float(l.split()[-1])
-                if "Threshold for max gradient element" in l:
-                    data["thr_max_grad"] = convert_float(l.split()[-1])
-                if "Threshold for RMS of displacement" in l:
-                    data["thr_rms_displ"] = convert_float(l.split()[-1])
-                if "Threshold for RMS of gradient" in l:
-                    data["thr_rms_grad"] = convert_float(l.split()[-1])
+            for line in match.group(1).splitlines():
+                if "Maximum allowed trust radius" in line:
+                    data["max_trust_radius"] = convert_float(line.split()[-1])
+                if "Minimum allowed trust radius" in line:
+                    data["min_trust_radius"] = convert_float(line.split()[-1])
+                if "Initial trust radius" in line:
+                    data["init_trust_radius"] = convert_float(line.split()[-1])
+                if "GDIIS used if gradient norm" in line:
+                    data["min_grad_norm_for_gdiis"] = convert_float(line.split()[-1])
+                if "Number of previous steps for GDIIS" in line:
+                    data["prev_steps_for_gdiis"] = convert_int(line.split()[-1])
+                if "Hessian update method" in line:
+                    data["hessian_update_method"] = line.split()[-1]
+                if "Threshold for energy change" in line:
+                    data["thr_energy_change"] = convert_float(line.split()[-1])
+                if "Threshold for max displacement element" in line:
+                    data["thr_max_displ"] = convert_float(line.split()[-1])
+                if "Threshold for max gradient element" in line:
+                    data["thr_max_grad"] = convert_float(line.split()[-1])
+                if "Threshold for RMS of displacement" in line:
+                    data["thr_rms_displ"] = convert_float(line.split()[-1])
+                if "Threshold for RMS of gradient" in line:
+                    data["thr_rms_grad"] = convert_float(line.split()[-1])
 
-        data["use_defaults"] = "Keyword $statpt not found - using default options" in self.string
+        data["use_defaults"] = (
+            "Keyword $statpt not found - using default options" in self.string
+        )
 
         r = r"$\s+Final\s+step\s+radius\s*:\s+(" + float_number_e_re + r")"
         match = re.search(r, self.string, re.MULTILINE)
@@ -1737,14 +2029,14 @@ class Parser:
     @lazy_property
     def relax_info(self):
         """
-        Initial information provided in relax.
+        Extract the initial information provided in relax.
+
         Valid only for relax.
 
         Returns:
             dict with "optimizations" list of optimized quantities and "thr_int_coord".
         """
-        data = dict(optimizations=None,
-                    thr_int_coord=None)
+        data = dict(optimizations=None, thr_int_coord=None)
 
         # Parses for example:
         #  optimization will be performed with respect to
@@ -1753,13 +2045,17 @@ class Parser:
         match = re.search(r, self.string, re.DOTALL)
         if match:
             opt = []
-            for l in match.group(1).splitlines():
-                l = l.strip()
-                if l.startswith("-"):
-                    opt.append(l.replace("-", "", 1).strip())
+            for line in match.group(1).splitlines():
+                line = line.strip()
+                if line.startswith("-"):
+                    opt.append(line.replace("-", "", 1).strip())
             data["optimizations"] = opt
 
-        r = r"$\s+convergence\s+criterion\s+for\s+internal\s+coordinates\s*:\s+(" + float_number_e_re + r")"
+        r = (
+            r"$\s+convergence\s+criterion\s+for\s+internal\s+coordinates\s*:\s+("
+            + float_number_e_re
+            + r")"
+        )
         match = re.search(r, self.string, re.MULTILINE)
         if match:
             data["thr_int_coord"] = convert_float(match.group(1))
@@ -1772,33 +2068,44 @@ class Parser:
     @lazy_property
     def relax_gradient_values(self):
         """
-        Gradient values extracted from the relax/stapt output that taking into account
-        the frozen coordinates.
+        Extract the gradient values from the relax/stapt output.
+
+        This takes frozen coordinates into account.
         Valid for relax and statpt.
 
         Returns:
             dict with "norm_cartesian", "norm_internal", "max_internal"
         """
-        #Parses:
+        # Parses:
         #   norm of actual CARTESIAN gradient : .54369
         #   norm of actual  INTERNAL gradient : .55998
         #   maximum norm of actual  INTERNAL gradient : .46843
 
-        data = dict(norm_cartesian=None,
-                    norm_internal=None,
-                    max_internal=None)
+        data = dict(norm_cartesian=None, norm_internal=None, max_internal=None)
 
-        r = r"$\s+norm\s+of\s+actual\s+CARTESIAN\s+gradient\s*:\s+("+float_number_e_re+r")"
+        r = (
+            r"$\s+norm\s+of\s+actual\s+CARTESIAN\s+gradient\s*:\s+("
+            + float_number_e_re
+            + r")"
+        )
         match = re.search(r, self.string, re.MULTILINE)
         if match:
             data["norm_cartesian"] = convert_float(match.group(1))
 
-        r = r"$\s+norm\s+of\s+actual\s+INTERNAL\s+gradient\s*:\s+("+float_number_e_re+r")"
+        r = (
+            r"$\s+norm\s+of\s+actual\s+INTERNAL\s+gradient\s*:\s+("
+            + float_number_e_re
+            + r")"
+        )
         match = re.search(r, self.string, re.MULTILINE)
         if match:
             data["norm_internal"] = convert_float(match.group(1))
 
-        r = r"maximum\s+norm\s+of\s+actual\s+INTERNAL\s+gradient\s*:\s+("+float_number_e_re+r")"
+        r = (
+            r"maximum\s+norm\s+of\s+actual\s+INTERNAL\s+gradient\s*:\s+("
+            + float_number_e_re
+            + r")"
+        )
         match = re.search(r, self.string)
         if match:
             data["max_internal"] = convert_float(match.group(1))
@@ -1811,8 +2118,9 @@ class Parser:
     @lazy_property
     def relax_conv_info(self):
         """
-        Final information about convergence according to what is defined in the
-        control file.
+        Extract the final information about convergence.
+
+        This is performed according to what is defined in the control file.
         Valid for relax and statpt.
 
         Returns:
@@ -1839,39 +2147,49 @@ class Parser:
         def get_single_data(line):
             s = line.split()
             converged = "yes" == s[-3]
-            return {"value": convert_float(s[-2]), "thr": convert_float(s[-1]), "conv": converged}
+            return {
+                "value": convert_float(s[-2]),
+                "thr": convert_float(s[-1]),
+                "conv": converged,
+            }
 
-        data = dict(energy_change=None,
-                    rms_displ=None,
-                    rms_grad=None,
-                    max_displ=None,
-                    max_grad=None)
-        for l in match.group(1).splitlines():
-            if "Energy change" in l:
-                data["energy_change"] = get_single_data(l)
-            if "RMS of displacement" in l:
-                data["rms_displ"] = get_single_data(l)
-            if "RMS of gradient" in l:
-                data["rms_grad"] = get_single_data(l)
-            if "MAX displacement" in l:
-                data["max_displ"] = get_single_data(l)
-            if "MAX geom. grad." in l or "MAX gradient" in l:
-                data["max_grad"] = get_single_data(l)
+        data = dict(
+            energy_change=None,
+            rms_displ=None,
+            rms_grad=None,
+            max_displ=None,
+            max_grad=None,
+        )
+        for line in match.group(1).splitlines():
+            if "Energy change" in line:
+                data["energy_change"] = get_single_data(line)
+            if "RMS of displacement" in line:
+                data["rms_displ"] = get_single_data(line)
+            if "RMS of gradient" in line:
+                data["rms_grad"] = get_single_data(line)
+            if "MAX displacement" in line:
+                data["max_displ"] = get_single_data(line)
+            if "MAX geom. grad." in line or "MAX gradient" in line:
+                data["max_grad"] = get_single_data(line)
 
         return data
 
     @lazy_property
     def aoforce_numerical_integration(self):
         """
-        Information about the numerical integration in aoforce.
-        Will be present only if a proper aoforce is run. Absent if running after numforce.
+        Extract the information about the numerical integration in aoforce.
+
+        Will be present only if a proper aoforce is run.
+        Absent if running after numforce.
 
         Returns:
-            dict with "memory" (a dict with "core_memory_dft", "memory_per_atom", "atoms_per_loop") and
-            "construction_timings" (a list of lists with construction timings. For each element:
-            [str with description of the timing, cpu time in seconds, wall time in seconds]).
+            dict with "memory" (a dict with "core_memory_dft", "memory_per_atom",
+            "atoms_per_loop") and "construction_timings" (a list of lists with
+            construction timings. For each element:
+            [timing_description, cpu_time, wall_time]
+            with timing_description being the description of the timing, cpu_time
+            being the CPU time in seconds and wall_time, the wall time in seconds.
         """
-
         # This section may not be present if aoforce runs after a numforce but also
         #  if the calculation is not dft.
         r = r"PREPARING NUMERICAL INTEGRATION.*atoms per loop"
@@ -1879,13 +2197,13 @@ class Parser:
 
         if match:
             memory = {}
-            for l in match.group().splitlines():
-                if "Remaining core memory for DFT" in l:
-                    memory["core_memory_dft"] = convert_int(l.split()[-2])
-                if "Memory needed per atom" in l:
-                    memory["memory_per_atom"] = convert_int(l.split()[-2])
-                if "atoms per loop" in l:
-                    memory["atoms_per_loop"] = convert_int(l.split()[-4])
+            for line in match.group().splitlines():
+                if "Remaining core memory for DFT" in line:
+                    memory["core_memory_dft"] = convert_int(line.split()[-2])
+                if "Memory needed per atom" in line:
+                    memory["memory_per_atom"] = convert_int(line.split()[-2])
+                if "atoms per loop" in line:
+                    memory["atoms_per_loop"] = convert_int(line.split()[-4])
         else:
             memory = None
 
@@ -1895,7 +2213,10 @@ class Parser:
         #   ...
         #       ...terminated. cpu:       0.00       wall:       0.00
         # it skips the CONSTRUCTING integral bounds, that does not contain any timing.
-        r = r"CONSTRUCTING((?! integral bounds).*?wall:\s+\d\.\d+)\s+(?=CONSTRUCTING|SOLVING|-------)"
+        r = (
+            r"CONSTRUCTING((?! integral bounds).*?wall:\s+\d\.\d+)\s+"
+            r"(?=CONSTRUCTING|SOLVING|-------)"
+        )
         for m in re.findall(r, self.string, re.DOTALL):
             # consider a different case for the second deriv. of 2e energy
             # since if it a dft calculations there are two timings there.
@@ -1907,19 +2228,25 @@ class Parser:
                         treating_line = gl[i]
                     if "...terminated" in gl[i]:
                         gls = gl[i].split()
-                        timings.append((gl[0] + "\n" + treating_line, convert_float(gls[-3]), convert_float(gls[-1])))
+                        timings.append(
+                            (
+                                gl[0] + "\n" + treating_line,
+                                convert_float(gls[-3]),
+                                convert_float(gls[-1]),
+                            )
+                        )
 
             else:
                 lines = []
                 cpu = None
                 wall = None
-                for l in m.splitlines():
-                    if "...terminated" in l:
-                        s = l.split()
+                for line in m.splitlines():
+                    if "...terminated" in line:
+                        s = line.split()
                         cpu = convert_float(s[-3])
                         wall = convert_float(s[-1])
-                    elif "->" in l or ("<" and ">" in l) or ("[" and "]" in l):
-                        lines.append(l)
+                    elif "->" in line or ("<" and ">" in line) or ("[" and "]" in line):
+                        lines.append(line)
                 timings.append(("\n".join(lines), cpu, wall))
 
         if not memory and not timings:
@@ -1935,9 +2262,11 @@ class Parser:
         Output of rotational and vibrational analysis in aoforce.
 
         Returns:
-            dict with "rotational" (a dict with "dipole_moment", "b", "intensities", "m") and "vibrational".
-            Vibrational, contains dict with keys "frequencies", "symmetries", "ir", "dDIP_dQ", "intensities",
-            "intensities_perc", "raman", "eigenvectors", "reduced_masses". One value for each frequency.
+            dict with "rotational" (a dict with "dipole_moment", "b",
+            "intensities", "m") and "vibrational". Vibrational, contains dict
+            with keys "frequencies", "symmetries", "ir", "dDIP_dQ", "intensities",
+            "intensities_perc", "raman", "eigenvectors", "reduced_masses".
+            One value for each frequency.
         """
         # See test files for examples. Parses the section starting with:
         #              -----------------------------------
@@ -1968,7 +2297,6 @@ class Parser:
         #    y   :     0.0000000000     1.0000000000     0.0000000000
         #    z   :     0.0000000000     0.0000000000     1.0000000000
 
-
         rot = {}
         rot_lines = split2[0].splitlines()
 
@@ -1976,28 +2304,28 @@ class Parser:
         b = None
         rot_intensities = None
         m = None
-        for l in rot_lines:
-            l = l.strip()
-            if l.startswith("b ") and "cm" in l:
-                s = l.split()
-                b = [convert_float(s[i]) for i in (2,3,4)]
-            if l.startswith("int."):
-                s = l.split()
-                rot_intensities = [convert_float(s[i]) for i in (2,3,4)]
-            if l.startswith("x "):
+        for line in rot_lines:
+            line = line.strip()
+            if line.startswith("b ") and "cm" in line:
+                s = line.split()
+                b = [convert_float(s[i]) for i in (2, 3, 4)]
+            if line.startswith("int."):
+                s = line.split()
+                rot_intensities = [convert_float(s[i]) for i in (2, 3, 4)]
+            if line.startswith("x "):
                 # the x :   y :   z : section may be missing.
                 # Initialize m here only if it is actually filled
-                m = [[0., 0., 0.]] * 3
-                s = l.split()
-                m[0] = [convert_float(s[i]) for i in (2,3,4)]
-            if l.startswith("y "):
-                s = l.split()
-                m[1] = [convert_float(s[i]) for i in (2,3,4)]
-            if l.startswith("z "):
-                s = l.split()
-                m[2] = [convert_float(s[i]) for i in (2,3,4)]
+                m = [[0.0, 0.0, 0.0]] * 3
+                s = line.split()
+                m[0] = [convert_float(s[i]) for i in (2, 3, 4)]
+            if line.startswith("y "):
+                s = line.split()
+                m[1] = [convert_float(s[i]) for i in (2, 3, 4)]
+            if line.startswith("z "):
+                s = line.split()
+                m[2] = [convert_float(s[i]) for i in (2, 3, 4)]
 
-        #TODO verify the meaning of int and m
+        # TODO verify the meaning of int and m
         rot["b"] = b
         rot["intensities"] = rot_intensities
         rot["m"] = m
@@ -2039,12 +2367,13 @@ class Parser:
         eigenvectors = []
         reduced_masses = []
 
-        regex_eigenvectors = re.compile(r"(.*?)(^[ \t]+\d+\s+[a-z]{1,2}.*?)(reduced mass.*)", re.DOTALL|re.MULTILINE)
+        regex_eigenvectors = re.compile(
+            r"(.*?)(^[ \t]+\d+\s+[a-z]{1,2}.*?)(reduced mass.*)",
+            re.DOTALL | re.MULTILINE,
+        )
 
         def get_active_value(v):
-            """
-            Converts the value to a bool. If "-" is set to None.
-            """
+            """Convert the value to a bool. If "-" is set to None."""
             if v == "YES":
                 return True
             elif v == "NO":
@@ -2066,38 +2395,43 @@ class Parser:
             n_freqs = len(freqs_lines[0].split()) - 1
 
             # loop over the lines of the block, extract all the properties
-            for l in freqs_lines:
-                s = l.split()
-                if "frequency" in l:
+            for line in freqs_lines:
+                s = line.split()
+                if "frequency" in line:
                     # put imaginary frequencies to negative values.
-                    frequencies.extend(convert_float(f.replace("i", "-")) for f in s[1:])
-                elif "symmetry" in l:
+                    frequencies.extend(
+                        convert_float(f.replace("i", "-")) for f in s[1:]
+                    )
+                elif "symmetry" in line:
                     # put the symmetries that are present
                     symmetries.extend(sym for sym in s[1:])
                     # add None values for those that are not present
-                    symmetries.extend(None for i in range(n_freqs-len(s)+1))
-                elif "IR " in l:
+                    symmetries.extend(None for i in range(n_freqs - len(s) + 1))
+                elif "IR " in line:
                     ir.extend(get_active_value(v) for v in s[1:])
-                elif "|dDIP/dQ|" in l:
+                elif "|dDIP/dQ|" in line:
                     dDIP_dQ.extend(convert_float(f) for f in s[2:])
-                elif "intensity (km/mol)" in l:
+                elif "intensity (km/mol)" in line:
                     vib_intensities.extend(convert_float(f) for f in s[2:])
-                elif "intensity" in l and "%" in l:
+                elif "intensity" in line and "%" in line:
                     vib_intensities_perc.extend(convert_float(f) for f in s[4:])
-                elif "RAMAN " in l:
+                elif "RAMAN " in line:
                     raman.extend(get_active_value(v) for v in s[1:])
-                elif "reduced mass" in l:
+                elif "reduced mass" in line:
                     reduced_masses.extend(convert_float(f) for f in s[2:])
 
             eig_lines = block_eigenvectors.splitlines()
             if len(eig_lines) % 3 != 0:
-                raise RuntimeError("number of line to be parsed for eigenvectors seems wrong: {}".format(len(eig_lines)))
+                raise RuntimeError(
+                    "number of line to be parsed for eigenvectors "
+                    "seems wrong: {}".format(len(eig_lines))
+                )
 
             n_atoms = len(eig_lines) // 3
             eigv_block = np.zeros((n_freqs, n_atoms, 3))
             for i in range(n_atoms):
                 for j in range(3):
-                    s = eig_lines[3*i+j].split()
+                    s = eig_lines[3 * i + j].split()
                     eigv_block[:, i, j] = [convert_float(f) for f in s[-n_freqs:]]
 
             eigenvectors.extend(eigv_block.tolist())
@@ -2106,26 +2440,35 @@ class Parser:
         re_zpve = r"zero point VIBRATIONAL energy.*?\*{10,}"
         match = re.search(re_zpve, self.string, re.DOTALL)
         if match:
-            energies = {"zpve": None,
-                        "scf": None,
-                        "total": None}
-            for l in match.group().splitlines():
-                if "zero point VIBRATIONAL energy" in l:
-                    energies["zpve"] = convert_float(l.split()[-3])
-                if "SCF-energy" in l:
-                    energies["scf"] = convert_float(l.split()[-2])
-                if "SCF + E(vib0)" in l:
-                    energies["total"] = convert_float(l.split()[-2])
+            energies = {"zpve": None, "scf": None, "total": None}
+            for line in match.group().splitlines():
+                if "zero point VIBRATIONAL energy" in line:
+                    energies["zpve"] = convert_float(line.split()[-3])
+                if "SCF-energy" in line:
+                    energies["scf"] = convert_float(line.split()[-2])
+                if "SCF + E(vib0)" in line:
+                    energies["total"] = convert_float(line.split()[-2])
 
-        vib = dict(frequencies=frequencies, symmetries=symmetries, ir=ir, dDIP_dQ=dDIP_dQ,
-                   intensities=vib_intensities, intensities_perc=vib_intensities_perc,
-                   raman=raman, eigenvectors=eigenvectors, reduced_masses=reduced_masses,
-                   energies=energies)
+        vib = dict(
+            frequencies=frequencies,
+            symmetries=symmetries,
+            ir=ir,
+            dDIP_dQ=dDIP_dQ,
+            intensities=vib_intensities,
+            intensities_perc=vib_intensities_perc,
+            raman=raman,
+            eigenvectors=eigenvectors,
+            reduced_masses=reduced_masses,
+            energies=energies,
+        )
 
         tot_n_freqs = len(frequencies)
         if any(k != "energies" and len(v) != tot_n_freqs for k, v in vib.items()):
-            raise RuntimeError("Error parsing the vibrational frequencies, for some quantity the list of "
-                               "values does not contain the correct number of items")
+            raise RuntimeError(
+                "Error parsing the vibrational frequencies, "
+                "for some quantity the list of "
+                "values does not contain the correct number of items"
+            )
 
         data = dict(rotational=rot, vibrational=vib)
 
@@ -2134,25 +2477,22 @@ class Parser:
     @lazy_property
     def mp2_data(self):
         """
-        MP2 data: information of MP2 calculation.
+        Extract information of MP2 calculation.
 
         Returns:
             dict with "energy_only".
         """
-
-        # TODO: implement or mpgrad and rimp2/ricc2
-
+        # TODO: implement for mpgrad and rimp2/ricc2
         return None
 
     @lazy_property
     def mp2_results(self):
         """
-        MP2 results.
+        Extract MP2 results.
 
         Returns:
             dict with "energy".
         """
-
         energy = None
         # Try to parse from rimp2/ricc2 programs
         r = r"\*{62,62}\s+\*\s+\*\s+\*<{10,10}\s+"
@@ -2165,22 +2505,34 @@ class Parser:
         if len(m) == 1:
             energy = convert_float(m[0])
         elif len(m) > 1:
-            raise RuntimeError("Error parsing the MP2 results. Multiple occurrences of MP2 results found.")
+            raise RuntimeError(
+                "Error parsing the MP2 results. Multiple occurrences of "
+                "MP2 results found."
+            )
 
         # Try to parse from mpgrad program
         r = r"\*{53,53}\s+\*\s+\*\s+\*\s+"
         r += r"SCF-energy\s+:\s+(" + float_number_all_re + r")\s+\*\s+\*\s+"
         r += r"MP2-energy\s+:\s+(" + float_number_all_re + r")\s+\*\s+\*\s+"
         r += r"total\s+:\s+(" + float_number_all_re + r")\s+\*\s+\*\s+"
-        r += r"\*\s+\*\s+\(MP2-energy\s+evaluated\s+from\s+T2\s+amplitudes\)\s+\*\s+\*\s+\*\s+\*{53,53}"
+        r += (
+            r"\*\s+\*\s+\(MP2-energy\s+evaluated\s+from\s+T2\s+"
+            r"amplitudes\)\s+\*\s+\*\s+\*\s+\*{53,53}"
+        )
         m = re.findall(r, string=self.string)
         if len(m) == 1:
             if energy is not None:
-                raise RuntimeError("Error parsing the MP2 results. "
-                                   "Found MP2 results from both mpgrad- and rimp2/ricc2-like calculations.")
+                raise RuntimeError(
+                    "Error parsing the MP2 results. "
+                    "Found MP2 results from both mpgrad- and "
+                    "rimp2/ricc2-like calculations."
+                )
             energy = convert_float(m[0][2])
         elif len(m) > 1:
-            raise RuntimeError("Error parsing the MP2 results. Multiple occurrences of MP2 results found.")
+            raise RuntimeError(
+                "Error parsing the MP2 results. Multiple occurrences of "
+                "MP2 results found."
+            )
 
         return dict(energy=energy)
 
@@ -2190,8 +2542,9 @@ class Parser:
         Information about periodicity.
 
         Returns:
-            dict with "periodicity", "tm_lattice_params", "shortest_interatomic_distance",
-                "direct_space_vectors", "reciprocal_space_vectors".
+            dict with "periodicity", "tm_lattice_params",
+            "shortest_interatomic_distance", "direct_space_vectors",
+            "reciprocal_space_vectors".
         """
         r = r"Periodic system found\: PBC structure information.*"
         r += r"Reciprocal space cell vectors \(au\)\:\s+"
@@ -2206,56 +2559,81 @@ class Parser:
         if len(m) == 0:
             return None
         elif len(m) > 1:
-            raise RuntimeError('More than one section on periodicity.')
+            raise RuntimeError("More than one section on periodicity.")
         periodicity_string = m[0]
-        periodicity = int(re.findall(r"Periodicity in (\d) dimensions", periodicity_string)[0])
+        periodicity = int(
+            re.findall(r"Periodicity in (\d) dimensions", periodicity_string)[0]
+        )
         if periodicity == 1:
             rlatparams = rf"\+-{{73}}\s+({float_number_all_re})\s+\+-{{73}}"
-            tm_lattice_params = [convert_float(lp) for lp in re.findall(rlatparams, periodicity_string)]
+            tm_lattice_params = [
+                convert_float(lp) for lp in re.findall(rlatparams, periodicity_string)
+            ]
         elif periodicity == 2:
             rlatparams = r"\+-{73}"
             rlatparams += rf"\s+({float_number_all_re})" * 3
             rlatparams += r"\s+\+-{73}"
-            tm_lattice_params = [convert_float(lp) for lp in re.findall(rlatparams, periodicity_string)[0]]
+            tm_lattice_params = [
+                convert_float(lp)
+                for lp in re.findall(rlatparams, periodicity_string)[0]
+            ]
         elif periodicity == 3:
             rlatparams = r"\+-{73}"
             rlatparams += rf"\s+({float_number_all_re})" * 6
             rlatparams += r"\s+\+-{73}"
-            tm_lattice_params = [convert_float(lp) for lp in re.findall(rlatparams, periodicity_string)[0]]
+            tm_lattice_params = [
+                convert_float(lp)
+                for lp in re.findall(rlatparams, periodicity_string)[0]
+            ]
         else:
-            raise RuntimeError('Wrong periodicity.')
+            raise RuntimeError("Wrong periodicity.")
 
         shortest_interatomic_distance = convert_float(
             re.search(
                 rf"Shortest interatomic distance \(bohr\)\:\s+({float_number_all_re})",
-                periodicity_string
+                periodicity_string,
             ).group(1)
         )
 
         rdirect = r"Direct space cell vectors \(au\)\:"
-        rdirect += rf"\s+[a|b|c]\s+({float_number_all_re})\s+({float_number_all_re})\s+({float_number_all_re})" * periodicity
+        rdirect += (
+            rf"\s+[a|b|c]\s+({float_number_all_re})"
+            rf"\s+({float_number_all_re})\s+({float_number_all_re})" * periodicity
+        )
         direct_space_vectors = np.reshape(
-            [convert_float(val)
-             for val in re.search(rdirect, periodicity_string).groups()],
-            (periodicity, 3)
+            [
+                convert_float(val)
+                for val in re.search(rdirect, periodicity_string).groups()
+            ],
+            (periodicity, 3),
         ).tolist()
 
         r_recip = r"Reciprocal space cell vectors \(au\)\:"
-        r_recip += rf"\s+[a|b|c]\s+({float_number_all_re})\s+({float_number_all_re})\s+({float_number_all_re})" * periodicity
+        r_recip += (
+            rf"\s+[a|b|c]\s+({float_number_all_re})"
+            rf"\s+({float_number_all_re})\s+({float_number_all_re})" * periodicity
+        )
         reciprocal_space_vectors = np.reshape(
-            [convert_float(val)
-             for val in re.search(r_recip, periodicity_string).groups()],
-            (periodicity, 3)
+            [
+                convert_float(val)
+                for val in re.search(r_recip, periodicity_string).groups()
+            ],
+            (periodicity, 3),
         ).tolist()
 
-        return dict(periodicity=periodicity, tm_lattice_params=tm_lattice_params,
-                    shortest_interatomic_distance=shortest_interatomic_distance,
-                    direct_space_vectors=direct_space_vectors,
-                    reciprocal_space_vectors=reciprocal_space_vectors)
+        return dict(
+            periodicity=periodicity,
+            tm_lattice_params=tm_lattice_params,
+            shortest_interatomic_distance=shortest_interatomic_distance,
+            direct_space_vectors=direct_space_vectors,
+            reciprocal_space_vectors=reciprocal_space_vectors,
+        )
 
     def get_split_jobex_parsers(self):
         """
-        Given the string of the "job.last" output file of jobex generates the
+        Get parser for each step of a jobex calculation.
+
+        Given the string of the "job.last" output file of jobex, this generates the
         parsers for each of the step: energy, gradient and relax.
 
         Returns:
@@ -2289,14 +2667,27 @@ class Parser:
                 p_relax = p
                 exec_relax = executable
 
-        JobexParsers = namedtuple("JobexParsers", ["exec_en", "parser_en", "exec_grad", "parser_grad", "exec_relax", "parser_relax"])
+        JobexParsers = namedtuple(
+            "JobexParsers",
+            [
+                "exec_en",
+                "parser_en",
+                "exec_grad",
+                "parser_grad",
+                "exec_relax",
+                "parser_relax",
+            ],
+        )
 
         return JobexParsers(exec_en, p_en, exec_grad, p_grad, exec_relax, p_relax)
 
     def grep_line(self, text, nlines=0):
         """
-        Searches the specified text in a single line and return the full line plus
-        the "nlines" following the matching one. Returns the first match.
+        Search the text in the string similarly to the grep command.
+
+        The specified text is searched in a single line and the full line plus
+        the "nlines" following the matching one is returned.
+        Returns the first match.
 
         Args:
             text (str): the text to be searched.
@@ -2305,7 +2696,6 @@ class Parser:
         Returns:
             str: the text found
         """
-
         r = r"^.*" + text + r".*$(\n.*){0," + str(nlines) + r"}"
 
         m = re.search(r, self.string, re.MULTILINE)
@@ -2317,7 +2707,9 @@ class Parser:
 
     def get_value(self, text, chunk, occurrence=0, converter=None):
         """
-        Finds the i-th occurrence of a line containing the specified text,
+        Get value from the string.
+
+        This finds the i-th occurrence of a line containing the specified text,
         splits the line and takes the specified chunk obtained from the split.
         Optionally converts it to a specific format.
 
@@ -2334,7 +2726,6 @@ class Parser:
         Returns:
             the converted selected chunk.
         """
-
         r = r"^.*" + text + r".*$"
 
         m = re.findall(r, self.string, re.MULTILINE)
