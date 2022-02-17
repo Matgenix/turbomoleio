@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -26,26 +26,35 @@ of calculations. Implicitly tests the construction of the Data object. The tests
 will not be repeated for the Data objects separately
 """
 
-import pytest
-import os
 import json
+import os
+
+import pytest
 from monty.serialization import loadfn
 
-from turbomoleio.output.files import exec_to_out_obj, JobexOutput, EscfOnlyOutput, EscfOutput
-from turbomoleio.testfiles.utils import assert_almost_equal
-from turbomoleio.testfiles.utils import TM_VERSIONS
-from turbomoleio.testfiles.utils import TESTS_CONFIGS_TM_VERSIONS
-
+from turbomoleio.output.files import (
+    EscfOnlyOutput,
+    EscfOutput,
+    JobexOutput,
+    exec_to_out_obj,
+)
+from turbomoleio.testfiles.utils import (
+    TESTS_CONFIGS_TM_VERSIONS,
+    TM_VERSIONS,
+    assert_almost_equal,
+)
 
 files_list = [
     (tm_version, tm_exec, test_name)
     for tm_version in TM_VERSIONS
-    for tm_exec, exec_tests in TESTS_CONFIGS_TM_VERSIONS[tm_version]['testlist'].items()
+    for tm_exec, exec_tests in TESTS_CONFIGS_TM_VERSIONS[tm_version]["testlist"].items()
     for test_name in exec_tests
 ]
 
 
-@pytest.fixture(scope="function", params=files_list, ids=[os.path.join(*f) for f in files_list])
+@pytest.fixture(
+    scope="function", params=files_list, ids=[os.path.join(*f) for f in files_list]
+)
 def cls_dict_path(request, testdir):
     tm_version = request.param[0]
     tm_exec = request.param[1]
@@ -74,7 +83,6 @@ def cls_dict_path(request, testdir):
 
 
 class TestFiles:
-
     def test_properties(self, cls_dict_path):
         output_clses, desired_list, paths_list = cls_dict_path
 
@@ -83,8 +91,12 @@ class TestFiles:
 
             # ignore date values since in the dictionary they are datetime, while
             # just strings in the json file.
-            assert_almost_equal(parsed_data, desired, rtol=1e-4,
-                                ignored_values=["start_time", "end_time", "@version"])
+            assert_almost_equal(
+                parsed_data,
+                desired,
+                rtol=1e-4,
+                ignored_values=["start_time", "end_time", "@version"],
+            )
 
 
 def generate_files(files=None, overwrite=False):
@@ -107,7 +119,9 @@ def generate_files(files=None, overwrite=False):
             directory = "escf"
         else:
             directory = ref_name
-        path = os.path.join(os.path.split(__file__)[0], "../../testfiles", "outputs", directory, name)
+        path = os.path.join(
+            os.path.split(__file__)[0], "../../testfiles", "outputs", directory, name
+        )
         if ref_name == "escf_only":
             json_path = path + "_outfile_escf_only.json"
         else:
@@ -127,4 +141,5 @@ def generate_files(files=None, overwrite=False):
 
         with open(json_path, "wt") as f:
             from monty.json import jsanitize
+
             json.dump(jsanitize(parsed_data), f, indent=2)

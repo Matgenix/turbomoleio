@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -22,25 +22,34 @@
 
 import pytest
 
-from turbomoleio.testfiles.utils import run_itest
 from turbomoleio.input.utils import get_define_template
-from turbomoleio.output.files import ScfOutput, GradOutput, RelaxOutput, StatptOutput, EgradOutput
+from turbomoleio.output.files import (
+    EgradOutput,
+    GradOutput,
+    RelaxOutput,
+    ScfOutput,
+    StatptOutput,
+)
+from turbomoleio.testfiles.utils import run_itest
 
-structures = ['h2o', 'nh3']
+structures = ["h2o", "nh3"]
 
 
 @pytest.mark.integration
 class TestRelax:
-
     @pytest.mark.parametrize("structure", structures)
     def test_run_dscf_grad_statpt(self, structure):
         dp = get_define_template("dscf")
         dp["desy"] = True
         dp["ired"] = True
 
-        assert run_itest(["dscf", "grad", "statpt"], dp,
-                         structure, "dscf_grad_statpt_{}_sym".format(structure),
-                         [ScfOutput, GradOutput, StatptOutput])
+        assert run_itest(
+            ["dscf", "grad", "statpt"],
+            dp,
+            structure,
+            "dscf_grad_statpt_{}_sym".format(structure),
+            [ScfOutput, GradOutput, StatptOutput],
+        )
 
     @pytest.mark.parametrize("structure", structures)
     def test_run_ridft_rdgrad_relax(self, structure):
@@ -48,9 +57,13 @@ class TestRelax:
         dp["desy"] = True
         dp["ired"] = True
 
-        assert run_itest(["ridft", "rdgrad", "relax"], dp,
-                         structure, "ridft_rdgrad_relax_{}_sym".format(structure),
-                         [ScfOutput, GradOutput, StatptOutput])
+        assert run_itest(
+            ["ridft", "rdgrad", "relax"],
+            dp,
+            structure,
+            "ridft_rdgrad_relax_{}_sym".format(structure),
+            [ScfOutput, GradOutput, StatptOutput],
+        )
 
     @pytest.mark.parametrize("structure", structures)
     def test_run_dscf_egrad_relax(self, structure):
@@ -58,9 +71,13 @@ class TestRelax:
         dp["desy"] = False
         dp["ired"] = False
 
-        assert run_itest(["dscf", "egrad", "relax"], dp,
-                         structure, "dscf_escf_relax_{}_nosym".format(structure),
-                         [ScfOutput, EgradOutput, RelaxOutput])
+        assert run_itest(
+            ["dscf", "egrad", "relax"],
+            dp,
+            structure,
+            "dscf_escf_relax_{}_nosym".format(structure),
+            [ScfOutput, EgradOutput, RelaxOutput],
+        )
 
     @pytest.mark.parametrize("structure", structures)
     def test_run_ridft_egrad_statpt_ex_irrep(self, structure):
@@ -70,6 +87,10 @@ class TestRelax:
         dp["ex_all_states"] = None
         dp["ex_irrep_states"] = {"a1": 1}
 
-        assert run_itest(["ridft", "egrad", "statpt"], dp,
-                         structure, "ridft_egrad_statpt_{}_ex_irrep".format(structure),
-                         [ScfOutput, EgradOutput, RelaxOutput])
+        assert run_itest(
+            ["ridft", "egrad", "statpt"],
+            dp,
+            structure,
+            "ridft_egrad_statpt_{}_ex_irrep".format(structure),
+            [ScfOutput, EgradOutput, RelaxOutput],
+        )

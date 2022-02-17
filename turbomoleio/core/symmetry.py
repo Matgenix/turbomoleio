@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -20,17 +20,8 @@
 # along with turbomoleio (see ~turbomoleio/COPYING). If not,
 # see <https://www.gnu.org/licenses/>.
 
-"""
-Module for functionalities related to symmetries of the molecule.
-"""
+"""Module for functionalities related to symmetries of the molecule."""
 
 # starting letter associated with different sizes of the irreducible
 # representation. Gives the degeneracy of states
-irrep_size = dict(
-    A=1,
-    B=1,
-    E=2,
-    T=3,
-    G=4,
-    H=5
-)
+irrep_size = dict(A=1, B=1, E=2, T=3, G=4, H=5)

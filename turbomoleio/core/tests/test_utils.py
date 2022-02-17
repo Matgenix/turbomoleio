@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -20,15 +20,16 @@
 # along with turbomoleio (see ~turbomoleio/COPYING). If not,
 # see <https://www.gnu.org/licenses/>.
 
-from unittest import mock
-import turbomoleio.core.utils
-from monty.tempfile import ScratchDir
-import shutil
 import os
+import shutil
+from unittest import mock
+
+from monty.tempfile import ScratchDir
+
+import turbomoleio.core.utils
 
 
 class TestGetVersion:
-
     def test_V72(self, testdir):
         def copy_define_log():
             shutil.copy(
@@ -36,10 +37,12 @@ class TestGetVersion:
                 "define.log",
             )
 
-        with mock.patch("turbomoleio.core.utils.define_quit", side_effect=copy_define_log):
-            with ScratchDir('.'):
+        with mock.patch(
+            "turbomoleio.core.utils.define_quit", side_effect=copy_define_log
+        ):
+            with ScratchDir("."):
                 tm_version = turbomoleio.core.utils.get_tm_version()
-                assert tm_version == '7.2'
+                assert tm_version == "7.2"
 
     def test_V731(self, testdir):
         def copy_define_log():
@@ -48,10 +51,12 @@ class TestGetVersion:
                 "define.log",
             )
 
-        with mock.patch("turbomoleio.core.utils.define_quit", side_effect=copy_define_log):
-            with ScratchDir('.'):
+        with mock.patch(
+            "turbomoleio.core.utils.define_quit", side_effect=copy_define_log
+        ):
+            with ScratchDir("."):
                 tm_version = turbomoleio.core.utils.get_tm_version()
-                assert tm_version == '7.3.1'
+                assert tm_version == "7.3.1"
 
     def test_V741(self, testdir):
         def copy_define_log():
@@ -60,10 +65,12 @@ class TestGetVersion:
                 "define.log",
             )
 
-        with mock.patch("turbomoleio.core.utils.define_quit", side_effect=copy_define_log):
-            with ScratchDir('.'):
+        with mock.patch(
+            "turbomoleio.core.utils.define_quit", side_effect=copy_define_log
+        ):
+            with ScratchDir("."):
                 tm_version = turbomoleio.core.utils.get_tm_version()
-                assert tm_version == '7.4.1'
+                assert tm_version == "7.4.1"
 
     def test_V751(self, testdir):
         def copy_define_log():
@@ -72,7 +79,9 @@ class TestGetVersion:
                 "define.log",
             )
 
-        with mock.patch("turbomoleio.core.utils.define_quit", side_effect=copy_define_log):
-            with ScratchDir('.'):
+        with mock.patch(
+            "turbomoleio.core.utils.define_quit", side_effect=copy_define_log
+        ):
+            with ScratchDir("."):
                 tm_version = turbomoleio.core.utils.get_tm_version()
-                assert tm_version == '7.5.1'
+                assert tm_version == "7.5.1"

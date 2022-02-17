@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -21,6 +21,7 @@
 # see <https://www.gnu.org/licenses/>.
 
 import pytest
+
 from turbomoleio.input.utils import get_define_template, validate_parameters
 
 
@@ -30,9 +31,10 @@ def test_get_define_template():
     dscf_dict = get_define_template("dscf")
     assert dscf_dict["basis"] == "def-SV(P)"
 
-    with pytest.raises(ValueError,
-                       match=r'^Could not find template file '
-                             r'\S*non_existing_template.yaml$'):
+    with pytest.raises(
+        ValueError,
+        match=r"^Could not find template file " r"\S*non_existing_template.yaml$",
+    ):
         get_define_template("non_existing_template.yaml")
 
 
@@ -56,7 +58,7 @@ def test_validate_parameters():
     d["method"] = "mp2"
     assert validate_parameters(d)
 
-    #wrong type
+    # wrong type
     assert not validate_parameters({"method": 1})
 
     assert validate_parameters({"disp": "DFT-D1"})

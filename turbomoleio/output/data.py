@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -22,29 +22,32 @@
 
 """
 Module with basic objects extracted from the stdout of Turbomole executables.
+
 Rely on the Parser object to extract the data.
 """
+
 import abc
 import pprint
+
 import numpy as np
 import pandas as pd
-from turbomoleio.output.parser import Parser
+from monty.json import MSONable
 from pymatgen.core.structure import Molecule
 from pymatgen.core.units import bohr_to_ang
 from pymatgen.util.plotting import add_fig_kwargs, get_ax_fig_plt
-from monty.json import MSONable
+
+from turbomoleio.output.parser import Parser
 
 
 class BaseData(MSONable, abc.ABC):
-    """
-    Base class for the data extracted from the parser of the output files.
-    """
+    """Base class for the data extracted from the parser of the output files."""
 
     @classmethod
     def from_file(cls, filepath):
         """
-        Generates an instance of the class from a file containing the stdout
-        of a Turbomole executable.
+        Generate an instance of the class from a file.
+
+        The file should contain the stdout of a Turbomole executable.
 
         Args:
             filepath (str): path to the file.
@@ -53,17 +56,18 @@ class BaseData(MSONable, abc.ABC):
             An instance of the class.
         """
         try:
-            with open(filepath, 'r') as f:
+            with open(filepath, "r") as f:
                 return cls.from_string(f.read())
         except UnicodeDecodeError:
-            with open(filepath, 'r', errors='ignore') as f:
+            with open(filepath, "r", errors="ignore") as f:
                 return cls.from_string(f.read())
 
     @classmethod
     def from_string(cls, string):
         """
-        Generates an instance of the class from a string containing the stdout
-        of a Turbomole executable.
+        Generate an instance of the class from a string.
+
+        The string should contain the stdout of a Turbomole executable.
 
         Args:
             string (str): the string with output.
@@ -78,8 +82,10 @@ class BaseData(MSONable, abc.ABC):
     @abc.abstractmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of the class from a parser based on the stdout
-        of a Turbomole executable. Should return None if no data could be parsed.
+        Generate an instance of the class from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Should return None if no data could be parsed.
 
         Subclasses should use the parser to extract the relevant information.
 
@@ -92,9 +98,7 @@ class BaseData(MSONable, abc.ABC):
         pass
 
     def __str__(self):
-        """
-        String representation of the object with print of the as_dict()
-        """
+        """Get a string representation of the object with print of the as_dict()."""
         string = "Content of the {} object".format(self.__class__.__name__)
         string += pprint.pformat(self.as_dict())
 
@@ -102,13 +106,18 @@ class BaseData(MSONable, abc.ABC):
 
 
 class CosmoData(BaseData):
-    """
-    Information about the cosmo run. Inputs and outputs.
-    """
+    """Information about the cosmo run. Inputs and outputs."""
 
-    def __init__(self, info=None, parameters=None, screening_charge=None,
-                 energies=None, element_radius=None):
-        """
+    def __init__(
+        self,
+        info=None,
+        parameters=None,
+        screening_charge=None,
+        energies=None,
+        element_radius=None,
+    ):
+        """Construct CosmoData object.
+
         Args:
             info (dict): initial info provided in the output by COSMO. Contains the
                 keys area and volume.
@@ -117,13 +126,13 @@ class CosmoData(BaseData):
                 refind, fepsi.
             screening_charge (dict): values of the screening charge. Contains
                 the keys cosmo, correction, total.
-            energies (dict): total and dielectric energies. Contains the keys total_energy,
-                total_energy_oc_corr, dielectric_energy, dielectric_energy_oc_corr.
+            energies (dict): total and dielectric energies.
+                Contains the keys total_energy, total_energy_oc_corr,
+                dielectric_energy and dielectric_energy_oc_corr.
             element_radius (dict): to an Element object correspond values of the
                 radius and a list of sites of the corresponding element in the
                 molecule.
         """
-
         self.info = info
         self.parameters = parameters
         self.screening_charge = screening_charge
@@ -133,8 +142,10 @@ class CosmoData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of CosmoData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of CosmoData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
         Can be used for scf and escf/egrad.
 
         Args:
@@ -157,21 +168,31 @@ class CosmoData(BaseData):
                 for el, el_data in results["element_radius"].items():
                     element_radius[el.capitalize()] = el_data
 
-        if all(i is None for i in [info, parameters, screening_charge, energies, element_radius]):
+        if all(
+            i is None
+            for i in [info, parameters, screening_charge, energies, element_radius]
+        ):
             return None
 
-        return cls(info=info, parameters=parameters, screening_charge=screening_charge,
-                   energies=energies, element_radius=element_radius)
+        return cls(
+            info=info,
+            parameters=parameters,
+            screening_charge=screening_charge,
+            energies=energies,
+            element_radius=element_radius,
+        )
 
 
 class TurbomoleData(BaseData):
     """
     Information about the Turbomole version and executable used.
+
     Can be used for all Turbomole executables.
     """
 
     def __init__(self, version=None, build=None, executable=None):
-        """
+        """Construct TurbomoleData object.
+
         Args:
             version (str): number of the Turbomole version.
             build (str): Turbomole build.
@@ -184,8 +205,10 @@ class TurbomoleData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of TurbomoleData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of TurbomoleData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -193,23 +216,30 @@ class TurbomoleData(BaseData):
         Returns:
             TurbomoleData.
         """
-
         header = parser.header
 
         if not header:
             return None
 
-        return cls(version=header["tm_version"], build=header["tm_build"], executable=header["executable"])
+        return cls(
+            version=header["tm_version"],
+            build=header["tm_build"],
+            executable=header["executable"],
+        )
 
 
 class RunData(BaseData):
     """
     Information about where the calculation was executed and the timings.
+
     Can be used for all Turbomole executables.
     """
 
-    def __init__(self, host=None, start_time=None, end_time=None, cpu_time=None, wall_time=None):
-        """
+    def __init__(
+        self, host=None, start_time=None, end_time=None, cpu_time=None, wall_time=None
+    ):
+        """Construct RunData object.
+
         Args:
             host (str): name of the host.
             start_time (datetime): initial time of the run.
@@ -223,12 +253,13 @@ class RunData(BaseData):
         self.cpu_time = cpu_time
         self.wall_time = wall_time
 
-
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of RunData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of RunData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -236,18 +267,18 @@ class RunData(BaseData):
         Returns:
             RunData.
         """
-        kwargs = {}
-
         header = parser.header
         time_data = parser.timings
         if not header and not time_data:
             return None
 
-        kwargs = {"start_time": None,
-                  "host": None,
-                  "end_time": None,
-                  "cpu_time": None,
-                  "wall_time": None}
+        kwargs = {
+            "start_time": None,
+            "host": None,
+            "end_time": None,
+            "cpu_time": None,
+            "wall_time": None,
+        }
 
         if header:
             kwargs["start_time"] = header["start_time"]
@@ -265,15 +296,24 @@ class RunData(BaseData):
 class BasisData(BaseData):
     """
     Information about the basis used for the calculation.
+
     Can be used for most of the Turbomole executables (including the scf, escf, grad).
     """
-    def __init__(self, basis_per_specie=None, aux_basis_per_specie=None,
-                 number_scf_basis_func=None, number_scf_aux_basis_func=None):
-        """
+
+    def __init__(
+        self,
+        basis_per_specie=None,
+        aux_basis_per_specie=None,
+        number_scf_basis_func=None,
+        number_scf_aux_basis_func=None,
+    ):
+        """Construct BasisData object.
+
         Args:
-            basis_per_specie (dict): dict with species as keys and name of the basis as values.
-            aux_basis_per_specie (dict): dict with species as keys and name of the auxiliary
+            basis_per_specie (dict): dict with species as keys and name of the
                 basis as values.
+            aux_basis_per_specie (dict): dict with species as keys and name
+                of the auxiliary basis as values.
             number_scf_basis_func (int): number of scf basis functions.
             number_scf_aux_basis_func (int): number of auxialiary scf basis functions.
         """
@@ -285,8 +325,10 @@ class BasisData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of BasisData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of BasisData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -305,11 +347,14 @@ class BasisData(BaseData):
 class SymmetryData(BaseData):
     """
     Information on the symmetry of the molecule.
+
     Can be used for all the TM executables (in some case only a part of the
     information might be available).
     """
+
     def __init__(self, symbol=None, n_reps=None, reps=None):
-        """
+        """Construct SymmetryData object.
+
         Args:
             symbol (str): symbol of the symmetry of the molecule.
             n_reps (int): number of representations
@@ -322,8 +367,10 @@ class SymmetryData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of SymmetryData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of SymmetryData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -342,16 +389,18 @@ class SymmetryData(BaseData):
 class FunctionalData(BaseData):
     """
     Information about the exchange-correlation functional.
+
     Can be used for for scf, gradient and relax executables.
     """
 
     def __init__(self, msg=None, name=None, func_type=None, xcfun=None):
-        """
+        """Construct FunctionalData object.
+
         Args:
             msg (str): the full message in the output concerning the XC functional.
                 In case the parsing failed to identify the correct name it will provide
                 a way to figure out the information.
-            name (str): name of the XC funtional.
+            name (str): name of the XC functional.
             func_type (str): type of the XC functional (e.g. GGA, LDA, ...).
             xcfun (str): version of xcfun used, if present.
         """
@@ -363,8 +412,10 @@ class FunctionalData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of FunctionalData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of FunctionalData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -376,18 +427,24 @@ class FunctionalData(BaseData):
         if not func_data:
             return None
 
-        return cls(msg=func_data["functional_msg"], name=func_data["functional_name"],
-                   func_type=func_data["functional_type"], xcfun=func_data["xcfun"])
+        return cls(
+            msg=func_data["functional_msg"],
+            name=func_data["functional_name"],
+            func_type=func_data["functional_type"],
+            xcfun=func_data["xcfun"],
+        )
 
 
 class RiData(BaseData):
     """
     Information about RI calculations.
-    Can be used for ridft and escf/egrad
+
+    Can be used for ridft and escf/egrad.
     """
 
     def __init__(self, ricore=None, marij=None, rij_memory=None, rik=None):
-        """
+        """Construct RiData object.
+
         Args:
             ricore (int): memory used in ricore.
             marij (bool): True if marij approximation used.
@@ -402,8 +459,10 @@ class RiData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of RiData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of RiData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -422,11 +481,13 @@ class RiData(BaseData):
 class DispersionCorrectionData(BaseData):
     """
     Information about the dispersion correction used in the calculation.
+
     Can be used for scf executables.
     """
 
     def __init__(self, correction=None, en_corr=None):
-        """
+        """Construct DispersionCorrectionData object.
+
         Args:
             correction (str): the name of the correction (e.g. D1, D2, ...).
             en_corr (float): correction on the total energy.
@@ -437,8 +498,10 @@ class DispersionCorrectionData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of DispersionCorrectionData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of DispersionCorrectionData from a parser.
+
+        The paser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -455,15 +518,23 @@ class DispersionCorrectionData(BaseData):
 class DFTData(BaseData):
     """
     The information about a dft calculation.
+
     Can be used for scf, gradients and escf executables.
     """
 
-    def __init__(self, functional=None, ri=None, spherical_gridsize=None,
-                 gridpoints=None, dispersion_correction=None):
-        """
+    def __init__(
+        self,
+        functional=None,
+        ri=None,
+        spherical_gridsize=None,
+        gridpoints=None,
+        dispersion_correction=None,
+    ):
+        """Construct a DFTData object.
 
         Args:
-            functional (FunctionalData): information about the exchange-correlation functional.
+            functional (FunctionalData): information about the exchange-correlation
+                functional.
             ri (RiData): information RI calculations.
             spherical_gridsize (int): size of the grid for spherical integration.
             gridpoints (int): number of points for spherical integration.
@@ -479,8 +550,10 @@ class DFTData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of DFTData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of DFTData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -503,21 +576,34 @@ class DFTData(BaseData):
         if all(i is None for i in [spherical_gridsize, gridpoints, func, ri, disp]):
             return None
 
-        return cls(functional=func, ri=ri, spherical_gridsize=spherical_gridsize,
-                   gridpoints=gridpoints, dispersion_correction=disp)
+        return cls(
+            functional=func,
+            ri=ri,
+            spherical_gridsize=spherical_gridsize,
+            gridpoints=gridpoints,
+            dispersion_correction=disp,
+        )
 
 
 class ScfIterationData(BaseData):
     """
     Details about the iteration in a scf calculation.
+
     It contains the value for each step as lists, but only keeps the initial
     and final indices to avoid wasting space. The index may start from
     values higher than 1 if it is a restart of a previous scf calculation.
     """
 
-    def __init__(self, energies=None, first_index=None, n_steps=None, dampings=None,
-                 converged=None):
-        """
+    def __init__(
+        self,
+        energies=None,
+        first_index=None,
+        n_steps=None,
+        dampings=None,
+        converged=None,
+    ):
+        """Construct ScfIterationData object.
+
         Args:
             energies (list): values of the energies for each step of the scf loop.
             first_index (int): first index of the loop.
@@ -534,8 +620,10 @@ class ScfIterationData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of ScfIterationData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of ScfIterationData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -547,13 +635,18 @@ class ScfIterationData(BaseData):
         if not iter_data:
             return None
 
-        return cls(energies=iter_data["energies"], first_index=iter_data["first_index"],
-                   n_steps=iter_data["n_steps"], dampings=iter_data["dampings"], converged=iter_data["converged"])
+        return cls(
+            energies=iter_data["energies"],
+            first_index=iter_data["first_index"],
+            n_steps=iter_data["n_steps"],
+            dampings=iter_data["dampings"],
+            converged=iter_data["converged"],
+        )
 
     @add_fig_kwargs
     def plot_energies(self, ax=None, **kwargs):
         """
-        Plots the evolution of the energies in the scf loop.
+        Plot the evolution of the energies in the scf loop.
 
         Args:
             ax (Axes):  a matplotlib Axes or None if a new figure should be created.
@@ -574,22 +667,38 @@ class ScfIterationData(BaseData):
 class ScfData(BaseData):
     """
     Information about options and operations in an scf calculation.
+
     Can be used for scf calculations.
     """
 
-    def __init__(self, iterations=None, diis=None, diis_error_vect=None, conv_tot_en=None,
-                 conv_one_e_en=None, virtual_orbital_shift_on=None, virtual_orbital_shift_limit=None,
-                 orbital_characterization=None, restart_file=None, n_occupied_orbitals=None):
-        """
+    def __init__(
+        self,
+        iterations=None,
+        diis=None,
+        diis_error_vect=None,
+        conv_tot_en=None,
+        conv_one_e_en=None,
+        virtual_orbital_shift_on=None,
+        virtual_orbital_shift_limit=None,
+        orbital_characterization=None,
+        restart_file=None,
+        n_occupied_orbitals=None,
+    ):
+        """Construct an ScfData object.
+
         Args:
-            iterations (ScfIterationData):  details about the iteration in the scf loop.
+            iterations (ScfIterationData):  details about the iteration in the
+                scf loop.
             diis (bool): True if DIIS is switched on.
             diis_error_vect (str): type of DIIS error vector.
-            conv_tot_en (float): criterion for scf convergence on increment of total energy.
-            conv_one_e_en (float): criterion for scf convergence on increment of one-electron energy.
-            virtual_orbital_shift_on (bool): True if automatic virtual orbital shift is switched on.
-            virtual_orbital_shift_limit (float): automatic virtual orbital shift switched when
-                e(lumo)-e(homo) lower than this value.
+            conv_tot_en (float): criterion for scf convergence on increment
+                of total energy.
+            conv_one_e_en (float): criterion for scf convergence on increment of
+                one-electron energy.
+            virtual_orbital_shift_on (bool): True if automatic virtual orbital
+                shift is switched on.
+            virtual_orbital_shift_limit (float): automatic virtual orbital shift
+                switched when e(lumo)-e(homo) lower than this value.
             orbital_characterization (str): type of orbital characterization.
             restart_file (str): file to which restart information will be dumped.
             n_occupied_orbitals (int): number of occupied orbitals.
@@ -608,8 +717,10 @@ class ScfData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of ScfData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of ScfData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -638,24 +749,36 @@ class ScfData(BaseData):
 class ScfEnergiesData(BaseData):
     """
     Final energies and different contributions obtained from an scf calculation.
+
     Can be used for scf calculations.
     """
 
-    def __init__(self, total_energy=None, kinetic_energy=None, potential_energy=None,
-                 virial_theorem=None, wavefunction_norm=None, coulomb_energy=None,
-                 xc_energy=None, ts_energy=None, free_energy=None, sigma0_energy=None):
-        """
+    def __init__(
+        self,
+        total_energy=None,
+        kinetic_energy=None,
+        potential_energy=None,
+        virial_theorem=None,
+        wavefunction_norm=None,
+        coulomb_energy=None,
+        xc_energy=None,
+        ts_energy=None,
+        free_energy=None,
+        sigma0_energy=None,
+    ):
+        """Construct ScfEnergiesData object.
+
         Args:
-            total_energy (float):
-            kinetic_energy (float):
-            potential_energy (float):
-            virial_theorem (float):
-            wavefunction_norm (float):
-            coulomb_energy (float):
-            xc_energy (float):
-            ts_energy (float):
-            free_energy (float):
-            sigma0_energy (float):
+            total_energy (float): Total energy of the system.
+            kinetic_energy (float): Kinetic energy of the system.
+            potential_energy (float): Potential energy of the system.
+            virial_theorem (float): Value of the virial theorem.
+            wavefunction_norm (float): Norm of the wavefunction.
+            coulomb_energy (float): Coulomb energy of the system.
+            xc_energy (float): Exchange-correlation energy of the system.
+            ts_energy (float): Entropic energy of the system.
+            free_energy (float): Free energy of the system.
+            sigma0_energy (float): "Sigma0" energy of the system.
         """
         self.total_energy = total_energy
         self.kinetic_energy = kinetic_energy
@@ -671,8 +794,10 @@ class ScfEnergiesData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of ScfEnergiesData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of ScfEnergiesData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -680,13 +805,14 @@ class ScfEnergiesData(BaseData):
         Returns:
             ScfEnergiesData.
         """
-
         en_data = parser.scf_energies
         riper_en_data = parser.riper_scf_energies
 
         if en_data:
             if riper_en_data:
-                raise RuntimeError('Found scf energy data from dscf/ridft as well as from riper.')
+                raise RuntimeError(
+                    "Found scf energy data from dscf/ridft as well as from riper."
+                )
             return cls(**en_data)
         elif riper_en_data:
             return cls(**riper_en_data)
@@ -697,13 +823,22 @@ class ScfEnergiesData(BaseData):
 class ElectrostaticMomentsData(BaseData):
     """
     The data of the electrostatic moments (charge, dipole and quadrupole).
+
     Can be used for scf executables.
     """
 
-    def __init__(self, charge=None, unrestricted_electrons=None, dipole_vector=None,
-                 dipole_norm=None, quadrupole_tensor=None, quadrupole_trace=None,
-                 quadrupole_anisotropy=None):
-        """
+    def __init__(
+        self,
+        charge=None,
+        unrestricted_electrons=None,
+        dipole_vector=None,
+        dipole_norm=None,
+        quadrupole_tensor=None,
+        quadrupole_trace=None,
+        quadrupole_anisotropy=None,
+    ):
+        """Construct ElectrostaticMomentsData object.
+
         Args:
             charge (float): total charge.
             unrestricted_electrons (float): number of unrestricted electrons.
@@ -724,8 +859,10 @@ class ElectrostaticMomentsData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of ElectrostaticMomentsData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of ElectrostaticMomentsData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -740,19 +877,27 @@ class ElectrostaticMomentsData(BaseData):
 
         dip = mom_data["dipole"]
         quad = mom_data["quadrupole"]
-        return cls(charge=mom_data["charge"], unrestricted_electrons=mom_data["unrestricted_electrons"],
-                   dipole_vector=dip["moment"], dipole_norm=dip["norm"], quadrupole_tensor=quad["moment"],
-                   quadrupole_trace=quad["trace"], quadrupole_anisotropy=quad["anisotropy"])
+        return cls(
+            charge=mom_data["charge"],
+            unrestricted_electrons=mom_data["unrestricted_electrons"],
+            dipole_vector=dip["moment"],
+            dipole_norm=dip["norm"],
+            quadrupole_tensor=quad["moment"],
+            quadrupole_trace=quad["trace"],
+            quadrupole_anisotropy=quad["anisotropy"],
+        )
 
 
 class GeometryData(BaseData):
     """
     Data of the geometry of the system: molecule and centers.
+
     Can be used for most of the Turbomole executables (including the scf, escf, grad).
     """
 
     def __init__(self, center_of_mass=None, center_of_charge=None, molecule=None):
-        """
+        """Construct GeometryData object.
+
         Args:
             center_of_mass (list): 3D vector with the position of the center of mass.
             center_of_charge: 3D vector with the position of the center of charge.
@@ -765,8 +910,10 @@ class GeometryData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of GeometryData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of GeometryData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -798,11 +945,13 @@ class GeometryData(BaseData):
 class SpinData(BaseData):
     """
     Information about the spin in the calculation.
+
     Can be used for scf, gradient and escf executables.
     """
 
     def __init__(self, unrestricted=None, s2=None):
-        """
+        """Construct SpinData object.
+
         Args:
             unrestricted (bool): True if is an uhf calculation.
             s2 (float): S^2 value of the spin.
@@ -813,8 +962,10 @@ class SpinData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of SpinData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of SpinData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -828,18 +979,28 @@ class SpinData(BaseData):
 class SmearingData(BaseData):
     """
     Information about the smearing ($fermi datagroup).
+
     Can be used for scf executables.
     """
 
-    def __init__(self, initial_elec_temp=None, final_elec_temp=None, annealing_factor=None,
-                 annealing_homo_lumo_gap_limit=None, smearing_de_limit=None):
-        """
+    def __init__(
+        self,
+        initial_elec_temp=None,
+        final_elec_temp=None,
+        annealing_factor=None,
+        annealing_homo_lumo_gap_limit=None,
+        smearing_de_limit=None,
+    ):
+        """Construct SmearingData object.
+
         Args:
             initial_elec_temp (float): initial electron temperature.
             final_elec_temp (float): final electron temperature.
             annealing_factor (float): annealing factor
-            annealing_homo_lumo_gap_limit (float): annealing if HOMO-LUMO gap lower than this value.
-            smearing_de_limit (float): smearing switched off if DE lower than this value.
+            annealing_homo_lumo_gap_limit (float): annealing if HOMO-LUMO gap lower
+                than this value.
+            smearing_de_limit (float): smearing switched off if DE lower than
+                this value.
         """
         self.initial_elec_temp = initial_elec_temp
         self.final_elec_temp = final_elec_temp
@@ -850,8 +1011,10 @@ class SmearingData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of SmearingData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of SmearingData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -870,11 +1033,13 @@ class SmearingData(BaseData):
 class IntegralData(BaseData):
     """
     Data about the thresholds for integrals.
+
     Can be used for for scf, gradien and escf executables.
     """
 
     def __init__(self, integral_neglect_threshold=None, thize=None, thime=None):
-        """
+        """Construct IntegralData object.
+
         Args:
             integral_neglect_threshold (float): integral neglect threshold.
             thize (float): integral storage threshold THIZE.
@@ -887,8 +1052,10 @@ class IntegralData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of IntegralData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of IntegralData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -907,16 +1074,18 @@ class IntegralData(BaseData):
 class EscfIterationData(BaseData):
     """
     Details about the iteration in an escf calculation.
+
     It contains the data for a list of steps. For each one a sublist of the convergence
     information converning each of the irreps treated as excited states.
     """
 
     def __init__(self, steps=None, converged=None):
-        """
+        """Construct EscfIterationData object.
+
         Args:
-            steps (list): list of lists of lists (3 dimensions). One element of the list for
-                each escf step. One element of the sublist for each irrep dealt with. The inner list
-                contains the convergence information:
+            steps (list): list of lists of lists (3 dimensions). One element of the
+                list for each escf step. One element of the sublist for each irrep
+                dealt with. The inner list contains the convergence information:
                 [name of the irrep, number of converged roots, euclidean residual norm]
             converged (bool): True if converged.
         """
@@ -926,8 +1095,10 @@ class EscfIterationData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of EscfIterationData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of EscfIterationData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -945,27 +1116,37 @@ class EscfIterationData(BaseData):
 class SingleExcitation(MSONable):
     """
     Auxiliary object to store the information about an escf/egrad calculation.
+
     It cannot be extracted directly from the string, being present several
     times in the output of an escf/egrad calculation.
     """
 
-    def __init__(self, tot_en=None, osc_stre=None, rot_stre=None, dominant_contributions=None,
-                 moments_columns=None):
-        """
+    def __init__(
+        self,
+        tot_en=None,
+        osc_stre=None,
+        rot_stre=None,
+        dominant_contributions=None,
+        moments_columns=None,
+    ):
+        """Construct SingleExcitation object.
+
         Args:
             tot_en (float): total energy.
             osc_stre (float): oscillator strength, length representation.
             rot_stre (float): rotatory strength, length representation.
             dominant_contributions (list): list of all the dominant contributions.
-                Each element is a dictionary with "occ_orb" (a dictionary with index of
-                the occupied orbital, irrep, energy and spin), "virt_orb" (same as "occ_orb")
-                and "coeff" (the coefficient of the contribution).
-            moments_columns (list): a list of dictionaries containing the electric an magnetic
-                moments for each column. Each dictionary should contain the following keys:
+                Each element is a dictionary with "occ_orb" (a dictionary with index
+                of the occupied orbital, irrep, energy and spin), "virt_orb"
+                (same as "occ_orb") and "coeff" (the coefficient of the contribution).
+            moments_columns (list): a list of dictionaries containing the electric
+                and magnetic moments for each column. Each dictionary should contain
+                the following keys:
                 "electric_dipole" (3D vector with the electronic dipole as a list),
                 "magnetic_dipole" (3D vector with the magnetic dipole as a list) and
-                "electric_quadrupole" (description of the electronic quadrupole with keys
-                "moment", i.e. the 3x3 matrix of the quadrupole moment, "trace" and "anisotropy").
+                "electric_quadrupole" (description of the electronic quadrupole
+                with keys "moment", i.e. the 3x3 matrix of the quadrupole moment,
+                "trace" and "anisotropy").
         """
         self.tot_en = tot_en
         self.osc_stre = osc_stre
@@ -976,33 +1157,50 @@ class SingleExcitation(MSONable):
 
 class EscfData(BaseData):
     """
-    Output of an escf calculation.
+    Output data of an escf calculation.
+
     Can be used for escf and egrad.
     """
 
-    def __init__(self, calc_type=None, iterations=None, residuum_convergence_criterium=None,
-                 n_occupied_orbitals=None, orbital_characterization=None, max_davidson_iter=None,
-                 machine_precision=None, max_core_mem=None, max_cao_basis_vectors=None,
-                 max_treated_vectors=None, irrep_data=None, gs_tot_en=None, excitations=None):
-        """
+    def __init__(
+        self,
+        calc_type=None,
+        iterations=None,
+        residuum_convergence_criterium=None,
+        n_occupied_orbitals=None,
+        orbital_characterization=None,
+        max_davidson_iter=None,
+        machine_precision=None,
+        max_core_mem=None,
+        max_cao_basis_vectors=None,
+        max_treated_vectors=None,
+        irrep_data=None,
+        gs_tot_en=None,
+        excitations=None,
+    ):
+        """Construct EscfData object.
+
         Args:
-            calc_type (str): string describing the calculation type (e.g. 'RPA SINGLET-EXCITATION').
+            calc_type (str): string describing the calculation type (e.g.
+                'RPA SINGLET-EXCITATION').
             iterations (EscfIterationData): the data about the escf iterations.
             residuum_convergence_criterium (float): residuum convergence criterium.
             n_occupied_orbitals (int): number of occupied orbitals.
-            orbital_characterization (str): description of how the orbital were converged in scf.
+            orbital_characterization (str): description of how the orbital were
+                converged in scf.
             max_davidson_iter (int): maximum number of Davidson iterations.
             machine_precision (float): machine precision.
             max_core_mem (int): maximum core memory in MB.
             max_cao_basis_vectors (int): number of maximum CAO vectors in memory.
-            max_treated_vectors (int): maximum number of simultaneously treated vectors,
-                including degeneracy.
-            irrep_data (dict): keys are strings with the name of the irrep, values are tuples
-                with [tensor space dimension, number of roots].
-            gs_tot_en (float): total energy of the ground state. Turbomole extracts it from the
-                output of the scf calculation. If that is missing Turbomole sets this value to 0
-                in the output of escf.
-            excitations (dict): keys are the name of the irreps and values are lists of SingleExcitation.
+            max_treated_vectors (int): maximum number of simultaneously treated
+                vectors, including degeneracy.
+            irrep_data (dict): keys are strings with the name of the irrep, values
+                are tuples with [tensor space dimension, number of roots].
+            gs_tot_en (float): total energy of the ground state. Turbomole extracts
+                it from the output of the scf calculation. If that is missing
+                Turbomole sets this value to 0 in the output of escf.
+            excitations (dict): keys are the name of the irreps and values are lists
+                of SingleExcitation.
         """
         self.calc_type = calc_type
         self.iterations = iterations
@@ -1021,14 +1219,16 @@ class EscfData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of EscfIterationData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of EscfData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
 
         Returns:
-            EscfIterationData.
+            EscfData.
         """
         iterations = EscfIterationData.from_parser(parser)
 
@@ -1049,7 +1249,7 @@ class EscfData(BaseData):
             max_core_mem=None,
             max_cao_basis_vectors=None,
             max_treated_vectors=None,
-            irrep_data=None
+            irrep_data=None,
         )
 
         kwargs["iterations"] = iterations
@@ -1068,14 +1268,28 @@ class EscfData(BaseData):
 class StatptData(BaseData):
     """
     Initial information provided in statpt.
+
     Can be used only for statpt.
     """
 
-    def __init__(self, max_trust_radius=None, min_trust_radius=None, init_trust_radius=None,
-                 min_grad_norm_for_gdiis=None, prev_steps_for_gdiis=None, hessian_update_method=None,
-                 thr_energy_change=None, thr_max_displ=None, thr_max_grad=None, thr_rms_displ=None,
-                 thr_rms_grad=None, use_defaults=None, final_step_radius=None):
-        """
+    def __init__(
+        self,
+        max_trust_radius=None,
+        min_trust_radius=None,
+        init_trust_radius=None,
+        min_grad_norm_for_gdiis=None,
+        prev_steps_for_gdiis=None,
+        hessian_update_method=None,
+        thr_energy_change=None,
+        thr_max_displ=None,
+        thr_max_grad=None,
+        thr_rms_displ=None,
+        thr_rms_grad=None,
+        use_defaults=None,
+        final_step_radius=None,
+    ):
+        """Construct StatptData object.
+
         Args:
             max_trust_radius (float): maximum allowed trust radius.
             min_trust_radius (float): minimum allowed trust radius
@@ -1089,7 +1303,8 @@ class StatptData(BaseData):
             thr_max_grad (float): threshold for max gradient element.
             thr_rms_displ (float): threshold for RMS of displacement.
             thr_rms_grad (float): threshold for RMS of gradient.
-            use_defaults (bool): True if $statpt was not defined and using default options.
+            use_defaults (bool): True if $statpt was not defined and using
+                default options.
             final_step_radius (float): final step radius.
         """
         self.max_trust_radius = max_trust_radius
@@ -1109,8 +1324,10 @@ class StatptData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of StatptData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of StatptData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -1128,11 +1345,13 @@ class StatptData(BaseData):
 class RelaxData(BaseData):
     """
     Initial information provided in relax.
+
     Can be used only for relax.
     """
 
     def __init__(self, optimizations=None, thr_int_coord=None):
-        """
+        """Construct RelaxData object.
+
         Args:
             optimizations (list): list of strings describing with respect to what the
                 optimization has been performed.
@@ -1144,8 +1363,10 @@ class RelaxData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of RelaxData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of RelaxData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -1162,13 +1383,16 @@ class RelaxData(BaseData):
 
 class RelaxGradientsData(BaseData):
     """
-    Gradient values extracted from the relax/stapt output that take into account
+    Data about gradients in a relaxation calculation.
+
+    Gradient values are extracted from the relax/stapt output that take into account
     the frozen coordinates.
     Can be used for relax and statpt.
     """
 
     def __init__(self, norm_cartesian=None, norm_internal=None, max_internal=None):
-        """
+        """Construct RelaxGradientsData object.
+
         Args:
             norm_cartesian (float): norm of the cartesian gradient.
             norm_internal (float): norm of the internal gradient.
@@ -1182,8 +1406,10 @@ class RelaxGradientsData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of RelaxGradientsData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of RelaxGradientsData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -1200,26 +1426,35 @@ class RelaxGradientsData(BaseData):
 
 class RelaxConvergenceData(BaseData):
     """
-    Final information about convergence according to what is defined in the
-    control file.
+    Final information about relaxation convergence.
+
+    This is obtained according to what is defined in the control file.
     Can be used for relax and statpt.
     """
 
-    def __init__(self, energy_change=None, rms_displ=None, max_displ=None, rms_grad=None, max_grad=None):
-        """
+    def __init__(
+        self,
+        energy_change=None,
+        rms_displ=None,
+        max_displ=None,
+        rms_grad=None,
+        max_grad=None,
+    ):
+        """Construct RelaxConvergenceData object.
+
         Args:
-            energy_change (dict): information about the convergence of the energy change.
-                Contains "value" with the actual value, "thr" with the specified threshold,
-                and "conv" a bool specifying wether the convergence for this threshold has been
-                achieved or not.
-            rms_displ (dict): information about the convergence of the rms of the displacements.
-                Same structure as "energy_change".
-            max_displ (dict): information about the convergence of the maximum of the displacements.
-                Same structure as "energy_change".
-            rms_grad (dict): information about the convergence of the rms of the gradient.
-                Same structure as "energy_change".
-            max_grad (dict): information about the convergence of the maximum of the gradient.
-                Same structure as "energy_change".
+            energy_change (dict): information about the convergence of the
+                energy change. Contains "value" with the actual value, "thr"
+                with the specified threshold, and "conv" a bool specifying whether
+                the convergence for this threshold has been achieved or not.
+            rms_displ (dict): information about the convergence of the rms of the
+                displacements. Same structure as "energy_change".
+            max_displ (dict): information about the convergence of the maximum of
+                the displacements. Same structure as "energy_change".
+            rms_grad (dict): information about the convergence of the rms of the
+                gradient. Same structure as "energy_change".
+            max_grad (dict): information about the convergence of the maximum of the
+                gradient. Same structure as "energy_change".
         """
         self.energy_change = energy_change
         self.rms_displ = rms_displ
@@ -1230,8 +1465,10 @@ class RelaxConvergenceData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of RelaxConvergenceData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of RelaxConvergenceData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -1249,19 +1486,28 @@ class RelaxConvergenceData(BaseData):
 class AoforceNumericalIntegrationData(BaseData):
     """
     Information about the numerical integration in aoforce.
+
     Will be present only if a proper aoforce is run. Absent if running after numforce.
     """
 
-    def __init__(self, core_memory_dft=None, memory_per_atom=None, atoms_per_loop=None,
-                 construction_timings=None):
-        """
+    def __init__(
+        self,
+        core_memory_dft=None,
+        memory_per_atom=None,
+        atoms_per_loop=None,
+        construction_timings=None,
+    ):
+        """Construct AoforceNumericalIntegrationData object.
+
         Args:
             core_memory_dft (int): remaining core memory for DFT in MB.
             memory_per_atom (int): memory needed per atom in KB.
             atoms_per_loop (int): atoms per loop corresponding to the memory.
             construction_timings (list): a list of lists with construction timings.
                 For each element:
-                [str with description of the timing, cpu time in seconds, wall time in seconds]
+                [timing_description, cpu_time, wall_time]
+                with timing_description being the description of the timing, cpu_time
+                being the CPU time in seconds and wall_time, the wall time in seconds.
         """
         self.core_memory_dft = core_memory_dft
         self.memory_per_atom = memory_per_atom
@@ -1271,8 +1517,10 @@ class AoforceNumericalIntegrationData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of AoforceNumericalIntegrationData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of AoforceNumericalIntegrationData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -1291,17 +1539,17 @@ class AoforceNumericalIntegrationData(BaseData):
 
 
 class AoforceRotationalData(BaseData):
-    """
-    Analysis of rotational states in aoforce.
-    """
+    """Analysis of rotational states in aoforce."""
 
     def __init__(self, b=None, intensities=None, m=None, dipole_moment=None):
-        """
+        """Construct AoforceRotationalData object.
+
         Args:
             b (float): 3D vector with rotational constants b in cm^-1.
             intensities (list): 3D vector with optical intensities in a.u.
             m (list): 3x3 matrix.
-            dipole_moment (list): 3D vector with dipole moment in principle axis system in a.u.
+            dipole_moment (list): 3D vector with dipole moment in principle
+                axis system in a.u.
         """
         self.b = b
         self.intensities = intensities
@@ -1311,8 +1559,10 @@ class AoforceRotationalData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of AoforceRotationalData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of AoforceRotationalData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -1330,14 +1580,26 @@ class AoforceRotationalData(BaseData):
 class AoforceVibrationalData(BaseData):
     """
     Analysis of vibrational states in aoforce.
+
     Results are stored as lists, each value corresponds to the frequency
     in the "frequencies" list with the same index.
     """
 
-    def __init__(self, frequencies=None, symmetries=None, ir=None, dDIP_dQ=None,
-                 intensities=None, intensities_perc=None, raman=None, eigenvectors=None,
-                 reduced_masses=None, energies=None):
-        """
+    def __init__(
+        self,
+        frequencies=None,
+        symmetries=None,
+        ir=None,
+        dDIP_dQ=None,
+        intensities=None,
+        intensities_perc=None,
+        raman=None,
+        eigenvectors=None,
+        reduced_masses=None,
+        energies=None,
+    ):
+        """Construct AoforceVibrationalData object.
+
         Args:
             frequencies (list): vibrational frequencies in cm^-1.
             symmetries (list): string with the name of the symmetry of the modes.
@@ -1352,8 +1614,8 @@ class AoforceVibrationalData(BaseData):
             eigenvectors (list): matrix with shape (num frequencies, number of atoms, 3)
                 with the eigenvectors for each atom.
             reduced_masses (list): reduced masses in g/mol.
-            energies (dict): the values of the vibrational energies. A dictionary with "zpve"
-                "scf" and "total" as keys.
+            energies (dict): the values of the vibrational energies.
+                A dictionary with "zpve", "scf" and "total" as keys.
         """
         self.frequencies = frequencies
         self.symmetries = symmetries
@@ -1369,8 +1631,10 @@ class AoforceVibrationalData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of AoforceVibrationalData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of AoforceVibrationalData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -1386,20 +1650,41 @@ class AoforceVibrationalData(BaseData):
 
     def get_freqs_df(self):
         """
-        Generates a pandas DataFrame with the frequencies and their properties
+        Generate a pandas DataFrame with the frequencies and their properties.
 
         Returns:
             DataFrame
         """
-        cols = np.column_stack([self.frequencies, self.symmetries, self.intensities, self.intensities_perc, self.ir,
-                                self.raman, self.dDIP_dQ, self.reduced_masses])
-        labels = ["frequency", "symmetry", "intensity", "intensity %", "IR", "Raman", "|dDIP/dQ|", "red. mass"]
+        cols = np.column_stack(
+            [
+                self.frequencies,
+                self.symmetries,
+                self.intensities,
+                self.intensities_perc,
+                self.ir,
+                self.raman,
+                self.dDIP_dQ,
+                self.reduced_masses,
+            ]
+        )
+        labels = [
+            "frequency",
+            "symmetry",
+            "intensity",
+            "intensity %",
+            "IR",
+            "Raman",
+            "|dDIP/dQ|",
+            "red. mass",
+        ]
         return pd.DataFrame(cols, columns=labels)
 
     def n_negative_freqs(self, tol=0.1):
         """
-        The number of frequencies that satisfy the condition
-        f < -abs(tol)
+        Get the number of negative frequencies.
+
+        Frequencies are considered negative if they satisfy the condition
+        f < -abs(tol).
 
         Args:
             tol (float): tolerance for considering a frequency as negative.
@@ -1407,13 +1692,14 @@ class AoforceVibrationalData(BaseData):
         Returns:
             int: the number of negative frequencies.
         """
-
         return np.count_nonzero(np.array(self.frequencies) < -np.abs(tol))
 
     def n_positive_freqs(self, tol=0.1):
         """
-        The number of frequencies that satisfy the condition
-        f > abs(tol)
+        Get the number of positive frequencies.
+
+        Frequencies are considered positive if they satisfy the condition
+        f > abs(tol).
 
         Args:
             tol (float): tolerance for considering a frequency as positive.
@@ -1421,13 +1707,14 @@ class AoforceVibrationalData(BaseData):
         Returns:
             int: the number of positive frequencies.
         """
-
         return np.count_nonzero(np.array(self.frequencies) > np.abs(tol))
 
     def n_zero_freqs(self, tol=0.1):
         """
-        The number of frequencies that satisfy the condition
-        -abs(tol) > f > abs(tol)
+        Get the number of frequencies close to zero.
+
+        Frequencies are considered close to zero if they satisfy the condition
+        -abs(tol) > f > abs(tol).
 
         Args:
             tol (float): tolerance for considering a frequency as zero.
@@ -1436,16 +1723,17 @@ class AoforceVibrationalData(BaseData):
             int: the number of zero frequencies.
         """
         f_arr = np.array(self.frequencies)
-        return np.count_nonzero(np.logical_and(-np.abs(tol) <= f_arr, f_arr <= np.abs(tol)))
+        return np.count_nonzero(
+            np.logical_and(-np.abs(tol) <= f_arr, f_arr <= np.abs(tol))
+        )
 
 
 class MP2Data(BaseData):
-    """
-    MP2 data object containing parameters used to run the MP2 calculation.
-    """
+    """Data object containing parameters used to run the MP2 calculation."""
 
     def __init__(self, energy_only=None):
-        """
+        """Construct MP2Data object.
+
         Args:
             energy_only (bool): whether this is an energy-only MP2 calculation.
         """
@@ -1454,8 +1742,10 @@ class MP2Data(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of MP2Data from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of MP2Data from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -1471,12 +1761,11 @@ class MP2Data(BaseData):
 
 
 class MP2Results(BaseData):
-    """
-    MP2 results object.
-    """
+    """Results from an MP2 calculation."""
 
     def __init__(self, energy=None):
-        """
+        """Construct MP2Results object.
+
         Args:
             energy (float): MP2 energy.
         """
@@ -1485,8 +1774,10 @@ class MP2Results(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of MP2Results from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of MP2Results from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -1504,10 +1795,16 @@ class MP2Results(BaseData):
 class PeriodicityData(BaseData):
     """Information about periodicity."""
 
-    def __init__(self, periodicity=None, lattice_params=None,
-                 shortest_interatomic_distance=None,
-                 direct_space_vectors=None, reciprocal_space_vectors=None):
-        """
+    def __init__(
+        self,
+        periodicity=None,
+        lattice_params=None,
+        shortest_interatomic_distance=None,
+        direct_space_vectors=None,
+        reciprocal_space_vectors=None,
+    ):
+        """Construct PeriodicityData object.
+
         Args:
             periodicity (int): Periodicity of the system (1, 2 or 3).
             lattice_params: Lattice parameters of the system (in Angstroms).
@@ -1521,8 +1818,9 @@ class PeriodicityData(BaseData):
             direct_space_vectors: Lattice vectors of the system (in Angstroms).
                 The first vector will always be aligned with the x cartesian direction.
                 For 2D and 3D, the second vector is always in the xy cartesian plane.
-            reciprocal_space_vectors: Reciprocal lattice vectors of the system (in Angstroms^-1).
-                The physics definition of the reciprocal lattice vectors is used here:
+            reciprocal_space_vectors: Reciprocal lattice vectors of the system (in
+                Angstroms^-1). The physics definition of the reciprocal lattice
+                vectors is used here:
 
                 .. code-block:: text
 
@@ -1551,8 +1849,10 @@ class PeriodicityData(BaseData):
     @classmethod
     def from_parser(cls, parser):
         """
-        Generates an instance of PeriodicityData from a parser based on the stdout
-        of a Turbomole executable. Returns None if no data could be parsed.
+        Generate an instance of PeriodicityData from a parser.
+
+        The parser is based on the stdout of a Turbomole executable.
+        Returns None if no data could be parsed.
 
         Args:
             parser (Parser): the parser to be used to extract the data.
@@ -1570,28 +1870,37 @@ class PeriodicityData(BaseData):
             lattice_params = [bohr_to_ang * data["tm_lattice_params"][0]]
         elif periodicity == 2:
             # a, b, gamma
-            lattice_params = [bohr_to_ang * data["tm_lattice_params"][0],
-                              bohr_to_ang * data["tm_lattice_params"][1],
-                              data["tm_lattice_params"][2]]
+            lattice_params = [
+                bohr_to_ang * data["tm_lattice_params"][0],
+                bohr_to_ang * data["tm_lattice_params"][1],
+                data["tm_lattice_params"][2],
+            ]
         elif periodicity == 3:
             # a, b, c, alpha, beta, gamma
-            lattice_params = [bohr_to_ang * data["tm_lattice_params"][0],
-                              bohr_to_ang * data["tm_lattice_params"][1],
-                              bohr_to_ang * data["tm_lattice_params"][2],
-                              data["tm_lattice_params"][3],
-                              data["tm_lattice_params"][4],
-                              data["tm_lattice_params"][5]]
+            lattice_params = [
+                bohr_to_ang * data["tm_lattice_params"][0],
+                bohr_to_ang * data["tm_lattice_params"][1],
+                bohr_to_ang * data["tm_lattice_params"][2],
+                data["tm_lattice_params"][3],
+                data["tm_lattice_params"][4],
+                data["tm_lattice_params"][5],
+            ]
         else:
             raise RuntimeError('"periodicity" should be 1, 2 or 3.')
 
-        direct_space_vectors = [[bohr_to_ang * xx for xx in vect]
-                                for vect in data["direct_space_vectors"]]
-        reciprocal_space_vectors = [[xx / bohr_to_ang for xx in vect]
-                                    for vect in data["reciprocal_space_vectors"]]
+        direct_space_vectors = [
+            [bohr_to_ang * xx for xx in vect] for vect in data["direct_space_vectors"]
+        ]
+        reciprocal_space_vectors = [
+            [xx / bohr_to_ang for xx in vect]
+            for vect in data["reciprocal_space_vectors"]
+        ]
 
-        return cls(periodicity=periodicity,
-                   lattice_params=lattice_params,
-                   shortest_interatomic_distance=bohr_to_ang*data["shortest_interatomic_distance"],
-                   direct_space_vectors=direct_space_vectors,
-                   reciprocal_space_vectors=reciprocal_space_vectors
-                   )
+        return cls(
+            periodicity=periodicity,
+            lattice_params=lattice_params,
+            shortest_interatomic_distance=bohr_to_ang
+            * data["shortest_interatomic_distance"],
+            direct_space_vectors=direct_space_vectors,
+            reciprocal_space_vectors=reciprocal_space_vectors,
+        )

@@ -2,7 +2,7 @@
     The turbomoleio package, a python interface to Turbomole
     for preparing inputs, parsing outputs and other related tools.
 
-    Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+    Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 
     This file is part of turbomoleio.
 

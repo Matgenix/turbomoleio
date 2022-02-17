@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -27,27 +27,38 @@ The output obtained from the parsing are compared with those stored in json file
 A helper function is provided to generate the reference json files. These files
 should then be verified by the user to ensure the correctness of the parser.
 """
-import pytest
-import os
 import json
+import os
 
-from turbomoleio.output.parser import Parser, convert_float, convert_int, convert_time_string
-from turbomoleio.testfiles.utils import assert_almost_equal, temp_dir
-from turbomoleio.testfiles.utils import PARSER_METHODS
-from turbomoleio.testfiles.utils import TM_VERSIONS
-from turbomoleio.testfiles.utils import TESTS_CONFIGS_TM_VERSIONS
+import pytest
 
-excluded_execs = ['jobex']
+from turbomoleio.output.parser import (
+    Parser,
+    convert_float,
+    convert_int,
+    convert_time_string,
+)
+from turbomoleio.testfiles.utils import (
+    PARSER_METHODS,
+    TESTS_CONFIGS_TM_VERSIONS,
+    TM_VERSIONS,
+    assert_almost_equal,
+    temp_dir,
+)
+
+excluded_execs = ["jobex"]
 files_list = [
     (tm_version, tm_exec, test_name)
     for tm_version in TM_VERSIONS
-    for tm_exec, exec_tests in TESTS_CONFIGS_TM_VERSIONS[tm_version]['testlist'].items()
+    for tm_exec, exec_tests in TESTS_CONFIGS_TM_VERSIONS[tm_version]["testlist"].items()
     if tm_exec not in excluded_execs
     for test_name in exec_tests
 ]
 
 
-@pytest.fixture(scope="function", params=files_list, ids=[os.path.join(*f) for f in files_list])
+@pytest.fixture(
+    scope="function", params=files_list, ids=[os.path.join(*f) for f in files_list]
+)
 def parser_and_dict(request, testdir):
     tm_version = request.param[0]
     tm_exec = request.param[1]
@@ -66,7 +77,6 @@ def method(request):
 
 
 class TestParser:
-
     def test_properties(self, parser_and_dict, method):
         parser, desired = parser_and_dict
 
@@ -77,19 +87,27 @@ class TestParser:
 
         # ignore date values since in the dictionary they are datetime, while
         # just strings in the json file.
-        assert_almost_equal(parsed_data, desired[method], rtol=1e-4,
-                            ignored_values=["start_time", "end_time", "@version"])
+        assert_almost_equal(
+            parsed_data,
+            desired[method],
+            rtol=1e-4,
+            ignored_values=["start_time", "end_time", "@version"],
+        )
 
     @pytest.mark.parametrize("tm_version", TM_VERSIONS)
     def test_get_split_jobex_parsers(self, testdir, tm_version):
-        path = os.path.join(testdir, "outputs", tm_version, "jobex", "h2o_dscf", "job.last")
+        path = os.path.join(
+            testdir, "outputs", tm_version, "jobex", "h2o_dscf", "job.last"
+        )
         p = Parser.from_file(path)
         jp = p.get_split_jobex_parsers()
         assert jp.exec_en == "dscf"
         assert jp.exec_grad == "grad"
         assert jp.exec_relax == "statpt"
 
-        path = os.path.join(testdir, "outputs", tm_version, "jobex", "no3_ridft", "job.last")
+        path = os.path.join(
+            testdir, "outputs", tm_version, "jobex", "no3_ridft", "job.last"
+        )
         p = Parser.from_file(path)
         jp = p.get_split_jobex_parsers()
         assert jp.exec_en == "ridft"
@@ -110,18 +128,22 @@ following line"""
         assert p.get_value("line to", -2, 0, float) == pytest.approx(0.1)
 
     def test_fail_all_done_check(self, delete_tmp_dir):
-        with temp_dir(delete_tmp_dir) as tmp:
+        with temp_dir(delete_tmp_dir):
             with open("test.log", "wt") as f:
-                f.write("""some text
+                f.write(
+                    """some text
 some more text
-following line""")
+following line"""
+                )
 
-            with pytest.raises(ValueError, match="The string does not contain data for a completed calculation"):
+            with pytest.raises(
+                ValueError,
+                match="The string does not contain data for a completed calculation",
+            ):
                 Parser.from_file("test.log")
 
 
 class TestFunctions:
-
     def test_convert_float(self):
         assert convert_float("0.1") == pytest.approx(0.1)
         assert convert_float("0.1E-01") == pytest.approx(0.01)
@@ -164,9 +186,11 @@ def generate_files(files=None, methods=None, overwrite=False):
         files = files_list
 
     for directory, name in files:
-        path = os.path.join(os.path.split(__file__)[0], "../../testfiles", "outputs", directory, name)
-        parser = Parser.from_file(path+".log")
-        json_path = path+".json"
+        path = os.path.join(
+            os.path.split(__file__)[0], "../../testfiles", "outputs", directory, name
+        )
+        parser = Parser.from_file(path + ".log")
+        json_path = path + ".json"
         if os.path.isfile(json_path):
             with open(json_path) as f:
                 ref_data = json.load(f)
@@ -180,4 +204,5 @@ def generate_files(files=None, methods=None, overwrite=False):
 
         with open(json_path, "wt") as f:
             from monty.json import jsanitize
+
             json.dump(jsanitize(ref_data), f, indent=2)

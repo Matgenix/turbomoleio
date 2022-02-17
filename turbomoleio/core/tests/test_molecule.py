@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -21,17 +21,25 @@
 # see <https://www.gnu.org/licenses/>.
 
 import os
-import pytest
 import re
 
+import pytest
 from pymatgen.core.periodic_table import DummySpecie
 from pymatgen.core.structure import Molecule
-from pymatgen.core.structure import Structure
-from turbomoleio.testfiles.utils import temp_dir, assert_MSONable
-from turbomoleio.core.molecule import Distance, BondAngle, DihedralAngle, InverseDistance, OutOfPlaneAngle
-from turbomoleio.core.molecule import CollinearBendingAngle, PerpendicularBendingAngle, InternalDefinition
-from turbomoleio.core.molecule import MoleculeSystem
+
 from turbomoleio.core.datagroups import DataGroups
+from turbomoleio.core.molecule import (
+    BondAngle,
+    CollinearBendingAngle,
+    DihedralAngle,
+    Distance,
+    InternalDefinition,
+    InverseDistance,
+    MoleculeSystem,
+    OutOfPlaneAngle,
+    PerpendicularBendingAngle,
+)
+from turbomoleio.testfiles.utils import assert_MSONable, temp_dir
 
 try:
     from pymatgen.core.periodic_table import DummySpecies
@@ -106,25 +114,30 @@ def check_user_defined_bonds_dg(to_test, ref):
     assert to_test == ref
 
 
-@pytest.mark.parametrize('molecule_filename', ['ch4.json'])
+@pytest.mark.parametrize("molecule_filename", ["ch4.json"])
 class TestInternalDefinition:
-
     def test_distance(self, molecule):
-        d = Distance(status="k", indices=[0,1])
+        d = Distance(status="k", indices=[0, 1])
         assert d.is_valid(molecule)
         d.value = 1.0
         assert not d.is_valid(molecule)
         d.value = 2.058455873547
         assert d.is_valid(molecule)
 
-        d = Distance(status="k", indices=[[0,1], [1,2]], weights=[1, 0.5], value=2.49279)
+        d = Distance(
+            status="k", indices=[[0, 1], [1, 2]], weights=[1, 0.5], value=2.49279
+        )
         assert d.is_valid(molecule)
 
-        d = Distance(status="f", indices=[[0,1], [1,2]], weights=[1, -0.5], value=0.25182)
+        d = Distance(
+            status="f", indices=[[0, 1], [1, 2]], weights=[1, -0.5], value=0.25182
+        )
         assert d.is_valid(molecule)
         # wrong status
-        with pytest.raises(ValueError, match="Unsupported internal definition status.*z"):
-            Distance(status="z", indices=[0,1])
+        with pytest.raises(
+            ValueError, match="Unsupported internal definition status.*z"
+        ):
+            Distance(status="z", indices=[0, 1])
 
         assert str(d)
 
@@ -136,16 +149,18 @@ class TestInternalDefinition:
     def test_bond_angle(self, molecule):
         # wrong number of indices
         with pytest.raises(ValueError, match="Wrong number of indices.*2"):
-            BondAngle(status="k", indices=[0,1])
+            BondAngle(status="k", indices=[0, 1])
 
-        ba = BondAngle(status="k", indices=[0,1,2])
+        ba = BondAngle(status="k", indices=[0, 1, 2])
         assert ba.is_valid(molecule)
         ba.value = 90
         assert not ba.is_valid(molecule)
         ba.value = 35.26438972
         assert ba.is_valid(molecule)
 
-        ba = BondAngle(status="k", indices=[[0,1,2], [1,2,3]], weights=[1, 0.2], value=39.38699)
+        ba = BondAngle(
+            status="k", indices=[[0, 1, 2], [1, 2, 3]], weights=[1, 0.2], value=39.38699
+        )
         assert ba.is_valid(molecule)
 
         assert str(ba)
@@ -158,17 +173,21 @@ class TestInternalDefinition:
     def test_dihedral_angle(self, molecule):
         # wrong number of indices
         with pytest.raises(ValueError, match="Wrong number of indices.*3"):
-            DihedralAngle(status="k", indices=[0,1,2])
+            DihedralAngle(status="k", indices=[0, 1, 2])
 
-        da = DihedralAngle(status="k", indices=[0,1,2,3])
+        da = DihedralAngle(status="k", indices=[0, 1, 2, 3])
         assert da.is_valid(molecule)
         da.value = 90
         assert not da.is_valid(molecule)
         da.value = 35.26438972
         assert da.is_valid(molecule)
 
-        da = DihedralAngle(status="k", indices=[[0,1,2,3], [1,2,3,4], [0,2,3,4]],
-                           weights=[-0.1, 0.7, 0.7], value=-51.72110)
+        da = DihedralAngle(
+            status="k",
+            indices=[[0, 1, 2, 3], [1, 2, 3, 4], [0, 2, 3, 4]],
+            weights=[-0.1, 0.7, 0.7],
+            value=-51.72110,
+        )
         assert da.is_valid(molecule)
 
         assert str(da)
@@ -180,7 +199,7 @@ class TestInternalDefinition:
         check_dg(da.to_string(), s_out)
 
     def test_inverse_distance(self, molecule):
-        i = InverseDistance(status="k", indices=[[0,1]])
+        i = InverseDistance(status="k", indices=[[0, 1]])
         assert i.is_valid(molecule)
         i.value = 1.0
         assert not i.is_valid(molecule)
@@ -193,7 +212,7 @@ class TestInternalDefinition:
         check_dg(i.to_string(), s_out)
 
     def test_out_of_plane_angle(self, molecule):
-        outp = OutOfPlaneAngle(status="k", indices=[0,1,2,3])
+        outp = OutOfPlaneAngle(status="k", indices=[0, 1, 2, 3])
         assert outp.is_valid(molecule)
         outp.value = 1.0
         assert not outp.is_valid(molecule)
@@ -206,7 +225,7 @@ class TestInternalDefinition:
         check_dg(outp.to_string(), s_out)
 
     def test_collinear_bending_angle(self, molecule):
-        linc = CollinearBendingAngle(status="k", indices=[0,1,2,3])
+        linc = CollinearBendingAngle(status="k", indices=[0, 1, 2, 3])
         assert linc.is_valid(molecule)
         linc.value = 1.0
         assert not linc.is_valid(molecule)
@@ -219,7 +238,7 @@ class TestInternalDefinition:
         check_dg(linc.to_string(), s_out)
 
     def test_perpendicular_bending_angle(self, molecule):
-        linp = PerpendicularBendingAngle(status="k", indices=[0,1,2,3])
+        linp = PerpendicularBendingAngle(status="k", indices=[0, 1, 2, 3])
         # is_valid always returns True
         assert linp.is_valid(molecule)
         linp.value = 1.0
@@ -231,7 +250,6 @@ class TestInternalDefinition:
 
         s_out = """1 k 1.0 linp 1 2 3 4 val=24.73561"""
         check_dg(linp.to_string(), s_out)
-
 
     def test_from_string(self, molecule):
         # Distance
@@ -270,13 +288,13 @@ class TestInternalDefinition:
 
         # Inverse distance
         s_inverse_distance = """# definitions of internal coordinates
-  1 k  1.0000000000000 invr    1    2 
+  1 k  1.0000000000000 invr    1    2
 """
         i = InternalDefinition.from_string(s_inverse_distance)
         assert isinstance(i, InverseDistance)
         assert i.is_valid(molecule)
         assert len(i.indices) == 1
-        assert i.value == None
+        assert i.value is None
         assert i.status == "k"
 
         # Out of plane angle
@@ -319,33 +337,38 @@ class TestInternalDefinition:
         # wrong type
         s = """   1 z  1.0000000000000 bend    1    2  3    val=  19.38699
         """
-        with pytest.raises(ValueError, match="Unsupported internal definition status.*z"):
+        with pytest.raises(
+            ValueError, match="Unsupported internal definition status.*z"
+        ):
             InternalDefinition.from_string(s)
 
         # wrong type of coordinate
         s = """   1 f  1.0000000000000 zzzz    1    2  3    val=  19.38699
         """
-        with pytest.raises(ValueError, match="Could not find a subclass with coord_str matching zzzz"):
+        with pytest.raises(
+            ValueError, match="Could not find a subclass with coord_str matching zzzz"
+        ):
             InternalDefinition.from_string(s)
 
         # misformatted string
         s = """    1.0000000000000 bend    1    2  3    val=  19.38699
         """
-        with pytest.raises(ValueError, match="Could not find a subclass with coord_str matching 2"):
+        with pytest.raises(
+            ValueError, match="Could not find a subclass with coord_str matching 2"
+        ):
             InternalDefinition.from_string(s)
 
 
 class TestMoleculeSystem:
-
     def test_from_string(self):
         # basic test
         string = """
 $coord
- .00000000000000       .00000000000000       .00000000000000      n       
--1.15103063747470     -1.99364354517457       .00000000000000      o       
-2.30206127494940       .00000000000000       .00000000000000      o       
--1.15103063747470      1.99364354517457       .00000000000000      o       
-$end        
+ .00000000000000       .00000000000000       .00000000000000      n
+-1.15103063747470     -1.99364354517457       .00000000000000      o
+2.30206127494940       .00000000000000       .00000000000000      o
+-1.15103063747470      1.99364354517457       .00000000000000      o
+$end
 """
 
         ms = MoleculeSystem.from_string(string=string, fmt="coord")
@@ -359,23 +382,23 @@ $end
         assert_MSONable(ms)
 
         # no coord
-        with pytest.raises(ValueError, match=r'^The string does not contain \$coord!$'):
+        with pytest.raises(ValueError, match=r"^The string does not contain \$coord!$"):
             MoleculeSystem.from_string(string="$end", fmt="coord")
 
         # with frozen and internal definitions
         string = """
 $coord
  .00000000000000       .00000000000000       .00000000000000      n  f
--1.15103063747470     -1.99364354517457       .00000000000000      o       
-2.30206127494940       .00000000000000       .00000000000000      o       
--1.15103063747470      1.99364354517457       .00000000000000      o f       
+-1.15103063747470     -1.99364354517457       .00000000000000      o
+2.30206127494940       .00000000000000       .00000000000000      o
+-1.15103063747470      1.99364354517457       .00000000000000      o f
 $intdef
 # definitions of internal coordinates
 
 1 k  1.0000000000000 stre    1    2           val=   2.43987
-2 f  1.0000000000000 bend    1    2  3        
-     -0.5000000000000 bend    2    3  4        
-$end        
+2 f  1.0000000000000 bend    1    2  3
+     -0.5000000000000 bend    2    3  4
+$end
 """
         ms = MoleculeSystem.from_string(string=string, fmt="coord")
         mol = ms.molecule
@@ -402,13 +425,13 @@ $end
         # with user-defined bonds
         string = """
 $coord
- .00000000000000       .00000000000000       .00000000000000      n 
--1.15103063747470     -1.99364354517457       .00000000000000      o       
-2.30206127494940       .00000000000000       .00000000000000      o       
--1.15103063747470      1.99364354517457       .00000000000000      o       
+ .00000000000000       .00000000000000       .00000000000000      n
+-1.15103063747470     -1.99364354517457       .00000000000000      o
+2.30206127494940       .00000000000000       .00000000000000      o
+-1.15103063747470      1.99364354517457       .00000000000000      o
 $user-defined bonds
-1-2, 2 - 3,3|4      
-$end        
+1-2, 2 - 3,3|4
+$end
 """
         ms = MoleculeSystem.from_string(string=string, fmt="coord")
         mol = ms.molecule
@@ -420,19 +443,21 @@ $end
         dg_ref = DataGroups(string)
         assert len(dg.dg_list) == 3
         check_dg(dg.sdg("coord", strict=True), dg_ref.sdg("coord", strict=True))
-        check_user_defined_bonds_dg(dg.sdg("user-defined bonds", strict=True),
-                                    dg_ref.sdg("user-defined bonds", strict=True))
+        check_user_defined_bonds_dg(
+            dg.sdg("user-defined bonds", strict=True),
+            dg_ref.sdg("user-defined bonds", strict=True),
+        )
 
         # malformed user-defined bonds
         string = """
 $coord
- .00000000000000       .00000000000000       .00000000000000      n 
--1.15103063747470     -1.99364354517457       .00000000000000      o       
-2.30206127494940       .00000000000000       .00000000000000      o       
--1.15103063747470      1.99364354517457       .00000000000000      o       
+ .00000000000000       .00000000000000       .00000000000000      n
+-1.15103063747470     -1.99364354517457       .00000000000000      o
+2.30206127494940       .00000000000000       .00000000000000      o
+-1.15103063747470      1.99364354517457       .00000000000000      o
 $user-defined bonds
-1-2, 2 3,3|4      
-$end        
+1-2, 2 3,3|4
+$end
 """
         with pytest.raises(ValueError, match="Cannot parse user-defined bonds.*"):
             MoleculeSystem.from_string(string=string, fmt="coord")
@@ -441,7 +466,7 @@ $end
         ms = MoleculeSystem.from_string(mol.to(fmt="xyz"), fmt="xyz")
         assert ms.molecule[1].coords[0] == pytest.approx(-0.6090991821345737)
 
-    @pytest.mark.parametrize('molecule_filename', ['co2.json'])
+    @pytest.mark.parametrize("molecule_filename", ["co2.json"])
     def test_to_coord_string(self, molecule):
         ms = MoleculeSystem(molecule)
         test_value = """
@@ -463,7 +488,7 @@ $end
         assert len(dg.dg_list) == 2
         check_dg(dg.sdg("coord", strict=True), test_value)
 
-    @pytest.mark.parametrize('molecule_filename', ['h2o_dummy_atom'])
+    @pytest.mark.parametrize("molecule_filename", ["h2o_dummy_atom"])
     def test_dummy_atoms(self, molecule_filepath):
         ms = MoleculeSystem.from_file(molecule_filepath, fmt="coord")
         mol = ms.molecule
@@ -484,20 +509,23 @@ $end
 
         assert_MSONable(ms)
 
-    @pytest.mark.parametrize('molecule_filename', ['disordered_mol.json'])
+    @pytest.mark.parametrize("molecule_filename", ["disordered_mol.json"])
     def test_disordered(self, molecule_filepath):
         m = Molecule.from_file(molecule_filepath)
         assert not m.is_ordered
 
-        with pytest.raises(ValueError, match=r'^Turbomoleio and turbomole do not handle disordered structures.$'):
+        with pytest.raises(
+            ValueError,
+            match=r"^Turbomoleio and turbomole do not handle disordered structures.$",
+        ):
             MoleculeSystem(m).to_coord_string()
 
-    @pytest.mark.parametrize('molecule_filename', ['co2.json'])
+    @pytest.mark.parametrize("molecule_filename", ["co2.json"])
     def test_to_file(self, molecule, delete_tmp_dir):
         ms = MoleculeSystem(molecule)
 
         with temp_dir(delete_tmp_dir) as tmp_dir:
-            fname = os.path.join(tmp_dir, 'coord_test')
+            fname = os.path.join(tmp_dir, "coord_test")
             ms.to_file(filepath=fname, fmt="coord")
             assert os.path.isfile("coord_test")
             dg = DataGroups.from_file("coord_test")
@@ -507,13 +535,15 @@ $end
             assert os.path.isfile("mol_test.xyz")
             assert ms.from_file("mol_test.xyz") is not None
 
-    @pytest.mark.parametrize('molecule_filename', ['ch4.json'])
+    @pytest.mark.parametrize("molecule_filename", ["ch4.json"])
     def test_add_distance(self, molecule):
         ms = MoleculeSystem(molecule)
         ms.add_distance(1, 2)
         assert not ms.has_inconsistencies()
         assert len(ms.user_defined_bonds) == 1
-        ms.add_distance(0, 1, status="k", add_user_def_bonds=False, value=2.058455873547)
+        ms.add_distance(
+            0, 1, status="k", add_user_def_bonds=False, value=2.058455873547
+        )
         assert not ms.has_inconsistencies()
         assert len(ms.user_defined_bonds) == 1
 
@@ -528,32 +558,36 @@ $end
 
         assert_MSONable(ms)
 
-    @pytest.mark.parametrize('molecule_filename', ['ch4.json'])
+    @pytest.mark.parametrize("molecule_filename", ["ch4.json"])
     def test_add_bond_angle(self, molecule):
         ms = MoleculeSystem(molecule)
         ms.add_bond_angle(1, 2, 3)
         assert not ms.has_inconsistencies()
         assert len(ms.user_defined_bonds) == 2
-        ms.add_bond_angle(0, 1, 2, status="k", add_user_def_bonds=False, value=35.26438972)
+        ms.add_bond_angle(
+            0, 1, 2, status="k", add_user_def_bonds=False, value=35.26438972
+        )
         assert not ms.has_inconsistencies()
         assert len(ms.user_defined_bonds) == 2
 
         ms.add_bond_angle(2, 3, 4, value=10, weights=1.0)
         assert ms.has_inconsistencies()
 
-        ms.add_bond_angle([0,1], [2,3], [3,4])
+        ms.add_bond_angle([0, 1], [2, 3], [3, 4])
         assert len(ms.int_def[-1].indices) == 2
 
         with pytest.raises(ValueError):
-            ms.add_bond_angle([1,2,3], [1,2], [2,3])
+            ms.add_bond_angle([1, 2, 3], [1, 2], [2, 3])
 
-    @pytest.mark.parametrize('molecule_filename', ['ch4.json'])
+    @pytest.mark.parametrize("molecule_filename", ["ch4.json"])
     def test_add_dihedral(self, molecule):
         ms = MoleculeSystem(molecule)
         ms.add_dihedral(1, 2, 3, 4)
         assert not ms.has_inconsistencies()
         assert len(ms.user_defined_bonds) == 3
-        ms.add_dihedral(0, 1, 2, 3, status="k", add_user_def_bonds=False, value=35.26438972)
+        ms.add_dihedral(
+            0, 1, 2, 3, status="k", add_user_def_bonds=False, value=35.26438972
+        )
         assert not ms.has_inconsistencies()
         assert len(ms.user_defined_bonds) == 3
 
@@ -566,13 +600,21 @@ $end
         with pytest.raises(ValueError):
             ms.add_dihedral([1, 2, 3], [1, 2], [2, 3], [3, 4])
 
-    @pytest.mark.parametrize('molecule_filename', ['ch4.json'])
+    @pytest.mark.parametrize("molecule_filename", ["ch4.json"])
     def test_check_index(self, molecule):
         ms = MoleculeSystem(molecule)
-        with pytest.raises(ValueError, match="One of the indices representing the atoms is negative or larger then the number of sites"):
+        with pytest.raises(
+            ValueError,
+            match="One of the indices representing the atoms is negative or "
+            "larger then the number of sites",
+        ):
             ms._check_index([5])
 
-        with pytest.raises(ValueError, match="One of the indices representing the atoms is negative or larger then the number of sites"):
+        with pytest.raises(
+            ValueError,
+            match="One of the indices representing the atoms is negative or "
+            "larger then the number of sites",
+        ):
             ms._check_index([-1])
 
         assert ms._check_index([4]) is None

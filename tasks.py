@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -20,18 +20,19 @@
 # along with turbomoleio (see ~turbomoleio/COPYING). If not,
 # see <https://www.gnu.org/licenses/>.
 
+"""Tasks to automatize new releases."""
 
 from invoke import task
 from monty.os import cd
 
 
-"""
-Tasks for automatize new releases.
-"""
-
-
 @task
 def make_doc(ctx):
+    """Make the documentation html files from source .rst files.
+
+    Args:
+        ctx: Context object for global values of the current invoke session.
+    """
     with cd("docs_rst"):
         ctx.run("sphinx-apidoc -o api/ -f ../turbomoleio")
         ctx.run("make html")

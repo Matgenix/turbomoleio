@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -21,35 +21,46 @@
 # see <https://www.gnu.org/licenses/>.
 
 import os
+
 import pytest
 
-from turbomoleio.testfiles.utils import run_itest
 from turbomoleio.core.control import sdg
 from turbomoleio.input.utils import get_define_template
 from turbomoleio.output.files import JobexOutput
+from turbomoleio.testfiles.utils import run_itest
 
-structures = ['h2o', 'nh3']
+structures = ["h2o", "nh3"]
 
 
 @pytest.mark.integration
 class TestJobex:
-
     @pytest.mark.parametrize("structure", structures)
     def test_run_jobex_dscf(self, structure):
         dp = get_define_template("dscf")
         dp["desy"] = True
         dp["ired"] = True
 
-        assert run_itest("jobex", dp, structure, "jobex_dscf_{}_sym".format(structure),
-                         JobexOutput, arguments="-c 2")
+        assert run_itest(
+            "jobex",
+            dp,
+            structure,
+            "jobex_dscf_{}_sym".format(structure),
+            JobexOutput,
+            arguments="-c 2",
+        )
 
-    @pytest.mark.parametrize('structure_filename', ["graphene"])
+    @pytest.mark.parametrize("structure_filename", ["graphene"])
     def test_run_jobex_riper(self, structure_filepath):
         structure_filename = os.path.basename(structure_filepath)
         dp = get_define_template("ridft")
-        periodic = sdg('periodic', structure_filepath)
-        cell = sdg('cell', structure_filepath)
-        assert run_itest("jobex", dp, structure_filename, "jobex_riper_{}".format(structure_filename),
-                         JobexOutput, arguments="-c 2", datagroups_options={'periodic': periodic,
-                                                                            'cell': cell,
-                                                                            'optcell': ''})
+        periodic = sdg("periodic", structure_filepath)
+        cell = sdg("cell", structure_filepath)
+        assert run_itest(
+            "jobex",
+            dp,
+            structure_filename,
+            "jobex_riper_{}".format(structure_filename),
+            JobexOutput,
+            arguments="-c 2",
+            datagroups_options={"periodic": periodic, "cell": cell, "optcell": ""},
+        )

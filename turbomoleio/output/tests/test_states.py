@@ -2,7 +2,7 @@
 # The turbomoleio package, a python interface to Turbomole
 # for preparing inputs, parsing outputs and other related tools.
 #
-# Copyright (C) 2018-2021 BASF SE, Matgenix SRL.
+# Copyright (C) 2018-2022 BASF SE, Matgenix SRL.
 #
 # This file is part of turbomoleio.
 #
@@ -22,15 +22,20 @@
 
 import os
 import re
-from unittest import mock
-from fractions import Fraction
 import shutil
-
+from fractions import Fraction
+from unittest import mock
 
 import pytest
 
-from turbomoleio.output.states import State, States, EigerOutput, EigerRunner, get_mos_energies
-from turbomoleio.testfiles.utils import temp_dir, assert_MSONable
+from turbomoleio.output.states import (
+    EigerOutput,
+    EigerRunner,
+    State,
+    States,
+    get_mos_energies,
+)
+from turbomoleio.testfiles.utils import assert_MSONable, temp_dir
 
 
 def test_state():
@@ -40,7 +45,9 @@ def test_state():
     assert s != 1
     assert s == s1
     assert s.max_occupation == 1
-    assert re.match(r"Eigenvalue: [.\d]+, irrep: a1, index: 1, spin: a, occupation: 1", str(s))
+    assert re.match(
+        r"Eigenvalue: [.\d]+, irrep: a1, index: 1, spin: a, occupation: 1", str(s)
+    )
     assert s2.has_fractional_occ
     assert s2.max_occupation == 6
     assert_MSONable(s)
@@ -56,7 +63,7 @@ def test_parsing_failures():
         EigerOutput.from_string("Nr. \n wrong format")
 
 
-@pytest.mark.parametrize('dir_name', ['alpha_beta_nh3'])
+@pytest.mark.parametrize("dir_name", ["alpha_beta_nh3"])
 def test_uhf(mo_dirpath, delete_tmp_dir):
     with temp_dir(delete_tmp_dir):
         for f in ["alpha", "beta", "control"]:
@@ -71,12 +78,24 @@ def test_uhf(mo_dirpath, delete_tmp_dir):
         assert_MSONable(s)
 
         eiger_out = EigerOutput.from_file(os.path.join(mo_dirpath, "eiger"))
-        eiger_wrong_val = EigerOutput.from_file(os.path.join(mo_dirpath, "eiger_wrong_val"))
-        eiger_wrong_length = EigerOutput.from_file(os.path.join(mo_dirpath, "eiger_wrong_length"))
-        eiger_wrong_gap = EigerOutput.from_file(os.path.join(mo_dirpath, "eiger_wrong_gap"))
-        eiger_wrong_nel = EigerOutput.from_file(os.path.join(mo_dirpath, "eiger_wrong_nelec"))
-        eiger_wrong_occ = EigerOutput.from_file(os.path.join(mo_dirpath, "eiger_wrong_occ"))
-        eiger_wrong_match = EigerOutput.from_file(os.path.join(mo_dirpath, "eiger_wrong_match"))
+        eiger_wrong_val = EigerOutput.from_file(
+            os.path.join(mo_dirpath, "eiger_wrong_val")
+        )
+        eiger_wrong_length = EigerOutput.from_file(
+            os.path.join(mo_dirpath, "eiger_wrong_length")
+        )
+        eiger_wrong_gap = EigerOutput.from_file(
+            os.path.join(mo_dirpath, "eiger_wrong_gap")
+        )
+        eiger_wrong_nel = EigerOutput.from_file(
+            os.path.join(mo_dirpath, "eiger_wrong_nelec")
+        )
+        eiger_wrong_occ = EigerOutput.from_file(
+            os.path.join(mo_dirpath, "eiger_wrong_occ")
+        )
+        eiger_wrong_match = EigerOutput.from_file(
+            os.path.join(mo_dirpath, "eiger_wrong_match")
+        )
 
         assert eiger_out.compare_states(s) is None
         assert "gap" in eiger_wrong_gap.compare_states(s)
@@ -123,7 +142,7 @@ def test_uhf(mo_dirpath, delete_tmp_dir):
         assert shell.states[0] == ("a1", 1)
 
 
-@pytest.mark.parametrize('dir_name', ['mos_nh3'])
+@pytest.mark.parametrize("dir_name", ["mos_nh3"])
 def test_closed(mo_dirpath, delete_tmp_dir):
     with temp_dir(delete_tmp_dir):
         for f in ["mos", "control"]:
@@ -170,7 +189,8 @@ def test_closed(mo_dirpath, delete_tmp_dir):
         assert shell.occupations[0] == 2
         assert shell.states[0] == ("a1", 1)
 
-@pytest.mark.parametrize('dir_name', ['mos_nh3'])
+
+@pytest.mark.parametrize("dir_name", ["mos_nh3"])
 def test_hole(mo_dirpath, delete_tmp_dir):
     with temp_dir(delete_tmp_dir):
         for f in ["mos", "control"]:
@@ -191,10 +211,14 @@ def test_hole(mo_dirpath, delete_tmp_dir):
         assert not lowest.has_hole
         assert lowest[2].irrep_index == 6
 
-        lowest = s.generate_lowest_filled_states(only_occupied=True, allow_fractional=True)
+        lowest = s.generate_lowest_filled_states(
+            only_occupied=True, allow_fractional=True
+        )
         assert len(lowest) == 4
 
-        lowest = s.generate_lowest_filled_states(allow_fractional=True, reorder_irrep_index=True)
+        lowest = s.generate_lowest_filled_states(
+            allow_fractional=True, reorder_irrep_index=True
+        )
         assert lowest[2].irrep_index == 1
 
 
@@ -212,7 +236,7 @@ def test_no_empty_states():
     assert s.gap is None
 
 
-@pytest.mark.parametrize('dir_name', ['mos_nh3'])
+@pytest.mark.parametrize("dir_name", ["mos_nh3"])
 def test_eiger_runner(mo_dirpath, delete_tmp_dir):
     with mock.patch("subprocess.run") as mock_run:
         er = EigerRunner()
@@ -233,4 +257,3 @@ def test_eiger_runner(mo_dirpath, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
             er.to_file("out_test")
             assert os.path.isfile("out_test")
-
