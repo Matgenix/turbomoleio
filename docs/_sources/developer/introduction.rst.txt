@@ -51,7 +51,7 @@ in the ``turbomoleio/docs`` folder and can be generated from the source rst file
 `invoke <https://www.pyinvoke.org/>`_ `make-doc` task defined in
 `~turbomoleio/tasks.py`.:
 
-    invoke make-docs
+    invoke make-doc
 
 Implementing unit tests and, if suitable, integration tests is also a requirement for the
 acceptance of new developments in turbomoleio. See the :ref:`developer_testing` section for more details.
