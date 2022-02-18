@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>turbomoleio.core.base &mdash; turbomoleio 1.2.0 documentation</title>
+  <title>turbomoleio.core.base &mdash; turbomoleio 1.3.0 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                1.2.0
+                1.3.0
               </div>
             
           
@@ -173,7 +173,7 @@
 <span class="c1"># The turbomoleio package, a python interface to Turbomole</span>
 <span class="c1"># for preparing inputs, parsing outputs and other related tools.</span>
 <span class="c1">#</span>
-<span class="c1"># Copyright (C) 2018-2021 BASF SE, Matgenix SRL.</span>
+<span class="c1"># Copyright (C) 2018-2022 BASF SE, Matgenix SRL.</span>
 <span class="c1">#</span>
 <span class="c1"># This file is part of turbomoleio.</span>
 <span class="c1">#</span>
@@ -191,25 +191,29 @@
 <span class="c1"># along with turbomoleio (see ~turbomoleio/COPYING). If not,</span>
 <span class="c1"># see &lt;https://www.gnu.org/licenses/&gt;.</span>
 
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">abc</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="sd">&quot;&quot;&quot;Base module for objects representing physical systems in turbomoleio.&quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">from</span> <span class="nn">fnmatch</span> <span class="kn">import</span> <span class="n">fnmatch</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">monty.json</span> <span class="kn">import</span> <span class="n">MSONable</span>
 <span class="kn">from</span> <span class="nn">pymatgen.core.lattice</span> <span class="kn">import</span> <span class="n">Lattice</span>
-<span class="kn">from</span> <span class="nn">pymatgen.core.structure</span> <span class="kn">import</span> <span class="n">Molecule</span>
-<span class="kn">from</span> <span class="nn">pymatgen.core.structure</span> <span class="kn">import</span> <span class="n">Structure</span>
+<span class="kn">from</span> <span class="nn">pymatgen.core.structure</span> <span class="kn">import</span> <span class="n">Molecule</span><span class="p">,</span> <span class="n">Structure</span>
 <span class="kn">from</span> <span class="nn">pymatgen.core.units</span> <span class="kn">import</span> <span class="n">ang_to_bohr</span><span class="p">,</span> <span class="n">bohr_to_ang</span>
 
 
-<div class="viewcode-block" id="get_mol_and_indices_frozen"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.base.get_mol_and_indices_frozen">[docs]</a><span class="k">def</span> <span class="nf">get_mol_and_indices_frozen</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">cell_string</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">periodic_string</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                               <span class="n">lattice_string</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                               <span class="n">periodic_extension</span><span class="o">=</span><span class="mf">5.0</span><span class="p">):</span>
+<div class="viewcode-block" id="get_mol_and_indices_frozen"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.base.get_mol_and_indices_frozen">[docs]</a><span class="k">def</span> <span class="nf">get_mol_and_indices_frozen</span><span class="p">(</span>
+    <span class="n">string</span><span class="p">,</span>
+    <span class="n">cell_string</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">periodic_string</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">lattice_string</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">periodic_extension</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extracts a pymatgen Molecule and indices of the frozen atoms from the</span>
-<span class="sd">    $coord datagroup.</span>
+<span class="sd">    Get the pymatgen Molecule and indices of the frozen atoms from a $coord datagroup.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        string (str): The string containing the list of coordinates.</span>
@@ -230,19 +234,18 @@
 <span class="sd">            Only cell_string or lattice_string should be set for</span>
 <span class="sd">            periodic systems (not both).</span>
 <span class="sd">        periodic_extension (float): For 1D and 2D periodic systems,</span>
-<span class="sd">            periodic_extension is the amount (in Angstroms of</span>
-<span class="sd">            artifically added vacuum in the Structure object in</span>
+<span class="sd">            periodic_extension is the amount (in Angstroms) of</span>
+<span class="sd">            artificially added vacuum in the Structure object in</span>
 <span class="sd">            the non-periodic directions).</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        namedtuple:</span>
 <span class="sd">            molecule: a pymatgen molecule or structure (when cell and</span>
-<span class="sd">            periodic are provided).</span>
+<span class="sd">                periodic are provided).</span>
 <span class="sd">            frozen_indices: a set with the indices of the frozen atoms.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
     <span class="k">if</span> <span class="n">cell_string</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">lattice_string</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Only cell_string or lattice_string should be set.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only cell_string or lattice_string should be set.&quot;</span><span class="p">)</span>
 
     <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()]</span>
 
@@ -255,8 +258,8 @@
     <span class="c1"># 1.0 0.2 0.1 si</span>
     <span class="c1"># 1.0 0.2 0.1 h f</span>
     <span class="c1"># with the final f meaning that the coordinate is frozen.</span>
-    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span> <span class="ow">or</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">):</span>
             <span class="k">continue</span>
         <span class="n">iatom</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -272,35 +275,57 @@
         <span class="n">cell</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">sp</span><span class="p">)</span> <span class="k">for</span> <span class="n">sp</span> <span class="ow">in</span> <span class="n">cell_string</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
         <span class="k">if</span> <span class="n">periodicity</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The $cell data group should contain 1 number for 1D periodic systems&#39;</span><span class="p">)</span>
-            <span class="n">yrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
-            <span class="n">zrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
-            <span class="n">lattice</span> <span class="o">=</span> <span class="n">Lattice</span><span class="o">.</span><span class="n">orthorhombic</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">bohr_to_ang</span><span class="o">*</span><span class="n">cell</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                                           <span class="n">b</span><span class="o">=</span><span class="n">yrange</span><span class="o">+</span><span class="n">periodic_extension</span><span class="p">,</span>
-                                           <span class="n">c</span><span class="o">=</span><span class="n">zrange</span><span class="o">+</span><span class="n">periodic_extension</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;The $cell data group should contain 1 number for 1D periodic &quot;</span>
+                    <span class="s2">&quot;systems&quot;</span>
+                <span class="p">)</span>
+            <span class="n">yrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="n">zrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
+            <span class="n">lattice</span> <span class="o">=</span> <span class="n">Lattice</span><span class="o">.</span><span class="n">orthorhombic</span><span class="p">(</span>
+                <span class="n">a</span><span class="o">=</span><span class="n">bohr_to_ang</span> <span class="o">*</span> <span class="n">cell</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">b</span><span class="o">=</span><span class="n">yrange</span> <span class="o">+</span> <span class="n">periodic_extension</span><span class="p">,</span>
+                <span class="n">c</span><span class="o">=</span><span class="n">zrange</span> <span class="o">+</span> <span class="n">periodic_extension</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="k">elif</span> <span class="n">periodicity</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The $cell data group should contain 3 numbers for 2D periodic systems&#39;</span><span class="p">)</span>
-            <span class="n">zrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
-            <span class="n">lattice</span> <span class="o">=</span> <span class="n">Lattice</span><span class="o">.</span><span class="n">from_parameters</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">bohr_to_ang</span><span class="o">*</span><span class="n">cell</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                                              <span class="n">b</span><span class="o">=</span><span class="n">bohr_to_ang</span><span class="o">*</span><span class="n">cell</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                                              <span class="n">c</span><span class="o">=</span><span class="n">zrange</span><span class="o">+</span><span class="n">periodic_extension</span><span class="p">,</span>
-                                              <span class="n">alpha</span><span class="o">=</span><span class="mf">90.0</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">90.0</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="n">cell</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
-                                              <span class="n">vesta</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;The $cell data group should contain 3 numbers for 2D periodic &quot;</span>
+                    <span class="s2">&quot;systems&quot;</span>
+                <span class="p">)</span>
+            <span class="n">zrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
+            <span class="n">lattice</span> <span class="o">=</span> <span class="n">Lattice</span><span class="o">.</span><span class="n">from_parameters</span><span class="p">(</span>
+                <span class="n">a</span><span class="o">=</span><span class="n">bohr_to_ang</span> <span class="o">*</span> <span class="n">cell</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">b</span><span class="o">=</span><span class="n">bohr_to_ang</span> <span class="o">*</span> <span class="n">cell</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">c</span><span class="o">=</span><span class="n">zrange</span> <span class="o">+</span> <span class="n">periodic_extension</span><span class="p">,</span>
+                <span class="n">alpha</span><span class="o">=</span><span class="mf">90.0</span><span class="p">,</span>
+                <span class="n">beta</span><span class="o">=</span><span class="mf">90.0</span><span class="p">,</span>
+                <span class="n">gamma</span><span class="o">=</span><span class="n">cell</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                <span class="n">vesta</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="k">elif</span> <span class="n">periodicity</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">6</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The $cell data group should contain 6 numbers for 3D periodic systems&#39;</span><span class="p">)</span>
-            <span class="n">lattice</span> <span class="o">=</span> <span class="n">Lattice</span><span class="o">.</span><span class="n">from_parameters</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">bohr_to_ang</span><span class="o">*</span><span class="n">cell</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                                              <span class="n">b</span><span class="o">=</span><span class="n">bohr_to_ang</span><span class="o">*</span><span class="n">cell</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                                              <span class="n">c</span><span class="o">=</span><span class="n">bohr_to_ang</span><span class="o">*</span><span class="n">cell</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
-                                              <span class="n">alpha</span><span class="o">=</span><span class="n">cell</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
-                                              <span class="n">beta</span><span class="o">=</span><span class="n">cell</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
-                                              <span class="n">gamma</span><span class="o">=</span><span class="n">cell</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
-                                              <span class="n">vesta</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;The $cell data group should contain 6 numbers for 3D periodic &quot;</span>
+                    <span class="s2">&quot;systems&quot;</span>
+                <span class="p">)</span>
+            <span class="n">lattice</span> <span class="o">=</span> <span class="n">Lattice</span><span class="o">.</span><span class="n">from_parameters</span><span class="p">(</span>
+                <span class="n">a</span><span class="o">=</span><span class="n">bohr_to_ang</span> <span class="o">*</span> <span class="n">cell</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">b</span><span class="o">=</span><span class="n">bohr_to_ang</span> <span class="o">*</span> <span class="n">cell</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">c</span><span class="o">=</span><span class="n">bohr_to_ang</span> <span class="o">*</span> <span class="n">cell</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                <span class="n">alpha</span><span class="o">=</span><span class="n">cell</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+                <span class="n">beta</span><span class="o">=</span><span class="n">cell</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+                <span class="n">gamma</span><span class="o">=</span><span class="n">cell</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+                <span class="n">vesta</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Periodicity should be one of 1, 2 or 3.&#39;</span><span class="p">)</span>
-        <span class="n">molecule_or_structure</span> <span class="o">=</span> <span class="n">Structure</span><span class="p">(</span><span class="n">lattice</span><span class="o">=</span><span class="n">lattice</span><span class="p">,</span> <span class="n">species</span><span class="o">=</span><span class="n">species</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span> <span class="n">coords_are_cartesian</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                          <span class="n">to_unit_cell</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Periodicity should be one of 1, 2 or 3.&quot;</span><span class="p">)</span>
+        <span class="n">molecule_or_structure</span> <span class="o">=</span> <span class="n">Structure</span><span class="p">(</span>
+            <span class="n">lattice</span><span class="o">=</span><span class="n">lattice</span><span class="p">,</span>
+            <span class="n">species</span><span class="o">=</span><span class="n">species</span><span class="p">,</span>
+            <span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span>
+            <span class="n">coords_are_cartesian</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">to_unit_cell</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
     <span class="k">elif</span> <span class="n">lattice_string</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">lattice_string</span> <span class="o">=</span> <span class="n">lattice_string</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="n">periodicity</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">periodic_string</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
@@ -309,28 +334,46 @@
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">periodicity</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">lattice_numbers</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The lattice_numbers should contain 1 number for 1D periodic systems&#39;</span><span class="p">)</span>
-            <span class="n">yrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
-            <span class="n">zrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
-            <span class="n">lattice</span> <span class="o">=</span> <span class="n">Lattice</span><span class="o">.</span><span class="n">orthorhombic</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">lattice_numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
-                                           <span class="n">b</span><span class="o">=</span><span class="n">yrange</span><span class="o">+</span><span class="n">periodic_extension</span><span class="p">,</span>
-                                           <span class="n">c</span><span class="o">=</span><span class="n">zrange</span><span class="o">+</span><span class="n">periodic_extension</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;The lattice_numbers should contain 1 number for 1D periodic &quot;</span>
+                    <span class="s2">&quot;systems&quot;</span>
+                <span class="p">)</span>
+            <span class="n">yrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="n">zrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
+            <span class="n">lattice</span> <span class="o">=</span> <span class="n">Lattice</span><span class="o">.</span><span class="n">orthorhombic</span><span class="p">(</span>
+                <span class="n">a</span><span class="o">=</span><span class="n">lattice_numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">b</span><span class="o">=</span><span class="n">yrange</span> <span class="o">+</span> <span class="n">periodic_extension</span><span class="p">,</span>
+                <span class="n">c</span><span class="o">=</span><span class="n">zrange</span> <span class="o">+</span> <span class="n">periodic_extension</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="k">elif</span> <span class="n">periodicity</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">lattice_numbers</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The lattice_numbers should contain 2x2 numbers for 2D periodic systems&#39;</span><span class="p">)</span>
-            <span class="n">zrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
-            <span class="n">lat_matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="n">lattice_numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">lattice_numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">],</span>
-                          <span class="p">[</span><span class="n">lattice_numbers</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">lattice_numbers</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">],</span>
-                          <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">zrange</span><span class="o">+</span><span class="n">periodic_extension</span><span class="p">]]</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;The lattice_numbers should contain 2x2 numbers for 2D periodic &quot;</span>
+                    <span class="s2">&quot;systems&quot;</span>
+                <span class="p">)</span>
+            <span class="n">zrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
+            <span class="n">lat_matrix</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">[</span><span class="n">lattice_numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">lattice_numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">],</span>
+                <span class="p">[</span><span class="n">lattice_numbers</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">lattice_numbers</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">zrange</span> <span class="o">+</span> <span class="n">periodic_extension</span><span class="p">],</span>
+            <span class="p">]</span>
             <span class="n">lattice</span> <span class="o">=</span> <span class="n">Lattice</span><span class="p">(</span><span class="n">lat_matrix</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">periodicity</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">lattice_numbers</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The lattice_numbers should contain 3x3 numbers for 3D periodic systems&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;The lattice_numbers should contain 3x3 numbers for 3D periodic &quot;</span>
+                    <span class="s2">&quot;systems&quot;</span>
+                <span class="p">)</span>
             <span class="n">lattice</span> <span class="o">=</span> <span class="n">Lattice</span><span class="p">(</span><span class="n">lattice_numbers</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Periodicity should be one of 1, 2 or 3.&#39;</span><span class="p">)</span>
-        <span class="n">molecule_or_structure</span> <span class="o">=</span> <span class="n">Structure</span><span class="p">(</span><span class="n">lattice</span><span class="o">=</span><span class="n">lattice</span><span class="p">,</span> <span class="n">species</span><span class="o">=</span><span class="n">species</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span> <span class="n">coords_are_cartesian</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                          <span class="n">to_unit_cell</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Periodicity should be one of 1, 2 or 3.&quot;</span><span class="p">)</span>
+        <span class="n">molecule_or_structure</span> <span class="o">=</span> <span class="n">Structure</span><span class="p">(</span>
+            <span class="n">lattice</span><span class="o">=</span><span class="n">lattice</span><span class="p">,</span>
+            <span class="n">species</span><span class="o">=</span><span class="n">species</span><span class="p">,</span>
+            <span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span>
+            <span class="n">coords_are_cartesian</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">to_unit_cell</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">molecule_or_structure</span> <span class="o">=</span> <span class="n">Molecule</span><span class="p">(</span><span class="n">species</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
     <span class="n">CoordSystem</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;CoordSystem&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;molecule_or_structure&quot;</span><span class="p">,</span> <span class="s2">&quot;frozen_indices&quot;</span><span class="p">])</span>
@@ -340,7 +383,7 @@
 
 <div class="viewcode-block" id="get_coord_lines"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.base.get_coord_lines">[docs]</a><span class="k">def</span> <span class="nf">get_coord_lines</span><span class="p">(</span><span class="n">molecule</span><span class="p">,</span> <span class="n">frozen_indices</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates the lines contained in the $coord datagroup from a pymatgen Molecule.</span>
+<span class="sd">    Generate the lines contained in the $coord datagroup from a pymatgen Molecule.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        molecule (Molecule): the molecule that should be converted.</span>
@@ -351,11 +394,13 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">frozen_indices</span> <span class="o">=</span> <span class="n">frozen_indices</span> <span class="ow">or</span> <span class="nb">set</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">specie</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">molecule</span><span class="o">.</span><span class="n">cart_coords</span> <span class="o">*</span> <span class="n">ang_to_bohr</span><span class="p">,</span> <span class="n">molecule</span><span class="o">.</span><span class="n">species</span><span class="p">)):</span>
-        <span class="n">l</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:.14f}</span><span class="s2"> </span><span class="si">{:.14f}</span><span class="s2"> </span><span class="si">{:.14f}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">coords</span><span class="p">,</span> <span class="n">specie</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">specie</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+        <span class="nb">zip</span><span class="p">(</span><span class="n">molecule</span><span class="o">.</span><span class="n">cart_coords</span> <span class="o">*</span> <span class="n">ang_to_bohr</span><span class="p">,</span> <span class="n">molecule</span><span class="o">.</span><span class="n">species</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:.14f}</span><span class="s2"> </span><span class="si">{:.14f}</span><span class="s2"> </span><span class="si">{:.14f}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">coords</span><span class="p">,</span> <span class="n">specie</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
         <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">frozen_indices</span><span class="p">:</span>
-            <span class="n">l</span> <span class="o">+=</span> <span class="s2">&quot; f&quot;</span>
-        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+            <span class="n">line</span> <span class="o">+=</span> <span class="s2">&quot; f&quot;</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">lines</span></div>
 
@@ -364,7 +409,7 @@
     <span class="sd">&quot;&quot;&quot;Common base class for MoleculeSystem and PeriodicSystem objects.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule_or_structure</span><span class="p">,</span> <span class="n">frozen_indices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">periodicity</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Common base for MoleculeSystem and PeriodicSystem objects.</span>
+        <span class="sd">&quot;&quot;&quot;Construct base class common to MoleculeSystem and PeriodicSystem objects.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            molecule_or_structure: pymatgen Molecule or Structure.</span>
@@ -374,43 +419,46 @@
 <span class="sd">                should be 1, 2 or 3 for PeriodicSystem.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">molecule_or_structure</span><span class="o">.</span><span class="n">is_ordered</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Turbomoleio and turbomole do not handle disordered structures.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Turbomoleio and turbomole do not handle disordered structures.&quot;</span>
+            <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_molecule_or_structure</span> <span class="o">=</span> <span class="n">molecule_or_structure</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frozen_indices</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">frozen_indices</span><span class="p">)</span> <span class="k">if</span> <span class="n">frozen_indices</span> <span class="k">else</span> <span class="nb">set</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">periodicity</span> <span class="o">=</span> <span class="n">periodicity</span>
 
 <div class="viewcode-block" id="BaseSystem.coord_lines"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.base.BaseSystem.coord_lines">[docs]</a>    <span class="k">def</span> <span class="nf">coord_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gives the lines of the $coord datagroup based on the internal Structure.</span>
+<span class="sd">        Give the lines of the $coord datagroup based on the internal Structure.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list: list of strings with the $coord datagroup.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="k">return</span> <span class="n">get_coord_lines</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_molecule_or_structure</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frozen_indices</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BaseSystem.to_coord_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.base.BaseSystem.to_coord_string">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">to_coord_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates the string of a coord file for this system.</span>
+<span class="sd">        Create the string of a coord file for this system.</span>
 
 <span class="sd">        Should be implemented separately for molecules and periodic systems.</span>
 <span class="sd">        &quot;&quot;&quot;</span></div>
 
 <div class="viewcode-block" id="BaseSystem.to_coord_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.base.BaseSystem.to_coord_file">[docs]</a>    <span class="k">def</span> <span class="nf">to_coord_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;coord&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Writes the system to a coord file.</span>
+<span class="sd">        Write the system to a coord file.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            filepath (str): the path to the file</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;wt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;wt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_coord_string</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="BaseSystem.to_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.base.BaseSystem.to_file">[docs]</a>    <span class="k">def</span> <span class="nf">to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Writes the system to a file depending on the specified format. Could be</span>
-<span class="sd">        a coord file or any other format supported by pymatgen Molecule or Structure.</span>
+<span class="sd">        Write the system to a file depending on the specified format.</span>
+
+<span class="sd">        The format can be a coord file or any other format supported by pymatgen</span>
+<span class="sd">        Molecule or Structure.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            filepath (str): path to the file.</span>
@@ -435,7 +483,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2021 BASF SE, Matgenix SRL
+        &copy; Copyright 2018-2022 BASF SE, Matgenix SRL
 
     </p>
   </div>

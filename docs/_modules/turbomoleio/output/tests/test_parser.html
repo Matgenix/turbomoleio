@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>turbomoleio.output.tests.test_parser &mdash; turbomoleio 1.2.0 documentation</title>
+  <title>turbomoleio.output.tests.test_parser &mdash; turbomoleio 1.3.0 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                1.2.0
+                1.3.0
               </div>
             
           
@@ -173,7 +173,7 @@
 <span class="c1"># The turbomoleio package, a python interface to Turbomole</span>
 <span class="c1"># for preparing inputs, parsing outputs and other related tools.</span>
 <span class="c1">#</span>
-<span class="c1"># Copyright (C) 2018-2021 BASF SE, Matgenix SRL.</span>
+<span class="c1"># Copyright (C) 2018-2022 BASF SE, Matgenix SRL.</span>
 <span class="c1">#</span>
 <span class="c1"># This file is part of turbomoleio.</span>
 <span class="c1">#</span>
@@ -198,27 +198,38 @@
 <span class="sd">A helper function is provided to generate the reference json files. These files</span>
 <span class="sd">should then be verified by the user to ensure the correctness of the parser.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">pytest</span>
-<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
-<span class="kn">from</span> <span class="nn">turbomoleio.output.parser</span> <span class="kn">import</span> <span class="n">Parser</span><span class="p">,</span> <span class="n">convert_float</span><span class="p">,</span> <span class="n">convert_int</span><span class="p">,</span> <span class="n">convert_time_string</span>
-<span class="kn">from</span> <span class="nn">turbomoleio.testfiles.utils</span> <span class="kn">import</span> <span class="n">assert_almost_equal</span><span class="p">,</span> <span class="n">temp_dir</span>
-<span class="kn">from</span> <span class="nn">turbomoleio.testfiles.utils</span> <span class="kn">import</span> <span class="n">PARSER_METHODS</span>
-<span class="kn">from</span> <span class="nn">turbomoleio.testfiles.utils</span> <span class="kn">import</span> <span class="n">TM_VERSIONS</span>
-<span class="kn">from</span> <span class="nn">turbomoleio.testfiles.utils</span> <span class="kn">import</span> <span class="n">TESTS_CONFIGS_TM_VERSIONS</span>
+<span class="kn">import</span> <span class="nn">pytest</span>
 
-<span class="n">excluded_execs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;jobex&#39;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.output.parser</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Parser</span><span class="p">,</span>
+    <span class="n">convert_float</span><span class="p">,</span>
+    <span class="n">convert_int</span><span class="p">,</span>
+    <span class="n">convert_time_string</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">turbomoleio.testfiles.utils</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">PARSER_METHODS</span><span class="p">,</span>
+    <span class="n">TESTS_CONFIGS_TM_VERSIONS</span><span class="p">,</span>
+    <span class="n">TM_VERSIONS</span><span class="p">,</span>
+    <span class="n">assert_almost_equal</span><span class="p">,</span>
+    <span class="n">temp_dir</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">excluded_execs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;jobex&quot;</span><span class="p">]</span>
 <span class="n">files_list</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">(</span><span class="n">tm_version</span><span class="p">,</span> <span class="n">tm_exec</span><span class="p">,</span> <span class="n">test_name</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">tm_version</span> <span class="ow">in</span> <span class="n">TM_VERSIONS</span>
-    <span class="k">for</span> <span class="n">tm_exec</span><span class="p">,</span> <span class="n">exec_tests</span> <span class="ow">in</span> <span class="n">TESTS_CONFIGS_TM_VERSIONS</span><span class="p">[</span><span class="n">tm_version</span><span class="p">][</span><span class="s1">&#39;testlist&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">tm_exec</span><span class="p">,</span> <span class="n">exec_tests</span> <span class="ow">in</span> <span class="n">TESTS_CONFIGS_TM_VERSIONS</span><span class="p">[</span><span class="n">tm_version</span><span class="p">][</span><span class="s2">&quot;testlist&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">tm_exec</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">excluded_execs</span>
     <span class="k">for</span> <span class="n">test_name</span> <span class="ow">in</span> <span class="n">exec_tests</span>
 <span class="p">]</span>
 
 
-<div class="viewcode-block" id="parser_and_dict"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.parser_and_dict">[docs]</a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">files_list</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files_list</span><span class="p">])</span>
+<div class="viewcode-block" id="parser_and_dict"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.parser_and_dict">[docs]</a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span>
+    <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">files_list</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files_list</span><span class="p">]</span>
+<span class="p">)</span>
 <span class="k">def</span> <span class="nf">parser_and_dict</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">testdir</span><span class="p">):</span>
     <span class="n">tm_version</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">param</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">tm_exec</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">param</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -237,7 +248,6 @@
 
 
 <div class="viewcode-block" id="TestParser"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.TestParser">[docs]</a><span class="k">class</span> <span class="nc">TestParser</span><span class="p">:</span>
-
 <div class="viewcode-block" id="TestParser.test_properties"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.TestParser.test_properties">[docs]</a>    <span class="k">def</span> <span class="nf">test_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser_and_dict</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
         <span class="n">parser</span><span class="p">,</span> <span class="n">desired</span> <span class="o">=</span> <span class="n">parser_and_dict</span>
 
@@ -248,19 +258,27 @@
 
         <span class="c1"># ignore date values since in the dictionary they are datetime, while</span>
         <span class="c1"># just strings in the json file.</span>
-        <span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">,</span> <span class="n">desired</span><span class="p">[</span><span class="n">method</span><span class="p">],</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
-                            <span class="n">ignored_values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;start_time&quot;</span><span class="p">,</span> <span class="s2">&quot;end_time&quot;</span><span class="p">,</span> <span class="s2">&quot;@version&quot;</span><span class="p">])</span></div>
+        <span class="n">assert_almost_equal</span><span class="p">(</span>
+            <span class="n">parsed_data</span><span class="p">,</span>
+            <span class="n">desired</span><span class="p">[</span><span class="n">method</span><span class="p">],</span>
+            <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
+            <span class="n">ignored_values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;start_time&quot;</span><span class="p">,</span> <span class="s2">&quot;end_time&quot;</span><span class="p">,</span> <span class="s2">&quot;@version&quot;</span><span class="p">],</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="TestParser.test_get_split_jobex_parsers"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.TestParser.test_get_split_jobex_parsers">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;tm_version&quot;</span><span class="p">,</span> <span class="n">TM_VERSIONS</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">test_get_split_jobex_parsers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">testdir</span><span class="p">,</span> <span class="n">tm_version</span><span class="p">):</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">testdir</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="n">tm_version</span><span class="p">,</span> <span class="s2">&quot;jobex&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_dscf&quot;</span><span class="p">,</span> <span class="s2">&quot;job.last&quot;</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">testdir</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="n">tm_version</span><span class="p">,</span> <span class="s2">&quot;jobex&quot;</span><span class="p">,</span> <span class="s2">&quot;h2o_dscf&quot;</span><span class="p">,</span> <span class="s2">&quot;job.last&quot;</span>
+        <span class="p">)</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">Parser</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="n">jp</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get_split_jobex_parsers</span><span class="p">()</span>
         <span class="k">assert</span> <span class="n">jp</span><span class="o">.</span><span class="n">exec_en</span> <span class="o">==</span> <span class="s2">&quot;dscf&quot;</span>
         <span class="k">assert</span> <span class="n">jp</span><span class="o">.</span><span class="n">exec_grad</span> <span class="o">==</span> <span class="s2">&quot;grad&quot;</span>
         <span class="k">assert</span> <span class="n">jp</span><span class="o">.</span><span class="n">exec_relax</span> <span class="o">==</span> <span class="s2">&quot;statpt&quot;</span>
 
-        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">testdir</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="n">tm_version</span><span class="p">,</span> <span class="s2">&quot;jobex&quot;</span><span class="p">,</span> <span class="s2">&quot;no3_ridft&quot;</span><span class="p">,</span> <span class="s2">&quot;job.last&quot;</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">testdir</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="n">tm_version</span><span class="p">,</span> <span class="s2">&quot;jobex&quot;</span><span class="p">,</span> <span class="s2">&quot;no3_ridft&quot;</span><span class="p">,</span> <span class="s2">&quot;job.last&quot;</span>
+        <span class="p">)</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">Parser</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="n">jp</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get_split_jobex_parsers</span><span class="p">()</span>
         <span class="k">assert</span> <span class="n">jp</span><span class="o">.</span><span class="n">exec_en</span> <span class="o">==</span> <span class="s2">&quot;ridft&quot;</span>
@@ -281,18 +299,22 @@
         <span class="k">assert</span> <span class="n">p</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;line to&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TestParser.test_fail_all_done_check"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.TestParser.test_fail_all_done_check">[docs]</a>    <span class="k">def</span> <span class="nf">test_fail_all_done_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delete_tmp_dir</span><span class="p">):</span>
-        <span class="k">with</span> <span class="n">temp_dir</span><span class="p">(</span><span class="n">delete_tmp_dir</span><span class="p">)</span> <span class="k">as</span> <span class="n">tmp</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">temp_dir</span><span class="p">(</span><span class="n">delete_tmp_dir</span><span class="p">):</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;test.log&quot;</span><span class="p">,</span> <span class="s2">&quot;wt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;some text</span>
-<span class="s2">some more text</span>
-<span class="s2">following line&quot;&quot;&quot;</span><span class="p">)</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="sd">&quot;&quot;&quot;some text</span>
+<span class="sd">some more text</span>
+<span class="sd">following line&quot;&quot;&quot;</span>
+                <span class="p">)</span>
 
-            <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;The string does not contain data for a completed calculation&quot;</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span>
+                <span class="ne">ValueError</span><span class="p">,</span>
+                <span class="n">match</span><span class="o">=</span><span class="s2">&quot;The string does not contain data for a completed calculation&quot;</span><span class="p">,</span>
+            <span class="p">):</span>
                 <span class="n">Parser</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;test.log&quot;</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="TestFunctions"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.TestFunctions">[docs]</a><span class="k">class</span> <span class="nc">TestFunctions</span><span class="p">:</span>
-
 <div class="viewcode-block" id="TestFunctions.test_convert_float"><a class="viewcode-back" href="../../../../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.TestFunctions.test_convert_float">[docs]</a>    <span class="k">def</span> <span class="nf">test_convert_float</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">assert</span> <span class="n">convert_float</span><span class="p">(</span><span class="s2">&quot;0.1&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">convert_float</span><span class="p">(</span><span class="s2">&quot;0.1E-01&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
@@ -335,9 +357,11 @@
         <span class="n">files</span> <span class="o">=</span> <span class="n">files_list</span>
 
     <span class="k">for</span> <span class="n">directory</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;../../testfiles&quot;</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-        <span class="n">parser</span> <span class="o">=</span> <span class="n">Parser</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="s2">&quot;.log&quot;</span><span class="p">)</span>
-        <span class="n">json_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">+</span><span class="s2">&quot;.json&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;../../testfiles&quot;</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">name</span>
+        <span class="p">)</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">Parser</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.log&quot;</span><span class="p">)</span>
+        <span class="n">json_path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.json&quot;</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">json_path</span><span class="p">):</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">ref_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
@@ -351,6 +375,7 @@
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_path</span><span class="p">,</span> <span class="s2">&quot;wt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">monty.json</span> <span class="kn">import</span> <span class="n">jsanitize</span>
+
             <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">jsanitize</span><span class="p">(</span><span class="n">ref_data</span><span class="p">),</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
 </pre></div>
 
@@ -364,7 +389,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2021 BASF SE, Matgenix SRL
+        &copy; Copyright 2018-2022 BASF SE, Matgenix SRL
 
     </p>
   </div>

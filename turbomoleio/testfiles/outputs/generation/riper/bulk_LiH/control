@@ -72,5 +72,5 @@ $riper
    thrints 1.0d-8
    lenonly on
 $optcell
-$scfconv 5
+$scfconv 3
 $end

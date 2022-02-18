@@ -1,0 +1,265 @@
+{
+  "all_done": true,
+  "header": {
+    "executable": "dscf",
+    "host": "fedora",
+    "tm_version": "7.5.1",
+    "tm_build": null,
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2022-02-18 16:12:33.886000"
+    }
+  },
+  "centers": {
+    "center_of_mass": [
+      -0.0,
+      -0.0,
+      0.0
+    ],
+    "center_of_charge": [
+      -0.00071328,
+      0.15355432,
+      0.0
+    ]
+  },
+  "coordinates": {
+    "coords": [
+      [
+        0.04340035,
+        -2.43303953,
+        0.0
+      ],
+      [
+        2.40289845,
+        1.33092842,
+        0.0
+      ],
+      [
+        -2.44869437,
+        1.25914649,
+        0.0
+      ],
+      [
+        -0.00810063,
+        -0.18289217,
+        0.0
+      ],
+      [
+        2.09020694,
+        3.35088178,
+        0.0
+      ],
+      [
+        -4.02779836,
+        -0.02916167,
+        0.0
+      ],
+      [
+        3.51545227,
+        0.83515949,
+        1.64389798
+      ],
+      [
+        3.51545227,
+        0.83515949,
+        -1.64389798
+      ],
+      [
+        -2.56998075,
+        2.4714595,
+        1.64993688
+      ],
+      [
+        -2.56998075,
+        2.4714595,
+        -1.64993688
+      ]
+    ],
+    "species": [
+      "o",
+      "c",
+      "c",
+      "c",
+      "h",
+      "h",
+      "h",
+      "h",
+      "h",
+      "h"
+    ],
+    "charges": [
+      8.0,
+      6.0,
+      6.0,
+      6.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "isotopes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "basis": {
+    "basis_per_specie": {
+      "o": "def-TZVP",
+      "c": "def-TZVP",
+      "h": "def-TZVP"
+    },
+    "aux_basis_per_specie": {},
+    "number_scf_basis_func": 112,
+    "number_scf_aux_basis_func": null
+  },
+  "symmetry": {
+    "symbol": "c1",
+    "n_reps": 1,
+    "reps": [
+      "a"
+    ]
+  },
+  "cosmo_header": null,
+  "density_functional_data": {
+    "functional_msg": "B-P86 functional\n exchange:    LDA + Becke (B88)\n correlation: LDA (VWN) + Perdew (P86)",
+    "functional_name": "b-p",
+    "functional_type": "GGA",
+    "xcfun": null,
+    "spherical_gridsize": 3,
+    "gridpoints": 302
+  },
+  "rij_info": null,
+  "dftd": {
+    "correction": "D3",
+    "en_corr": -0.005018931
+  },
+  "pre_scf_run": {
+    "diis": true,
+    "diis_error_vect": "FDS-SDF",
+    "conv_tot_en": 1e-07,
+    "conv_one_e_en": 0.0001,
+    "virtual_orbital_shift_on": true,
+    "virtual_orbital_shift_limit": 0.1,
+    "orbital_characterization": "expanded",
+    "restart_file": "mos",
+    "n_occupied_orbitals": 16
+  },
+  "scf_iterations": {
+    "energies": [
+      -192.2937281394,
+      -193.04589993537,
+      -193.19817618491,
+      -193.22274837497,
+      -193.23564133922,
+      -193.23594867389,
+      -193.23596716585,
+      -193.23596906936,
+      -193.23596880104,
+      -193.23596915118,
+      -193.23564839525
+    ],
+    "first_index": 1,
+    "n_steps": 11,
+    "dampings": [
+      0.3,
+      0.25,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.35,
+      0.2,
+      0.25,
+      0.3,
+      0.35
+    ],
+    "converged": true
+  },
+  "scf_energies": {
+    "total_energy": -193.23564839525,
+    "kinetic_energy": 192.64177839562,
+    "potential_energy": -385.87742679087,
+    "virial_theorem": 1.99692670579,
+    "wavefunction_norm": 1.0
+  },
+  "cosmo_results": null,
+  "electrostatic_moments": {
+    "unrestricted_electrons": null,
+    "charge": 0.0,
+    "dipole": {
+      "norm": 1.0981,
+      "moment": [
+        0.001242,
+        1.09812,
+        -0.0
+      ]
+    },
+    "quadrupole": {
+      "trace": -56.834799,
+      "anisotropy": 3.557563,
+      "moment": [
+        [
+          -17.564225,
+          -0.026784,
+          0.0
+        ],
+        [
+          -0.026784,
+          -21.305098,
+          -0.0
+        ],
+        [
+          0.0,
+          -0.0,
+          -17.965477
+        ]
+      ]
+    }
+  },
+  "timings": {
+    "cpu_time": 6.72,
+    "wall_time": 6.75,
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2022-02-18 16:12:40.634000"
+    }
+  },
+  "s2": null,
+  "is_uhf": false,
+  "fermi": null,
+  "integral": {
+    "integral_neglect_threshold": 2.9e-11,
+    "thize": 1e-05,
+    "thime": 5
+  },
+  "pre_escf_run": null,
+  "escf_iterations": null,
+  "escf_gs_total_en": null,
+  "escf_excitations": null,
+  "rdgrad_memory": null,
+  "gradient": null,
+  "egrad_excited_state": null,
+  "statpt_info": null,
+  "relax_info": null,
+  "relax_gradient_values": null,
+  "relax_conv_info": null,
+  "aoforce_numerical_integration": null,
+  "aoforce_analysis": null,
+  "mp2_results": {
+    "energy": null
+  },
+  "riper_scf_energies": null,
+  "periodicity_data": null
+}

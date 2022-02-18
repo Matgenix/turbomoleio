@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Contributing &mdash; turbomoleio 1.2.0 documentation</title>
+  <title>Contributing &mdash; turbomoleio 1.3.0 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                1.2.0
+                1.3.0
               </div>
             
           
@@ -191,9 +191,15 @@ when possible.</p>
 to help future developers and to automatically generate the API documentation. In turbomoleio
 the <a class="reference external" href="https://github.com/google/styleguide/blob/gh-pages/pyguide.md#38-comments-and-docstrings">Google style</a>
 is used for docstrings and comments. New developments should also be described in the user
-and developer guides whose sources can be found in the <code class="docutils literal notranslate"><span class="pre">turbomoleio/docs</span></code> folder. They are
+and developer guides whose sources can be found in the <code class="docutils literal notranslate"><span class="pre">turbomoleio/docs_rst</span></code> folder. They are
 typeset using the <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a>
-and converted to html format using <a class="reference external" href="http://www.sphinx-doc.org">sphinx</a>.</p>
+and converted to html format using <a class="reference external" href="http://www.sphinx-doc.org">sphinx</a>. The html files are located
+in the <code class="docutils literal notranslate"><span class="pre">turbomoleio/docs</span></code> folder and can be generated from the source rst files using the
+<a class="reference external" href="https://www.pyinvoke.org/">invoke</a> <cite>make-doc</cite> task defined in
+<cite>~turbomoleio/tasks.py</cite>.:</p>
+<blockquote>
+<div><p>invoke make-docs</p>
+</div></blockquote>
 <p>Implementing unit tests and, if suitable, integration tests is also a requirement for the
 acceptance of new developments in turbomoleio. See the <a class="reference internal" href="testing.html#developer-testing"><span class="std std-ref">Testing</span></a> section for more details.</p>
 <p>A final remark: since other packages rely on turbomoleio, changes to the current API are strongly

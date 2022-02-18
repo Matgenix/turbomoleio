@@ -1,0 +1,237 @@
+
+ grad (fedora) : TURBOMOLE rev. V7.5.1 compiled 23 Dec 2020 at 11:32:14
+ Copyright (C) 2020 TURBOMOLE GmbH, Karlsruhe
+
+
+    2022-02-18 16:12:48.399 
+
+
+
+                             g r a d - program
+
+                reinhart ahlrichs, hans horn & ansgar schaefer
+                 density functional version : oliver treutler
+
+
+                          quantum chemistry group
+                          universitaet  karlsruhe
+                                   germany
+
+
+
+
+                                                 
+                                 References:     
+                                                 
+          Density Functional:                              
+              O. Treutler and R. Ahlrichs                      
+              Efficient Molecular Numerical Integration Schemes
+              J. Chem. Phys. 102: 346 (1995)                   
+          Parallel Version:                                
+              Performance of parallel TURBOMOLE for Density    
+              Functional Calculations                          
+              M. v. Arnim and R. Ahlrichs                      
+              J. Comp. Chem. 19: 1746 (1998)                   
+                                         
+
+
+
+
+              +--------------------------------------------------+
+              | Atomic coordinate, charge and isotop information |
+              +--------------------------------------------------+
+
+                    atomic coordinates            atom    charge  isotop
+          0.00000000    0.00000000   -0.72557892    o      8.000     0
+          1.41713421    0.00000000    0.36278946    h      1.000     0
+         -1.41713421    0.00000000    0.36278946    h      1.000     0
+ 
+       center of nuclear mass  :    0.00000000    0.00000000   -0.60378908
+       center of nuclear charge:    0.00000000    0.00000000   -0.50790524
+
+              +--------------------------------------------------+
+              |               basis set information              |
+              +--------------------------------------------------+
+
+              we will work with the 1s 3p 5d 7f 9g ... basis set
+              ...i.e. with spherical basis functions...
+
+   type   atoms  prim   cont   basis
+   ---------------------------------------------------------------------------
+    o        1     24     14   def-SV(P)   [3s2p1d|7s4p1d]
+    h        2      4      2   def-SV(P)   [2s|4s]
+   ---------------------------------------------------------------------------
+   total:    3     32     18
+   ---------------------------------------------------------------------------
+
+   total number of primitive shells          :   16
+   total number of contracted shells         :   10
+   total number of cartesian basis functions :   19
+   total number of SCF-basis functions       :   18
+
+
+   *************************************************************************
+   dscf                                                                     
+   *************************************************************************
+
+
+
+ integral neglect threshold       :  0.18E-09
+ integral storage threshold THIZE :  0.10E-04
+ integral storage threshold THIME :         5
+
+
+ WARNING : cannot change filename for statistics 
+
+ symmetry group of the molecule :   c2v
+
+ the group has the following generators :
+   c2(z)
+   mirror plane sigma(xz)
+
+    4 symmetry operations found
+
+ there are 4 real representations :   a1   a2   b1   b2  
+
+ maximum number of shells which are related by symmetry :  2
+
+
+    mo occupation :
+   irrep   mo's   occupied
+    a1       9        3
+    a2       1        0
+    b1       5        1
+    b2       3        1
+ 
+ number of basis functions   :    18
+ number of occupied orbitals :     5
+ 
+
+ number of off-diagonal lagrangians expected :  0
+  MOs are in ASCII format !
+
+
+ reading orbital data $scfmo  from file mos
+ orbital characterization : scfconv=7
+ time elapsed for calculating density matrices :   0.000 sec
+
+  grad preliminaries : cpu elapsed         0.010 s
+                       wall                0.010 s
+  
+           ------------------
+           density functional
+           ------------------
+ B-P86 functional
+ exchange:    LDA + Becke (B88)
+ correlation: LDA (VWN) + Perdew (P86)
+
+ iterations will be done with small grid
+  
+ spherical integration : Lebedev's spherical grid
+ spherical gridsize    :                     3
+    i.e. gridpoints    :                   302
+ value for diffuse not defined
+ radial integration    : Chebyshev 2nd kind (scaling 3)
+ radial gridsize       :                     3
+ integration cells     :                     2
+ partition function    : becke
+ partition sharpness   :                     3
+  
+
+ <rpardf> : input of entry tasksize
+           from data group '$pardft' failed !
+
+               Default values taken
+
+ <rpardf> : input of entry memdiv
+           from data group '$pardft' failed !
+
+               Default values taken
+
+
+
+                    and now featuring
+                             the super-duper gradient    ..... wow .....
+
+
+ ------------------------------------------------------------------------------
+
+            SCF ENERGY GRADIENT with respect to NUCLEAR COORDINATES            
+
+ ------------------------------------------------------------------------------
+
+
+
+    ----------------------------------------
+     S+T+V CONTRIBUTIONS TO ENERGY GRADIENT 
+    ----------------------------------------
+
+ 1e-integral 1st. derivatives will be neglected if expon. factor < 0.100000E-10
+
+  cpu time for 1e-part of gradient :      0.00 sec
+
+
+    -----------------------------------------------
+     TWO ELECTRON CONTRIBUTIONS TO ENERGY GRADIENT 
+    -----------------------------------------------
+
+ biggest 1-particle AO density matrix element is expected to be    2.1355116296
+
+ setting up bound for integral derivative estimation
+
+ increment for numerical differentiation : 0.00050000
+
+ biggest AO integral is expected to be     4.776656448
+ biggest cartesian 1st derivative AO integral is expected to be     8.648821438
+
+ 2e-integral 1st. derivatives will be neglected if expon. factor < 0.100000E-06
+ outer boundary for 2e-integral derivative neglection is 0.182732E-08
+
+  cpu time for 2e-part of gradient :      0.00 min
+
+          Overall gridpoints after grid construction =          3891
+
+ Integrated ground state density     :   9.999998377624131    
+
+
+          ------------------------------------------------
+           cartesian gradient of the energy (hartree/bohr)
+          ------------------------------------------------
+
+  ATOM      1 o           2 h           3 h 
+dE/dx  0.0000000D+00 -0.2701367D-01  0.2701367D-01
+dE/dy  0.0000000D+00  0.0000000D+00  0.0000000D+00
+dE/dz  0.4134789D-01 -0.2065737D-01 -0.2065737D-01
+ 
+ resulting FORCE  (fx,fy,fz) = (-.173D-16,0.000D+00,0.332D-04)
+ resulting MOMENT (mx,my,mz) = (0.000D+00,-.694D-17,0.000D+00)
+
+
+ exx =      -0.076564 eyy =       0.000000 ezz =      -0.044990
+ eyz =       0.000000 exz =      -0.000000 exy =       0.000000
+
+
+ **********************************************************************
+  |maximum component of gradient| : 0.41347887E-01  (atom  1 o )       
+   gradient norm                  : 0.63423797E-01
+ **********************************************************************
+
+ <getgrd> : data group $grad  is missing 
+
+   ***  cartesian gradients written onto <gradient>  ***
+
+
+     --- calculation of the energy gradient finished ---
+
+
+
+    ------------------------------------------------------------------------
+         total  cpu-time :   0.02 seconds
+         total wall-time :   0.02 seconds
+    ------------------------------------------------------------------------
+
+   ****  grad : all done  ****
+
+
+    2022-02-18 16:12:48.414 
+
