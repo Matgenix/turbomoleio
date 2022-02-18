@@ -799,8 +799,12 @@ class Parser:
                 elif damp_val == 23:
                     d["correction"] = "D1"
 
+        # Output for DFT-D3 has changed in Turbomole 7.5:
+        # - versions < 7.5: "empirical dispersive energy correction"
+        # - versions >= 7.5: "DFT-D3 Energy contribution"
         corr_l = re.search(
-            r"empirical dispersive energy correction[\s=]+(" + float_number_re + r")",
+            r"(?:empirical dispersive energy correction|"
+            r"DFT-D3 Energy contribution)[\s=]+(" + float_number_re + r")",
             match_str,
         )
 

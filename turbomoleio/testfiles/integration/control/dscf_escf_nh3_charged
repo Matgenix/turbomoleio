@@ -59,7 +59,6 @@ $soes
  a1          10
  a2          10
  e           10
-$rpacor      220   in_total
 $denconv 1d-7
 $dft
    functional b-p
