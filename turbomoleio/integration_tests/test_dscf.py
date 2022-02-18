@@ -32,7 +32,15 @@ from turbomoleio.testfiles.utils import get_tfp, run_itest
 #               'nh3', 'phenol', 'sf4', 'sih4']
 structures = ["h2o", "nh3"]
 
-disp_corrections = ["DFT-D1", "DFT-D2", "DFT-D3", "DFT-D3 BJ"]
+# disp_corrections = ["DFT-D1", "DFT-D2", "DFT-D3", "DFT-D3 BJ"]
+# DFT-D1 is not working anymore in Turbomole 7.5! Turbomole developers
+# have been made aware of this fact. Even though DFT-D1 is not used
+# anymore by many people, it is always good to keep it to be able
+# to reproduce previous results. An issue has been opened on
+# the turbomoleio to keep track of this problem. If DFT-D1 dispersion
+# corrections are fixed in a subsequent Turbomole version (e.g. 7.6),
+# Enable again DFT-D1.
+disp_corrections = ["DFT-D2", "DFT-D3", "DFT-D3 BJ"]
 
 
 @pytest.mark.integration
