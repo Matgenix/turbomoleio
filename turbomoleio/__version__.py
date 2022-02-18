@@ -33,6 +33,6 @@ __long_description__ = """Turbomoleio is a python package
 containing a set of tools for the generation of inputs and parsing of
 outputs for `TURBOMOLE <http://www.turbomole.com/>`_, based on the
 open-source `pymatgen <http://pymatgen.org/>`_ library.
-Turbomoleio is compatible with python version 3.6. Full documentation
+Turbomoleio is compatible with python version 3.8+. Full documentation
 can be found on `<https://matgenix.github.io/turbomoleio/index.html>`_. """
 __version__ = "1.3.0"
