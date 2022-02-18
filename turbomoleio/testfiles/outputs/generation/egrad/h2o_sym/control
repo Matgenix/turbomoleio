@@ -57,7 +57,6 @@ $forceapprox    file=forceapprox
 $scfinstab rpas
 $soes
  a1           3
-$rpacor      220   in_total
 $denconv 1d-7
 $dft
    functional b-p

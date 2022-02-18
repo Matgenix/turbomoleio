@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>turbomoleio.input package &mdash; turbomoleio 1.2.0 documentation</title>
+  <title>turbomoleio.input package &mdash; turbomoleio 1.3.0 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                1.2.0
+                1.3.0
               </div>
             
           
@@ -214,12 +214,13 @@
 </section>
 <section id="module-turbomoleio.input.define">
 <span id="turbomoleio-input-define-module"></span><h2>turbomoleio.input.define module<a class="headerlink" href="#module-turbomoleio.input.define" title="Permalink to this headline">¶</a></h2>
-<p>Module containing the required classes to run define based on a set of input parameters.</p>
+<p>Module with classes and functions to run define.</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="turbomoleio.input.define.DefineError">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.input.define.</span></span><span class="sig-name descname"><span class="pre">DefineError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/input/define.html#DefineError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.input.define.DefineError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
-<p>Base exception for define errors</p>
+<p>Base exception for define errors.</p>
+<p>Construct DefineError object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the message describing the error</p>
@@ -231,7 +232,8 @@
 <dt class="sig sig-object py" id="turbomoleio.input.define.DefineExpectError">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.input.define.</span></span><span class="sig-name descname"><span class="pre">DefineExpectError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/input/define.html#DefineExpectError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.input.define.DefineExpectError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#turbomoleio.input.define.DefineError" title="turbomoleio.input.define.DefineError"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.input.define.DefineError</span></code></a></p>
-<p>Exception raised when an expect fail, going in timeout or EOF</p>
+<p>Exception raised when an expect fail, going in timeout or EOF.</p>
+<p>Construct DefineExpectError object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -246,8 +248,9 @@
 <dt class="sig sig-object py" id="turbomoleio.input.define.DefineIredError">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.input.define.</span></span><span class="sig-name descname"><span class="pre">DefineIredError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/input/define.html#DefineIredError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.input.define.DefineIredError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#turbomoleio.input.define.DefineError" title="turbomoleio.input.define.DefineError"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.input.define.DefineError</span></code></a></p>
-<p>Exception raised for problems related to the generation of the internal coordinates.
-Even in the case of incomplete set in internal coordinates and ired is True.</p>
+<p>Exception raised for problems related to the generation of internal coordinates.</p>
+<p>Even in the case of incomplete set in internal coordinates and ired is True.</p>
+<p>Construct DefineError object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the message describing the error</p>
@@ -259,8 +262,10 @@ Even in the case of incomplete set in internal coordinates and ired is True.</p>
 <dt class="sig sig-object py" id="turbomoleio.input.define.DefineParameterError">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.input.define.</span></span><span class="sig-name descname"><span class="pre">DefineParameterError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/input/define.html#DefineParameterError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.input.define.DefineParameterError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#turbomoleio.input.define.DefineError" title="turbomoleio.input.define.DefineError"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.input.define.DefineError</span></code></a></p>
-<p>Exception raised when parameters are not defined properly, e.g. incompatible among them or
+<p>Exception raised when parameters are not defined properly.</p>
+<p>This happens when the options are, e.g. incompatible among them or
 with the other files provided, like coord or a previous control.</p>
+<p>Construct DefineError object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the message describing the error</p>
@@ -272,28 +277,35 @@ with the other files provided, like coord or a previous control.</p>
 <dt class="sig sig-object py" id="turbomoleio.input.define.DefineRunner">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.input.define.</span></span><span class="sig-name descname"><span class="pre">DefineRunner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">60</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'define.log'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">executable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_popen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/input/define.html#DefineRunner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.input.define.DefineRunner" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Class that runs the define executable using pexpect to communicate with the code.</p>
+<p>Class that runs the define executable.</p>
+<p>This uses pexpect to communicate with the code.</p>
+<p>Construct a DefineRunner object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>parameters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – dictionary with the parameters defining the execution. The dictionary will be
-copied to avoid side effects during the execution.</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – integer with the maximum time waited by “expect” before raising a timeout exception.</p></li>
-<li><p><strong>log_filepath</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – string with a path to the file used to log the input and output of define.
-If None no log will be created.</p></li>
-<li><p><strong>workdir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – directory where the define will be executed. If None runs in the current directory.</p></li>
-<li><p><strong>executable</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – path to the executable that will be used to run define. If None will first
-search in an environment variable and then default to “define”, that should be in the $PATH</p></li>
-<li><p><strong>use_popen</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – if True the pexpect.popen_spawn.PopenSpawn implementation of pexpect based
-on popen is used. Otherwise the standard spawn (based on pty).</p></li>
+<li><p><strong>parameters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – dictionary with the parameters defining the execution.
+The dictionary will be copied to avoid side effects during
+the execution.</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – integer with the maximum time waited by “expect” before
+raising a timeout exception.</p></li>
+<li><p><strong>log_filepath</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – string with a path to the file used to log the input
+and output of define. If None no log will be created.</p></li>
+<li><p><strong>workdir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – directory where the define will be executed.
+If None runs in the current directory.</p></li>
+<li><p><strong>executable</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – path to the executable that will be used to run define.
+If None will first search in an environment variable and then default
+to “define”, that should be in the $PATH.</p></li>
+<li><p><strong>use_popen</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – if True the pexpect.popen_spawn.PopenSpawn
+implementation of pexpect based on popen is used.
+Otherwise the standard spawn (based on pty).</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.input.define.DefineRunner.dump_command_file">
 <span class="sig-name descname"><span class="pre">dump_command_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'define_commands'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/input/define.html#DefineRunner.dump_command_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.input.define.DefineRunner.dump_command_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Utility function that dumps a file with the commands given to define.
-Can be used as an input for define to test its behavior:
+<dd><p>Dump a file with the commands given to define.</p>
+<p>Can be used as an input for define to test its behavior:
 define &lt; define_commands</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -308,8 +320,9 @@ define &lt; define_commands</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.input.define.DefineRunner.run_full">
 <span class="sig-name descname"><span class="pre">run_full</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/input/define.html#DefineRunner.run_full"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.input.define.DefineRunner.run_full" title="Permalink to this definition">¶</a></dt>
-<dd><p>Runs define going through all the menus using the parameters. If The jobs reaches the end
-without exceptions being raised it will check if the job ended normally or abnormally.</p>
+<dd><p>Run define going through all the menus using the parameters.</p>
+<p>If The jobs reaches the end without exceptions being raised it
+will check if the job ended normally or abnormally.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if define ended normally otherwise abnormally.</p>
@@ -323,17 +336,21 @@ without exceptions being raised it will check if the job ended normally or abnor
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.input.define.DefineRunner.run_generate_mo_files">
 <span class="sig-name descname"><span class="pre">run_generate_mo_files</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/input/define.html#DefineRunner.run_generate_mo_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.input.define.DefineRunner.run_generate_mo_files" title="Permalink to this definition">¶</a></dt>
-<dd><p>Runs define in a folder where a control file is already present and only regenerates
-the molecular orbital files. If the usemo option is defined the related molecular orbital
-will be taken from there and updated, otherwise they will be generated from scratch with
-the extended hueckel guess. (N.B. the control should not be the one currently being edited
+<dd><p>Run define to regenerate the molecular orbital files.</p>
+<p>This must be run  in a folder where a control file is already present
+and only regenerates the molecular orbital files. If the usemo option
+is defined the related molecular orbital will be taken from there and
+updated, otherwise they will be generated from scratch with the extended
+hueckel guess. (N.B. the control should not be the one currently being edited
 by define)</p>
-<p>Also allows to change some information in the geometry. If at least one of the following
-options is enabled it will enter the geometry menu: sym, desy, ired. Notice that if the
-geometry menu should be skipped these options should be disabled.</p>
+<p>Also allows to change some information in the geometry. If at least one
+of the following options is enabled it will enter the geometry menu:
+sym, desy, ired. Notice that if the geometry menu should be skipped these
+options should be disabled.</p>
 <p>Quits terminating define “abnormally”.</p>
-<p>The function can only return True or fail with an exception. The return value is given
-to provide an interface similar to the other running methods.</p>
+<p>The function can only return True or fail with an exception.
+The return value is given to provide an interface similar to the other
+running methods.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>always returns True if the function completes.</p>
@@ -347,8 +364,10 @@ to provide an interface similar to the other running methods.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.input.define.DefineRunner.run_update_internal_coords">
 <span class="sig-name descname"><span class="pre">run_update_internal_coords</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/input/define.html#DefineRunner.run_update_internal_coords"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.input.define.DefineRunner.run_update_internal_coords" title="Permalink to this definition">¶</a></dt>
-<dd><p>Runs the define in a folder where a control file is already present and uses the parameters to
-update the internal coordinates of the system. Quits afterwards terminating define “abnormally”.</p>
+<dd><p>Run the define to update internal coordinates of the system.</p>
+<p>This is run in a folder where a control file is already present and
+uses the parameters to update the internal coordinates of the system.
+Quits afterwards terminating define “abnormally”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if internal coordinates were successfully updated.</p>
@@ -365,8 +384,11 @@ update the internal coordinates of the system. Quits afterwards terminating defi
 <dt class="sig sig-object py" id="turbomoleio.input.define.UnsupportedDefineStateError">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.input.define.</span></span><span class="sig-name descname"><span class="pre">UnsupportedDefineStateError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/input/define.html#UnsupportedDefineStateError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.input.define.UnsupportedDefineStateError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#turbomoleio.input.define.DefineError" title="turbomoleio.input.define.DefineError"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.input.define.DefineError</span></code></a></p>
-<p>Exception raised when according to the current implementation a specific behavior is
-expected from define, but a proper way of handling with the case has not been implemented.</p>
+<p>Exception for unexpected behavior of define.</p>
+<p>This exception is raised when, according to the current implementation,
+a specific behavior is expected from define, but a proper way of handling
+with the case has not been implemented.</p>
+<p>Construct DefineError object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the message describing the error</p>
@@ -377,12 +399,14 @@ expected from define, but a proper way of handling with the case has not been im
 </section>
 <section id="module-turbomoleio.input.utils">
 <span id="turbomoleio-input-utils-module"></span><h2>turbomoleio.input.utils module<a class="headerlink" href="#module-turbomoleio.input.utils" title="Permalink to this headline">¶</a></h2>
+<p>Module with utility functions and classes for define execution and validation.</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="turbomoleio.input.utils.ParametersValidationError">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.input.utils.</span></span><span class="sig-name descname"><span class="pre">ParametersValidationError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/input/utils.html#ParametersValidationError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.input.utils.ParametersValidationError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#turbomoleio.input.define.DefineError" title="turbomoleio.input.define.DefineError"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.input.define.DefineError</span></code></a></p>
-<p>Exception raised when the validation of the parameters fails due
-with respect to the defined schema.</p>
+<p>Exception raised when the validation of the parameters fails.</p>
+<p>This is raised when the parameters do not follow the defined schema.</p>
+<p>Construct DefineError object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the message describing the error</p>
@@ -390,23 +414,16 @@ with respect to the defined schema.</p>
 </dl>
 </dd></dl>
 
-<dl class="py data">
-<dt class="sig sig-object py" id="turbomoleio.input.utils.define_parameters_validator">
-<span class="sig-prename descclassname"><span class="pre">turbomoleio.input.utils.</span></span><span class="sig-name descname"><span class="pre">define_parameters_validator</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;cerberus.validator.Validator</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#turbomoleio.input.utils.define_parameters_validator" title="Permalink to this definition">¶</a></dt>
-<dd><p>An instance of cerberus.Validator that can be used to validate the input for DefineRunner.</p>
-</dd></dl>
-
 <dl class="py function">
 <dt class="sig sig-object py" id="turbomoleio.input.utils.ex_setter">
 <span class="sig-prename descclassname"><span class="pre">turbomoleio.input.utils.</span></span><span class="sig-name descname"><span class="pre">ex_setter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/input/utils.html#ex_setter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.input.utils.ex_setter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Helper function for setting excited states in the cerberus schema
-of DefineRunner.</p>
+<dd><p>Set excited states in the cerberus schema of DefineRunner.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="turbomoleio.input.utils.get_define_template">
 <span class="sig-prename descclassname"><span class="pre">turbomoleio.input.utils.</span></span><span class="sig-name descname"><span class="pre">get_define_template</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/input/utils.html#get_define_template"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.input.utils.get_define_template" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the dict generate from the default templates available.</p>
+<dd><p>Return the dict generate from the default templates available.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – name of the template present in the folder.</p>
@@ -429,7 +446,8 @@ of DefineRunner.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="turbomoleio.input.utils.validate_parameters">
 <span class="sig-prename descclassname"><span class="pre">turbomoleio.input.utils.</span></span><span class="sig-name descname"><span class="pre">validate_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/input/utils.html#validate_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.input.utils.validate_parameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function using the cerberus tool and the schema_define_params dictionary
+<dd><p>Validate the define parameters.</p>
+<p>This function uses the cerberus tool and the schema_define_params dictionary
 to validate the dictionary that should be passed to DefineRunner in the
 parameters argument.
 Consider it as an experimental feature.</p>
@@ -449,6 +467,7 @@ Consider it as an experimental feature.</p>
 </section>
 <section id="module-turbomoleio.input">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-turbomoleio.input" title="Permalink to this headline">¶</a></h2>
+<p>Module of turbomoleio for input generation.</p>
 </section>
 </section>
 

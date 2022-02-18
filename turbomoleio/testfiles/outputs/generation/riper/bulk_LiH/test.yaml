@@ -17,7 +17,7 @@ datagroups:
     riper: "\n   lmaxmom 3\n   sigma 0.01\n   nctrgt 3\n   wsicl 2.0\n   epsbext 1.0d-2\n   thrints 1.0d-8\n   lenonly on"
     optcell: ""
   change:
-    scfconv: '5'
+    scfconv: "3"  # very loose convergence criteria to speed up generation
 
 # List of TM commands to be run
 commands:

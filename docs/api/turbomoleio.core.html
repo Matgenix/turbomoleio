@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>turbomoleio.core package &mdash; turbomoleio 1.2.0 documentation</title>
+  <title>turbomoleio.core package &mdash; turbomoleio 1.3.0 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                1.2.0
+                1.3.0
               </div>
             
           
@@ -213,12 +213,13 @@
 </section>
 <section id="module-turbomoleio.core.base">
 <span id="turbomoleio-core-base-module"></span><h2>turbomoleio.core.base module<a class="headerlink" href="#module-turbomoleio.core.base" title="Permalink to this headline">¶</a></h2>
+<p>Base module for objects representing physical systems in turbomoleio.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="turbomoleio.core.base.BaseSystem">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.core.base.</span></span><span class="sig-name descname"><span class="pre">BaseSystem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">molecule_or_structure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frozen_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/base.html#BaseSystem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.base.BaseSystem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">monty.json.MSONable</span></code></p>
 <p>Common base class for MoleculeSystem and PeriodicSystem objects.</p>
-<p>Common base for MoleculeSystem and PeriodicSystem objects.</p>
+<p>Construct base class common to MoleculeSystem and PeriodicSystem objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -233,7 +234,7 @@ should be 1, 2 or 3 for PeriodicSystem.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.base.BaseSystem.coord_lines">
 <span class="sig-name descname"><span class="pre">coord_lines</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/base.html#BaseSystem.coord_lines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.base.BaseSystem.coord_lines" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gives the lines of the $coord datagroup based on the internal Structure.</p>
+<dd><p>Give the lines of the $coord datagroup based on the internal Structure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>list of strings with the $coord datagroup.</p>
@@ -247,7 +248,7 @@ should be 1, 2 or 3 for PeriodicSystem.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.base.BaseSystem.to_coord_file">
 <span class="sig-name descname"><span class="pre">to_coord_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coord'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/base.html#BaseSystem.to_coord_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.base.BaseSystem.to_coord_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Writes the system to a coord file.</p>
+<dd><p>Write the system to a coord file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>filepath</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the path to the file</p>
@@ -258,15 +259,16 @@ should be 1, 2 or 3 for PeriodicSystem.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.base.BaseSystem.to_coord_string">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">to_coord_string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/base.html#BaseSystem.to_coord_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.base.BaseSystem.to_coord_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates the string of a coord file for this system.</p>
+<dd><p>Create the string of a coord file for this system.</p>
 <p>Should be implemented separately for molecules and periodic systems.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.base.BaseSystem.to_file">
 <span class="sig-name descname"><span class="pre">to_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/base.html#BaseSystem.to_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.base.BaseSystem.to_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Writes the system to a file depending on the specified format. Could be
-a coord file or any other format supported by pymatgen Molecule or Structure.</p>
+<dd><p>Write the system to a file depending on the specified format.</p>
+<p>The format can be a coord file or any other format supported by pymatgen
+Molecule or Structure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -284,7 +286,7 @@ If None the code would try to infer it from the file name.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="turbomoleio.core.base.get_coord_lines">
 <span class="sig-prename descclassname"><span class="pre">turbomoleio.core.base.</span></span><span class="sig-name descname"><span class="pre">get_coord_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">molecule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frozen_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/base.html#get_coord_lines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.base.get_coord_lines" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates the lines contained in the $coord datagroup from a pymatgen Molecule.</p>
+<dd><p>Generate the lines contained in the $coord datagroup from a pymatgen Molecule.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -305,8 +307,7 @@ If None the code would try to infer it from the file name.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="turbomoleio.core.base.get_mol_and_indices_frozen">
 <span class="sig-prename descclassname"><span class="pre">turbomoleio.core.base.</span></span><span class="sig-name descname"><span class="pre">get_mol_and_indices_frozen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodic_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lattice_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodic_extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/base.html#get_mol_and_indices_frozen"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.base.get_mol_and_indices_frozen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extracts a pymatgen Molecule and indices of the frozen atoms from the
-$coord datagroup.</p>
+<dd><p>Get the pymatgen Molecule and indices of the frozen atoms from a $coord datagroup.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -328,15 +329,18 @@ parameters as a matrix.
 Only cell_string or lattice_string should be set for
 periodic systems (not both).</p></li>
 <li><p><strong>periodic_extension</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – For 1D and 2D periodic systems,
-periodic_extension is the amount (in Angstroms of
-artifically added vacuum in the Structure object in
+periodic_extension is the amount (in Angstroms) of
+artificially added vacuum in the Structure object in
 the non-periodic directions).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>molecule: a pymatgen molecule or structure (when cell and
-periodic are provided).
-frozen_indices: a set with the indices of the frozen atoms.</p>
+<dd class="field-even"><p><dl class="simple">
+<dt>molecule: a pymatgen molecule or structure (when cell and</dt><dd><p>periodic are provided).</p>
+</dd>
+</dl>
+<p>frozen_indices: a set with the indices of the frozen atoms.</p>
+</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>namedtuple</p>
@@ -347,8 +351,9 @@ frozen_indices: a set with the indices of the frozen atoms.</p>
 </section>
 <section id="module-turbomoleio.core.control">
 <span id="turbomoleio-core-control-module"></span><h2>turbomoleio.core.control module<a class="headerlink" href="#module-turbomoleio.core.control" title="Permalink to this headline">¶</a></h2>
-<p>This module contains the object and functions to interact directly with a
-control file. Based on the DataGroups class.</p>
+<p>Module with objects and functions to interact directly with a control file.</p>
+<p>It also contains other objects related to the control file, e.g. gradient,
+energy, etc …</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Control">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.core.control.</span></span><span class="sig-name descname"><span class="pre">Control</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dg_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Control"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Control" title="Permalink to this definition">¶</a></dt>
@@ -359,7 +364,7 @@ Parameters in a control file are stored as “Data Groups”. A data group
 is a key-value pair storing data “value” for the specific “key”. Value may
 be a single number, a string or a series of strings, numbers or
 combinations thereof.</p>
-<p>Initializes a <cite>Control</cite> class.</p>
+<p>Initialize a <cite>Control</cite> class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -372,21 +377,24 @@ Usually read from file.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Control.add_cosmo">
 <span class="sig-name descname"><span class="pre">add_cosmo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nppa</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nspa</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rsolv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">routf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cavity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_old_amat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Control.add_cosmo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Control.add_cosmo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds the $cosmo datagroup to the control, using the keywords to set the cosmo options.
+<dd><p>Add the $cosmo datagroup to the control.</p>
+<p>The keywords are used to set the cosmo options.
 If None all the options will not be written to the control file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>epsilon</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – permittivity used for scaling of the screening charges</p></li>
-<li><p><strong>nppa</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – number of basis grid points per atom</p></li>
-<li><p><strong>nspa</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – number of segments per atom</p></li>
-<li><p><strong>disex</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – distance threshold for A matrix elements (Angstrom)</p></li>
-<li><p><strong>rsolv</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – distance to outer solvent sphere for cavity construction (Angstrom)</p></li>
-<li><p><strong>routf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – factor for outer cavity construction in the outlying charge correction</p></li>
-<li><p><strong>cavity</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – acceptable values are “open” (leave untidy seams between atoms) and
-“closed” (pave intersection seams with segments)</p></li>
-<li><p><strong>use_old_amat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – if True adds the <code class="docutils literal notranslate"><span class="pre">use_old_amat</span></code> to the <code class="docutils literal notranslate"><span class="pre">$cosmo</span></code> datagroup,
-i.e. uses A matrix setup of TURBOMOLE 5.7.</p></li>
+<li><p><strong>epsilon</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – permittivity used for scaling of the screening charges.</p></li>
+<li><p><strong>nppa</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – number of basis grid points per atom.</p></li>
+<li><p><strong>nspa</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – number of segments per atom.</p></li>
+<li><p><strong>disex</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – distance threshold for A matrix elements (Angstrom).</p></li>
+<li><p><strong>rsolv</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – distance to outer solvent sphere for cavity
+construction (Angstrom).</p></li>
+<li><p><strong>routf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – factor for outer cavity construction in the outlying
+charge correction.</p></li>
+<li><p><strong>cavity</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – acceptable values are “open” (leave untidy seams between
+atoms) and “closed” (pave intersection seams with segments).</p></li>
+<li><p><strong>use_old_amat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – if True adds the <code class="docutils literal notranslate"><span class="pre">use_old_amat</span></code> to the <code class="docutils literal notranslate"><span class="pre">$cosmo</span></code>
+datagroup, i.e. uses A matrix setup of TURBOMOLE 5.7.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -398,8 +406,8 @@ i.e. uses A matrix setup of TURBOMOLE 5.7.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Control.cpc">
 <span class="sig-name descname"><span class="pre">cpc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Control.cpc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Control.cpc" title="Permalink to this definition">¶</a></dt>
-<dd><p>Copies the control file and all files referenced here.
-Creates the destination folder if not already existing.</p>
+<dd><p>Copy the control file and all files referenced here.</p>
+<p>This creates the destination folder if not already existing.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -414,14 +422,14 @@ destination folder will be overwritten.</p></li>
 <dl class="py property">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Control.energy">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">energy</span></span><a class="headerlink" href="#turbomoleio.core.control.Control.energy" title="Permalink to this definition">¶</a></dt>
-<dd><p>An Energy object with the data from the $energy data group.
-None if the datagroup is absent/empty or if the file is missing.</p>
+<dd><p>Get an Energy object with the data from the $energy data group.</p>
+<p>This is None if the datagroup is absent/empty or if the file is missing.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Control.from_file">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'control'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Control.from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Control.from_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates Control object reading from a given file.</p>
+<dd><p>Create Control object reading from a given file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the file from which this Control object
@@ -433,11 +441,12 @@ should be read, default is “control”.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Control.from_metric">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Control.from_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Control.from_metric" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates a new Control containing the value of the metric in $redund_inp
+<dd><p>Generate a new Control from a given metric.</p>
+<p>The new Control object contains the metric in $redund_inp
 and an empty $coord.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>metric</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the value of the metric</p>
+<dd class="field-odd"><p><strong>metric</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the value of the metric.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -459,11 +468,13 @@ and an empty $coord.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Control.get_shells">
 <span class="sig-name descname"><span class="pre">get_shells</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shells_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Control.get_shells"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Control.get_shells" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extract a Shell object for a specific type of shell.
-:param shells_type: the type of shell. Can be “closed”, “alpha” or “beta”.</p>
+<dd><p>Extract a Shell object for a specific type of shell.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>An instance of Shells</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>shells_type</strong> – the type of shell. Can be “closed”, “alpha” or “beta”.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An instance of Shells</p>
 </dd>
 </dl>
 </dd></dl>
@@ -471,8 +482,8 @@ and an empty $coord.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Control.get_subfiles_list">
 <span class="sig-name descname"><span class="pre">get_subfiles_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Control.get_subfiles_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Control.get_subfiles_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extracts the list of files referenced in the datagroups with
-“file=xxx” and “file xxx”.</p>
+<dd><p>Extract the list of files referenced in the datagroups with “file directives”.</p>
+<p>Files directives are of the form “file=xxx” or “file xxx”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>list of files referenced in the datagroups.</p>
@@ -486,21 +497,22 @@ and an empty $coord.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Control.gradient">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">gradient</span></span><a class="headerlink" href="#turbomoleio.core.control.Control.gradient" title="Permalink to this definition">¶</a></dt>
-<dd><p>A Gradient object with the data from the $grad data group.
-None if the datagroup is absent/empty or if the file is missing.</p>
+<dd><p>Get a Gradient object with the data from the $grad data group.</p>
+<p>This is None if the datagroup is absent/empty or if the file is missing.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Control.is_uhf">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_uhf</span></span><a class="headerlink" href="#turbomoleio.core.control.Control.is_uhf" title="Permalink to this definition">¶</a></dt>
-<dd><p>True if the $uhf datagroup is present in control.</p>
+<dd><p>Determine if the $uhf datagroup is present in control.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Control.remove_last_energy">
 <span class="sig-name descname"><span class="pre">remove_last_energy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'control'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backup_suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Control.remove_last_energy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Control.remove_last_energy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes last energy step from the energy data group and writes it to
-the correct file, depending on the original location of the data group.
+<dd><p>Remove last energy step from the energy data group.</p>
+<p>In addition to removing the last energy step, it writes the energy data
+group to the correct file, depending on the original location of the data group.
 N.B. if the energies are in control and not in an external file, this
 will call the to_file of the current instance of Control. If other
 modifications have been done to the dg_list will be written to the
@@ -525,8 +537,9 @@ will be created with the current content of Control.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Control.remove_last_gradient">
 <span class="sig-name descname"><span class="pre">remove_last_gradient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'control'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backup_suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Control.remove_last_gradient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Control.remove_last_gradient" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes last gradient step from the grad data group and writes it to
-the correct file, depending on the original location of the data group.
+<dd><p>Remove last gradient step from the grad data group.</p>
+<p>In addition to removing the last gradient step, it writes the grad data
+group to the correct file, depending on the original location of the data group.
 N.B. if the gradients are in control and not in an external file, this
 will call the to_file of the current instance of Control. If other
 modifications have been done to the dg_list will be written to the
@@ -551,12 +564,13 @@ will be created with the current content of Control.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Control.set_disp">
 <span class="sig-name descname"><span class="pre">set_disp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dispersion_correction</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Control.set_disp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Control.set_disp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the dispersion correction.</p>
+<dd><p>Set the dispersion correction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>dispersion_correction</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the name of the method used for the dispersion correction.
-Supported values are “DFT-D1”, “DFT-D2” “DFT-D3” and “DFT-D3 BJ”, case insensitive.
-If None all the “disp” datagroup will be eliminated.</p>
+<dd class="field-odd"><p><strong>dispersion_correction</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the name of the method used for the
+dispersion correction. Supported values are “DFT-D1”, “DFT-D2”,
+“DFT-D3” and “DFT-D3 BJ”, case insensitive. If None all the “disp”
+datagroup will be eliminated.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>None</p>
@@ -567,8 +581,8 @@ If None all the “disp” datagroup will be eliminated.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Control.to_file">
 <span class="sig-name descname"><span class="pre">to_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'control'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Control.to_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Control.to_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Writes this Control object to a file.
-If the file exists it will be overwritten.</p>
+<dd><p>Write this Control object to a file.</p>
+<p>If the file exists it will be overwritten.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the file to which this Control object
@@ -583,8 +597,8 @@ should be written.</p>
 <dt class="sig sig-object py" id="turbomoleio.core.control.Defaults">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.core.control.</span></span><span class="sig-name descname"><span class="pre">Defaults</span></span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Defaults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Defaults" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Class collecting default values used by TM executables when not
-present in the control file.</p>
+<p>Class collecting default values used by TM executables.</p>
+<p>When some values are not present in the control file, some defaults are used.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Defaults.METRIC">
 <span class="sig-name descname"><span class="pre">METRIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#turbomoleio.core.control.Defaults.METRIC" title="Permalink to this definition">¶</a></dt>
@@ -596,8 +610,9 @@ present in the control file.</p>
 <dt class="sig sig-object py" id="turbomoleio.core.control.Energy">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.core.control.</span></span><span class="sig-name descname"><span class="pre">Energy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scfkin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scfpot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mp2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Energy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Energy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">monty.json.MSONable</span></code></p>
-<p>Represents the “energy” data group of TurboMole.
-Usually stored in the “energy” file or directly in the control file.</p>
+<p>Represents the “energy” data group of TurboMole.</p>
+<p>Usually stored in the “energy” file or directly in the control file.</p>
+<p>Construct Energy object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -611,14 +626,14 @@ Usually stored in the “energy” file or directly in the control file.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Energy.delta_e">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delta_e</span></span><a class="headerlink" href="#turbomoleio.core.control.Energy.delta_e" title="Permalink to this definition">¶</a></dt>
-<dd><p>The variation of the total energy in the last step.
-None if less than 2 steps presents.</p>
+<dd><p>Get the variation of the total energy in the last step.</p>
+<p>This is None if less than 2 steps are present.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Energy.from_file">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'energy'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Energy.from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Energy.from_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates Energy object reading from a given file.</p>
+<dd><p>Create Energy object reading from a given file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the file from which this Energy object
@@ -633,7 +648,7 @@ should be read, default is “energy”.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Energy.from_string">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Energy.from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Energy.from_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates Energy object reading from a string.</p>
+<dd><p>Create Energy object reading from a string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the string of the “energy” datagroup.</p>
@@ -644,7 +659,7 @@ should be read, default is “energy”.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Energy.n_steps">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_steps</span></span><a class="headerlink" href="#turbomoleio.core.control.Energy.n_steps" title="Permalink to this definition">¶</a></dt>
-<dd><p>The number of steps present.</p>
+<dd><p>Get the number of steps present.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -711,8 +726,9 @@ Default: False</p></td>
 <dt class="sig sig-object py" id="turbomoleio.core.control.Gradient">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.core.control.</span></span><span class="sig-name descname"><span class="pre">Gradient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gradients</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">molecules</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lattice_vectors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lattice_gradients</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Gradient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Gradient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">monty.json.MSONable</span></code></p>
-<p>Represents the “grad” data group of TurboMole.
-Usually stored in the “gradient” file or directly in the control file.</p>
+<p>Represents the “grad” data group of TurboMole.</p>
+<p>Usually stored in the “gradient” file or directly in the control file.</p>
+<p>Construct Gradient object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -732,7 +748,7 @@ and size of each lattice vector depends on the periodicity. For
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Gradient.from_file">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gradient'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Gradient.from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Gradient.from_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates Gradient object reading from a given file.</p>
+<dd><p>Create Gradient object reading from a given file.</p>
 <dl class="simple">
 <dt>Note: For periodic systems, the lattice gradients are usually either</dt><dd><p>in the control file directly or in a different file. One option
 is thus to initialize the Gradients object from the control file,
@@ -751,7 +767,7 @@ should be read, default is “gradient”.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Gradient.from_string">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lattice_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Gradient.from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Gradient.from_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates Gradient object reading from a given file.</p>
+<dd><p>Create Gradient object reading from a given file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -765,33 +781,33 @@ should be read, default is “gradient”.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Gradient.last_grad_max">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">last_grad_max</span></span><a class="headerlink" href="#turbomoleio.core.control.Gradient.last_grad_max" title="Permalink to this definition">¶</a></dt>
-<dd><p>The value of the maximum value of the gradient in the last step.
-None if no steps presents.</p>
+<dd><p>Get the value of the maximum value of the gradient in the last step.</p>
+<p>This is None if no step is present.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Gradient.last_grad_norm">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">last_grad_norm</span></span><a class="headerlink" href="#turbomoleio.core.control.Gradient.last_grad_norm" title="Permalink to this definition">¶</a></dt>
-<dd><p>The value of the last gradient norm.
-None if no steps presents.</p>
+<dd><p>Get the value of the last gradient norm.</p>
+<p>This is None if no step is present.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Gradient.max_gradients">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">max_gradients</span></span><a class="headerlink" href="#turbomoleio.core.control.Gradient.max_gradients" title="Permalink to this definition">¶</a></dt>
-<dd><p>Norms of the largest gradients for each step.</p>
+<dd><p>Get norms of the largest gradients for each step.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Gradient.n_steps">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_steps</span></span><a class="headerlink" href="#turbomoleio.core.control.Gradient.n_steps" title="Permalink to this definition">¶</a></dt>
-<dd><p>The number of steps present.</p>
+<dd><p>Get the number of steps present.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Gradient.norms">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">norms</span></span><a class="headerlink" href="#turbomoleio.core.control.Gradient.norms" title="Permalink to this definition">¶</a></dt>
-<dd><p>Total norm of the gradients for each step.</p>
+<dd><p>Get total norm of the gradients for each step.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -855,12 +871,13 @@ Default: False</p></td>
 <dt class="sig sig-object py" id="turbomoleio.core.control.Shells">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.core.control.</span></span><span class="sig-name descname"><span class="pre">Shells</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">states</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">occupations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Shells"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Shells" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">monty.json.MSONable</span></code></p>
-<p>Object describing the occupation of a type of shells.
-It can map $closed shells, $alpha shells and $beta shells
+<p>Object describing the occupation of a type of shells.</p>
+<p>It can map $closed shells, $alpha shells and $beta shells
 ($open shells not supported).
 Handles integer, fractional and floating point occupations.
 Occupations are stored as Fraction objects
 Supports presence of the same irrep in multiple lines.</p>
+<p>Construct Shells object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -873,13 +890,13 @@ states for each.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Shells.as_dict">
 <span class="sig-name descname"><span class="pre">as_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Shells.as_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Shells.as_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>A JSON serializable dict representation of Shells.</p>
+<dd><p>Get a JSON serializable dict representation of Shells.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Shells.from_dict">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Shells.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Shells.from_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates an instance of Shell from a JSON serialized representation.</p>
+<dd><p>Generate an instance of Shell from a JSON serialized representation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>d</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – the dictionary with the data to initialize Shells</p>
@@ -893,8 +910,7 @@ states for each.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Shells.from_file">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shells_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'control'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Shells.from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Shells.from_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates an instance of Shells from a file containing
-the datagroup.</p>
+<dd><p>Generate an instance of Shells from a file containing the datagroup.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -915,8 +931,8 @@ the datagroup.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Shells.from_string">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Shells.from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Shells.from_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates an instance of Shells from a string.
-Examples of a string:</p>
+<dd><p>Generate an instance of Shells from a string.</p>
+<p>Examples of a string:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>a1      1-3                      ( 2 )
 b1      1,3                       ( 2 )
 b2      1                        ( 2 )
@@ -935,13 +951,13 @@ b2      1                        ( 2 )
 <dl class="py property">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Shells.irreps">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">irreps</span></span><a class="headerlink" href="#turbomoleio.core.control.Shells.irreps" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set of irreducible representations.</p>
+<dd><p>Get the set of irreducible representations.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Shells.to_datagroup">
 <span class="sig-name descname"><span class="pre">to_datagroup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#Shells.to_datagroup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.Shells.to_datagroup" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates a string that can be used to set the datagroup in control.</p>
+<dd><p>Generate a string that can be used to set the datagroup in control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The string of the data group.</p>
@@ -952,7 +968,7 @@ b2      1                        ( 2 )
 <dl class="py property">
 <dt class="sig sig-object py" id="turbomoleio.core.control.Shells.total_electrons">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">total_electrons</span></span><a class="headerlink" href="#turbomoleio.core.control.Shells.total_electrons" title="Permalink to this definition">¶</a></dt>
-<dd><p>Total number of electrons present in all the shells.</p>
+<dd><p>Get the total number of electrons present in all the shells.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>the total number of electrons.</p>
@@ -968,8 +984,8 @@ b2      1                        ( 2 )
 <dl class="py function">
 <dt class="sig sig-object py" id="turbomoleio.core.control.adg">
 <span class="sig-prename descclassname"><span class="pre">turbomoleio.core.control.</span></span><span class="sig-name descname"><span class="pre">adg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'control'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backup_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#adg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.adg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that adds <cite>data_group</cite> with <cite>data_block</cite> from the control file specified by the path.
-Comments and empty lines will be removed. The file will be overwritten.</p>
+<dd><p>Add <cite>data_group</cite> with <cite>data_block</cite> from the control file specified by the path.</p>
+<p>Comments and empty lines will be removed. The file will be overwritten.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -993,8 +1009,8 @@ If None no backup will be created.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="turbomoleio.core.control.cdg">
 <span class="sig-prename descclassname"><span class="pre">turbomoleio.core.control.</span></span><span class="sig-name descname"><span class="pre">cdg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'control'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backup_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#cdg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.cdg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that replaces an existing <cite>data_group</cite> with <cite>data_block</cite> from the control file specified
-by the path. Comments and empty lines will be removed. The file will be overwritten.</p>
+<dd><p>Replace an existing <cite>data_group</cite> with <cite>data_block</cite> from the control file.</p>
+<p>Comments and empty lines will be removed. The file will be overwritten.</p>
 <p>If <cite>data_block</cite> is None it is equivalent to kdg. To set a data group with no
 explicit value use and empty string for <cite>data_block</cite> (e.g. to add $uhf the input
 should be data_group=”uhf” and data_block=””).</p>
@@ -1019,9 +1035,8 @@ If None no backup will be created.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="turbomoleio.core.control.cpc">
 <span class="sig-prename descclassname"><span class="pre">turbomoleio.core.control.</span></span><span class="sig-name descname"><span class="pre">cpc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">control_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#cpc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.cpc" title="Permalink to this definition">¶</a></dt>
-<dd><p>Copies a control file from the specified folder and all files
-referenced there to the destination folder.
-Creates the destination folder if not already existing.</p>
+<dd><p>Copy a control file and its referenced files to another folder.</p>
+<p>The destination folder is created if it does not already exists.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1039,8 +1054,8 @@ be used.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="turbomoleio.core.control.kdg">
 <span class="sig-prename descclassname"><span class="pre">turbomoleio.core.control.</span></span><span class="sig-name descname"><span class="pre">kdg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'control'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backup_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#kdg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.kdg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that removes <cite>data_group</cite> from the control file specified by the path.
-Comments and empty lines will be removed. The file will be overwritten.</p>
+<dd><p>Remove <cite>data_group</cite> from the control file specified by the path.</p>
+<p>Comments and empty lines will be removed. The file will be overwritten.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1061,8 +1076,9 @@ If None no backup will be created.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="turbomoleio.core.control.mdgo">
 <span class="sig-prename descclassname"><span class="pre">turbomoleio.core.control.</span></span><span class="sig-name descname"><span class="pre">mdgo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'control'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backup_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#mdgo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.mdgo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that, given a data group that allows several options on separate
-line (e.g. $dft), updates the values of the options according to the
+<dd><p>Modify a data group option.</p>
+<p>Given a data group that allows several options on separate lines (e.g. $dft),
+this function updates the values of the options according to the
 dictionary provided.
 The option dictionary should have the form:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>{&quot;option_name1&quot;: &quot;option_name1 option_value&quot;,
@@ -1099,8 +1115,8 @@ If None no backup will be created.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="turbomoleio.core.control.sdg">
 <span class="sig-prename descclassname"><span class="pre">turbomoleio.core.control.</span></span><span class="sig-name descname"><span class="pre">sdg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'control'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_from_subfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_if_multiple_subfiles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_if_missing_subfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_if_regular_and_subfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#sdg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.sdg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that shows the <cite>data_group</cite> from the control file specified by the path.
-Comments and empty lines will be removed.
+<dd><p>Show the <cite>data_group</cite> from the control file specified by the path.</p>
+<p>Comments and empty lines will be removed.
 If the filepath is a full path (i.e. not just a file name), it will change
 directory to the specified one, so that the subfiles are correctly read.</p>
 <dl class="field-list simple">
@@ -1138,7 +1154,8 @@ False, just returns the standard control data block.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="turbomoleio.core.control.sdgo">
 <span class="sig-prename descclassname"><span class="pre">turbomoleio.core.control.</span></span><span class="sig-name descname"><span class="pre">sdgo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'control'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/control.html#sdgo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.control.sdgo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a data group that allows several options on separate line
+<dd><p>Show the option of a given data group.</p>
+<p>Given a data group that allows several options on separate line
 (e.g. $dft), returns the value of the option provided.</p>
 <p>Since each value may be defined in a different way, the returned
 value will include anything after the option specified. It is up
@@ -1187,7 +1204,7 @@ the user’s manual, as well as a description of all the keywords available.</p>
 <p>Generic class for data group formatted files and strings.</p>
 <p>DataGroups is a generic class for parsing, manipulating and generating
 strings/files using the data group format of TurboMole.</p>
-<p>Initializes a <cite>DataGroups</cite> class.</p>
+<p>Initialize a <cite>DataGroups</cite> class.</p>
 <p>The DataGroups object defines a set of key-value-like pairs. A data
 group is a key starting with a dollar (“$”) sign. The value
 corresponding to the data group is called the data block. When
@@ -1209,7 +1226,7 @@ always in line with the data group list.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.add_data_group">
 <span class="sig-name descname"><span class="pre">add_data_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_block</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#DataGroups.add_data_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.add_data_group" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds <cite>data_group</cite>-&gt;`data_block` to this <cite>DataGroups</cite> object.</p>
+<dd><p>Add <cite>data_group</cite>-&gt;`data_block` to this <cite>DataGroups</cite> object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1227,7 +1244,7 @@ sign will be automatically added if not present.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.adg">
 <span class="sig-name descname"><span class="pre">adg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_block</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.adg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds <cite>data_group</cite>-&gt;`data_block` to this <cite>DataGroups</cite> object.</p>
+<dd><p>Add <cite>data_group</cite>-&gt;`data_block` to this <cite>DataGroups</cite> object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1245,14 +1262,14 @@ sign will be automatically added if not present.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.as_dict">
 <span class="sig-name descname"><span class="pre">as_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#DataGroups.as_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.as_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a dictionary representing the DataGroups object.</p>
+<dd><p>Return a dictionary representing the DataGroups object.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.cdg">
 <span class="sig-name descname"><span class="pre">cdg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_block</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.cdg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Changes the value of the <cite>data_group</cite> to the new <cite>data_block</cite> in this
-<cite>DataGroups</cite> object. If the key is not present will be added.</p>
+<dd><p>Change the value of the <cite>data_group</cite> to the new <cite>data_block</cite>.</p>
+<p>If the key is not present will be added.</p>
 <p>It will first apply the kill_data_group and then add_data_group. Note
 that in the current implementation, the data group will be moved to
 the end of the data groups object (just before $end).</p>
@@ -1275,8 +1292,8 @@ data_group value.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.change_data_group">
 <span class="sig-name descname"><span class="pre">change_data_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_block</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#DataGroups.change_data_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.change_data_group" title="Permalink to this definition">¶</a></dt>
-<dd><p>Changes the value of the <cite>data_group</cite> to the new <cite>data_block</cite> in this
-<cite>DataGroups</cite> object. If the key is not present will be added.</p>
+<dd><p>Change the value of the <cite>data_group</cite> to the new <cite>data_block</cite>.</p>
+<p>If the key is not present will be added.</p>
 <p>It will first apply the kill_data_group and then add_data_group. Note
 that in the current implementation, the data group will be moved to
 the end of the data groups object (just before $end).</p>
@@ -1299,37 +1316,41 @@ data_group value.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.compare">
 <span class="sig-name descname"><span class="pre">compare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datagroups</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignored_dg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_all_diffs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#DataGroups.compare"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.compare" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compares the current object with another DataGroups. Aside from the datagroups
-that should be ignored, (define in the ignored_dg argument), the two should contain
-the same amount of elements in dg_list and each one from the current object
-should have a matching elements in the one that is passed as argument.
-To match two strings should have the same number of lines. Each line should have the
-same number of chunks. Each chunk should match exactly as a string, except if
-they are numbers. In that, if a tol is specified they will be converted to float
-and their difference should be lower than the tolerance.</p>
+<dd><p>Compare the current object with another DataGroups.</p>
+<p>Aside from the datagroups that should be ignored, (define in the
+ignored_dg argument), the two should contain the same amount of elements in
+dg_list and each one from the current object should have a matching elements
+in the one that is passed as argument.
+To match two strings should have the same number of lines. Each line should
+have the same number of chunks. Each chunk should match exactly as a string,
+except if they are numbers. In that, if a tol is specified they will be
+converted to float and their difference should be lower than the tolerance.</p>
 <p>If the two objects match None will be returned, otherwise a message describing
 the property that caused the match to fail.</p>
-<p>Note that, given the variety of notations supported by Turbomole, this function is to
-be intended more for testing purposes rather than as a complete tool to guarantee the
-equivalence of two control file.</p>
+<p>Note that, given the variety of notations supported by Turbomole, this
+function is to be intended more for testing purposes rather than as a complete
+tool to guarantee the equivalence of two control file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>datagroups</strong> (<a class="reference internal" href="#turbomoleio.core.datagroups.DataGroups" title="turbomoleio.core.datagroups.DataGroups"><em>DataGroups</em></a>) – a Datagroups that should match with the current instance.</p></li>
+<li><p><strong>datagroups</strong> (<a class="reference internal" href="#turbomoleio.core.datagroups.DataGroups" title="turbomoleio.core.datagroups.DataGroups"><em>DataGroups</em></a>) – a Datagroups that should match with the
+current instance.</p></li>
 <li><p><strong>tol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – the tolerance allowed when comparing numbers. If None
 even the number should match as strings.</p></li>
-<li><p><strong>ignored_dg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – a list of datagroups that should be ignored for the comparison.
-It is expected to be the name of the datagroup, thus starting with a “$”.
-If the “$” symbol is not present will be added before trying to match the
-datagroup to skip.</p></li>
-<li><p><strong>return_all_diffs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, a list of all differences is returned. If False
-(default), a string describing the first source of difference found is returned.</p></li>
+<li><p><strong>ignored_dg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – a list of datagroups that should be ignored for
+the comparison. It is expected to be the name of the datagroup,
+thus starting with a “$”.
+If the “$” symbol is not present will be added before trying to
+match the datagroup to skip.</p></li>
+<li><p><strong>return_all_diffs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, a list of all differences is returned.
+If False (default), a string describing the first source of
+difference found is returned.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
-<dt>None if the results match or a string describing a source of difference otherwise</dt><dd><p>(if return_all_diffs is False) or a list of all differences (if return_all_diffs
-is True).</p>
+<dt>None if the results match or a string describing a source of difference</dt><dd><p>otherwise (if return_all_diffs is False) or a list of all differences
+(if return_all_diffs is True).</p>
 </dd>
 </dl>
 </p>
@@ -1340,20 +1361,20 @@ is True).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.empty">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">empty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#DataGroups.empty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.empty" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates an empty DataGroups object.</p>
+<dd><p>Create an empty DataGroups object.</p>
 <p>An empty DataGroups object only contains the “$end” data group.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.from_dict">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#DataGroups.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.from_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates DataGroups object from a dictionary.</p>
+<dd><p>Create DataGroups object from a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.from_file">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#DataGroups.from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.from_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates DataGroups object reading from a given file.</p>
+<dd><p>Create DataGroups object reading from a given file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the file from which this DataGroups object
@@ -1365,7 +1386,7 @@ should be read.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.kdg">
 <span class="sig-name descname"><span class="pre">kdg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.kdg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes <cite>data_group</cite> from this <cite>DataGroups</cite> object.</p>
+<dd><p>Remove <cite>data_group</cite> from this <cite>DataGroups</cite> object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1381,7 +1402,7 @@ removed.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.kill_data_group">
 <span class="sig-name descname"><span class="pre">kill_data_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#DataGroups.kill_data_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.kill_data_group" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes <cite>data_group</cite> from this <cite>DataGroups</cite> object.</p>
+<dd><p>Remove <cite>data_group</cite> from this <cite>DataGroups</cite> object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1397,7 +1418,8 @@ removed.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.mdgo">
 <span class="sig-name descname"><span class="pre">mdgo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.mdgo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a data group that allows several options on separate line
+<dd><p>Modify a data group option.</p>
+<p>Given a data group that allows several options on separate line
 (e.g. $dft), updates the values of the options according to the
 dictionary provided.
 The option dictionary should have the form:</p>
@@ -1429,7 +1451,8 @@ value of one key is None the option will be removed if present.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.modify_data_group_options">
 <span class="sig-name descname"><span class="pre">modify_data_group_options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#DataGroups.modify_data_group_options"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.modify_data_group_options" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a data group that allows several options on separate line
+<dd><p>Modify a data group option.</p>
+<p>Given a data group that allows several options on separate line
 (e.g. $dft), updates the values of the options according to the
 dictionary provided.
 The option dictionary should have the form:</p>
@@ -1461,17 +1484,19 @@ value of one key is None the option will be removed if present.</p></li>
 <dl class="py property">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.ndg">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ndg</span></span><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.ndg" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get the number of datagroups in this DataGroups object.</p>
+</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.number_of_data_groups">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">number_of_data_groups</span></span><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.number_of_data_groups" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get the number of datagroups in this DataGroups object.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.sdg">
 <span class="sig-name descname"><span class="pre">sdg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_from_subfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_if_multiple_subfiles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_if_missing_subfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_if_regular_and_subfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.sdg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Shows <cite>data_group</cite> from this <cite>DataGroups</cite> object.</p>
+<dd><p>Show <cite>data_group</cite> from this <cite>DataGroups</cite> object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1521,7 +1546,8 @@ False, just returns the standard data block.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.sdgo">
 <span class="sig-name descname"><span class="pre">sdgo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.sdgo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a data group that allows several options on separate line
+<dd><p>Show a data group option.</p>
+<p>Given a data group that allows several options on separate line
 (e.g. $dft), returns the value of the option provided.</p>
 <p>Since each value may be defined in a different way, the returned
 value will include anything after the option specified. It is up
@@ -1549,7 +1575,7 @@ data_group or the option are not present in the list.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.show_data_group">
 <span class="sig-name descname"><span class="pre">show_data_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_from_subfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_if_multiple_subfiles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_if_missing_subfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_if_regular_and_subfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#DataGroups.show_data_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.show_data_group" title="Permalink to this definition">¶</a></dt>
-<dd><p>Shows <cite>data_group</cite> from this <cite>DataGroups</cite> object.</p>
+<dd><p>Show <cite>data_group</cite> from this <cite>DataGroups</cite> object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1599,7 +1625,8 @@ False, just returns the standard data block.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.show_data_group_option">
 <span class="sig-name descname"><span class="pre">show_data_group_option</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#DataGroups.show_data_group_option"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.show_data_group_option" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a data group that allows several options on separate line
+<dd><p>Show a data group option.</p>
+<p>Given a data group that allows several options on separate line
 (e.g. $dft), returns the value of the option provided.</p>
 <p>Since each value may be defined in a different way, the returned
 value will include anything after the option specified. It is up
@@ -1653,8 +1680,8 @@ return the filename anyway.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.DataGroups.to_file">
 <span class="sig-name descname"><span class="pre">to_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#DataGroups.to_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.datagroups.DataGroups.to_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Writes this DataGroups object to a file.
-If the file exists it will be overwritten.</p>
+<dd><p>Write this DataGroups object to a file.</p>
+<p>If the file exists it will be overwritten.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the file to which this DataGroups object
@@ -1668,7 +1695,7 @@ should be written.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.cleanup_string">
 <span class="sig-prename descclassname"><span class="pre">turbomoleio.core.datagroups.</span></span><span class="sig-name descname"><span class="pre">cleanup_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cleanup_types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#cleanup_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.datagroups.cleanup_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a cleaned data groups string.</p>
+<dd><p>Return a cleaned data groups string.</p>
 <p>This function allows to clean up a data groups string. It allows to :
 - remove everything before the first dollar (“$”) sign,
 - remove blank lines,
@@ -1705,8 +1732,8 @@ performed.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.compare_datagroup_string">
 <span class="sig-prename descclassname"><span class="pre">turbomoleio.core.datagroups.</span></span><span class="sig-name descname"><span class="pre">compare_datagroup_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dg1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dg2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#compare_datagroup_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.datagroups.compare_datagroup_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compares to datagroup strings as split from the DataGroups object.
-Return True if the two match.
+<dd><p>Compare two datagroup strings as split from the DataGroups object.</p>
+<p>Return True if the two match.
 The two strings should have the same number of lines. Each line should have the
 same number of chunks. Chunks will be separated using spaces and “=”. Each chunk
 should match exactly as a string, except if they are numbers. In that, if a tol
@@ -1733,7 +1760,7 @@ even the number should match as strings.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.remove_comments">
 <span class="sig-prename descclassname"><span class="pre">turbomoleio.core.datagroups.</span></span><span class="sig-name descname"><span class="pre">remove_comments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment_types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#remove_comments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.datagroups.remove_comments" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a data group string with comment lines removed.</p>
+<dd><p>Return a data group string with comment lines removed.</p>
 <p>Comments or additional information in TurboMole is typically specified in
 three different ways : a line starting with a hash (“#”) symbol, a data
 group with the keyword “$dummy” (can span multiple lines), anything
@@ -1768,7 +1795,7 @@ four types of comments will be removed.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.remove_dg_from_list">
 <span class="sig-prename descclassname"><span class="pre">turbomoleio.core.datagroups.</span></span><span class="sig-name descname"><span class="pre">remove_dg_from_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dg_to_remove</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dg_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#remove_dg_from_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.datagroups.remove_dg_from_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns new list with a data group removed from the initial list.</p>
+<dd><p>Return new list with a data group removed from the initial list.</p>
 <p>This function will remove dg_to_remove from a list of data groups. If the
 data group is duplicated, all occurrences are removed. The standard usage
 is to remove the data group if it is an exact match (i.e. if the data
@@ -1800,7 +1827,7 @@ group is removed only if it is an exact match of <cite>dg_to_remove</cite>.</p><
 <dl class="py function">
 <dt class="sig sig-object py" id="turbomoleio.core.datagroups.split_string_to_dg_list">
 <span class="sig-prename descclassname"><span class="pre">turbomoleio.core.datagroups.</span></span><span class="sig-name descname"><span class="pre">split_string_to_dg_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cleanup_types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_comment_types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/datagroups.html#split_string_to_dg_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.datagroups.split_string_to_dg_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Splits a string into a list of data groups.</p>
+<dd><p>Split a string into a list of data groups.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1851,11 +1878,13 @@ None in which case all five types of comments will be removed.</p></li>
 </section>
 <section id="module-turbomoleio.core.molecule">
 <span id="turbomoleio-core-molecule-module"></span><h2>turbomoleio.core.molecule module<a class="headerlink" href="#module-turbomoleio.core.molecule" title="Permalink to this headline">¶</a></h2>
+<p>Module defining molecules in turbomoleio.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.BondAngle">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.core.molecule.</span></span><span class="sig-name descname"><span class="pre">BondAngle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#BondAngle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.BondAngle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#turbomoleio.core.molecule.InternalDefinition" title="turbomoleio.core.molecule.InternalDefinition"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.molecule.InternalDefinition</span></code></a></p>
 <p>Class defining a bond angle internal coordinate (bend in TM).</p>
+<p>Initialize InternalDefinition object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1873,7 +1902,7 @@ If None will be set to a list of 1.0 with the same length as indices.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.BondAngle.compute_value">
 <span class="sig-name descname"><span class="pre">compute_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">molecule</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#BondAngle.compute_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.BondAngle.compute_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the value of the internal coordinate based on the given molecule.</p>
+<dd><p>Calculate the value of the internal coordinate based on the given molecule.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>molecule</strong> (<em>Molecule</em>) – a pymatgen Molecule.</p>
@@ -1909,6 +1938,7 @@ If None will be set to a list of 1.0 with the same length as indices.</p></li>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.core.molecule.</span></span><span class="sig-name descname"><span class="pre">CollinearBendingAngle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#CollinearBendingAngle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.CollinearBendingAngle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#turbomoleio.core.molecule.InternalDefinition" title="turbomoleio.core.molecule.InternalDefinition"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.molecule.InternalDefinition</span></code></a></p>
 <p>Class defining an collinear bending angle internal coordinate (linc in TM).</p>
+<p>Initialize InternalDefinition object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1926,7 +1956,7 @@ If None will be set to a list of 1.0 with the same length as indices.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.CollinearBendingAngle.compute_value">
 <span class="sig-name descname"><span class="pre">compute_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">molecule</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#CollinearBendingAngle.compute_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.CollinearBendingAngle.compute_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the value of the internal coordinate based on the given molecule.</p>
+<dd><p>Calculate the value of the internal coordinate based on the given molecule.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>molecule</strong> (<em>Molecule</em>) – a pymatgen Molecule.</p>
@@ -1962,6 +1992,7 @@ If None will be set to a list of 1.0 with the same length as indices.</p></li>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.core.molecule.</span></span><span class="sig-name descname"><span class="pre">DihedralAngle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#DihedralAngle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.DihedralAngle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#turbomoleio.core.molecule.InternalDefinition" title="turbomoleio.core.molecule.InternalDefinition"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.molecule.InternalDefinition</span></code></a></p>
 <p>Class defining a dihedral angle internal coordinate (tors in TM).</p>
+<p>Initialize InternalDefinition object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1979,7 +2010,7 @@ If None will be set to a list of 1.0 with the same length as indices.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.DihedralAngle.compute_value">
 <span class="sig-name descname"><span class="pre">compute_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">molecule</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#DihedralAngle.compute_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.DihedralAngle.compute_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the value of the internal coordinate based on the given molecule.</p>
+<dd><p>Calculate the value of the internal coordinate based on the given molecule.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>molecule</strong> (<em>Molecule</em>) – a pymatgen Molecule.</p>
@@ -2015,6 +2046,7 @@ If None will be set to a list of 1.0 with the same length as indices.</p></li>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.core.molecule.</span></span><span class="sig-name descname"><span class="pre">Distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#Distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.Distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#turbomoleio.core.molecule.InternalDefinition" title="turbomoleio.core.molecule.InternalDefinition"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.molecule.InternalDefinition</span></code></a></p>
 <p>Class defining a distance internal coordinate (stre in TM).</p>
+<p>Initialize InternalDefinition object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2032,7 +2064,7 @@ If None will be set to a list of 1.0 with the same length as indices.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.Distance.compute_value">
 <span class="sig-name descname"><span class="pre">compute_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">molecule</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#Distance.compute_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.Distance.compute_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the value of the internal coordinate based on the given molecule.</p>
+<dd><p>Calculate the value of the internal coordinate based on the given molecule.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>molecule</strong> (<em>Molecule</em>) – a pymatgen Molecule.</p>
@@ -2067,8 +2099,9 @@ If None will be set to a list of 1.0 with the same length as indices.</p></li>
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.InternalDefinition">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.core.molecule.</span></span><span class="sig-name descname"><span class="pre">InternalDefinition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#InternalDefinition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.InternalDefinition" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">monty.json.MSONable</span></code></p>
-<p>Abstract class for the definition of an internal coordinate according to
-the conventions established in turbomole.</p>
+<p>Abstract class for the definition of an internal coordinate.</p>
+<p>This class follows the conventions established in turbomole.</p>
+<p>Initialize InternalDefinition object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2086,7 +2119,7 @@ If None will be set to a list of 1.0 with the same length as indices.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.InternalDefinition.compute_value">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compute_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">molecule</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#InternalDefinition.compute_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.InternalDefinition.compute_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the value of the internal coordinate based on the given molecule.</p>
+<dd><p>Calculate the value of the internal coordinate based on the given molecule.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>molecule</strong> (<em>Molecule</em>) – a pymatgen Molecule.</p>
@@ -2113,7 +2146,7 @@ If None will be set to a list of 1.0 with the same length as indices.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.InternalDefinition.from_string">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#InternalDefinition.from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.InternalDefinition.from_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates a concrete subclass of InternalDefinition from a tm string.</p>
+<dd><p>Generate a concrete subclass of InternalDefinition from a tm string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – a turbomole string used in the $intdef datagroup.</p>
@@ -2127,7 +2160,7 @@ If None will be set to a list of 1.0 with the same length as indices.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.InternalDefinition.get_subclass_from_str">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_subclass_from_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coord_str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#InternalDefinition.get_subclass_from_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.InternalDefinition.get_subclass_from_str" title="Permalink to this definition">¶</a></dt>
-<dd><p>Helper method to get the correct subclass based on the string description</p>
+<dd><p>Get the correct subclass based on the string description.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>coord_str</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the string to determine the subclass.</p>
@@ -2141,8 +2174,9 @@ If None will be set to a list of 1.0 with the same length as indices.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.InternalDefinition.is_valid">
 <span class="sig-name descname"><span class="pre">is_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">molecule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#InternalDefinition.is_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.InternalDefinition.is_valid" title="Permalink to this definition">¶</a></dt>
-<dd><p>If the value is not None, checks if it is consistent with the positions
-of the atoms in the given molecule.</p>
+<dd><p>Check if this internal definition is consistent with the molecule.</p>
+<p>If the value of this internal coordinate is not None, it checks if it is
+consistent with the positions of the atoms in the given molecule.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2168,7 +2202,7 @@ internal and the calculated value.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.InternalDefinition.to_string">
 <span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#InternalDefinition.to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.InternalDefinition.to_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates the turbomole string used in $intdef.</p>
+<dd><p>Generate the turbomole string used in $intdef.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the index that should be prepended to the generated string.</p>
@@ -2186,6 +2220,7 @@ internal and the calculated value.</p></li>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.core.molecule.</span></span><span class="sig-name descname"><span class="pre">InverseDistance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#InverseDistance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.InverseDistance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#turbomoleio.core.molecule.InternalDefinition" title="turbomoleio.core.molecule.InternalDefinition"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.molecule.InternalDefinition</span></code></a></p>
 <p>Class defining a inverse distance internal coordinate (invr in TM).</p>
+<p>Initialize InternalDefinition object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2203,7 +2238,7 @@ If None will be set to a list of 1.0 with the same length as indices.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.InverseDistance.compute_value">
 <span class="sig-name descname"><span class="pre">compute_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">molecule</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#InverseDistance.compute_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.InverseDistance.compute_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the value of the internal coordinate based on the given molecule.</p>
+<dd><p>Calculate the value of the internal coordinate based on the given molecule.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>molecule</strong> (<em>Molecule</em>) – a pymatgen Molecule.</p>
@@ -2238,13 +2273,14 @@ If None will be set to a list of 1.0 with the same length as indices.</p></li>
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.MoleculeSystem">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.core.molecule.</span></span><span class="sig-name descname"><span class="pre">MoleculeSystem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">molecule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">int_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frozen_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_defined_bonds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#MoleculeSystem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.MoleculeSystem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#turbomoleio.core.base.BaseSystem" title="turbomoleio.core.base.BaseSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.base.BaseSystem</span></code></a></p>
-<p>Object providing information about the geometry of a molcule and its dynamics.
-The geometry is described using a pymatgen Molecule, while internal definitions,
+<p>Object providing information about the geometry of a molecule and its dynamics.</p>
+<p>The geometry is described using a pymatgen Molecule, while internal definitions,
 constraints and frozen coordinates are provided as additional attributes.</p>
 <p>Notably, since this can be used as an input for define to update the atomic
 coordinates, the constraints may be inconsistent with the actual cartesian
 coordinates. When parsed from a coord file obtained from define the information
 should be consistent. Methods are implemented to check such consistency.</p>
+<p>Construct MoleculeSystem object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2261,23 +2297,27 @@ where the atoms index are 0-based and the symbol can be “-” or “|”.</p><
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.MoleculeSystem.add_bond_angle">
 <span class="sig-name descname"><span class="pre">add_bond_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'f'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_user_def_bonds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#MoleculeSystem.add_bond_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.MoleculeSystem.add_bond_angle" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a bond angle coordinate to the list of internal coordinates.
-Typically used to add frozen coordinates.</p>
-<p>Allows to set linear combinations of the coordinate. If a single value is given to the
-arguments it will be a simple internal coordinate. If a list of atoms and values are
-given this will produce a linear combination of those coordinates.</p>
+<dd><p>Add a bond angle coordinate to the list of internal coordinates.</p>
+<p>Typically used to add frozen coordinates.</p>
+<p>Allows to set linear combinations of the coordinate. If a single value is
+given to the arguments it will be a simple internal coordinate. If a list of
+atoms and values are given this will produce a linear combination of
+those coordinates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>atom1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – index (0-based) or list on indices of the first atom(s).</p></li>
-<li><p><strong>atom2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – index (0-based) or list on indices of the second atom(s).</p></li>
+<li><p><strong>atom1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – index (0-based) or list on indices of the
+first atom(s).</p></li>
+<li><p><strong>atom2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – index (0-based) or list on indices of the
+second atom(s).</p></li>
 <li><p><strong>vertex</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – index (0-based) or list on indices of the vertex.</p></li>
 <li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – value of the distance.</p></li>
 <li><p><strong>weights</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – weight or list of weights in case of linear
 combinations of coordinates. Should have the same length as the atoms.
 If None will be set to a list of 1.0 with the same length as atoms.</p></li>
 <li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the status of the coordinate, can be “k”, “f”, “d” and “i”.</p></li>
-<li><p><strong>add_user_def_bonds</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – if True the pair of atoms will be added to the used defined bonds</p></li>
+<li><p><strong>add_user_def_bonds</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – if True the pair of atoms will be added to
+the used defined bonds</p></li>
 </ul>
 </dd>
 </dl>
@@ -2286,25 +2326,31 @@ If None will be set to a list of 1.0 with the same length as atoms.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.MoleculeSystem.add_dihedral">
 <span class="sig-name descname"><span class="pre">add_dihedral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'f'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_user_def_bonds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#MoleculeSystem.add_dihedral"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.MoleculeSystem.add_dihedral" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a dihedral angle coordinate to the list of internal coordinates.
-Typically used to add frozen coordinates.</p>
-<p>Allows to set linear combinations of the coordinate. If a single value is given to the
-arguments it will be a simple internal coordinate. If a list of atoms and values are
-given this will produce a linear combination of those coordinates.</p>
+<dd><p>Add a dihedral angle coordinate to the list of internal coordinates.</p>
+<p>Typically used to add frozen coordinates.</p>
+<p>Allows to set linear combinations of the coordinate. If a single value is
+given to the arguments it will be a simple internal coordinate. If a list
+of atoms and values are given this will produce a linear combination of
+those coordinates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>atom1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – index (0-based) or list on indices of the first atom(s).</p></li>
-<li><p><strong>atom2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – index (0-based) or list on indices of the second atom(s).</p></li>
-<li><p><strong>atom3</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – index (0-based) or list on indices of the third atom(s).</p></li>
-<li><p><strong>atom4</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – index (0-based) or list on indices of the fourth atom(s).</p></li>
+<li><p><strong>atom1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – index (0-based) or list on indices of the
+first atom(s).</p></li>
+<li><p><strong>atom2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – index (0-based) or list on indices of the
+second atom(s).</p></li>
+<li><p><strong>atom3</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – index (0-based) or list on indices of the
+third atom(s).</p></li>
+<li><p><strong>atom4</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – index (0-based) or list on indices of the
+fourth atom(s).</p></li>
 <li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – value of the distance.</p></li>
 <li><p><strong>weights</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – weight or list of weights in case of linear
 combinations of coordinates. Should have the same length as the atoms.
 If None will be set to a list of 1.0 with the same length as atoms.</p></li>
 <li><p><strong>frozen</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – True if the coordinate should be frozen.</p></li>
 <li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the status of the coordinate, can be “k”, “f”, “d” and “i”.</p></li>
-<li><p><strong>add_user_def_bonds</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – if True the pair of atoms will be added to the used defined bonds</p></li>
+<li><p><strong>add_user_def_bonds</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – if True the pair of atoms will be added to the
+used defined bonds.</p></li>
 </ul>
 </dd>
 </dl>
@@ -2313,16 +2359,19 @@ If None will be set to a list of 1.0 with the same length as atoms.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.MoleculeSystem.add_distance">
 <span class="sig-name descname"><span class="pre">add_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'f'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_user_def_bonds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#MoleculeSystem.add_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.MoleculeSystem.add_distance" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a distance coordinate to the list of internal coordinates.
-Typically used to add frozen coordinates.</p>
-<p>Allows to set linear combinations of the coordinate. If a single value is given to the
-arguments it will be a simple internal coordinate. If a list of atoms and values are
-given this will produce a linear combination of those coordinates.</p>
+<dd><p>Add a distance coordinate to the list of internal coordinates.</p>
+<p>Typically used to add frozen coordinates.</p>
+<p>Allows to set linear combinations of the coordinate. If a single value
+is given to the arguments it will be a simple internal coordinate.
+If a list of atoms and values are given this will produce a linear
+combination of those coordinates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>atom1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – index (0-based) or list on indices of the first atom(s).</p></li>
-<li><p><strong>atom2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – index (0-based) or list on indices of the second atom(s).</p></li>
+<li><p><strong>atom1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – index (0-based) or list on indices of
+the first atom(s).</p></li>
+<li><p><strong>atom2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – index (0-based) or list on indices of
+the second atom(s).</p></li>
 <li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – value of the distance.</p></li>
 <li><p><strong>weights</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – weight or list of weights in case of linear
 combinations of coordinates. Should have the same length as the atoms.
@@ -2338,8 +2387,8 @@ user defined bonds.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.MoleculeSystem.as_dict">
 <span class="sig-name descname"><span class="pre">as_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#MoleculeSystem.as_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.MoleculeSystem.as_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>A JSON serializable dict representation of an object.
-Overwrites base method to handle sets.</p>
+<dd><p>Return a JSON serializable dict representation of an object.</p>
+<p>This overwrites base method to handle sets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>json representation of the object.</p>
@@ -2353,8 +2402,8 @@ Overwrites base method to handle sets.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.MoleculeSystem.from_dict">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#MoleculeSystem.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.MoleculeSystem.from_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates object from JSON representation.
-Overwrites base method to handle sets.</p>
+<dd><p>Generate object from JSON representation.</p>
+<p>This overwrites base method to handle sets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>d</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – json representation of the object.</p>
@@ -2368,8 +2417,8 @@ Overwrites base method to handle sets.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.MoleculeSystem.from_file">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#MoleculeSystem.from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.MoleculeSystem.from_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates an instance from a file. Could be a coord file or any other
-format supported by pymatgen Molecule.</p>
+<dd><p>Create an instance from a file.</p>
+<p>Could be a coord file or any other format supported by pymatgen Molecule.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2388,8 +2437,9 @@ If None the code would try to infer it from the file name.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.MoleculeSystem.from_string">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coord'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#MoleculeSystem.from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.MoleculeSystem.from_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates an instance from a string. Could be the string of a coord file
-or any format supported by pymatgen Molecule.</p>
+<dd><p>Create an instance from a string.</p>
+<p>Could be the string of a coord file or any format supported by
+pymatgen Molecule.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2407,8 +2457,9 @@ coord file or any format supported in pymatgen Molecule.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.MoleculeSystem.get_int_def_inconsistencies">
 <span class="sig-name descname"><span class="pre">get_int_def_inconsistencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ltol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#MoleculeSystem.get_int_def_inconsistencies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.MoleculeSystem.get_int_def_inconsistencies" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gives a list of the internal coordinates whose values are not consistent
-with the values obtained from the molecule object.</p>
+<dd><p>Get inconsistent internal coordinates.</p>
+<p>This returns a list of the internal coordinates whose values are not
+consistent with the values obtained from the molecule object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2428,7 +2479,7 @@ with the values obtained from the molecule object.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.MoleculeSystem.has_inconsistencies">
 <span class="sig-name descname"><span class="pre">has_inconsistencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ltol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#MoleculeSystem.has_inconsistencies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.MoleculeSystem.has_inconsistencies" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks if any inconsistency in internal coordinates is present.</p>
+<dd><p>Check if any inconsistency in internal coordinates is present.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2448,12 +2499,13 @@ with the values obtained from the molecule object.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.MoleculeSystem.molecule">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">molecule</span></span><a class="headerlink" href="#turbomoleio.core.molecule.MoleculeSystem.molecule" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Return the pymatgen Molecule.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.MoleculeSystem.to_coord_string">
 <span class="sig-name descname"><span class="pre">to_coord_string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#MoleculeSystem.to_coord_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.MoleculeSystem.to_coord_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates the string of a coord file for this system.</p>
+<dd><p>Create the string of a coord file for this system.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>the string representing the system.</p>
@@ -2471,6 +2523,7 @@ with the values obtained from the molecule object.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.core.molecule.</span></span><span class="sig-name descname"><span class="pre">OutOfPlaneAngle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#OutOfPlaneAngle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.OutOfPlaneAngle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#turbomoleio.core.molecule.InternalDefinition" title="turbomoleio.core.molecule.InternalDefinition"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.molecule.InternalDefinition</span></code></a></p>
 <p>Class defining an out-of-plane angle internal coordinate (outp in TM).</p>
+<p>Initialize InternalDefinition object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2488,7 +2541,7 @@ If None will be set to a list of 1.0 with the same length as indices.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.OutOfPlaneAngle.compute_value">
 <span class="sig-name descname"><span class="pre">compute_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">molecule</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#OutOfPlaneAngle.compute_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.OutOfPlaneAngle.compute_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the value of the internal coordinate based on the given molecule.</p>
+<dd><p>Calculate the value of the internal coordinate based on the given molecule.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>molecule</strong> (<em>Molecule</em>) – a pymatgen Molecule.</p>
@@ -2524,6 +2577,7 @@ If None will be set to a list of 1.0 with the same length as indices.</p></li>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.core.molecule.</span></span><span class="sig-name descname"><span class="pre">PerpendicularBendingAngle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#PerpendicularBendingAngle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.PerpendicularBendingAngle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#turbomoleio.core.molecule.InternalDefinition" title="turbomoleio.core.molecule.InternalDefinition"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.molecule.InternalDefinition</span></code></a></p>
 <p>Class defining an collinear bending angle internal coordinate (linp in TM).</p>
+<p>Initialize InternalDefinition object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2541,7 +2595,7 @@ If None will be set to a list of 1.0 with the same length as indices.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.molecule.PerpendicularBendingAngle.compute_value">
 <span class="sig-name descname"><span class="pre">compute_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">molecule</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/molecule.html#PerpendicularBendingAngle.compute_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.molecule.PerpendicularBendingAngle.compute_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the value of the internal coordinate based on the given molecule.</p>
+<dd><p>Calculate the value of the internal coordinate based on the given molecule.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>molecule</strong> (<em>Molecule</em>) – a pymatgen Molecule.</p>
@@ -2575,17 +2629,15 @@ If None will be set to a list of 1.0 with the same length as indices.</p></li>
 </section>
 <section id="module-turbomoleio.core.periodic">
 <span id="turbomoleio-core-periodic-module"></span><h2>turbomoleio.core.periodic module<a class="headerlink" href="#module-turbomoleio.core.periodic" title="Permalink to this headline">¶</a></h2>
+<p>Module defining periodic structures in turbomoleio.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="turbomoleio.core.periodic.PeriodicSystem">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.core.periodic.</span></span><span class="sig-name descname"><span class="pre">PeriodicSystem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">structure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frozen_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/periodic.html#PeriodicSystem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.periodic.PeriodicSystem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#turbomoleio.core.base.BaseSystem" title="turbomoleio.core.base.BaseSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.base.BaseSystem</span></code></a></p>
-<p>Object providing information about the geometry of a periodic structure and its dynamics.
-The geometry is described using a pymatgen Structure and frozen coordinates are
+<p>Object with information on the geometry of a periodic structure and its dynamics.</p>
+<p>The geometry is described using a pymatgen Structure and frozen coordinates are
 provided as additional attributes.</p>
-<p>Notably, since this can be used as an input for define to update the atomic
-coordinates, the constraints may be inconsistent with the actual cartesian
-coordinates. When parsed from a coord file obtained from define the information
-should be consistent. Methods are implemented to check such consistency.</p>
+<p>Construct PeriodicSystem object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2593,16 +2645,16 @@ should be consistent. Methods are implemented to check such consistency.</p>
 the system. Only supports ordered structures.</p></li>
 <li><p><strong>frozen_indices</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.10)"><em>set</em></a>) – a set of indices (0-based) indicating atoms
 that should have fixed cartesian coordinates.</p></li>
-<li><p><strong>periodicity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – periodicity of the system when a Structure object is given.
-Can be 1, 2, or 3.</p></li>
+<li><p><strong>periodicity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – periodicity of the system when a Structure object
+is given. Can be 1, 2, or 3.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.periodic.PeriodicSystem.as_dict">
 <span class="sig-name descname"><span class="pre">as_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/periodic.html#PeriodicSystem.as_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.periodic.PeriodicSystem.as_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>A JSON serializable dict representation of an object.
-Overwrites base method to handle sets.</p>
+<dd><p>Get a JSON serializable dict representation of an object.</p>
+<p>Overwrites base method to handle sets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>json representation of the object.</p>
@@ -2616,8 +2668,8 @@ Overwrites base method to handle sets.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.periodic.PeriodicSystem.from_dict">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/periodic.html#PeriodicSystem.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.periodic.PeriodicSystem.from_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates object from JSON representation.
-Overwrites base method to handle sets.</p>
+<dd><p>Generate object from JSON representation.</p>
+<p>Overwrites base method to handle sets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>d</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – json representation of the object.</p>
@@ -2631,8 +2683,8 @@ Overwrites base method to handle sets.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.periodic.PeriodicSystem.from_file">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodic_extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/periodic.html#PeriodicSystem.from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.periodic.PeriodicSystem.from_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates an instance from a file. Could be a coord file or any other
-format supported by pymatgen Structure.</p>
+<dd><p>Create an instance from a file.</p>
+<p>Could be a coord file or any other format supported by pymatgen Structure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2640,6 +2692,8 @@ format supported by pymatgen Structure.</p>
 <li><p><strong>fmt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the format of the data. could be “coord” for Turbomole
 coord file or any format supported in pymatgen Structure.
 If None the code would try to infer it from the file name.</p></li>
+<li><p><strong>periodic_extension</strong> – amount (in Angstroms) of artificially added
+vacuum in the Structure object in the non-periodic directions).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -2651,14 +2705,17 @@ If None the code would try to infer it from the file name.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.periodic.PeriodicSystem.from_string">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coord'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodic_extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/periodic.html#PeriodicSystem.from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.periodic.PeriodicSystem.from_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates an instance from a string. Could be the string of a coord file
-or any format supported by pymatgen Structure.</p>
+<dd><p>Create an instance from a string.</p>
+<p>Could be the string of a coord file or any format supported by
+pymatgen Structure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the string with the data.</p></li>
 <li><p><strong>fmt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the format of the data. could be “coord” for Turbomole
 coord file or any format supported in pymatgen Structure.</p></li>
+<li><p><strong>periodic_extension</strong> – amount (in Angstroms) of artificially added
+vacuum in the Structure object in the non-periodic directions).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -2670,12 +2727,13 @@ coord file or any format supported in pymatgen Structure.</p></li>
 <dl class="py property">
 <dt class="sig sig-object py" id="turbomoleio.core.periodic.PeriodicSystem.structure">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">structure</span></span><a class="headerlink" href="#turbomoleio.core.periodic.PeriodicSystem.structure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Return the pymatgen Structure.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="turbomoleio.core.periodic.PeriodicSystem.to_coord_string">
 <span class="sig-name descname"><span class="pre">to_coord_string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/periodic.html#PeriodicSystem.to_coord_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.periodic.PeriodicSystem.to_coord_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates the string of a coord file for this system.</p>
+<dd><p>Create the string of a coord file for this system.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>the string representing the system.</p>
@@ -2695,11 +2753,11 @@ coord file or any format supported in pymatgen Structure.</p></li>
 </section>
 <section id="module-turbomoleio.core.utils">
 <span id="turbomoleio-core-utils-module"></span><h2>turbomoleio.core.utils module<a class="headerlink" href="#module-turbomoleio.core.utils" title="Permalink to this headline">¶</a></h2>
-<p>Module containing miscellaneous utilities</p>
+<p>Module containing miscellaneous utilities.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="turbomoleio.core.utils.define_quit">
 <span class="sig-prename descclassname"><span class="pre">turbomoleio.core.utils.</span></span><span class="sig-name descname"><span class="pre">define_quit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/core/utils.html#define_quit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.core.utils.define_quit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Runs define but directly quits by sending “qq” interactively.</p>
+<dd><p>Run define but directly quits by sending “qq” interactively.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -2713,6 +2771,7 @@ the version from the header of the output.</p>
 </section>
 <section id="module-turbomoleio.core">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-turbomoleio.core" title="Permalink to this headline">¶</a></h2>
+<p>Core module of turbomoleio.</p>
 </section>
 </section>
 

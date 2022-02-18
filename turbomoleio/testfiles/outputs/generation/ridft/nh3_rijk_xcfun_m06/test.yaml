@@ -18,3 +18,5 @@ define:
 # List of TM commands to be run
 commands:
   - ridft
+
+disable: True  # m06 functional now uses libxc by default (see test ridft/nh3_rijk_libxc_m06)

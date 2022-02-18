@@ -1,0 +1,971 @@
+
+ ridft (fedora) : TURBOMOLE rev. V7.5.1 compiled 23 Dec 2020 at 11:32:14
+ Copyright (C) 2020 TURBOMOLE GmbH, Karlsruhe
+
+
+    2022-02-18 16:12:56.327 
+
+
+
+                                  r i d f t
+
+                        DFT program with RI approximation 
+                                for coulomb part 
+
+
+
+
+                                                 
+                                 References:     
+                                                 
+          TURBOMOLE:                             
+              R. Ahlrichs, M. Baer, M. Haeser, H. Horn, and
+              C. Koelmel
+              Electronic structure calculations on workstation
+              computers: the program system TURBOMOLE
+              Chem. Phys. Lett. 162: 165 (1989)
+          Density Functional:                              
+              O. Treutler and R. Ahlrichs                      
+              Efficient Molecular Numerical Integration Schemes
+              J. Chem. Phys. 102: 346 (1995)                   
+          Parallel Version:                                
+              Performance of parallel TURBOMOLE for Density    
+              Functional Calculations                          
+              M. v. Arnim and R. Ahlrichs                      
+              J. Comp. Chem. 19: 1746 (1998)                   
+          RI-J Method:                                     
+              Auxiliary Basis Sets to approximate Coulomb      
+              Potentials                                       
+              Chem. Phys. Lett. 240: 283 (1995)                
+              K. Eichkorn, O. Treutler, H. Oehm, M. Haeser     
+              and R. Ahlrichs                                  
+              Chem. Phys. Lett. 242: 652 (1995)                
+                                                           
+              Auxiliary Basis Sets for Main Row Atoms and their
+              Use to approximate Coulomb Potentials            
+              K. Eichkorn, F. Weigend, O. Treutler and         
+              R. Ahlrichs                                      
+              Theo. Chem. Acc. 97: 119 (1997)                   
+                                                           
+              Accurate Coulomb-fitting basis sets for H to Rn 
+              F. Weigend                                        
+              Phys. Chem. Chem. Phys. 8: 1057 (2006)            
+                                                           
+          Multipole accelerated RI-J (MARI-J):             
+              Fast evaluation of the Coulomb potential for     
+              electron densities using multipole accelerated   
+              resolution of identity approximation             
+              M. Sierka, A. Hogekamp and R. Ahlrichs           
+              J. Chem. Phys. 118: 9136 (2003)                  
+          RI-JK Method:                                     
+              A fully direct RI-HF algorithm: Implementation,
+              optimised auxiliary basis sets, demonstration of
+              accuracy and efficiency                         
+              F. Weigend                                      
+              Phys. Chem. Chem. Phys. 4: 4285 (2002)           
+          Two-component HF and DFT with spin-orbit coupling:  
+              Self-consistent treatment of spin-orbit         
+              interactions with efficient Hartree-Fock and    
+              density functional methods                      
+              M. K. Armbruster, F. Weigend, C. van Wüllen and 
+              W. Klopper                                      
+              Phys. Chem. Chem. Phys. 10: 1748 (2008)         
+          Two-component difference density and DIIS algorithm 
+              Efficient two-component self-consistent field   
+              procedures and gradients: implementation in     
+              TURBOMOLE and application to Au20-              
+              A. Baldes, F. Weigend                           
+              Mol. Phys. 111: 2617 (2013)                     
+          Relativistic all-electron 2c calculations           
+              An efficient implementation of two-component    
+              relativistic exact-decoupling methods for large 
+              molecules                                       
+              D. Peng, N. Middendorf, F. Weigend, M. Reiher   
+              J. Chem. Phys. 138: 184105 (2013)               
+          Finite nucleus model and SNSO approximation         
+              Efficient implementation of one- and two-       
+              component analytical energy gradients in exact  
+              two-component theory                            
+              Y. J. Franzke, N. Middendorf, F. Weigend        
+              J. Chem. Phys. 148: 104110 (2018)               
+          Grids for all-electron relativistic methods         
+              Error-consistent segmented contracted all-      
+              electron relativistic basis sets of double-     
+              and triple-zeta quality for NMR shielding       
+              constants                                       
+              Y. J. Franzke, R. Tress, T. M. Pazdera,         
+              F. Weigend                                      
+              Phys. Chem. Chem. Phys. 21: 166658 (2019)       
+          Seminumerical exchange algorithms                   
+              Seminumerical calculation of the Hartree-Fock   
+              exchange matirx: Application to two-component   
+              procedures and efficient evaluation of local    
+              hybrid functionsl                               
+              P. Plessow, F. Weigend,                         
+              J. Comput. Chem. 33: 810 (2012)                 
+          Improved seminumerical algorithms                   
+              C. Holzer,                                      
+              J. Chem. Phys. 153 (2020), 184115               
+                                         
+
+
+
+
+              +--------------------------------------------------+
+              |      general information about current run       |
+              +--------------------------------------------------+
+
+ 
+ B-P86 functional
+ exchange:    LDA + Becke (B88)
+ correlation: LDA (VWN) + Perdew (P86)
+ A DFT calculation using the RI-J approximation will be carried out.
+ Allocatable memory for RI due to $ricore (MB):                   500
+
+   *************************************************************************
+   ridft                                                                    
+   *************************************************************************
+
+
+
+
+              +--------------------------------------------------+
+              | Atomic coordinate, charge and isotop information |
+              +--------------------------------------------------+
+
+                    atomic coordinates            atom    charge  isotop
+         -0.77134581   -6.84588342    1.44112693    b      5.000     0
+          2.27535893   -6.50260224    1.44112693    b      5.000     0
+          4.87140093   -4.87140093    1.44112693    b      5.000     0
+          6.50260224   -2.27535893    1.44112693    b      5.000     0
+          6.84588342    0.77134581    1.44112693    b      5.000     0
+          5.83325343    3.66527606    1.44112693    b      5.000     0
+          3.66527606    5.83325343    1.44112693    b      5.000     0
+          0.77134581    6.84588342    1.44112693    b      5.000     0
+         -2.27535893    6.50260224    1.44112693    b      5.000     0
+         -4.87140093    4.87140093    1.44112693    b      5.000     0
+         -6.50260224    2.27535893    1.44112693    b      5.000     0
+         -6.84588342   -0.77134581    1.44112693    b      5.000     0
+         -5.83325343   -3.66527606    1.44112693    b      5.000     0
+         -3.66527606   -5.83325343    1.44112693    b      5.000     0
+         -0.77134581    6.84588342   -1.44112693    b      5.000     0
+         -3.66527606    5.83325343   -1.44112693    b      5.000     0
+         -5.83325343    3.66527606   -1.44112693    b      5.000     0
+         -6.84588342    0.77134581   -1.44112693    b      5.000     0
+         -6.50260224   -2.27535893   -1.44112693    b      5.000     0
+         -4.87140093   -4.87140093   -1.44112693    b      5.000     0
+         -2.27535893   -6.50260224   -1.44112693    b      5.000     0
+          0.77134581   -6.84588342   -1.44112693    b      5.000     0
+          3.66527606   -5.83325343   -1.44112693    b      5.000     0
+          5.83325343   -3.66527606   -1.44112693    b      5.000     0
+          6.84588342   -0.77134581   -1.44112693    b      5.000     0
+          6.50260224    2.27535893   -1.44112693    b      5.000     0
+          4.87140093    4.87140093   -1.44112693    b      5.000     0
+          2.27535893    6.50260224   -1.44112693    b      5.000     0
+ 
+       center of nuclear mass  :    0.00000000    0.00000000    0.00000000
+       center of nuclear charge:    0.00000000    0.00000000    0.00000000
+
+              +--------------------------------------------------+
+              |               basis set information              |
+              +--------------------------------------------------+
+
+              we will work with the 1s 3p 5d 7f 9g ... basis set
+              ...i.e. with spherical basis functions...
+
+   type   atoms  prim   cont   basis
+   ---------------------------------------------------------------------------
+    b       28     24     14   def-SV(P)   [3s2p1d|7s4p1d]
+   ---------------------------------------------------------------------------
+   total:   28    672    392
+   ---------------------------------------------------------------------------
+
+   total number of primitive shells          :   12
+   total number of contracted shells         :  168
+   total number of cartesian basis functions :  420
+   total number of SCF-basis functions       :  392
+
+
+ integral neglect threshold       :  0.79E-11
+ integral storage threshold THIZE :  0.10E-04
+ integral storage threshold THIME :         5
+
+ RI-J AUXILIARY BASIS SET information:
+
+              we will work with the 1s 3p 5d 7f 9g ... basis set
+              ...i.e. with spherical basis functions...
+
+   type   atoms  prim   cont   basis
+   ---------------------------------------------------------------------------
+    b       28     39     37   def-SV(P)   [6s3p3d1f|8s3p3d1f]
+   ---------------------------------------------------------------------------
+   total:   28   1092   1036
+   ---------------------------------------------------------------------------
+
+   total number of primitive shells          :   15
+   total number of contracted shells         :  364
+   total number of cartesian basis functions : 1204
+   total number of SCF-basis functions       : 1036
+
+
+ symmetry group of the molecule :   d14d
+
+ the group has the following generators :
+   s28(z)
+   c2(x)
+
+   56 symmetry operations found
+
+ there are 17 real representations :
+ a1   a2   b1   b2   e1   e2   e3   e4   e5   e6   e7   e8   e9   e10  e11 
+ e12  e13 
+
+ maximum number of shells which are related by symmetry : 28
+
+  
+           ------------------
+           density functional
+           ------------------
+ B-P86 functional
+ exchange:    LDA + Becke (B88)
+ correlation: LDA (VWN) + Perdew (P86)
+
+ iterations will be done with small grid
+  
+ spherical integration : Lebedev's spherical grid
+ spherical gridsize    :                     3
+    i.e. gridpoints    :                   302
+ value for diffuse not defined
+ radial integration    : Chebyshev 2nd kind (scaling 3)
+ radial gridsize       :                     3
+ integration cells     :                     1
+ partition function    : becke
+ partition sharpness   :                     3
+  
+
+ biggest AO integral is expected to be     2.904162095
+
+          ------------------------
+          nuclear repulsion energy  :   1288.43517816    
+          ------------------------
+
+
+         -----------------
+         -S,T+V- integrals
+         -----------------
+
+ 1e-integrals will be neglected if expon. factor < 0.795705E-12
+ 
+   Difference densities algorithm switched on.
+   The maximal number of linear combinations of
+   difference densities is                    20 .
+
+ DIIS switched on: error vector is FDS-SDF
+ Max. Iterations for DIIS is     :   4
+ DIIS matrix (see manual) 
+    Scaling factor of diagonals  :  1.200
+    threshold for scaling factor :  0.000
+
+ scf convergence criterion : increment of total energy < .1000000D-06
+                  and increment of one-electron energy < .1000000D-03
+
+ MOs are in ASCII format !
+
+
+    mo occupation :
+   irrep   mo's   occupied
+    a1      10        4
+    a2       4        0
+    b1       4        0
+    b2      10        3
+    e1      14        4
+    e2      14        4
+    e3      14        4
+    e4      14        2
+    e5      14        2
+    e6      14        2
+    e7      14        2
+    e8      14        2
+    e9      14        2
+    e10     14        2
+    e11     14        2
+    e12     14        2
+    e13     14        2
+ 
+ number of basis functions   :   392
+ number of occupied orbitals :    71
+ 
+
+ reading orbital data $uhfmo_alpha  from file alpha
+ orbital characterization : expanded
+
+ reading orbital data $uhfmo_beta  from file beta
+ orbital characterization : expanded
+ virtual MOs provided and orthogonalized by Cholesky decomposition
+ virtual MOs provided and orthogonalized by Cholesky decomposition
+
+ UHF mode switched on !
+
+ closed shell shift switched on 
+ all occupied orbitals are shifted by    0.05000
+
+  
+           ------------------------
+               RI-J - INFORMATION
+           ------------------------
+ Contributions to RI integral batches: 
+  neglected integral batches:                 13946
+  direct contribution:                            0
+  memory contribution:                   250
+ Memory core needed for (P|Q) and Cholesky      1 MByte
+ Memory core minimum needed except of (P|Q)     1 MByte
+ Total minimum memory core needed (sum)         1 MByte
+  
+ ****************************************
+ Memory allocated for RI-J    15 MByte
+ ****************************************
+                                            
+
+ DSCF restart information will be dumped onto file alpha
+
+
+ Starting SCF iterations
+
+          Overall gridpoints after grid construction =          1717
+
+ ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     NORM[dD(SAO)]  TOL
+   1  -690.81171680076    -3431.9679938     1452.7210988    0.000D+00 0.794D-11
+                            Exc = -110.290402715     Coul =  1563.01150156    
+                         Ntotal = 140.00340960      Nspin = 1.9999880136    
+                             Na = 71.001698809         Nb = 69.001710795    
+                            current damping = 1.000
+ 
+          max. resid. norm for Fia-block=  3.185D-01 for orbital      2e4   alpha
+          max. resid. fock norm         =  9.653D-01 for orbital     10e7   beta 
+
+ ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     NORM[dD(SAO)]  TOL
+   2  -693.36290445796    -3455.1937172     1473.3956345    0.379D+01 0.495D-11
+                            Exc = -111.562613193     Coul =  1584.95824774    
+                         Ntotal = 140.00331481      Nspin = 1.9999700781    
+                             Na = 71.001642443         Nb = 69.001672365    
+                            current damping = 0.950
+ 
+          Norm of current diis error:  2.8592    
+          max. resid. norm for Fia-block=  1.762D-01 for orbital      2e2   alpha
+          max. resid. fock norm         =  1.936D-01 for orbital      8e2   alpha
+
+ ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     NORM[dD(SAO)]  TOL
+   3  -694.31761760024    -3467.6251494     1484.8723537    0.963D+00 0.368D-11
+                            Exc = -112.376875438     Coul =  1597.24922909    
+                         Ntotal = 140.00313289      Nspin = 1.9999646478    
+                             Na = 71.001548769         Nb = 69.001584121    
+                            current damping = 0.850
+ 
+          Norm of current diis error:  1.6517    
+          max. resid. norm for Fia-block=  1.033D-01 for orbital      2e4   beta 
+          max. resid. fock norm         =  1.109D-01 for orbital      8e2   alpha
+
+ ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     NORM[dD(SAO)]  TOL
+   4  -694.70646513457    -3474.9385467     1491.7969034    0.486D+00 0.335D-11
+                            Exc = -112.882399094     Coul =  1604.67930246    
+                         Ntotal = 140.00298448      Nspin = 1.9999566587    
+                             Na = 71.001470570         Nb = 69.001513911    
+                            current damping = 0.750
+ 
+          Norm of current diis error: 0.90403    
+          max. resid. norm for Fia-block=  6.001D-02 for orbital      2e4   beta 
+          max. resid. fock norm         =  6.216D-02 for orbital      2e4   beta 
+
+ ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     NORM[dD(SAO)]  TOL
+   5  -694.84934704176    -3479.3981423     1496.1136171    0.105D+00 0.307D-11
+                            Exc = -113.182355306     Coul =  1609.29597239    
+                         Ntotal = 140.00288776      Nspin = 1.9999492051    
+                             Na = 71.001418480         Nb = 69.001469275    
+                            current damping = 0.650
+ 
+          Norm of current diis error: 0.44360    
+          max. resid. norm for Fia-block=  3.142D-02 for orbital      2e4   beta 
+          max. resid. fock norm         =  3.226D-02 for orbital      2e4   beta 
+          mo-orthogonalization: Cholesky decomposition
+
+ ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     NORM[dD(SAO)]  TOL
+   6  -694.89089207283    -3481.7993757     1498.4733054    0.379D-01 0.273D-11
+                            Exc = -113.343773629     Coul =  1611.81707904    
+                         Ntotal = 140.00283132      Nspin = 1.9999430288    
+                             Na = 71.001387174         Nb = 69.001444145    
+                            current damping = 0.550
+ 
+          Norm of current diis error: 0.19033    
+          max. resid. norm for Fia-block=  1.427D-02 for orbital      2e4   beta 
+          max. resid. fock norm         =  1.456D-02 for orbital      2e4   beta 
+
+ ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     NORM[dD(SAO)]  TOL
+   7  -694.89994244929    -3482.8042590     1499.4691384    0.197D-01 0.250D-11
+                            Exc = -113.414504912     Coul =  1612.88364331    
+                         Ntotal = 140.00280299      Nspin = 1.9999384713    
+                             Na = 71.001370732         Nb = 69.001432261    
+                            current damping = 0.450
+ 
+          Norm of current diis error: 0.76202E-01
+          max. resid. norm for Fia-block=  5.939D-03 for orbital      2e4   beta 
+          max. resid. fock norm         =  6.027D-03 for orbital      2e4   beta 
+
+ ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     NORM[dD(SAO)]  TOL
+   8  -694.90163951349    -3483.2337254     1499.8969077    0.858D-02 0.238D-11
+                            Exc = -113.443368666     Coul =  1613.34027640    
+                         Ntotal = 140.00279223      Nspin = 1.9999353077    
+                             Na = 71.001363766         Nb = 69.001428459    
+                            current damping = 0.300
+ 
+          Norm of current diis error: 0.27256E-01
+          max. resid. norm for Fia-block=  2.177D-03 for orbital      2e4   alpha
+          max. resid. fock norm         =  2.200D-03 for orbital      2e4   alpha
+
+ ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     NORM[dD(SAO)]  TOL
+   9  -694.90192253700    -3483.3719771     1500.0348764    0.500D-02 0.230D-11
+                            Exc = -113.453757463     Coul =  1613.48863386    
+                         Ntotal = 140.00278807      Nspin = 1.9999330258    
+                             Na = 71.001360547         Nb = 69.001427522    
+                            current damping = 0.150
+ 
+          Norm of current diis error: 0.87829E-02
+          max. resid. norm for Fia-block=  9.265D-04 for orbital      3e3   beta 
+          max. resid. fock norm         =  9.332D-04 for orbital      4e3   beta 
+
+ ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     NORM[dD(SAO)]  TOL
+  10  -694.90197215240    -3483.4341009     1500.0969506    0.251D-02 0.225D-11
+                            Exc = -113.457331500     Coul =  1613.55428210    
+                         Ntotal = 140.00278810      Nspin = 1.9999314547    
+                             Na = 71.001359775         Nb = 69.001428320    
+                            current damping = 0.100
+ 
+          Norm of current diis error: 0.28983E-02
+          max. resid. norm for Fia-block=  6.014D-04 for orbital      3e3   beta 
+          max. resid. fock norm         =  6.101D-04 for orbital      3e3   beta 
+          mo-orthogonalization: Cholesky decomposition
+
+ ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     NORM[dD(SAO)]  TOL
+  11  -694.90198375437    -3483.4190366     1500.0818747    0.653D-03 0.220D-11
+                            Exc = -113.457472727     Coul =  1613.53934743    
+                         Ntotal = 140.00278809      Nspin = 1.9999304779    
+                             Na = 71.001359286         Nb = 69.001428808    
+                            current damping = 0.150
+ 
+          Norm of current diis error: 0.23042E-02
+          max. resid. norm for Fia-block=  3.439D-04 for orbital      3e3   beta 
+          max. resid. fock norm         =  3.480D-04 for orbital      3e3   beta 
+
+ ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     NORM[dD(SAO)]  TOL
+  12  -694.90198805355    -3483.4284231     1500.0912569    0.133D-03 0.216D-11
+                            Exc = -113.457751956     Coul =  1613.54900883    
+                         Ntotal = 140.00278886      Nspin = 1.9999299342    
+                             Na = 71.001359397         Nb = 69.001429462    
+                            current damping = 0.200
+ 
+          Norm of current diis error: 0.87028E-03
+          max. resid. norm for Fia-block=  2.228D-04 for orbital      3e3   beta 
+          max. resid. fock norm         =  2.230D-04 for orbital      4e3   beta 
+
+ ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     NORM[dD(SAO)]  TOL
+  13  -694.90198957418    -3483.4285390     1500.0913713    0.669D-03 0.205D-11
+                            Exc = -113.457805437     Coul =  1613.54917672    
+                         Ntotal = 140.00278925      Nspin = 1.9999295585    
+                             Na = 71.001359404         Nb = 69.001429846    
+                            current damping = 0.100
+ 
+          Norm of current diis error: 0.47837E-03
+          max. resid. norm for Fia-block=  1.444D-04 for orbital      3e3   beta 
+          max. resid. fock norm         =  1.445D-04 for orbital      4e3   beta 
+
+ ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     NORM[dD(SAO)]  TOL
+  14  -694.90199021262    -3483.4270637     1500.0898953    0.173D-01 0.226D-11
+                            Exc = -113.457793630     Coul =  1613.54768897    
+                         Ntotal = 140.00278949      Nspin = 1.9999292999    
+                             Na = 71.001359394         Nb = 69.001430094    
+                            current damping = 0.150
+ 
+          Norm of current diis error: 0.28066E-03
+          max. resid. norm for Fia-block=  8.519D-05 for orbital      3e3   beta 
+          max. resid. fock norm         =  8.526D-05 for orbital      4e3   beta 
+
+ ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     NORM[dD(SAO)]  TOL
+  15  -694.90199042489    -3483.4275977     1500.0904291    0.123D-03 0.226D-11
+                            Exc = -113.457860417     Coul =  1613.54828957    
+                         Ntotal = 140.00278961      Nspin = 1.9999291641    
+                             Na = 71.001359388         Nb = 69.001430224    
+                            current damping = 0.200
+ 
+          Norm of current diis error: 0.16775E-03
+          max. resid. norm for Fia-block=  5.151D-05 for orbital      3e3   beta 
+          max. resid. fock norm         =  5.155D-05 for orbital      4e3   beta 
+          mo-orthogonalization: Cholesky decomposition
+
+ ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     NORM[dD(SAO)]  TOL
+  16  -694.90199049900    -3483.4269355     1500.0897669    0.800D-04 0.226D-11
+                            Exc = -113.457828738     Coul =  1613.54759561    
+                         Ntotal = 140.00278970      Nspin = 1.9999290909    
+                             Na = 71.001359397         Nb = 69.001430306    
+                            current damping = 0.250
+ 
+          Norm of current diis error: 0.10713E-03
+          max. resid. norm for Fia-block=  3.223D-05 for orbital      3e3   beta 
+          max. resid. fock norm         =  3.231D-05 for orbital      4e3   beta 
+
+ ENERGY CONVERGED !
+
+          Overall gridpoints after grid construction =          5890
+
+ ITERATION  ENERGY          1e-ENERGY        2e-ENERGY     NORM[dD(SAO)]  TOL
+  17  -694.90185728053    -3483.4268230     1500.0897876    0.888D-04 0.226D-11
+                            Exc = -113.457710364     Coul =  1613.54749794    
+                         Ntotal = 140.00025942      Nspin = 2.0000002011    
+                             Na = 71.000129808         Nb = 69.000129607    
+                            current damping = 0.300
+ 
+          Norm of current diis error: 0.68215E-04
+          max. resid. norm for Fia-block=  2.017D-05 for orbital      3e3   beta 
+          max. resid. fock norm         =  2.018D-05 for orbital      3e3   beta 
+
+ End of SCF iterations
+
+   convergence criteria satisfied after    17 iterations
+
+
+   *************************************************************************
+   ridft                                                                    
+   *************************************************************************
+
+
+                  ------------------------------------------ 
+                 |  total energy      =   -694.90185728053  |
+                  ------------------------------------------ 
+                 :  kinetic energy    =    684.60513479095  :
+                 :  potential energy  =  -1379.50699207147  :
+                 :  virial theorem    =      1.98518247954  :
+                 :  wavefunction norm =      1.00000000000  :
+                  .......................................... 
+
+
+ <geterg> : there is no data group $energy 
+
+
+ <skperg> : $end is missing 
+
+
+ orbitals $uhfmo_beta  will be written to file beta
+
+ orbitals $uhfmo_alpha  will be written to file alpha
+ 
+ alpha: 
+
+    irrep                  1a1         2a1         3a1         4a1         5a1  
+ eigenvalues H         -6.57222    -0.68287    -0.34356    -0.30126     0.08057
+            eV        -178.8407    -18.5821     -9.3489     -8.1977      2.1925
+ occupation              1.0000      1.0000      1.0000      1.0000
+
+    irrep                  6a1         7a1         8a1         9a1        10a1  
+ eigenvalues H          0.17746     0.19462     0.67093     1.08868     1.26343
+            eV           4.8291      5.2959     18.2570     29.6246     34.3800
+
+    irrep                  1a2         2a2         3a2         4a2  
+ eigenvalues H          0.75820     1.03954     2.16256     2.38227
+            eV          20.6319     28.2875     58.8466     64.8254
+
+    irrep                  1b1         2b1         3b1         4b1  
+ eigenvalues H          0.60640     0.93002     1.83105     1.99912
+            eV          16.5012     25.3075     49.8259     54.3992
+
+    irrep                  1b2         2b2         3b2         4b2         5b2  
+ eigenvalues H         -6.57177    -0.42370    -0.14991     0.07815     0.19625
+            eV        -178.8283    -11.5294     -4.0792      2.1267      5.3402
+ occupation              1.0000      1.0000      1.0000
+
+    irrep                  6b2         7b2         8b2         9b2        10b2  
+ eigenvalues H          0.26168     0.41428     1.06569     1.32877     1.48732
+            eV           7.1208     11.2731     28.9990     36.1581     40.4723
+
+    irrep                  1e1         2e1         3e1         4e1         5e1  
+ eigenvalues H         -6.57247    -0.67455    -0.33084    -0.29086     0.05734
+            eV        -178.8474    -18.3555     -9.0028     -7.9147      1.5602
+ occupation          2 * 1.0000  2 * 1.0000  2 * 1.0000  2 * 1.0000
+
+    irrep                  6e1         7e1         8e1         9e1        10e1  
+ eigenvalues H          0.18273     0.22351     0.51315     0.68439     0.72619
+            eV           4.9724      6.0822     13.9636     18.6232     19.7608
+
+    irrep                  1e2         2e2         3e2         4e2         5e2  
+ eigenvalues H         -6.57230    -0.65022    -0.29540    -0.25955     0.09059
+            eV        -178.8427    -17.6935     -8.0382     -7.0627      2.4650
+ occupation          2 * 1.0000  2 * 1.0000  2 * 1.0000  2 * 1.0000
+
+    irrep                  6e2         7e2         8e2         9e2        10e2  
+ eigenvalues H          0.22169     0.30493     0.54569     0.63973     0.73470
+            eV           6.0324      8.2977     14.8491     17.4080     19.9924
+
+    irrep                  1e3         2e3         3e3         4e3         5e3  
+ eigenvalues H         -6.57202    -0.61193    -0.24116    -0.20693     0.12766
+            eV        -178.8353    -16.6515     -6.5624     -5.6310      3.4738
+ occupation          2 * 1.0000  2 * 1.0000  2 * 1.0000  2 * 1.0000
+
+    irrep                  6e3         7e3         8e3         9e3        10e3  
+ eigenvalues H          0.27528     0.37502     0.55948     0.60833     0.80530
+            eV           7.4908     10.2049     15.2244     16.5537     21.9135
+
+    irrep                  1e4         2e4         3e4         4e4         5e4  
+ eigenvalues H         -6.57173    -0.56231    -0.17250    -0.13392     0.18011
+            eV        -178.8272    -15.3012     -4.6940     -3.6442      4.9011
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e4         7e4         8e4         9e4        10e4  
+ eigenvalues H          0.32301     0.35248     0.57487     0.68668     0.89878
+            eV           8.7897      9.5915     15.6432     18.6857     24.4573
+
+    irrep                  1e5         2e5         3e5         4e5         5e5  
+ eigenvalues H         -6.57151    -0.50432    -0.09515    -0.04566     0.21473
+            eV        -178.8213    -13.7234     -2.5892     -1.2424      5.8430
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e5         7e5         8e5         9e5        10e5  
+ eigenvalues H          0.29658     0.40276     0.54083     0.81612     0.97160
+            eV           8.0704     10.9596     14.7170     22.2078     26.4387
+
+    irrep                  1e6         2e6         3e6         4e6         5e6  
+ eigenvalues H         -6.57139    -0.44164    -0.02868     0.05078     0.19412
+            eV        -178.8181    -12.0178     -0.7805      1.3818      5.2824
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e6         7e6         8e6         9e6        10e6  
+ eigenvalues H          0.33902     0.45859     0.49114     0.89434     0.95127
+            eV           9.2254     12.4790     13.3648     24.3365     25.8855
+
+    irrep                  1e7         2e7         3e7         4e7         5e7  
+ eigenvalues H         -6.57130    -0.38000    -0.01287     0.15536     0.22161
+            eV        -178.8157    -10.3404     -0.3501      4.2275      6.0304
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e7         7e7         8e7         9e7        10e7  
+ eigenvalues H          0.37233     0.43219     0.53176     0.76678     1.00606
+            eV          10.1318     11.7607     14.4701     20.8654     27.3766
+
+    irrep                  1e8         2e8         3e8         4e8         5e8  
+ eigenvalues H         -6.57126    -0.33234    -0.02412     0.23964     0.27258
+            eV        -178.8144     -9.0436     -0.6562      6.5209      7.4174
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e8         7e8         8e8         9e8        10e8  
+ eigenvalues H          0.31200     0.42880     0.59291     0.62944     0.92388
+            eV           8.4899     11.6682     16.1341     17.1281     25.1401
+
+    irrep                  1e9         2e9         3e9         4e9         5e9  
+ eigenvalues H         -6.57133    -0.31645    -0.01770     0.17338     0.27867
+            eV        -178.8163     -8.6112     -0.4815      4.7180      7.5831
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e9         7e9         8e9         9e9        10e9  
+ eigenvalues H          0.38059     0.43757     0.51126     0.75484     0.98840
+            eV          10.3564     11.9069     13.9123     20.5404     26.8961
+
+    irrep                  1e10        2e10        3e10        4e10        5e10 
+ eigenvalues H         -6.57145    -0.33279    -0.01418     0.12437     0.27232
+            eV        -178.8197     -9.0556     -0.3859      3.3842      7.4103
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e10        7e10        8e10        9e10       10e10 
+ eigenvalues H          0.34414     0.46691     0.52758     0.70882     1.02765
+            eV           9.3647     12.7054     14.3562     19.2882     27.9639
+
+    irrep                  1e11        2e11        3e11        4e11        5e11 
+ eigenvalues H         -6.57161    -0.36366    -0.05588     0.11661     0.27939
+            eV        -178.8240     -9.8957     -1.5206      3.1731      7.6028
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e11        7e11        8e11        9e11       10e11 
+ eigenvalues H          0.30268     0.44523     0.57300     0.61440     1.14260
+            eV           8.2364     12.1155     15.5922     16.7188     31.0918
+
+    irrep                  1e12        2e12        3e12        4e12        5e12 
+ eigenvalues H         -6.57181    -0.39421    -0.10433     0.09532     0.22881
+            eV        -178.8293    -10.7271     -2.8389      2.5938      6.2263
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e12        7e12        8e12        9e12       10e12 
+ eigenvalues H          0.34604     0.40253     0.50863     0.65057     1.26748
+            eV           9.4164     10.9535     13.8405     17.7031     34.4901
+
+    irrep                  1e13        2e13        3e13        4e13        5e13 
+ eigenvalues H         -6.57194    -0.41587    -0.13765     0.07100     0.19337
+            eV        -178.8331    -11.3165     -3.7457      1.9320      5.2619
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e13        7e13        8e13        9e13       10e13 
+ eigenvalues H          0.28745     0.39752     0.56624     0.64189     1.17740
+            eV           7.8219     10.8173     15.4084     17.4668     32.0390
+ 
+ beta:  
+
+    irrep                  1a1         2a1         3a1         4a1         5a1  
+ eigenvalues H         -6.57137    -0.67997    -0.34152    -0.29199     0.08197
+            eV        -178.8175    -18.5031     -9.2933     -7.9456      2.2306
+ occupation              1.0000      1.0000      1.0000      1.0000
+
+    irrep                  6a1         7a1         8a1         9a1        10a1  
+ eigenvalues H          0.18285     0.19548     0.67707     1.09145     1.26906
+            eV           4.9757      5.3194     18.4241     29.7001     34.5330
+
+    irrep                  1a2         2a2         3a2         4a2  
+ eigenvalues H          0.75995     1.04002     2.16346     2.39061
+            eV          20.6796     28.3006     58.8713     65.0523
+
+    irrep                  1b1         2b1         3b1         4b1  
+ eigenvalues H          0.60802     0.93013     1.83922     2.00014
+            eV          16.5453     25.3104     50.0482     54.4271
+
+    irrep                  1b2         2b2         3b2         4b2         5b2  
+ eigenvalues H         -6.57092    -0.41671    -0.14747     0.08265     0.19865
+            eV        -178.8051    -11.3394     -4.0129      2.2490      5.4056
+ occupation              1.0000      1.0000      1.0000
+
+    irrep                  6b2         7b2         8b2         9b2        10b2  
+ eigenvalues H          0.26308     0.42052     1.06783     1.33473     1.49529
+            eV           7.1589     11.4430     29.0573     36.3202     40.6893
+
+    irrep                  1e1         2e1         3e1         4e1         5e1  
+ eigenvalues H         -6.57161    -0.67165    -0.32895    -0.28139     0.05844
+            eV        -178.8241    -18.2765     -8.9514     -7.6572      1.5901
+ occupation          2 * 1.0000  2 * 1.0000  2 * 1.0000  2 * 1.0000
+
+    irrep                  6e1         7e1         8e1         9e1        10e1  
+ eigenvalues H          0.18680     0.22493     0.51545     0.69013     0.72907
+            eV           5.0832      6.1206     14.0262     18.7796     19.8391
+
+    irrep                  1e2         2e2         3e2         4e2         5e2  
+ eigenvalues H         -6.57144    -0.64732    -0.29387    -0.24968     0.09148
+            eV        -178.8194    -17.6147     -7.9968     -6.7942      2.4893
+ occupation          2 * 1.0000  2 * 1.0000  2 * 1.0000  2 * 1.0000
+
+    irrep                  6e2         7e2         8e2         9e2        10e2  
+ eigenvalues H          0.22601     0.30668     0.54723     0.64322     0.74105
+            eV           6.1500      8.3453     14.8909     17.5032     20.1652
+
+    irrep                  1e3         2e3         3e3         4e3         5e3  
+ eigenvalues H         -6.57117    -0.60907    -0.23988    -0.19683     0.12839
+            eV        -178.8119    -16.5738     -6.5276     -5.3560      3.4937
+ occupation          2 * 1.0000  2 * 1.0000  2 * 1.0000
+
+    irrep                  6e3         7e3         8e3         9e3        10e3  
+ eigenvalues H          0.28003     0.37672     0.56338     0.60995     0.81180
+            eV           7.6199     10.2511     15.3304     16.5978     22.0903
+
+    irrep                  1e4         2e4         3e4         4e4         5e4  
+ eigenvalues H         -6.57087    -0.55954    -0.17103    -0.12408     0.18088
+            eV        -178.8039    -15.2260     -4.6541     -3.3765      4.9220
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e4         7e4         8e4         9e4        10e4  
+ eigenvalues H          0.32692     0.35662     0.57699     0.68959     0.90553
+            eV           8.8960      9.7042     15.7009     18.7649     24.6409
+
+    irrep                  1e5         2e5         3e5         4e5         5e5  
+ eigenvalues H         -6.57065    -0.50172    -0.09347    -0.03624     0.21747
+            eV        -178.7979    -13.6526     -2.5435     -0.9862      5.9176
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e5         7e5         8e5         9e5        10e5  
+ eigenvalues H          0.29877     0.40798     0.54251     0.82031     0.97780
+            eV           8.1300     11.1018     14.7624     22.3219     26.6074
+
+    irrep                  1e6         2e6         3e6         4e6         5e6  
+ eigenvalues H         -6.57053    -0.43926    -0.02678     0.05979     0.19917
+            eV        -178.7947    -11.9529     -0.7286      1.6269      5.4198
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e6         7e6         8e6         9e6        10e6  
+ eigenvalues H          0.33992     0.46230     0.49503     0.89863     0.95550
+            eV           9.2498     12.5799     13.4705     24.4530     26.0006
+
+    irrep                  1e7         2e7         3e7         4e7         5e7  
+ eigenvalues H         -6.57044    -0.37777    -0.00966     0.16392     0.22671
+            eV        -178.7923    -10.2798     -0.2628      4.4606      6.1693
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e7         7e7         8e7         9e7        10e7  
+ eigenvalues H          0.37425     0.43420     0.53635     0.77020     1.00897
+            eV          10.1839     11.8152     14.5950     20.9582     27.4557
+
+    irrep                  1e8         2e8         3e8         4e8         5e8  
+ eigenvalues H         -6.57040    -0.32991    -0.02013     0.24888     0.27711
+            eV        -178.7910     -8.9773     -0.5477      6.7725      7.5405
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e8         7e8         8e8         9e8        10e8  
+ eigenvalues H          0.31365     0.43010     0.59745     0.63424     0.92486
+            eV           8.5350     11.7038     16.2577     17.2586     25.1670
+
+    irrep                  1e9         2e9         3e9         4e9         5e9  
+ eigenvalues H         -6.57047    -0.31297    -0.01442     0.17967     0.28240
+            eV        -178.7930     -8.5165     -0.3923      4.8891      7.6847
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e9         7e9         8e9         9e9        10e9  
+ eigenvalues H          0.38466     0.43869     0.51689     0.75916     0.99092
+            eV          10.4673     11.9374     14.0654     20.6579     26.9644
+
+    irrep                  1e10        2e10        3e10        4e10        5e10 
+ eigenvalues H         -6.57059    -0.32793    -0.01196     0.13020     0.27592
+            eV        -178.7963     -8.9234     -0.3254      3.5430      7.5081
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e10        7e10        8e10        9e10       10e10 
+ eigenvalues H          0.34613     0.47266     0.52990     0.71276     1.03308
+            eV           9.4189     12.8618     14.4194     19.3954     28.1116
+
+    irrep                  1e11        2e11        3e11        4e11        5e11 
+ eigenvalues H         -6.57075    -0.35775    -0.05347     0.12126     0.28127
+            eV        -178.8007     -9.7350     -1.4549      3.2997      7.6538
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e11        7e11        8e11        9e11       10e11 
+ eigenvalues H          0.30599     0.45093     0.57607     0.61668     1.14876
+            eV           8.3266     12.2705     15.6757     16.7808     31.2596
+
+    irrep                  1e12        2e12        3e12        4e12        5e12 
+ eigenvalues H         -6.57095    -0.38766    -0.10184     0.09942     0.23098
+            eV        -178.8060    -10.5488     -2.7712      2.7055      6.2852
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e12        7e12        8e12        9e12       10e12 
+ eigenvalues H          0.34821     0.40790     0.51094     0.65399     1.27399
+            eV           9.4754     11.0996     13.9034     17.7962     34.6672
+
+    irrep                  1e13        2e13        3e13        4e13        5e13 
+ eigenvalues H         -6.57109    -0.40899    -0.13520     0.07483     0.19600
+            eV        -178.8098    -11.1292     -3.6789      2.0362      5.3334
+ occupation          2 * 1.0000  2 * 1.0000
+
+    irrep                  6e13        7e13        8e13        9e13       10e13 
+ eigenvalues H          0.28926     0.40178     0.56823     0.64600     1.17967
+            eV           7.8712     10.9331     15.4624     17.5786     32.1008
+ 
+
+                                             _ _ _ 
+  IRREP     alpha occ.     beta occ.      tr(D*D-D)
+
+
+ a1         4.00000000     4.00000000    -0.00002807
+
+
+ a2         0.00000000     0.00000000     0.00000000
+
+
+ b1         0.00000000     0.00000000     0.00000000
+
+
+ b2         3.00000000     3.00000000    -0.00004710
+
+
+ e1         8.00000000     8.00000000    -0.00005750
+
+
+ e2         8.00000000     8.00000000    -0.00004757
+
+
+ e3         8.00000000     6.00000000    -0.50001494
+
+
+ e4         4.00000000     4.00000000    -0.00001015
+
+
+ e5         4.00000000     4.00000000    -0.00000905
+
+
+ e6         4.00000000     4.00000000    -0.00000779
+
+
+ e7         4.00000000     4.00000000    -0.00000805
+
+
+ e8         4.00000000     4.00000000    -0.00002774
+
+
+ e9         4.00000000     4.00000000    -0.00008209
+
+
+ e10        4.00000000     4.00000000    -0.00011018
+
+
+ e11        4.00000000     4.00000000    -0.00011196
+
+
+ e12        4.00000000     4.00000000    -0.00010550
+
+
+ e13        4.00000000     4.00000000    -0.00009842
+
+   -------------------------------------------------
+
+   sum     71.00000000    69.00000000    -0.50076612
+
+ <S*S>     2.00153224
+
+ 
+ 
+ 
+ ==============================================================================
+                           electrostatic moments
+ ==============================================================================
+
+ reference point for electrostatic moments:    0.00000   0.00000   0.00000
+
+ 
+              nuc           elec       ->  total
+ ------------------------------------------------------------------------------
+                          charge      
+ ------------------------------------------------------------------------------
+         140.000000    -140.000000       0.000000
+ a-b                                     2.000000
+ 
+ ------------------------------------------------------------------------------
+                       dipole moment  
+ ------------------------------------------------------------------------------
+   x       0.000000      -0.000000      -0.000000
+   y       0.000000      -0.000000      -0.000000
+   z       0.000000       0.000000       0.000000
+ 
+   | dipole moment | =     0.0000 a.u. =     0.0000 debye 
+ 
+ ------------------------------------------------------------------------------
+                     quadrupole moment
+ ------------------------------------------------------------------------------
+  xx    3322.276589   -3432.050022    -109.773433
+  yy    3322.276589   -3432.050022    -109.773433
+  zz     290.758554    -418.368635    -127.610081
+  xy      -0.000000      -0.000000      -0.000000
+  xz      -0.000000      -0.000000      -0.000000
+  yz       0.000000      -0.000000      -0.000000
+ 
+     1/3  trace=    -115.718982
+     anisotropy=      17.836648
+ 
+ ==============================================================================
+ 
+HOMO-LUMO Separation
+ HOMO         :   -0.14747059 H =     -4.01288 eV
+ LUMO         :   -0.19682745 H =     -5.35595 eV
+ HOMO-LUMO gap:   -0.04935686 H =     -1.34307 eV
+ 
+ WARNING: HOMO-LUMO Gap is negativ !
+ to check the occupation call eiger
+ 
+ ==============================================================================
+
+
+    ------------------------------------------------------------------------
+         total  cpu-time :   1.71 seconds
+         total wall-time :   1.73 seconds
+    ------------------------------------------------------------------------
+
+   ****  ridft : all done  ****
+
+
+    2022-02-18 16:12:58.052 
+

@@ -44,9 +44,14 @@ Providing detailed **in-code documentation** in accordance with the standards is
 to help future developers and to automatically generate the API documentation. In turbomoleio
 the `Google style <https://github.com/google/styleguide/blob/gh-pages/pyguide.md#38-comments-and-docstrings>`_
 is used for docstrings and comments. New developments should also be described in the user
-and developer guides whose sources can be found in the ``turbomoleio/docs`` folder. They are
+and developer guides whose sources can be found in the ``turbomoleio/docs_rst`` folder. They are
 typeset using the `reStructuredText <http://docutils.sourceforge.net/rst.html>`_
-and converted to html format using `sphinx <http://www.sphinx-doc.org>`_.
+and converted to html format using `sphinx <http://www.sphinx-doc.org>`_. The html files are located
+in the ``turbomoleio/docs`` folder and can be generated from the source rst files using the
+`invoke <https://www.pyinvoke.org/>`_ `make-doc` task defined in
+`~turbomoleio/tasks.py`.:
+
+    invoke make-docs
 
 Implementing unit tests and, if suitable, integration tests is also a requirement for the
 acceptance of new developments in turbomoleio. See the :ref:`developer_testing` section for more details.
