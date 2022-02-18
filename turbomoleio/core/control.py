@@ -756,7 +756,10 @@ class Control(DataGroups):
         dispersion_correction = dispersion_correction.lower()
 
         if dispersion_correction == "dft-d1":
-            self.add_data_group("olddisp", "")
+            raise ValueError(
+                "D1 dispersion correction is not working anymore in " "Turbomole v7.5."
+            )
+            # self.add_data_group("olddisp", "")
         elif dispersion_correction == "dft-d2":
             self.add_data_group("disp", "")
         elif dispersion_correction == "dft-d3":
