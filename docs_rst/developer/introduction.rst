@@ -32,7 +32,7 @@ A developer should nonetheless comply with the general coding guidelines provide
 here.
 
 The most basic aspect concerns the coding in general. turbomoleio is written in **python 3**
-and should support versions greater or equal to 3.6. It is important to have an
+and should support versions greater or equal to 3.8. It is important to have an
 understanding of the basic principles of object orientation programming, like
 inheritance and abstraction, since these are often used in the code.
 The coding follows mainly the conventions defined in the standard
