@@ -45,124 +45,177 @@ asterisks_re = re.compile(r"\*+")
 # strings present in the output for all the types of standard xc functionals.
 # NB This should be updated if other standard xc functionals are added to TM.
 functional_strings = {
-    "s-vwn": r"Slater.+?Dirac.+?exchange.+?with.+?VWN.+?corr\..+?functional",
-    "s-vwn_Gaussian": r"Slater.+?Dirac.+?exchange.+?with.+?VWN.+?"
-    r"corr\.functional.+?\(fit.+?III.+?as.+?in.+?Gaussian\)",
-    "pwlda": r"Slater.+?Dirac.+?exchange.+?with.+?PW.+?LDA.+?corr\..+?functional",
-    "b-lyp": r"B\-LYP.+?functional.+?exchange\:.+?LDA.+?\+.+?Becke.+?\(B88\).+?"
-    r"correlation\:.+?Lee\-Yang\-Parr.+?\(LYP\)",
-    "b-vwn": r"B\-VWN.+?functional.+?exchange\:.+?LDA.+?\+.+?Becke.+?\(B88\).+?"
-    r"correlation\:.+?LDA.+?\(VWN\)",
-    "b-p": r"B\-P86.+?functional.+?exchange\:.+?LDA.+?\+.+?Becke.+?\(B88\).+?"
-    r"correlation\:.+?LDA.+?\(VWN\).+?\+.+?Perdew.+?\(P86\)",
-    "pbe": r"PBE.+?functional.+?exchange\:.+?LDA.+?\+.+?PBE.+?correlation\:.+?"
-    r"LDA.+?\(PW\).+?\+.+?PBE",
-    "tpss": r"TPSS.+?meta\-GGA.+?functional.+?exchange\:.+?LDA.+?\+.+?TPSS.+?"
-    r"correlation\:.+?LDA.+?\(PW\).+?\+.+?TPSS",
-    "bh-lyp": r"Becke\-Half\-and\-Half\-LYP.+?hybrid.+?functional\:.+?BH\-LYP.+?"
-    r"exchange\:.+?1\/2.+?\(LDA.+?\+.+?Becke.+?\(B88\)\).+?\+.+?1\/2.+?HF.+?"
-    r"correlation\:.+?Lee\-Yang\-Parr.+?\(LYP\)",
-    "b3-lyp": r"Becke\-3\-Parameter.+?hybrid.+?functional\:.+?B3\-LYP.+?"
-    r"exchange\:.+?0\.8\*LDA.+?\+.+?0\.72\*B88.+?\+.+?0\.2\*HF.+?"
-    r"correlation\:.+?0\.19\*LDA\(VWN\).+?\+.+?0\.81\*LYP",
-    "b3-lyp_Gaussian": r"Becke\-3\-Parameter.+?hybrid.+?functional\:.+?B3\-LYP.+?"
-    r"exchange\:.+?0\.8\*LDA.+?\+.+?0\.72\*B88.+?\+.+?0\.2\*"
-    r"HF.+?correlation\:.+?0\.19\*LDA\(VWNIII\).+?\+.+?0\.81\*"
-    r"LYP.+?\(VWNIII.+?fit.+?as.+?in.+?Gaussian\)",
-    "pbe0": r"PBE0.+?hybrid.+?functional.+?"
-    r"exchange\:.+?3\/4.+?\(LDA\+PBE\).+?\+.+?1\/4.+?HF.+?"
-    r"correlation\:.+?LDA.+?\(PW\).+?\+.+?PBE",
-    "tpssh": r"TPSS.+?global.+?hybrid.+?functional.+?"
-    r"exchange\:.+?9\/10.+?\(LDA\+TPSS\).+?\+.+?1\/10.+?HF.+?"
-    r"correlation\:.+?LDA.+?\(PW\).+?\+.+?TPSS",
-    "pw6b95": r"PW6B95.+?global.+?meta.+?hybrid.+?functional.+?code.+?by.+?"
-    r"Stefan.+?Grimme\,.+?University.+?of.+?Muenster.+?"
-    r"Zhao.+?and.+?Truhlar\,.+?"
-    r"J.+?Phys.+?Chem.+?A\,.+?109\,.+?25\,.+?2005\,.+?5656\.",
-    "m06": r"M06.+?meta\-GGA.+?functional.+?Truhlar.+?functional.+?with.+?27\%.+?HF.+?"
-    r"exchange.+?USING.+?XCfun.+?library\,.+?see.+?documentation.+?"
-    r"XCFun.+?library.+?is.+?being.+?used\,.+?version\:.+?1\.99000000000000.+?"
-    r"XCFun.+?DFT.+?library.+?Copyright.+?2009\-2011.+?"
-    r"Ulf.+?Ekstrom.+?and.+?contributors\..+?See.+?"
-    r"http\:\/\/admol\.org\/xcfun.+?for.+?more.+?information\..+?"
-    r"This.+?is.+?free.+?software\;.+?see.+?the.+?source.+?code.+?"
-    r"for.+?copying.+?conditions\..+?There.+?is.+?ABSOLUTELY.+?NO.+?"
-    r"WARRANTY\;.+?not.+?even.+?for.+?MERCHANTABILITY.+?or.+?FITNESS.+?"
-    r"FOR.+?A.+?PARTICULAR.+?PURPOSE\..+?For.+?details.+?"
-    r"see.+?the.+?documentation\..+?Scientific.+?users.+?of.+?this.+?"
-    r"library.+?should.+?cite.+?U\..+?Ekstrom\,.+?L\..+?Visscher\,.+?R\..+?"
-    r"Bast\,.+?A\..+?J\..+?Thorvaldsen.+?and.+?K\..+?Ruud\;.+?"
-    r"J\.Chem\.Theor\.Comp\..+?2010\,.+?DOI\:.+?10\.1021\/ct100117s.+?"
-    r"XCFun.+?uses.+?functional\:.+?m06",
-    "m06-l": r"M06\-L.+?meta\-GGA.+?functional.+?Truhlar.+?functional.+?without.+?"
-    r"HF.+?exchange.+?USING.+?XCfun.+?library\,.+?see.+?documentation.+?"
-    r"XCFun.+?library.+?is.+?being.+?used\,.+?"
-    r"version\:.+?1\.99000000000000.+?XCFun.+?DFT.+?library.+?"
-    r"Copyright.+?2009\-2011.+?Ulf.+?Ekstrom.+?and.+?contributors\..+?"
-    r"See.+?http\:\/\/admol\.org\/xcfun.+?for.+?more.+?information\..+?"
-    r"This.+?is.+?free.+?software\;.+?see.+?the.+?source.+?code.+?"
-    r"for.+?copying.+?conditions\..+?There.+?is.+?ABSOLUTELY.+?NO.+?"
-    r"WARRANTY\;.+?not.+?even.+?for.+?MERCHANTABILITY.+?or.+?FITNESS.+?"
-    r"FOR.+?A.+?PARTICULAR.+?PURPOSE\..+?For.+?details.+?see.+?the.+?"
-    r"documentation\..+?Scientific.+?users.+?of.+?this.+?library.+?should.+?"
-    r"cite.+?U\..+?Ekstrom\,.+?L\..+?Visscher\,.+?R\..+?Bast\,.+?A\..+?J\..+?"
-    r"Thorvaldsen.+?and.+?K\..+?Ruud\;.+?J\.Chem\.Theor\.Comp\..+?2010\,.+?"
-    r"DOI\:.+?10\.1021\/ct100117s.+?XCFun.+?uses.+?functional\:.+?m06l",
-    "m06-2x": r"M06\-2X.+?meta\-GGA.+?functional.+?Truhlar.+?functional.+?"
-    r"with.+?54\%.+?HF.+?exchange.+?USING.+?XCfun.+?library\,.+?see.+?"
-    r"documentation.+?XCFun.+?library.+?is.+?being.+?used\,.+?"
-    r"version\:.+?1\.99000000000000.+?XCFun.+?DFT.+?library.+?"
-    r"Copyright.+?2009\-2011.+?Ulf.+?Ekstrom.+?and.+?contributors\..+?"
-    r"See.+?http\:\/\/admol\.org\/xcfun.+?for.+?more.+?information\..+?"
-    r"This.+?is.+?free.+?software\;.+?see.+?the.+?source.+?code.+?"
-    r"for.+?copying.+?conditions\..+?There.+?is.+?ABSOLUTELY.+?"
-    r"NO.+?WARRANTY\;.+?not.+?even.+?for.+?MERCHANTABILITY.+?or.+?"
-    r"FITNESS.+?FOR.+?A.+?PARTICULAR.+?PURPOSE\..+?For.+?details.+?"
-    r"see.+?the.+?documentation\..+?Scientific.+?users.+?of.+?this.+?"
-    r"library.+?should.+?cite.+?U\..+?Ekstrom\,.+?L\..+?Visscher\,.+?R\..+?"
-    r"Bast\,.+?A\..+?J\..+?Thorvaldsen.+?and.+?K\..+?Ruud\;.+?"
-    r"J\.Chem\.Theor\.Comp\..+?2010\,.+?DOI\:.+?10\.1021\/ct100117s.+?"
-    r"XCFun.+?uses.+?functional\:.+?m062x",
-    "lhf": r"Localized.+?Hartree\-Fock.+?Methods\:.+?F\..+?"
-    r"Della.+?Sala.+?and.+?A\..+?Goerling\,.+?"
-    r"J\..+?Chem\..+?Phys\..+?115\,.+?5718.+?\(2001\).+?"
-    r"F\..+?Della.+?Sala.+?and.+?A\..+?Goerling\,.+?"
-    r"J\..+?Chem\..+?Phys\..+?116\,.+?5374.+?\(2002\)",
-    "oep": r"Exact\-Exchange.+?Optimized.+?Effective.+?Potential.+?Method\:.+?"
-    r"Hesselmann\,.+?A\.\,.+?Goetz\,.+?A\.\,.+?Della.+?Sala\,.+?"
-    r"F\.\,.+?Goerling\,.+?A\.\,.+?"
-    r"J\..+?Chem\..+?Phys\.\,.+?127.+?\(2007\)\,.+?054102",
-    "b97-d": r"exchange\:.+?B97GGA.+?vdW.+?refit.+?"
-    r"correlation\:.+?\".+?\".+?\".+?S\..+?Grimme\,.+?"
-    r"J\.Comput\..+?Chem\..+?27\,.+?\(2006\)\,.+?1787\-1799",
-    "pbeh-3c": r"PBE0.+?modified.+?by.+?S\..+?Grimme.+?for.+?D3.+?and.+?gCP.+?"
-    r"exchange\:.+?PBE.+?\(kappa\=1\.0245\,.+?mu\=0\.12345679\).+?"
-    r"correlation\:.+?LDA.+?\(PW\).+?\+.+?PBE",
-    "b97-3c": r"exchange\:.+?B97GGA.+?vdW.+?refit.+?"
-    r"correlation\:.+?\".+?\".+?\".+?S\..+?Grimme\,.+?"
-    r"modifications.+?B97\-3c.+?\(2016\)",
-    "lh07t-svwn": r"Lh07t\-SVWN.+?local.+?hybrid.+?functional.+?Local.+?hybrid.+?"
-    r"semi\-numerical.+?integral.+?thresholds\:.+?"
-    r"S\-junctions.+?\:.+?0\.10E\-05.+?P\-junctions.+?\:.+?0\.10E\-05",
-    "lh07s-svwn": r"Lh07s\-SVWN.+?local.+?hybrid.+?functional.+?"
-    r"Local.+?hybrid.+?semi\-numerical.+?integral.+?thresholds\:.+?"
-    r"S\-junctions.+?\:.+?0\.10E\-05.+?P\-junctions.+?\:.+?0\.10E\-05",
-    "lh12ct-ssirpw92": r"Lh12ct\-SsirPW92.+?local.+?hybrid.+?functional.+?"
-    r"Local.+?hybrid.+?semi\-numerical.+?integral.+?thresholds\:.+?"
-    r"S\-junctions.+?\:.+?0\.10E\-05.+?"
-    r"P\-junctions.+?\:.+?0\.10E\-05",
-    "lh12ct-ssifpw92": r"Lh12ct\-SsifPW92.+?local.+?hybrid.+?functional.+?"
-    r"Local.+?hybrid.+?semi\-numerical.+?integral.+?thresholds\:.+?"
-    r"S\-junctions.+?\:.+?0\.10E\-05.+?"
-    r"P\-junctions.+?\:.+?0\.10E\-05",
-    "lh14t-calpbe": r"Lh14t\-calPBE.+?local.+?hybrid.+?functional.+?"
-    r"Local.+?hybrid.+?semi\-numerical.+?integral.+?thresholds\:.+?"
-    r"S\-junctions.+?\:.+?0\.10E\-05.+?P\-junctions.+?\:.+?0\.10E\-05",
-    "b2-plyp": r"Hybrid.+?part.+?of.+?B2\-PLYP.+?double.+?hybrid.+?functional.+?"
-    r"exchange\:.+?0\.47\(LDA.+?\+.+?Becke.+?\(B88\)\).+?\+.+?0\.53.+?"
-    r"HF.+?correlation\:.+?0\.73.+?LYP.+?\+.+?0\.27.+?PT2.+?\
-               (MP2.+?program\).+?S\..+?Grimme\,.+?"
-    r"JCP.+?124\,.+?\(2006\)\,.+?034108\-16",
+    "s-vwn": [r"Slater.+?Dirac.+?exchange.+?with.+?VWN.+?corr\..+?functional"],
+    "s-vwn_Gaussian": [
+        r"Slater.+?Dirac.+?exchange.+?with.+?VWN.+?"
+        r"corr\.functional.+?\(fit.+?III.+?as.+?in.+?Gaussian\)"
+    ],
+    "pwlda": [r"Slater.+?Dirac.+?exchange.+?with.+?PW.+?LDA.+?corr\..+?functional"],
+    "b-lyp": [
+        r"B\-LYP.+?functional.+?exchange\:.+?LDA.+?\+.+?Becke.+?\(B88\).+?"
+        r"correlation\:.+?Lee\-Yang\-Parr.+?\(LYP\)"
+    ],
+    "b-vwn": [
+        r"B\-VWN.+?functional.+?exchange\:.+?LDA.+?\+.+?Becke.+?\(B88\).+?"
+        r"correlation\:.+?LDA.+?\(VWN\)"
+    ],
+    "b-p": [
+        r"B\-P86.+?functional.+?exchange\:.+?LDA.+?\+.+?Becke.+?\(B88\).+?"
+        r"correlation\:.+?LDA.+?\(VWN\).+?\+.+?Perdew.+?\(P86\)"
+    ],
+    "pbe": [
+        r"PBE.+?functional.+?exchange\:.+?LDA.+?\+.+?PBE.+?correlation\:.+?"
+        r"LDA.+?\(PW\).+?\+.+?PBE"
+    ],
+    "tpss": [
+        r"TPSS.+?meta\-GGA.+?functional.+?exchange\:.+?LDA.+?\+.+?TPSS.+?"
+        r"correlation\:.+?LDA.+?\(PW\).+?\+.+?TPSS"
+    ],
+    "bh-lyp": [
+        r"Becke\-Half\-and\-Half\-LYP.+?hybrid.+?functional\:.+?BH\-LYP.+?"
+        r"exchange\:.+?1\/2.+?\(LDA.+?\+.+?Becke.+?\(B88\)\).+?\+.+?1\/2.+?HF.+?"
+        r"correlation\:.+?Lee\-Yang\-Parr.+?\(LYP\)"
+    ],
+    "b3-lyp": [
+        r"Becke\-3\-Parameter.+?hybrid.+?functional\:.+?B3\-LYP.+?"
+        r"exchange\:.+?0\.8\*LDA.+?\+.+?0\.72\*B88.+?\+.+?0\.2\*HF.+?"
+        r"correlation\:.+?0\.19\*LDA\(VWN\).+?\+.+?0\.81\*LYP"
+    ],
+    "b3-lyp_Gaussian": [
+        r"Becke\-3\-Parameter.+?hybrid.+?functional\:.+?B3\-LYP.+?"
+        r"exchange\:.+?0\.8\*LDA.+?\+.+?0\.72\*B88.+?\+.+?0\.2\*"
+        r"HF.+?correlation\:.+?0\.19\*LDA\(VWNIII\).+?\+.+?0\.81\*"
+        r"LYP.+?\(VWNIII.+?fit.+?as.+?in.+?Gaussian\)"
+    ],
+    "pbe0": [
+        r"PBE0.+?hybrid.+?functional.+?"
+        r"exchange\:.+?3\/4.+?\(LDA\+PBE\).+?\+.+?1\/4.+?HF.+?"
+        r"correlation\:.+?LDA.+?\(PW\).+?\+.+?PBE"
+    ],
+    "tpssh": [
+        r"TPSS.+?global.+?hybrid.+?functional.+?"
+        r"exchange\:.+?9\/10.+?\(LDA\+TPSS\).+?\+.+?1\/10.+?HF.+?"
+        r"correlation\:.+?LDA.+?\(PW\).+?\+.+?TPSS"
+    ],
+    "pw6b95": [
+        r"PW6B95.+?global.+?meta.+?hybrid.+?functional.+?code.+?by.+?"
+        r"Stefan.+?Grimme\,.+?University.+?of.+?Muenster.+?"
+        r"Zhao.+?and.+?Truhlar\,.+?"
+        r"J.+?Phys.+?Chem.+?A\,.+?109\,.+?25\,.+?2005\,.+?5656\."
+    ],
+    "m06": [
+        r"M06.+?meta\-GGA.+?functional.+?Truhlar.+?functional.+?with.+?27\%.+?HF.+?"
+        r"exchange.+?USING.+?XCfun.+?library\,.+?see.+?documentation.+?"
+        r"XCFun.+?library.+?is.+?being.+?used\,.+?version\:.+?1\.99000000000000.+?"
+        r"XCFun.+?DFT.+?library.+?Copyright.+?2009\-2011.+?"
+        r"Ulf.+?Ekstrom.+?and.+?contributors\..+?See.+?"
+        r"http\:\/\/admol\.org\/xcfun.+?for.+?more.+?information\..+?"
+        r"This.+?is.+?free.+?software\;.+?see.+?the.+?source.+?code.+?"
+        r"for.+?copying.+?conditions\..+?There.+?is.+?ABSOLUTELY.+?NO.+?"
+        r"WARRANTY\;.+?not.+?even.+?for.+?MERCHANTABILITY.+?or.+?FITNESS.+?"
+        r"FOR.+?A.+?PARTICULAR.+?PURPOSE\..+?For.+?details.+?"
+        r"see.+?the.+?documentation\..+?Scientific.+?users.+?of.+?this.+?"
+        r"library.+?should.+?cite.+?U\..+?Ekstrom\,.+?L\..+?Visscher\,.+?R\..+?"
+        r"Bast\,.+?A\..+?J\..+?Thorvaldsen.+?and.+?K\..+?Ruud\;.+?"
+        r"J\.Chem\.Theor\.Comp\..+?2010\,.+?DOI\:.+?10\.1021\/ct100117s.+?"
+        r"XCFun.+?uses.+?functional\:.+?m06",
+        r"Name of XC-Functional: Minnesota M06 hybrid exchange functional",
+    ],
+    "m06-l": [
+        r"M06\-L.+?meta\-GGA.+?functional.+?Truhlar.+?functional.+?without.+?"
+        r"HF.+?exchange.+?USING.+?XCfun.+?library\,.+?see.+?documentation.+?"
+        r"XCFun.+?library.+?is.+?being.+?used\,.+?"
+        r"version\:.+?1\.99000000000000.+?XCFun.+?DFT.+?library.+?"
+        r"Copyright.+?2009\-2011.+?Ulf.+?Ekstrom.+?and.+?contributors\..+?"
+        r"See.+?http\:\/\/admol\.org\/xcfun.+?for.+?more.+?information\..+?"
+        r"This.+?is.+?free.+?software\;.+?see.+?the.+?source.+?code.+?"
+        r"for.+?copying.+?conditions\..+?There.+?is.+?ABSOLUTELY.+?NO.+?"
+        r"WARRANTY\;.+?not.+?even.+?for.+?MERCHANTABILITY.+?or.+?FITNESS.+?"
+        r"FOR.+?A.+?PARTICULAR.+?PURPOSE\..+?For.+?details.+?see.+?the.+?"
+        r"documentation\..+?Scientific.+?users.+?of.+?this.+?library.+?should.+?"
+        r"cite.+?U\..+?Ekstrom\,.+?L\..+?Visscher\,.+?R\..+?Bast\,.+?A\..+?J\..+?"
+        r"Thorvaldsen.+?and.+?K\..+?Ruud\;.+?J\.Chem\.Theor\.Comp\..+?2010\,.+?"
+        r"DOI\:.+?10\.1021\/ct100117s.+?XCFun.+?uses.+?functional\:.+?m06l"
+    ],
+    "m06-2x": [
+        r"M06\-2X.+?meta\-GGA.+?functional.+?Truhlar.+?functional.+?"
+        r"with.+?54\%.+?HF.+?exchange.+?USING.+?XCfun.+?library\,.+?see.+?"
+        r"documentation.+?XCFun.+?library.+?is.+?being.+?used\,.+?"
+        r"version\:.+?1\.99000000000000.+?XCFun.+?DFT.+?library.+?"
+        r"Copyright.+?2009\-2011.+?Ulf.+?Ekstrom.+?and.+?contributors\..+?"
+        r"See.+?http\:\/\/admol\.org\/xcfun.+?for.+?more.+?information\..+?"
+        r"This.+?is.+?free.+?software\;.+?see.+?the.+?source.+?code.+?"
+        r"for.+?copying.+?conditions\..+?There.+?is.+?ABSOLUTELY.+?"
+        r"NO.+?WARRANTY\;.+?not.+?even.+?for.+?MERCHANTABILITY.+?or.+?"
+        r"FITNESS.+?FOR.+?A.+?PARTICULAR.+?PURPOSE\..+?For.+?details.+?"
+        r"see.+?the.+?documentation\..+?Scientific.+?users.+?of.+?this.+?"
+        r"library.+?should.+?cite.+?U\..+?Ekstrom\,.+?L\..+?Visscher\,.+?R\..+?"
+        r"Bast\,.+?A\..+?J\..+?Thorvaldsen.+?and.+?K\..+?Ruud\;.+?"
+        r"J\.Chem\.Theor\.Comp\..+?2010\,.+?DOI\:.+?10\.1021\/ct100117s.+?"
+        r"XCFun.+?uses.+?functional\:.+?m062x"
+    ],
+    "lhf": [
+        r"Localized.+?Hartree\-Fock.+?Methods\:.+?F\..+?"
+        r"Della.+?Sala.+?and.+?A\..+?Goerling\,.+?"
+        r"J\..+?Chem\..+?Phys\..+?115\,.+?5718.+?\(2001\).+?"
+        r"F\..+?Della.+?Sala.+?and.+?A\..+?Goerling\,.+?"
+        r"J\..+?Chem\..+?Phys\..+?116\,.+?5374.+?\(2002\)"
+    ],
+    "oep": [
+        r"Exact\-Exchange.+?Optimized.+?Effective.+?Potential.+?Method\:.+?"
+        r"Hesselmann\,.+?A\.\,.+?Goetz\,.+?A\.\,.+?Della.+?Sala\,.+?"
+        r"F\.\,.+?Goerling\,.+?A\.\,.+?"
+        r"J\..+?Chem\..+?Phys\.\,.+?127.+?\(2007\)\,.+?054102"
+    ],
+    "b97-d": [
+        r"exchange\:.+?B97GGA.+?vdW.+?refit.+?"
+        r"correlation\:.+?\".+?\".+?\".+?S\..+?Grimme\,.+?"
+        r"J\.Comput\..+?Chem\..+?27\,.+?\(2006\)\,.+?1787\-1799"
+    ],
+    "pbeh-3c": [
+        r"PBE0.+?modified.+?by.+?S\..+?Grimme.+?for.+?D3.+?and.+?gCP.+?"
+        r"exchange\:.+?PBE.+?\(kappa\=1\.0245\,.+?mu\=0\.12345679\).+?"
+        r"correlation\:.+?LDA.+?\(PW\).+?\+.+?PBE"
+    ],
+    "b97-3c": [
+        r"exchange\:.+?B97GGA.+?vdW.+?refit.+?"
+        r"correlation\:.+?\".+?\".+?\".+?S\..+?Grimme\,.+?"
+        r"modifications.+?B97\-3c.+?\(2016\)"
+    ],
+    "lh07t-svwn": [
+        r"Lh07t\-SVWN.+?local.+?hybrid.+?functional.+?Local.+?hybrid.+?"
+        r"semi\-numerical.+?integral.+?thresholds\:.+?"
+        r"S\-junctions.+?\:.+?0\.10E\-05.+?P\-junctions.+?\:.+?0\.10E\-05"
+    ],
+    "lh07s-svwn": [
+        r"Lh07s\-SVWN.+?local.+?hybrid.+?functional.+?"
+        r"Local.+?hybrid.+?semi\-numerical.+?integral.+?thresholds\:.+?"
+        r"S\-junctions.+?\:.+?0\.10E\-05.+?P\-junctions.+?\:.+?0\.10E\-05"
+    ],
+    "lh12ct-ssirpw92": [
+        r"Lh12ct\-SsirPW92.+?local.+?hybrid.+?functional.+?"
+        r"Local.+?hybrid.+?semi\-numerical.+?integral.+?thresholds\:.+?"
+        r"S\-junctions.+?\:.+?0\.10E\-05.+?"
+        r"P\-junctions.+?\:.+?0\.10E\-05"
+    ],
+    "lh12ct-ssifpw92": [
+        r"Lh12ct\-SsifPW92.+?local.+?hybrid.+?functional.+?"
+        r"Local.+?hybrid.+?semi\-numerical.+?integral.+?thresholds\:.+?"
+        r"S\-junctions.+?\:.+?0\.10E\-05.+?"
+        r"P\-junctions.+?\:.+?0\.10E\-05"
+    ],
+    "lh14t-calpbe": [
+        r"Lh14t\-calPBE.+?local.+?hybrid.+?functional.+?"
+        r"Local.+?hybrid.+?semi\-numerical.+?integral.+?thresholds\:.+?"
+        r"S\-junctions.+?\:.+?0\.10E\-05.+?P\-junctions.+?\:.+?0\.10E\-05"
+    ],
+    "b2-plyp": [
+        r"Hybrid.+?part.+?of.+?B2\-PLYP.+?double.+?hybrid.+?functional.+?"
+        r"exchange\:.+?0\.47\(LDA.+?\+.+?Becke.+?\(B88\)\).+?\+.+?0\.53.+?"
+        r"HF.+?correlation\:.+?0\.73.+?LYP.+?\+.+?0\.27.+?PT2.+?"
+        r"\(MP2.+?program\).+?S\..+?Grimme\,.+?"
+        r"JCP.+?124\,.+?\(2006\)\,.+?034108\-16"
+    ],
 }
 
 
@@ -682,10 +735,16 @@ class Parser:
                 func_msg = func_match.group(1).strip()
                 d["functional_msg"] = func_msg
 
-                for func_name, desc in functional_strings.items():
-                    if re.search(desc, func_msg, re.DOTALL):
-                        d["functional_name"] = func_name
-                        d["functional_type"] = functional_types[func_name]
+                for func_name, desc_list in functional_strings.items():
+
+                    found = False
+                    for desc in desc_list:
+                        if re.search(desc, func_msg, re.DOTALL):
+                            d["functional_name"] = func_name
+                            d["functional_type"] = functional_types[func_name]
+                            found = True
+                            break
+                    if found:
                         break
 
         for line in dft_string.splitlines():

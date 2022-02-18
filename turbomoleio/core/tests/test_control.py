@@ -598,10 +598,18 @@ class TestControl(object):
     @pytest.mark.parametrize("control_filename", ["control_test-Control"])
     def test_disp(self, control):
 
-        control.set_disp("DFT-D1")
-        string_c = str(control)
-        assert "$olddisp" in string_c
-        assert "$disp" not in string_c
+        with pytest.raises(
+            ValueError,
+            match="D1 dispersion correction is not working "
+            "anymore in Turbomole v7.5",
+        ):
+            control.set_disp("DFT-D1")
+        # If a future version fixes DFT-D1 bug, remove the above test and uncomment
+        # the following:
+        # control.set_disp("DFT-D1")
+        # string_c = str(control)
+        # assert "$olddisp" in string_c
+        # assert "$disp" not in string_c
 
         control.set_disp("DFT-D2")
         string_c = str(control)
