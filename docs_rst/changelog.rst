@@ -24,6 +24,21 @@
 Changelog
 =========
 
+
+Release 1.3.0 (Feb 24, 2022)
+============================
+
+* Update of reference test files for Turbomole version 7.5.
+* Checked consistency of package with Turbomole version 7.5.
+* Documentation updated.
+
+Developer changes
+-----------------
+
+* Added pre-commit hooks for linting of the code.
+* Code has been linted and cleaned.
+* Pre-commit hooks are tested/applied in the github workflow.
+
 Release 1.2.0 (Feb 16, 2022)
 ============================
 
