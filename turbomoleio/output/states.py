@@ -24,7 +24,8 @@
 
 import re
 import subprocess
-from collections import MutableSequence, defaultdict
+from collections import defaultdict
+from collections.abc import MutableSequence
 from copy import copy
 from fractions import Fraction
 
