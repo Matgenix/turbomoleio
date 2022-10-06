@@ -132,3 +132,6 @@ dmypy.json
 
 # Dry-run comparison files
 dryrun_itest.json
+
+# MacOS
+.DS_Store
