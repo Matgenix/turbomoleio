@@ -279,6 +279,9 @@ class DefineRunner:
                     # atomic attribute menu - only basis set is used here
                     self._define_basis_sets()
 
+                    # core potential definition menu
+                    self._define_core_potentials()
+
                     # leave the previous menu and move to the next one
                     self._switch_to_molecular_orbital_definition_menu()
 
@@ -896,6 +899,63 @@ class DefineRunner:
                     atom_type = '"{}"'.format(atom_type)
 
                 self._set_basis(atom_type, basis)
+
+
+    def _set_ecp(self, atom_type, ecp):
+        r"""
+        Set the atomic core potentials.
+
+        Args:
+            atom_type (str): defines the type type of atom(s) addressed. Can be "all",
+                a list "1,2,4-6" or the atomic specie "\"c\"" (quotes are required).
+            ecp (stR): the type of core potential.
+
+        Returns:
+            None
+        """
+        self._sendline("ecp", action="go to core potential menu")
+
+        self._expect(
+            ["ENTER A SET OF ATOMS TO WHICH YOU WANT TO ASSIGN PSEUDO POTENTIALS*"],
+            action="set ecp",
+        )
+
+        self._sendline("{} {}".format(atom_type, ecp))
+
+        case = self._expect(
+            [
+                "ATOMIC ATTRIBUTE DEFINITION MENU.*",
+                "THERE ARE NO DATA SETS CATALOGUED IN FILE",
+            ],
+            action="set ecp",
+        )
+
+        if case == 1:
+            raise DefineParameterError(
+                "Define did not recognize the core potential {} for {}".format(ecp, atom_type)
+            )
+
+
+    def _define_core_potentials(self):
+        """
+        Define the core potentials.
+
+        This uses the "ecp_atom" keywords in the parameters.
+
+        Returns:
+            None
+        """
+
+        if self.parameters.get("ecp_atom", None) is not None:
+            for atom_type, ecp in self.parameters["ecp_atom"].items():
+                # convert to string in case an integer slips through since it can
+                # also represent an index.
+                atom_type = str(atom_type).strip()
+                # if it is a symbol and does not already contain quotations add them.
+                if re.fullmatch("[A-Za-z]+", atom_type):
+                    atom_type = '"{}"'.format(atom_type)
+
+                self._set_ecp(atom_type, ecp)
 
     def _switch_to_molecular_orbital_definition_menu(self):
         """
