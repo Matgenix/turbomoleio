@@ -29,6 +29,7 @@ import signal
 from copy import deepcopy
 
 import pexpect
+import pexpect.popen_spawn
 from monty.os import cd
 
 from turbomoleio.core.control import Control, cdg, mdgo, sdg
@@ -562,7 +563,7 @@ class DefineRunner:
 
         if (not new_coords and case == 0) or (new_coords and case in (1, 2, 3)):
             which_calc = "full define" if new_coords else "update"
-            present = "not " if update else ""
+            present = "not " if new_coords else "" # TODO check if this is correct
             raise DefineError(
                 "To run a {} previous data should {}be present".format(
                     which_calc, present
@@ -696,9 +697,10 @@ class DefineRunner:
         Returns:
             None
         """
+        sym_eps = self.parameters.get("sym_eps") or ""
         self._sendline(
             "sy {} {}".format(
-                self.parameters["sym"], self.parameters.get("sym_eps", "")
+                self.parameters["sym"], sym_eps
             ),
             action="specify symmetry",
         )
@@ -847,10 +849,17 @@ class DefineRunner:
 
         self._sendline("{} {}".format(atom_type, basis))
 
+        # note that "ENTER A SET OF ATOMS TO WHICH YOU WANT TO ASSIGN BASIS SETS.*"
+        # (e.g. the element passed in not among the elements of the molecule) is
+        # also returned when "LIST OF ATOMIC INDICES IS INCOMPREHENSIBLE" (e.g. index
+        # is larger than the number of atoms). Kept separated in case handling
+        # the error in a different way is needed.
         case = self._expect(
             [
                 "ATOMIC ATTRIBUTE DEFINITION MENU.*",
                 "THERE ARE NO DATA SETS CATALOGUED IN FILE",
+                "LIST OF ATOMIC INDICES IS INCOMPREHENSIBLE",
+                "ENTER A SET OF ATOMS TO WHICH YOU WANT TO ASSIGN BASIS SETS.*"
             ],
             action="set basis",
         )
@@ -858,6 +867,11 @@ class DefineRunner:
         if case == 1:
             raise DefineParameterError(
                 "Define did not recognize basis {} for {}".format(basis, atom_type)
+            )
+
+        if case in [2, 3]:
+            raise DefineParameterError(
+                "Define could not set basis {} for {}".format(basis, atom_type)
             )
 
     def _define_basis_sets(self):
