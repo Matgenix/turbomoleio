@@ -566,7 +566,7 @@ class DefineRunner:
 
         if (not new_coords and case == 0) or (new_coords and case in (1, 2, 3)):
             which_calc = "full define" if new_coords else "update"
-            present = "not " if new_coords else "" # TODO check if this is correct
+            present = "not " if new_coords else ""  # TODO check if this is correct
             raise DefineError(
                 "To run a {} previous data should {}be present".format(
                     which_calc, present
@@ -895,7 +895,7 @@ class DefineRunner:
                 # also represent an index.
                 atom_type = str(atom_type).strip()
                 # if it is a symbol and does not already contain quotations add them.
-                #convert to lowercase as define only accepts that
+                # convert to lowercase as define only accepts that
                 if re.fullmatch("[A-Za-z]+", atom_type):
                     atom_type = '"{}"'.format(atom_type.lower())
 
@@ -934,12 +934,16 @@ class DefineRunner:
 
         if case == 1:
             raise DefineParameterError(
-                "Define did not recognize the core potential {} for {}".format(ecp, atom_type)
+                "Define did not recognize the core potential {} for {}".format(
+                    ecp, atom_type
+                )
             )
 
         if case in [2, 3]:
             raise DefineParameterError(
-                "Define could not set the core potential {} for {}".format(ecp, atom_type)
+                "Define could not set the core potential {} for {}".format(
+                    ecp, atom_type
+                )
             )
 
     def _define_core_potentials(self):
@@ -958,7 +962,7 @@ class DefineRunner:
                 # also represent an index.
                 atom_type = str(atom_type).strip()
                 # if it is a symbol and does not already contain quotations add them.
-                #convert to lowercase as define only accepts that
+                # convert to lowercase as define only accepts that
                 if re.fullmatch("[A-Za-z]+", atom_type):
                     atom_type = '"{}"'.format(atom_type.lower())
 
