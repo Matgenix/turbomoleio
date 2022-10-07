@@ -700,12 +700,12 @@ class TestDefineRunner(object):
     def test_set_basis_error_2(self, dr_data):
         dr_data.expect_mock.side_effect = [0, 2]
         with pytest.raises(DefineParameterError):
-            dr_data.dr._set_basis("all", "could not set basis")
+            dr_data.dr._set_basis("12", "def2-SVP")
 
     def test_set_basis_error_3(self, dr_data):
-        dr_data.expect_mock.side_effect = [0, 2]
+        dr_data.expect_mock.side_effect = [0, 3]
         with pytest.raises(DefineParameterError):
-            dr_data.dr._set_basis("all", "could not set basis")
+            dr_data.dr._set_basis("Ca", "def2-SVP")
 
     def test_define_basis_sets(self, dr_data):
 
@@ -719,6 +719,33 @@ class TestDefineRunner(object):
             dr_data.sendline_mock,
             ["b", "all def2-SVP", "b", "1 def2-SVP", "b", '"Ca" def2-SVP'],
         )
+
+    def test_define_core_potentials(self, dr_data):
+
+        dr_data.dr.parameters = {
+            "ecp_atom": {1: "def2-TZVPP", "Ca": "def2-TZVPP"},
+        }
+        dr_data.expect_mock.side_effect = [0, 0, 0, 0]
+        dr_data.dr._define_core_potentials()
+        self.assert_sendline_calls(
+            dr_data.sendline_mock,
+            ["ecp", "1 def2-TZVPP", "ecp", '"Ca" def2-TZVPP'],
+        )
+
+    def test_set_ecp_error(self, dr_data):
+        dr_data.expect_mock.side_effect = [0, 1]
+        with pytest.raises(DefineParameterError):
+            dr_data.dr._set_ecp("Ca", "wrong basis")
+
+    def test_set_ecp_error_2(self, dr_data):
+        dr_data.expect_mock.side_effect = [0, 2]
+        with pytest.raises(DefineParameterError):
+            dr_data.dr._set_ecp("12", "def2-SVP")
+
+    def test_set_ecp_error_3(self, dr_data):
+        dr_data.expect_mock.side_effect = [0, 3]
+        with pytest.raises(DefineParameterError):
+            dr_data.dr._set_ecp("Ca", "def2-SVP")
 
     def test_switch_to_molecular_orbital_definition_menu(self, dr_data):
 

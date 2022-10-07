@@ -93,6 +93,18 @@ class TestDscf:
 
         assert run_itest("dscf", define_opt, "nh3", "dscf_nh3_usemo", ScfOutput)
 
+    def test_run_dscf_ecp_atom(self):
+        """
+        Tests the usemo functionalities with mos file
+        """
+
+        define_opt = get_define_template("dscf")
+
+        define_opt["basis"] = "def2-SV(P)"
+        define_opt["ecp_atom"] = {"N": "ecp-2-sdf"}
+
+        assert run_itest("dscf", define_opt, "nh3", "dscf_nh3_ecp_atom", ScfOutput)
+
     # TODO check if alpha/beta for usemo are needed
     # def test_run_dscf_usemo_alpha(self):
     #     """

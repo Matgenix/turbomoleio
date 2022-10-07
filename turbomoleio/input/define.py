@@ -895,11 +895,11 @@ class DefineRunner:
                 # also represent an index.
                 atom_type = str(atom_type).strip()
                 # if it is a symbol and does not already contain quotations add them.
+                #convert to lowercase as define only accepts that
                 if re.fullmatch("[A-Za-z]+", atom_type):
-                    atom_type = '"{}"'.format(atom_type)
+                    atom_type = '"{}"'.format(atom_type.lower())
 
                 self._set_basis(atom_type, basis)
-
 
     def _set_ecp(self, atom_type, ecp):
         r"""
@@ -926,6 +926,8 @@ class DefineRunner:
             [
                 "ATOMIC ATTRIBUTE DEFINITION MENU.*",
                 "THERE ARE NO DATA SETS CATALOGUED IN FILE",
+                "LIST OF ATOMIC INDICES IS INCOMPREHENSIBLE",
+                "ENTER A SET OF ATOMS TO WHICH YOU WANT TO ASSIGN PSEUDO POTENTIALS*"
             ],
             action="set ecp",
         )
@@ -935,6 +937,10 @@ class DefineRunner:
                 "Define did not recognize the core potential {} for {}".format(ecp, atom_type)
             )
 
+        if case in [2, 3]:
+            raise DefineParameterError(
+                "Define could not set the core potential {} for {}".format(ecp, atom_type)
+            )
 
     def _define_core_potentials(self):
         """
@@ -952,8 +958,9 @@ class DefineRunner:
                 # also represent an index.
                 atom_type = str(atom_type).strip()
                 # if it is a symbol and does not already contain quotations add them.
+                #convert to lowercase as define only accepts that
                 if re.fullmatch("[A-Za-z]+", atom_type):
-                    atom_type = '"{}"'.format(atom_type)
+                    atom_type = '"{}"'.format(atom_type.lower())
 
                 self._set_ecp(atom_type, ecp)
 
