@@ -702,9 +702,7 @@ class DefineRunner:
         """
         sym_eps = self.parameters.get("sym_eps") or ""
         self._sendline(
-            "sy {} {}".format(
-                self.parameters["sym"], sym_eps
-            ),
+            "sy {} {}".format(self.parameters["sym"], sym_eps),
             action="specify symmetry",
         )
         case = self._expect(
@@ -862,7 +860,7 @@ class DefineRunner:
                 "ATOMIC ATTRIBUTE DEFINITION MENU.*",
                 "THERE ARE NO DATA SETS CATALOGUED IN FILE",
                 "LIST OF ATOMIC INDICES IS INCOMPREHENSIBLE",
-                "ENTER A SET OF ATOMS TO WHICH YOU WANT TO ASSIGN BASIS SETS.*"
+                "ENTER A SET OF ATOMS TO WHICH YOU WANT TO ASSIGN BASIS SETS.*",
             ],
             action="set basis",
         )
@@ -927,7 +925,7 @@ class DefineRunner:
                 "ATOMIC ATTRIBUTE DEFINITION MENU.*",
                 "THERE ARE NO DATA SETS CATALOGUED IN FILE",
                 "LIST OF ATOMIC INDICES IS INCOMPREHENSIBLE",
-                "ENTER A SET OF ATOMS TO WHICH YOU WANT TO ASSIGN PSEUDO POTENTIALS*"
+                "ENTER A SET OF ATOMS TO WHICH YOU WANT TO ASSIGN PSEUDO POTENTIALS*",
             ],
             action="set ecp",
         )
