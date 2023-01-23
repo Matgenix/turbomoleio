@@ -696,19 +696,22 @@ class TestDefineRunner(object):
         dr_data.expect_mock.side_effect = [0, 1]
         with pytest.raises(
             DefineParameterError, match="Define did not recognize basis wrong basis .*"
-        ):            dr_data.dr._set_basis("all", "wrong basis")
+        ):
+            dr_data.dr._set_basis("all", "wrong basis")
 
     def test_set_basis_error_2(self, dr_data):
         dr_data.expect_mock.side_effect = [0, 2]
         with pytest.raises(
             DefineParameterError, match="Define could not set basis def2-SVP .*"
-        ):            dr_data.dr._set_basis("12", "def2-SVP")
+        ):
+            dr_data.dr._set_basis("12", "def2-SVP")
 
     def test_set_basis_error_3(self, dr_data):
         dr_data.expect_mock.side_effect = [0, 3]
         with pytest.raises(
             DefineParameterError, match="Define could not set basis def2-SVP .*"
-        ):            dr_data.dr._set_basis("Ca", "def2-SVP")
+        ):
+            dr_data.dr._set_basis("Ca", "def2-SVP")
 
     def test_define_basis_sets(self, dr_data):
 
@@ -740,21 +743,24 @@ class TestDefineRunner(object):
         with pytest.raises(
             DefineParameterError,
             match="Define did not recognize the core potential wrong ecp .*",
-        ):            dr_data.dr._set_ecp("Ca", "wrong ecp")
+        ):
+            dr_data.dr._set_ecp("Ca", "wrong ecp")
 
     def test_set_ecp_error_2(self, dr_data):
         dr_data.expect_mock.side_effect = [0, 2]
         with pytest.raises(
             DefineParameterError,
             match="Define could not set the core potential def2-SVP .*",
-        ):            dr_data.dr._set_ecp("12", "def2-SVP")
+        ):
+            dr_data.dr._set_ecp("12", "def2-SVP")
 
     def test_set_ecp_error_3(self, dr_data):
         dr_data.expect_mock.side_effect = [0, 3]
         with pytest.raises(
             DefineParameterError,
             match="Define could not set the core potential def2-SVP .*",
-        ):            dr_data.dr._set_ecp("Ca", "def2-SVP")
+        ):
+            dr_data.dr._set_ecp("Ca", "def2-SVP")
 
     def test_switch_to_molecular_orbital_definition_menu(self, dr_data):
 
