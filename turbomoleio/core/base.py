@@ -282,7 +282,7 @@ class BaseSystem(MSONable):
         with open(filepath, "wt") as f:
             f.write(self.to_coord_string())
 
-    def to_file(self, filepath, fmt=None):
+    def to_file(self, filepath, fmt=""):
         """
         Write the system to a file depending on the specified format.
 
@@ -299,4 +299,9 @@ class BaseSystem(MSONable):
         if fmt == "coord" or (fmt is None and fnmatch(fname, "*coord*")):
             self.to_coord_file(filepath)
         else:
+            # pymatgen changed its conventions and does not take a None as format
+            # anymore. Make the conversion to an empty string here to preserve
+            # backward compatibility.
+            if fmt is None:
+                fmt = ""
             self._molecule_or_structure.to(filename=filepath, fmt=fmt)
