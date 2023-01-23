@@ -144,7 +144,7 @@ class PeriodicSystem(BaseSystem):
             return cls(Structure.from_str(string, fmt))
 
     @classmethod
-    def from_file(cls, filepath, fmt=None, periodic_extension=5.0):
+    def from_file(cls, filepath, fmt="", periodic_extension=5.0):
         """
         Create an instance from a file.
 
@@ -162,7 +162,7 @@ class PeriodicSystem(BaseSystem):
             An instance of PeriodicSystem.
         """
         fname = os.path.basename(filepath)
-        if fmt == "coord" or (fmt is None and fnmatch(fname, "coord")):
+        if fmt == "coord" or (not fmt and fnmatch(fname, "coord")):
             with open(filepath) as f:
                 return cls.from_string(
                     f.read(), fmt="coord", periodic_extension=periodic_extension
