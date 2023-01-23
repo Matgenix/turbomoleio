@@ -253,7 +253,8 @@ class TestInternalDefinition:
 
     def test_from_string(self, molecule):
         # Distance
-        s_distance = """1 k  1.0000000000000 stre    1    2           val=   0.25182
+        s_distance = """
+   1 k  1.0000000000000 stre    1    2           val=   0.25182
        -0.5000000000000 stre    2    3
 """
         i = InternalDefinition.from_string(s_distance)
@@ -264,7 +265,8 @@ class TestInternalDefinition:
         assert i.status == "k"
 
         # Bond angle
-        s_bond_angle = """   1 f  1.0000000000000 bend    1    2    3      val=  19.38699
+        s_bond_angle = """
+   1 f  1.0000000000000 bend    1    2    3      val=  19.38699
        -0.2000000000000 bend    2    3    4
 """
         i = InternalDefinition.from_string(s_bond_angle)
@@ -275,7 +277,8 @@ class TestInternalDefinition:
         assert i.status == "f"
 
         # Dihedral angle
-        s_dihedral_angle = """   1 i -0.1000000000000 tors    1    2    3    4 val= -51.72110
+        s_dihedral_angle = """
+   1 i -0.1000000000000 tors    1    2    3    4 val= -51.72110
         0.7000000000000 tors    2    3    4    5
         0.7000000000000 tors    1    3    4    5
 """
