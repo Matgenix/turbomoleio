@@ -953,7 +953,6 @@ class DefineRunner:
         Returns:
             None
         """
-
         if self.parameters.get("ecp_atom", None) is not None:
             for atom_type, ecp in self.parameters["ecp_atom"].items():
                 # convert to string in case an integer slips through since it can
