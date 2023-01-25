@@ -1,0 +1,138 @@
+{
+  "@module": "turbomoleio.output.files",
+  "@class": "ScfOutput",
+  "@version": "1.3.0",
+  "dft": null,
+  "scf": null,
+  "energies": {
+    "@module": "turbomoleio.output.data",
+    "@class": "ScfEnergiesData",
+    "@version": "1.3.0",
+    "total_energy": -1.1595574974,
+    "kinetic_energy": 1.0583304493,
+    "potential_energy": null,
+    "virial_theorem": null,
+    "wavefunction_norm": null,
+    "coulomb_energy": -1.5316608497,
+    "xc_energy": -0.686227097,
+    "ts_energy": -0.0,
+    "free_energy": -1.1595574974,
+    "sigma0_energy": -1.1595574974
+  },
+  "electrostatic": null,
+  "geometry": {
+    "@module": "turbomoleio.output.data",
+    "@class": "GeometryData",
+    "@version": "1.3.0",
+    "center_of_mass": [
+      1.88972612,
+      0.5,
+      0.5
+    ],
+    "center_of_charge": [
+      1.88972612,
+      0.5,
+      0.5
+    ],
+    "molecule": {
+      "@module": "pymatgen.core.structure",
+      "@class": "Molecule",
+      "charge": 0.0,
+      "spin_multiplicity": 1,
+      "sites": [
+        {
+          "name": "H",
+          "species": [
+            {
+              "element": "H",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            0.4999999987760739,
+            0.2645886054515,
+            0.2645886054515
+          ],
+          "properties": {}
+        },
+        {
+          "name": "H",
+          "species": [
+            {
+              "element": "H",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            1.500000001619994,
+            0.2645886054515,
+            0.2645886054515
+          ],
+          "properties": {}
+        }
+      ]
+    }
+  },
+  "basis": null,
+  "run": {
+    "@module": "turbomoleio.output.data",
+    "@class": "RunData",
+    "@version": "1.3.0",
+    "host": "frontal3",
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2023-01-25 00:22:24.734000"
+    },
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2023-01-25 00:22:27.485000"
+    },
+    "cpu_time": 0.5,
+    "wall_time": 2.83
+  },
+  "tm": {
+    "@module": "turbomoleio.output.data",
+    "@class": "TurbomoleData",
+    "@version": "1.3.0",
+    "version": "7.6",
+    "build": null,
+    "executable": "riper"
+  },
+  "cosmo": null,
+  "spin": {
+    "@module": "turbomoleio.output.data",
+    "@class": "SpinData",
+    "@version": "1.3.0",
+    "unrestricted": false,
+    "s2": null
+  },
+  "integral": null,
+  "smearing": null,
+  "symmetry": null,
+  "periodicity": {
+    "@module": "turbomoleio.output.data",
+    "@class": "PeriodicityData",
+    "@version": "1.3.0",
+    "periodicity": 1,
+    "lattice_params": [
+      2.0000000003960676
+    ],
+    "shortest_interatomic_distance": 0.999986175443399,
+    "direct_space_vectors": [
+      [
+        2.0000000003960676,
+        0.0,
+        0.0
+      ]
+    ],
+    "reciprocal_space_vectors": [
+      [
+        3.1415926569535033,
+        -0.0,
+        -0.0
+      ]
+    ]
+  }
+}

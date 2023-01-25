@@ -1,5 +1,3 @@
-$title
-dscf
 $symmetry c1 n
 $user-defined bonds    file=coord
 $coord    file=coord
@@ -14,8 +12,6 @@ h  1-2                                                                         \
    basis =h def-SV(P)
 $basis    file=basis
 $scfmo   file=mos
-$closed shells
- a       1                                      ( 2 )
 $scfiterlimit      200
 $thize     0.10000000E-04
 $thime        5
@@ -64,4 +60,8 @@ $kpoints
    nkpoints 4
 $riper
    sigma 0.01
+$title
+dscf
+$closed shells
+ a       1                                      ( 2 )
 $end

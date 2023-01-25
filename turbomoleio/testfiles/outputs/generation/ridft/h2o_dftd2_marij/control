@@ -1,5 +1,3 @@
-$title
-ridft
 $symmetry c1
 $redundant    file=coord
 $user-defined bonds    file=coord
@@ -19,8 +17,6 @@ h  2-3                                                                         \
    jbas  =h def-SV(P)
 $basis    file=basis
 $scfmo   file=mos
-$closed shells
- a       1-5                                    ( 2 )
 $scfiterlimit      200
 $thize     0.10000000E-04
 $thime        5
@@ -67,4 +63,8 @@ $rundimensions
    nbf(AO)=18
 $last step     define
 $disp
+$title
+ridft
+$closed shells
+ a       1-5                                    ( 2 )
 $end

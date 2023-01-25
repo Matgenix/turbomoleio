@@ -1,0 +1,364 @@
+{
+  "@module": "turbomoleio.output.files",
+  "@class": "ScfOutput",
+  "@version": "1.3.0",
+  "dft": {
+    "@module": "turbomoleio.output.data",
+    "@class": "DFTData",
+    "@version": "1.3.0",
+    "functional": {
+      "@module": "turbomoleio.output.data",
+      "@class": "FunctionalData",
+      "@version": "1.3.0",
+      "msg": "B-P86 functional\n exchange:    LDA + Becke (B88)\n correlation: LDA (VWN) + Perdew (P86)",
+      "name": "b-p",
+      "func_type": "GGA",
+      "xcfun": null
+    },
+    "ri": null,
+    "spherical_gridsize": 3,
+    "gridpoints": 302,
+    "dispersion_correction": {
+      "@module": "turbomoleio.output.data",
+      "@class": "DispersionCorrectionData",
+      "@version": "1.3.0",
+      "correction": "D3",
+      "en_corr": -0.005018931
+    }
+  },
+  "scf": {
+    "@module": "turbomoleio.output.data",
+    "@class": "ScfData",
+    "@version": "1.3.0",
+    "iterations": {
+      "@module": "turbomoleio.output.data",
+      "@class": "ScfIterationData",
+      "@version": "1.3.0",
+      "energies": [
+        -192.2937281394,
+        -193.04589993537,
+        -193.19817618491,
+        -193.22274837497,
+        -193.23564133922,
+        -193.23594867389,
+        -193.23596716585,
+        -193.23596906936,
+        -193.23596880104,
+        -193.23596915118,
+        -193.23564839525
+      ],
+      "first_index": 1,
+      "n_steps": 11,
+      "dampings": [
+        0.3,
+        0.25,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.35,
+        0.2,
+        0.25,
+        0.3,
+        0.35
+      ],
+      "converged": true
+    },
+    "diis": true,
+    "diis_error_vect": "FDS-SDF",
+    "conv_tot_en": 1e-07,
+    "conv_one_e_en": 0.0001,
+    "virtual_orbital_shift_on": true,
+    "virtual_orbital_shift_limit": 0.1,
+    "orbital_characterization": "expanded",
+    "restart_file": "mos",
+    "n_occupied_orbitals": 16
+  },
+  "energies": {
+    "@module": "turbomoleio.output.data",
+    "@class": "ScfEnergiesData",
+    "@version": "1.3.0",
+    "total_energy": -193.23564839525,
+    "kinetic_energy": 192.64177839562,
+    "potential_energy": -385.87742679087,
+    "virial_theorem": 1.99692670579,
+    "wavefunction_norm": 1.0,
+    "coulomb_energy": null,
+    "xc_energy": null,
+    "ts_energy": null,
+    "free_energy": null,
+    "sigma0_energy": null
+  },
+  "electrostatic": {
+    "@module": "turbomoleio.output.data",
+    "@class": "ElectrostaticMomentsData",
+    "@version": "1.3.0",
+    "charge": 0.0,
+    "unrestricted_electrons": null,
+    "dipole_vector": [
+      0.001242,
+      1.09812,
+      -0.0
+    ],
+    "dipole_norm": 1.0981,
+    "quadrupole_tensor": [
+      [
+        -17.564225,
+        -0.026784,
+        0.0
+      ],
+      [
+        -0.026784,
+        -21.305098,
+        -0.0
+      ],
+      [
+        0.0,
+        -0.0,
+        -17.965477
+      ]
+    ],
+    "quadrupole_trace": -56.834799,
+    "quadrupole_anisotropy": 3.557563
+  },
+  "geometry": {
+    "@module": "turbomoleio.output.data",
+    "@class": "GeometryData",
+    "@version": "1.3.0",
+    "center_of_mass": [
+      -0.0,
+      -0.0,
+      0.0
+    ],
+    "center_of_charge": [
+      -0.00071328,
+      0.15355432,
+      0.0
+    ],
+    "molecule": {
+      "@module": "pymatgen.core.structure",
+      "@class": "Molecule",
+      "charge": 0.0,
+      "spin_multiplicity": 1,
+      "sites": [
+        {
+          "name": "O",
+          "species": [
+            {
+              "element": "O",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            0.022966476165214012,
+            -1.2875090725021459,
+            0.0
+          ],
+          "properties": {}
+        },
+        {
+          "name": "C",
+          "species": [
+            {
+              "element": "C",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            1.2715590998541417,
+            0.7042969892071365,
+            0.0
+          ],
+          "properties": {}
+        },
+        {
+          "name": "C",
+          "species": [
+            {
+              "element": "C",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -1.2957932570704787,
+            0.6663116276965021,
+            0.0
+          ],
+          "properties": {}
+        },
+        {
+          "name": "C",
+          "species": [
+            {
+              "element": "C",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -0.004286668789957168,
+            -0.09678236841659732,
+            0.0
+          ],
+          "properties": {}
+        },
+        {
+          "name": "H",
+          "species": [
+            {
+              "element": "H",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            1.106089878719294,
+            1.7732102744060798,
+            0.0
+          ],
+          "properties": {}
+        },
+        {
+          "name": "H",
+          "species": [
+            {
+              "element": "H",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -2.1314191022244775,
+            -0.015431691195873688,
+            0.0
+          ],
+          "properties": {}
+        },
+        {
+          "name": "H",
+          "species": [
+            {
+              "element": "H",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            1.86029722730122,
+            0.4419473695773719,
+            0.8699133480654756
+          ],
+          "properties": {}
+        },
+        {
+          "name": "H",
+          "species": [
+            {
+              "element": "H",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            1.86029722730122,
+            0.4419473695773719,
+            -0.8699133480654756
+          ],
+          "properties": {}
+        },
+        {
+          "name": "H",
+          "species": [
+            {
+              "element": "H",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -1.3599752453594,
+            1.3078400450697227,
+            0.8731089963243978
+          ],
+          "properties": {}
+        },
+        {
+          "name": "H",
+          "species": [
+            {
+              "element": "H",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -1.3599752453594,
+            1.3078400450697227,
+            -0.8731089963243978
+          ],
+          "properties": {}
+        }
+      ]
+    }
+  },
+  "basis": {
+    "@module": "turbomoleio.output.data",
+    "@class": "BasisData",
+    "@version": "1.3.0",
+    "basis_per_specie": {
+      "o": "def-TZVP",
+      "c": "def-TZVP",
+      "h": "def-TZVP"
+    },
+    "aux_basis_per_specie": {},
+    "number_scf_basis_func": 112,
+    "number_scf_aux_basis_func": null
+  },
+  "run": {
+    "@module": "turbomoleio.output.data",
+    "@class": "RunData",
+    "@version": "1.3.0",
+    "host": "frontal3",
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2023-01-25 00:18:24.476000"
+    },
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2023-01-25 00:18:35.889000"
+    },
+    "cpu_time": 9.25,
+    "wall_time": 11.46
+  },
+  "tm": {
+    "@module": "turbomoleio.output.data",
+    "@class": "TurbomoleData",
+    "@version": "1.3.0",
+    "version": "7.6",
+    "build": null,
+    "executable": "dscf"
+  },
+  "cosmo": null,
+  "spin": {
+    "@module": "turbomoleio.output.data",
+    "@class": "SpinData",
+    "@version": "1.3.0",
+    "unrestricted": false,
+    "s2": null
+  },
+  "integral": {
+    "@module": "turbomoleio.output.data",
+    "@class": "IntegralData",
+    "@version": "1.3.0",
+    "integral_neglect_threshold": 2.9e-11,
+    "thize": 1e-05,
+    "thime": 5
+  },
+  "smearing": null,
+  "symmetry": {
+    "@module": "turbomoleio.output.data",
+    "@class": "SymmetryData",
+    "@version": "1.3.0",
+    "symbol": "c1",
+    "n_reps": 1,
+    "reps": [
+      "a"
+    ]
+  },
+  "periodicity": null
+}

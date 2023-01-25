@@ -1,5 +1,3 @@
-$title
-dscf
 $symmetry cs
 $redundant    file=coord
 $user-defined bonds    file=coord
@@ -19,9 +17,6 @@ h  5-10                                                                        \
    basis =h def-SV(P)
 $basis    file=basis
 $scfmo   file=mos
-$closed shells
- a'      1-13                                   ( 2 )
- a"      1-3                                    ( 2 )
 $scfiterlimit      200
 $thize     0.10000000E-04
 $thime        5
@@ -63,4 +58,9 @@ $rundimensions
    nbf(AO)=68
 $last step     define
 $scfconv 8
+$title
+dscf
+$closed shells
+ a'      1-13                                   ( 2 )
+ a"      1-3                                    ( 2 )
 $end
