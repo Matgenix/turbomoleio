@@ -29,6 +29,7 @@ import signal
 from copy import deepcopy
 
 import pexpect
+import pexpect.popen_spawn
 from monty.os import cd
 
 from turbomoleio.core.control import Control, cdg, mdgo, sdg
@@ -565,7 +566,7 @@ class DefineRunner:
 
         if (not new_coords and case == 0) or (new_coords and case in (1, 2, 3)):
             which_calc = "full define" if new_coords else "update"
-            present = "not " if update else ""
+            present = "not " if new_coords else ""  # TODO check if this is correct
             raise DefineError(
                 "To run a {} previous data should {}be present".format(
                     which_calc, present
@@ -699,10 +700,9 @@ class DefineRunner:
         Returns:
             None
         """
+        sym_eps = self.parameters.get("sym_eps") or ""
         self._sendline(
-            "sy {} {}".format(
-                self.parameters["sym"], self.parameters.get("sym_eps", "")
-            ),
+            "sy {} {}".format(self.parameters["sym"], sym_eps),
             action="specify symmetry",
         )
         case = self._expect(
@@ -850,10 +850,17 @@ class DefineRunner:
 
         self._sendline("{} {}".format(atom_type, basis))
 
+        # note that "ENTER A SET OF ATOMS TO WHICH YOU WANT TO ASSIGN BASIS SETS.*"
+        # (e.g. the element passed in not among the elements of the molecule) is
+        # also returned when "LIST OF ATOMIC INDICES IS INCOMPREHENSIBLE" (e.g. index
+        # is larger than the number of atoms). Kept separated in case handling
+        # the error in a different way is needed.
         case = self._expect(
             [
                 "ATOMIC ATTRIBUTE DEFINITION MENU.*",
                 "THERE ARE NO DATA SETS CATALOGUED IN FILE",
+                "LIST OF ATOMIC INDICES IS INCOMPREHENSIBLE",
+                "ENTER A SET OF ATOMS TO WHICH YOU WANT TO ASSIGN BASIS SETS.*",
             ],
             action="set basis",
         )
@@ -861,6 +868,11 @@ class DefineRunner:
         if case == 1:
             raise DefineParameterError(
                 "Define did not recognize basis {} for {}".format(basis, atom_type)
+            )
+
+        if case in [2, 3]:
+            raise DefineParameterError(
+                "Define could not set basis {} for {}".format(basis, atom_type)
             )
 
     def _define_basis_sets(self):
@@ -881,11 +893,11 @@ class DefineRunner:
                 # also represent an index.
                 atom_type = str(atom_type).strip()
                 # if it is a symbol and does not already contain quotations add them.
+                # convert to lowercase as define only accepts that
                 if re.fullmatch("[A-Za-z]+", atom_type):
-                    atom_type = '"{}"'.format(atom_type)
+                    atom_type = '"{}"'.format(atom_type.lower())
 
                 self._set_basis(atom_type, basis)
-
 
     def _set_ecp(self, atom_type, ecp):
         r"""
@@ -912,15 +924,25 @@ class DefineRunner:
             [
                 "ATOMIC ATTRIBUTE DEFINITION MENU.*",
                 "THERE ARE NO DATA SETS CATALOGUED IN FILE",
+                "LIST OF ATOMIC INDICES IS INCOMPREHENSIBLE",
+                "ENTER A SET OF ATOMS TO WHICH YOU WANT TO ASSIGN PSEUDO POTENTIALS*",
             ],
             action="set ecp",
         )
 
         if case == 1:
             raise DefineParameterError(
-                "Define did not recognize the core potential {} for {}".format(ecp, atom_type)
+                "Define did not recognize the core potential {} for {}".format(
+                    ecp, atom_type
+                )
             )
 
+        if case in [2, 3]:
+            raise DefineParameterError(
+                "Define could not set the core potential {} for {}".format(
+                    ecp, atom_type
+                )
+            )
 
     def _define_core_potentials(self):
         """
@@ -931,15 +953,15 @@ class DefineRunner:
         Returns:
             None
         """
-
         if self.parameters.get("ecp_atom", None) is not None:
             for atom_type, ecp in self.parameters["ecp_atom"].items():
                 # convert to string in case an integer slips through since it can
                 # also represent an index.
                 atom_type = str(atom_type).strip()
                 # if it is a symbol and does not already contain quotations add them.
+                # convert to lowercase as define only accepts that
                 if re.fullmatch("[A-Za-z]+", atom_type):
-                    atom_type = '"{}"'.format(atom_type)
+                    atom_type = '"{}"'.format(atom_type.lower())
 
                 self._set_ecp(atom_type, ecp)
 

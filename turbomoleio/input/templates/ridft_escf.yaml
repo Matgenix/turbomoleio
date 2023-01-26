@@ -4,6 +4,7 @@ charge: null
 coord_file: coord
 desy: false
 desy_eps: null
+ecp_atom: null
 ex_all_states: 10
 ex_exopt: null
 ex_frequency: null
