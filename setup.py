@@ -9,7 +9,7 @@ from setuptools import find_packages
 # changing Python version requirements.
 if sys.version[0:3] < "3.8":
     sys.stderr.write(
-        "ERROR: turbomoleio requires Python Version 3.6 or above. "
+        "ERROR: turbomoleio requires Python Version 3.8 or above. "
         "You are using version {}. Exiting.".format(sys.version)
     )
     sys.exit(1)
