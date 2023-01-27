@@ -410,7 +410,7 @@ class Parser:
         # For example it may be:
         # escf (node001) : TURBOMOLE rev. compiled 1 Jul 2018 at 20:38:15
         #
-        #Note: TURBOMOLE 7.6 uses the notation 7-6. Catch it and convert to 7.6
+        # Note: TURBOMOLE 7.6 uses the notation 7-6. Catch it and convert to 7.6
         r_version = r"V([\d\.-]+\d)\s+.*"
         r_build = r"V[\d\.]+\d\s+\((.*)\)"
         match_version = re.search(r_version, match.group(3).strip())
