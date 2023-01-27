@@ -1,5 +1,5 @@
 default_language_version:
-  python: python3.8
+  python: python3
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.3.0
@@ -15,16 +15,16 @@ repos:
     hooks:
     - id: bandit
       args: ['-iii', '-ll', '-s=B308,B703']
--   repo: https://gitlab.com/pycqa/flake8
-    rev: 3.8.4
+-   repo: https://github.com/PyCQA/flake8
+    rev: 6.0.0
     hooks:
     - id: flake8
 #-   repo: https://github.com/PyCQA/pylint
 #    rev: pylint-2.6.0
 #    hooks:
 #    - id: pylint
--   repo: https://github.com/ambv/black
-    rev: 20.8b1
+-   repo: https://github.com/psf/black
+    rev: 22.12.0
     hooks:
     - id: black
 -   repo: https://github.com/PyCQA/isort

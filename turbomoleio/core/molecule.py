@@ -167,7 +167,7 @@ class MoleculeSystem(BaseSystem):
             return cls(Molecule.from_str(string, fmt))
 
     @classmethod
-    def from_file(cls, filepath, fmt=None):
+    def from_file(cls, filepath, fmt=""):
         """
         Create an instance from a file.
 
@@ -183,7 +183,7 @@ class MoleculeSystem(BaseSystem):
             An instance of MoleculeSystem.
         """
         fname = os.path.basename(filepath)
-        if fmt == "coord" or (fmt is None and fnmatch(fname, "coord")):
+        if fmt == "coord" or (not fmt and fnmatch(fname, "coord")):
             with open(filepath) as f:
                 return cls.from_string(f.read(), fmt="coord")
         else:

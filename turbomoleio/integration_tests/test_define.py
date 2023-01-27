@@ -90,6 +90,46 @@ class TestDefineRunner:
                 self.run_define_runner(define_opt, molecule_filepath)
 
     @pytest.mark.parametrize("molecule_filename", ["nh3"])
+    def test_wrong_basis_atom_index(self, molecule_filepath, delete_tmp_dir):
+
+        define_opt = get_define_template("dscf")
+        define_opt["basis_atom"] = {"12": "def-SV(P)"}
+
+        with temp_dir(delete_tmp_dir):
+            with pytest.raises(DefineParameterError):
+                self.run_define_runner(define_opt, molecule_filepath)
+
+    @pytest.mark.parametrize("molecule_filename", ["nh3"])
+    def test_wrong_basis_atom_specie(self, molecule_filepath, delete_tmp_dir):
+
+        define_opt = get_define_template("dscf")
+        define_opt["basis_atom"] = {"si": "def-SV(P)"}
+
+        with temp_dir(delete_tmp_dir):
+            with pytest.raises(DefineParameterError):
+                self.run_define_runner(define_opt, molecule_filepath)
+
+    @pytest.mark.parametrize("molecule_filename", ["nh3"])
+    def test_wrong_ecp_atom_index(self, molecule_filepath, delete_tmp_dir):
+
+        define_opt = get_define_template("dscf")
+        define_opt["ecp_atom"] = {"12": "def-SV(P)"}
+
+        with temp_dir(delete_tmp_dir):
+            with pytest.raises(DefineParameterError):
+                self.run_define_runner(define_opt, molecule_filepath)
+
+    @pytest.mark.parametrize("molecule_filename", ["nh3"])
+    def test_wrong_ecp_atom_specie(self, molecule_filepath, delete_tmp_dir):
+
+        define_opt = get_define_template("dscf")
+        define_opt["ecp_atom"] = {"si": "def-SV(P)"}
+
+        with temp_dir(delete_tmp_dir):
+            with pytest.raises(DefineParameterError):
+                self.run_define_runner(define_opt, molecule_filepath)
+
+    @pytest.mark.parametrize("molecule_filename", ["nh3"])
     def test_wrong_xc_func(self, molecule_filepath, delete_tmp_dir):
         define_opt = get_define_template("dscf")
         define_opt["functional"] = "pbexxxx"

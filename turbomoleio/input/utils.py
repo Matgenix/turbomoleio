@@ -155,6 +155,12 @@ schema_define_params = {
         "keysrules": {"type": "string"},
         "valuesrules": {"type": "string"},
     },
+    "ecp_atom": {
+        "type": "dict",
+        "nullable": True,
+        "keysrules": {"type": "string"},
+        "valuesrules": {"type": "string"},
+    },
     "charge": {"type": "integer", "nullable": True, "default": None},
     "unpaired_electrons": {"type": "integer", "nullable": True, "default": None},
     "rijk": {

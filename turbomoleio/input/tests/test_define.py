@@ -518,6 +518,20 @@ class TestDefineRunner(object):
             dr_data.sendline_mock, ["a coord", "sy c2v 0.01", "ired"]
         )
 
+    def test_geometry_menu_new_coords_4(self, dr_data):
+        # here desy will be ignored
+        dr_data.dr.parameters = {
+            "desy": True,
+            "ired": True,
+            "sym": "c2v",
+            "sym_eps": None,
+        }
+        dr_data.expect_mock.side_effect = [0, 1, 1, 0]
+        dr_data.dr._geometry_menu(new_coords=True)
+        self.assert_sendline_calls(
+            dr_data.sendline_mock, ["a coord", "sy c2v ", "ired"]
+        )
+
     def test_geometry_menu_no_new_coords(self, dr_data):
         dr_data.dr.parameters = {"desy": False, "ired": False}
         dr_data.expect_mock.side_effect = [1, 1, 0]
@@ -680,8 +694,24 @@ class TestDefineRunner(object):
 
     def test_set_basis_error(self, dr_data):
         dr_data.expect_mock.side_effect = [0, 1]
-        with pytest.raises(DefineParameterError):
+        with pytest.raises(
+            DefineParameterError, match="Define did not recognize basis wrong basis .*"
+        ):
             dr_data.dr._set_basis("all", "wrong basis")
+
+    def test_set_basis_error_2(self, dr_data):
+        dr_data.expect_mock.side_effect = [0, 2]
+        with pytest.raises(
+            DefineParameterError, match="Define could not set basis def2-SVP .*"
+        ):
+            dr_data.dr._set_basis("12", "def2-SVP")
+
+    def test_set_basis_error_3(self, dr_data):
+        dr_data.expect_mock.side_effect = [0, 3]
+        with pytest.raises(
+            DefineParameterError, match="Define could not set basis def2-SVP .*"
+        ):
+            dr_data.dr._set_basis("Ca", "def2-SVP")
 
     def test_define_basis_sets(self, dr_data):
 
@@ -693,8 +723,44 @@ class TestDefineRunner(object):
         dr_data.dr._define_basis_sets()
         self.assert_sendline_calls(
             dr_data.sendline_mock,
-            ["b", "all def2-SVP", "b", "1 def2-SVP", "b", '"Ca" def2-SVP'],
+            ["b", "all def2-SVP", "b", "1 def2-SVP", "b", '"ca" def2-SVP'],
         )
+
+    def test_define_core_potentials(self, dr_data):
+
+        dr_data.dr.parameters = {
+            "ecp_atom": {1: "def2-TZVPP", "Ca": "def2-TZVPP"},
+        }
+        dr_data.expect_mock.side_effect = [0, 0, 0, 0]
+        dr_data.dr._define_core_potentials()
+        self.assert_sendline_calls(
+            dr_data.sendline_mock,
+            ["ecp", "1 def2-TZVPP", "ecp", '"ca" def2-TZVPP'],
+        )
+
+    def test_set_ecp_error(self, dr_data):
+        dr_data.expect_mock.side_effect = [0, 1]
+        with pytest.raises(
+            DefineParameterError,
+            match="Define did not recognize the core potential wrong ecp .*",
+        ):
+            dr_data.dr._set_ecp("Ca", "wrong ecp")
+
+    def test_set_ecp_error_2(self, dr_data):
+        dr_data.expect_mock.side_effect = [0, 2]
+        with pytest.raises(
+            DefineParameterError,
+            match="Define could not set the core potential def2-SVP .*",
+        ):
+            dr_data.dr._set_ecp("12", "def2-SVP")
+
+    def test_set_ecp_error_3(self, dr_data):
+        dr_data.expect_mock.side_effect = [0, 3]
+        with pytest.raises(
+            DefineParameterError,
+            match="Define could not set the core potential def2-SVP .*",
+        ):
+            dr_data.dr._set_ecp("Ca", "def2-SVP")
 
     def test_switch_to_molecular_orbital_definition_menu(self, dr_data):
 
