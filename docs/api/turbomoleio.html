@@ -1,74 +1,38 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>turbomoleio package &mdash; turbomoleio 1.3.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  <title>turbomoleio package &mdash; turbomoleio 1.3.0 documentation</title>
-  
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="turbomoleio.core package" href="turbomoleio.core.html" />
     <link rel="prev" title="turbomoleio" href="modules.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> turbomoleio
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
-                1.3.0
+                1.3.1
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -76,17 +40,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../datagroups.html">The data group files</a></li>
@@ -97,7 +51,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="modules.html">turbomoleio</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">turbomoleio package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-turbomoleio">Module contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -121,209 +75,179 @@
 <li class="toctree-l1"><a class="reference internal" href="../bugs.html">Reporting bugs</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">turbomoleio</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html">Docs</a> &raquo;</li>
-        
-          <li><a href="../appendix.html">Appendix</a> &raquo;</li>
-        
-          <li><a href="modules.html">turbomoleio</a> &raquo;</li>
-        
-      <li>turbomoleio package</li>
-    
-    
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../appendix.html">Appendix</a></li>
+          <li class="breadcrumb-item"><a href="modules.html">turbomoleio</a></li>
+      <li class="breadcrumb-item active">turbomoleio package</li>
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="../_sources/api/turbomoleio.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <section id="turbomoleio-package">
-<h1>turbomoleio package<a class="headerlink" href="#turbomoleio-package" title="Permalink to this headline">¶</a></h1>
-<section id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+             
+  <div class="section" id="turbomoleio-package">
+<h1>turbomoleio package<a class="headerlink" href="#turbomoleio-package" title="Permalink to this heading"></a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="turbomoleio.core.html">turbomoleio.core package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="turbomoleio.core.tests.html">turbomoleio.core.tests package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.tests.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.tests.html#module-turbomoleio.core.tests.test_control">turbomoleio.core.tests.test_control module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.tests.html#module-turbomoleio.core.tests.test_datagroups">turbomoleio.core.tests.test_datagroups module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.tests.html#module-turbomoleio.core.tests.test_molecule">turbomoleio.core.tests.test_molecule module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.tests.html#module-turbomoleio.core.tests.test_periodic">turbomoleio.core.tests.test_periodic module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.tests.html#module-turbomoleio.core.tests.test_utils">turbomoleio.core.tests.test_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.tests.html#turbomoleio-core-tests-test-control-module">turbomoleio.core.tests.test_control module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.tests.html#turbomoleio-core-tests-test-datagroups-module">turbomoleio.core.tests.test_datagroups module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.tests.html#turbomoleio-core-tests-test-molecule-module">turbomoleio.core.tests.test_molecule module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.tests.html#turbomoleio-core-tests-test-periodic-module">turbomoleio.core.tests.test_periodic module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.tests.html#turbomoleio-core-tests-test-utils-module">turbomoleio.core.tests.test_utils module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.tests.html#module-turbomoleio.core.tests">Module contents</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.html#module-turbomoleio.core.base">turbomoleio.core.base module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.html#module-turbomoleio.core.control">turbomoleio.core.control module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.html#module-turbomoleio.core.datagroups">turbomoleio.core.datagroups module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.html#module-turbomoleio.core.molecule">turbomoleio.core.molecule module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.html#module-turbomoleio.core.periodic">turbomoleio.core.periodic module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.html#turbomoleio-core-base-module">turbomoleio.core.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.html#turbomoleio-core-control-module">turbomoleio.core.control module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.html#module-turbomoleio.core.datagroups">turbomoleio.core.datagroups module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups"><code class="docutils literal notranslate"><span class="pre">DataGroups</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.add_data_group"><code class="docutils literal notranslate"><span class="pre">DataGroups.add_data_group()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.adg"><code class="docutils literal notranslate"><span class="pre">DataGroups.adg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.as_dict"><code class="docutils literal notranslate"><span class="pre">DataGroups.as_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.cdg"><code class="docutils literal notranslate"><span class="pre">DataGroups.cdg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.change_data_group"><code class="docutils literal notranslate"><span class="pre">DataGroups.change_data_group()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.compare"><code class="docutils literal notranslate"><span class="pre">DataGroups.compare()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.empty"><code class="docutils literal notranslate"><span class="pre">DataGroups.empty()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.from_dict"><code class="docutils literal notranslate"><span class="pre">DataGroups.from_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.from_file"><code class="docutils literal notranslate"><span class="pre">DataGroups.from_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.kdg"><code class="docutils literal notranslate"><span class="pre">DataGroups.kdg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.kill_data_group"><code class="docutils literal notranslate"><span class="pre">DataGroups.kill_data_group()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.mdgo"><code class="docutils literal notranslate"><span class="pre">DataGroups.mdgo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.modify_data_group_options"><code class="docutils literal notranslate"><span class="pre">DataGroups.modify_data_group_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.ndg"><code class="docutils literal notranslate"><span class="pre">DataGroups.ndg</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.number_of_data_groups"><code class="docutils literal notranslate"><span class="pre">DataGroups.number_of_data_groups</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.sdg"><code class="docutils literal notranslate"><span class="pre">DataGroups.sdg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.sdgo"><code class="docutils literal notranslate"><span class="pre">DataGroups.sdgo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.show_data_group"><code class="docutils literal notranslate"><span class="pre">DataGroups.show_data_group()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.show_data_group_option"><code class="docutils literal notranslate"><span class="pre">DataGroups.show_data_group_option()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.show_subfile_fname"><code class="docutils literal notranslate"><span class="pre">DataGroups.show_subfile_fname()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.to_file"><code class="docutils literal notranslate"><span class="pre">DataGroups.to_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.cleanup_string"><code class="docutils literal notranslate"><span class="pre">cleanup_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.compare_datagroup_string"><code class="docutils literal notranslate"><span class="pre">compare_datagroup_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.remove_comments"><code class="docutils literal notranslate"><span class="pre">remove_comments()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.remove_dg_from_list"><code class="docutils literal notranslate"><span class="pre">remove_dg_from_list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="turbomoleio.core.html#turbomoleio.core.datagroups.split_string_to_dg_list"><code class="docutils literal notranslate"><span class="pre">split_string_to_dg_list()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.html#turbomoleio-core-molecule-module">turbomoleio.core.molecule module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.html#turbomoleio-core-periodic-module">turbomoleio.core.periodic module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.html#module-turbomoleio.core.symmetry">turbomoleio.core.symmetry module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.html#module-turbomoleio.core.utils">turbomoleio.core.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.html#turbomoleio-core-utils-module">turbomoleio.core.utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="turbomoleio.core.html#module-turbomoleio.core">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="turbomoleio.input.html">turbomoleio.input package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="turbomoleio.input.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="turbomoleio.input.templates.html">turbomoleio.input.templates package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="turbomoleio.input.templates.html#module-turbomoleio.input.templates">Module contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.input.templates.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="turbomoleio.input.tests.html">turbomoleio.input.tests package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="turbomoleio.input.tests.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="turbomoleio.input.tests.html#module-turbomoleio.input.tests.test_define">turbomoleio.input.tests.test_define module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="turbomoleio.input.tests.html#module-turbomoleio.input.tests.test_utils">turbomoleio.input.tests.test_utils module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="turbomoleio.input.tests.html#module-turbomoleio.input.tests">Module contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.input.tests.html#turbomoleio-input-tests-test-define-module">turbomoleio.input.tests.test_define module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.input.tests.html#turbomoleio-input-tests-test-utils-module">turbomoleio.input.tests.test_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.input.tests.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="turbomoleio.input.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="turbomoleio.input.html#module-turbomoleio.input.define">turbomoleio.input.define module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="turbomoleio.input.html#module-turbomoleio.input.utils">turbomoleio.input.utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="turbomoleio.input.html#module-turbomoleio.input">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turbomoleio.input.html#turbomoleio-input-define-module">turbomoleio.input.define module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turbomoleio.input.html#turbomoleio-input-utils-module">turbomoleio.input.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turbomoleio.input.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="turbomoleio.output.html">turbomoleio.output package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="turbomoleio.output.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="turbomoleio.output.tests.html">turbomoleio.output.tests package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="turbomoleio.output.tests.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="turbomoleio.output.tests.html#module-turbomoleio.output.tests.test_data">turbomoleio.output.tests.test_data module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="turbomoleio.output.tests.html#module-turbomoleio.output.tests.test_files">turbomoleio.output.tests.test_files module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="turbomoleio.output.tests.html#module-turbomoleio.output.tests.test_parser">turbomoleio.output.tests.test_parser module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="turbomoleio.output.tests.html#module-turbomoleio.output.tests.test_states">turbomoleio.output.tests.test_states module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="turbomoleio.output.tests.html#module-turbomoleio.output.tests">Module contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.output.tests.html#turbomoleio-output-tests-test-data-module">turbomoleio.output.tests.test_data module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.output.tests.html#turbomoleio-output-tests-test-files-module">turbomoleio.output.tests.test_files module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.output.tests.html#turbomoleio-output-tests-test-parser-module">turbomoleio.output.tests.test_parser module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.output.tests.html#turbomoleio-output-tests-test-states-module">turbomoleio.output.tests.test_states module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="turbomoleio.output.tests.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="turbomoleio.output.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="turbomoleio.output.html#module-turbomoleio.output.data">turbomoleio.output.data module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="turbomoleio.output.html#module-turbomoleio.output.files">turbomoleio.output.files module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="turbomoleio.output.html#module-turbomoleio.output.parser">turbomoleio.output.parser module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="turbomoleio.output.html#module-turbomoleio.output.states">turbomoleio.output.states module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="turbomoleio.output.html#module-turbomoleio.output">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turbomoleio.output.html#turbomoleio-output-data-module">turbomoleio.output.data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turbomoleio.output.html#turbomoleio-output-files-module">turbomoleio.output.files module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turbomoleio.output.html#turbomoleio-output-parser-module">turbomoleio.output.parser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turbomoleio.output.html#turbomoleio-output-states-module">turbomoleio.output.states module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turbomoleio.output.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="turbomoleio.testfiles.html">turbomoleio.testfiles package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="turbomoleio.testfiles.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="turbomoleio.testfiles.html#module-turbomoleio.testfiles.utils">turbomoleio.testfiles.utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="turbomoleio.testfiles.html#module-turbomoleio.testfiles">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turbomoleio.testfiles.html#turbomoleio-testfiles-utils-module">turbomoleio.testfiles.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turbomoleio.testfiles.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
 </div>
-</section>
-<section id="module-turbomoleio">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-turbomoleio" title="Permalink to this headline">¶</a></h2>
-<p>Turbomoleio is a package acting as an interface with the TURBOMOLE package.</p>
-<p>It allows to generate inputs and parse outputs easily.
-This is the root package.</p>
-</section>
-</section>
+</div>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this heading"></a></h2>
+</div>
+</div>
 
 
            </div>
-           
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="turbomoleio.core.html" class="btn btn-neutral float-right" title="turbomoleio.core package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="modules.html" class="btn btn-neutral float-left" title="turbomoleio" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="turbomoleio" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="turbomoleio.core.html" class="btn btn-neutral float-right" title="turbomoleio.core package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2018-2022 BASF SE, Matgenix SRL
-
-    </p>
+    <p>&#169; Copyright 2018-2022 BASF SE, Matgenix SRL.</p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
