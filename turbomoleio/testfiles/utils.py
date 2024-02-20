@@ -554,31 +554,35 @@ def compare_differences(actual, desired, rtol=1e-7, atol=0, current_level=None):
             )
         return differences
 
-    actual_np, desired_np = np.asanyarray(actual), np.asanyarray(desired)
-    if issubclass(actual_np.dtype.type, numbers.Number) and issubclass(
-        desired_np.dtype.type, numbers.Number
-    ):
-        if actual_np.shape != desired_np.shape:
-            _update_differences(
-                differences,
-                current_level,
-                ARRAYS_DIFFER,
-                message=f"Reference and test arrays do not have the same shape\n"
-                f" - Shape of reference array: {desired_np.shape}\n"
-                f" - Shape of test array: {actual_np.shape}",
-            )
+    try:
+        actual_np, desired_np = np.asanyarray(actual), np.asanyarray(desired)
+        if issubclass(actual_np.dtype.type, numbers.Number) and issubclass(
+            desired_np.dtype.type, numbers.Number
+        ):
+            if actual_np.shape != desired_np.shape:
+                _update_differences(
+                    differences,
+                    current_level,
+                    ARRAYS_DIFFER,
+                    message=f"Reference and test arrays do not have the same shape\n"
+                    f" - Shape of reference array: {desired_np.shape}\n"
+                    f" - Shape of test array: {actual_np.shape}",
+                )
+                return differences
+            if not np.allclose(actual_np, desired_np, rtol=rtol, atol=atol):
+                _update_differences(
+                    differences,
+                    current_level,
+                    ARRAYS_DIFFER,
+                    message=f"Reference and test arrays are not equal to tolerance "
+                    f"rtol={rtol}, atol={atol}\n"
+                    f" - Reference array: {desired}\n"
+                    f" - Test array: {actual}",
+                )
             return differences
-        if not np.allclose(actual_np, desired_np, rtol=rtol, atol=atol):
-            _update_differences(
-                differences,
-                current_level,
-                ARRAYS_DIFFER,
-                message=f"Reference and test arrays are not equal to tolerance "
-                f"rtol={rtol}, atol={atol}\n"
-                f" - Reference array: {desired}\n"
-                f" - Test array: {actual}",
-            )
-        return differences
+    except ValueError as err:
+        if 'setting an array element with a sequence.' in str(err):
+            pass
 
     if isinstance(desired, (list, tuple)):
         if not isinstance(actual, (list, tuple)):
