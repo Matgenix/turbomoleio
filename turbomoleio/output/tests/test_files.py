@@ -32,6 +32,8 @@ import os
 import pytest
 from monty.serialization import loadfn
 
+from pymatgen.core.structure import Molecule
+
 from turbomoleio.output.files import (
     EscfOnlyOutput,
     EscfOutput,
@@ -89,14 +91,24 @@ class TestFiles:
         for output_cls, desired, path in zip(output_clses, desired_list, paths_list):
             parsed_data = output_cls.from_file(path).as_dict()
 
-            # ignore date values since in the dictionary they are datetime, while
+            # Ignore date values since in the dictionary they are datetime, while
             # just strings in the json file.
+            # Also test the geometry and compare the Molecule objects directly.
             assert_almost_equal(
                 parsed_data,
                 desired,
                 rtol=1e-4,
-                ignored_values=["start_time", "end_time", "@version"],
+                ignored_values=["start_time", "end_time", "@version", "geometry"],
             )
+            if "geometry" in desired:
+                assert_almost_equal(
+                    parsed_data["geometry"],
+                    desired["geometry"],
+                    rtol=1e-4,
+                    ignored_values=["@version", "molecule"],)
+                desired_molecule = Molecule.from_dict(desired["geometry"]["molecule"])
+                parsed_molecule = Molecule.from_dict(parsed_data["geometry"]["molecule"])
+                assert desired_molecule == parsed_molecule
 
 
 def generate_files(files=None, overwrite=False):
