@@ -31,7 +31,6 @@ import os
 
 import pytest
 from monty.serialization import loadfn
-
 from pymatgen.core.structure import Molecule
 
 from turbomoleio.output.files import (
@@ -105,9 +104,12 @@ class TestFiles:
                     parsed_data["geometry"],
                     desired["geometry"],
                     rtol=1e-4,
-                    ignored_values=["@version", "molecule"],)
+                    ignored_values=["@version", "molecule"],
+                )
                 desired_molecule = Molecule.from_dict(desired["geometry"]["molecule"])
-                parsed_molecule = Molecule.from_dict(parsed_data["geometry"]["molecule"])
+                parsed_molecule = Molecule.from_dict(
+                    parsed_data["geometry"]["molecule"]
+                )
                 assert desired_molecule == parsed_molecule
 
 
