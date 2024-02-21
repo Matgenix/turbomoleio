@@ -36,7 +36,7 @@ from fractions import Fraction
 import numpy as np
 from monty.json import MSONable
 from monty.os import cd, makedirs_p
-from pymatgen.util.plotting import add_fig_kwargs, get_ax_fig_plt
+from pymatgen.util.plotting import add_fig_kwargs
 
 from turbomoleio.core.base import get_mol_and_indices_frozen
 from turbomoleio.core.datagroups import DataGroups
@@ -157,7 +157,14 @@ class Energy(MSONable):
         Returns:
             A matplotlib Figure
         """
-        ax, fig, plt = get_ax_fig_plt(ax=ax)
+        try:
+            from pymatgen.util.plotting import get_ax_fig_plt
+
+            ax, fig, plt = get_ax_fig_plt(ax=ax)
+        except ImportError:
+            from pymatgen.util.plotting import get_ax_fig
+
+            ax, fig = get_ax_fig(ax=ax)
 
         ax.plot(range(self.n_steps), self.total, **kwargs)
         ax.set_xlabel("Steps")

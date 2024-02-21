@@ -54,5 +54,5 @@ of the latest version of Turbomole. In addition, the latest version of turbomole
 to the latest version of Turbomole) also supports the parsing of the output files generated with
 older versions of Turbomole (starting at version 7.3).
 
-For example, turbomoleio 1.2.0 supports Turbomole version 7.5 for all the features and supports
+For example, turbomoleio 1.3.x series support Turbomole version 7.5 for all the features and supports
 parsing of outputs for Turbomole version 7.3 and 7.4.
