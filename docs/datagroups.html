@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The data group files &mdash; turbomoleio 1.3.1 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=992bbb82"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -28,14 +30,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> turbomoleio
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            turbomoleio
           </a>
               <div class="version">
                 1.3.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -86,7 +92,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">The data group files</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/datagroups.rst.txt" rel="nofollow"> View page source</a>
@@ -97,7 +103,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="the-data-group-files">
+  <section id="the-data-group-files">
 <span id="datagroup-files"></span><h1>The data group files<a class="headerlink" href="#the-data-group-files" title="Permalink to this heading"></a></h1>
 <p>Most of the input and output files in TURBOMOLE are structured as a list of data groups separated
 by a <code class="docutils literal notranslate"><span class="pre">$</span></code> symbol.  (e.g. <code class="docutils literal notranslate"><span class="pre">$coord</span></code>). The initial part of the of each group usually determines the type of
@@ -105,7 +111,7 @@ data with optional values that might be defined on the same line or on subsequen
 In turbomoleio a basic object is implemented to allow the parsing and writing of generic data groups files,
 with a set of subclasses to interact with selected types of file that require specific functionalities
 (e.g. the <code class="docutils literal notranslate"><span class="pre">control</span></code> file).</p>
-<div class="section" id="the-datagroups-object">
+<section id="the-datagroups-object">
 <h2>The DataGroups object<a class="headerlink" href="#the-datagroups-object" title="Permalink to this heading"></a></h2>
 <p>The most basic object to interact with data group files is <a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups" title="turbomoleio.core.datagroups.DataGroups"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.datagroups.DataGroups</span></code></a>.
 It keeps an internal representation of the file given by a list of data groups, i.e. of strings that should
@@ -145,7 +151,7 @@ These are inspired from the standard scripts distributed with TURBOMOLE, but are
 in python and may have some differences in their behavior, in addition to have some more options.
 Note that, while the examples provided below are based on a <code class="docutils literal notranslate"><span class="pre">control</span></code> for simplicity, the methods
 can be applied to any file structured with data groups.</p>
-<div class="section" id="accessing-a-data-group-value">
+<section id="accessing-a-data-group-value">
 <h3>Accessing a data group value<a class="headerlink" href="#accessing-a-data-group-value" title="Permalink to this heading"></a></h3>
 <p>The method to get the value of a data group is <code class="docutils literal notranslate"><span class="pre">show_data_group</span></code> with its shortcut <code class="docutils literal notranslate"><span class="pre">sdg</span></code>.
 The <code class="docutils literal notranslate"><span class="pre">data_group</span></code> string in input will be used to match the beginning of the elements of <code class="docutils literal notranslate"><span class="pre">dg_list</span></code>.
@@ -189,8 +195,8 @@ are not uniform in TURBOMOLE (e.g. the name of the option and the value can be s
 the support offered by this method are relatively limited. The code
 will just check among the lines in the <code class="docutils literal notranslate"><span class="pre">$dft</span></code> data group if one starts with the specified
 <code class="docutils literal notranslate"><span class="pre">option</span></code> are return the remaining string contained in the line.</p>
-</div>
-<div class="section" id="modifying-a-data-group-value">
+</section>
+<section id="modifying-a-data-group-value">
 <span id="mod-data-group"></span><h3>Modifying a data group value<a class="headerlink" href="#modifying-a-data-group-value" title="Permalink to this heading"></a></h3>
 <p>Different methods allow to change the values of the <code class="docutils literal notranslate"><span class="pre">dg_list</span></code>.
 The first considered is <code class="docutils literal notranslate"><span class="pre">kill_data_group</span></code> (or its shortcut <code class="docutils literal notranslate"><span class="pre">kdg</span></code>) that allows to remove an element from
@@ -254,11 +260,11 @@ the data group will be added to the list with the specified options only.</p>
 If you need to update a file you should call the <code class="docutils literal notranslate"><span class="pre">to_file</span></code> method after modifying the list in the
 object.</p>
 </div>
-</div>
-</div>
-<div class="section" id="the-control-object">
+</section>
+</section>
+<section id="the-control-object">
 <span id="control-object"></span><h2>The Control object<a class="headerlink" href="#the-control-object" title="Permalink to this heading"></a></h2>
-<p>An important subclass of <code class="docutils literal notranslate"><span class="pre">DataGroups</span></code> is <code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.control.Control</span></code>. This is specifically
+<p>An important subclass of <code class="docutils literal notranslate"><span class="pre">DataGroups</span></code> is <a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.control.Control" title="turbomoleio.core.control.Control"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.control.Control</span></code></a>. This is specifically
 designed to interact with the <code class="docutils literal notranslate"><span class="pre">control</span></code> file providing additional functionalities besides the one
 described for the basic data groups files. Different options are available to extract frequently
 accessed data groups (e.g. the <code class="docutils literal notranslate"><span class="pre">get_charge</span></code> method) or to set specific group of options (e.g.
@@ -267,7 +273,7 @@ over time, so the best option is to directly check its API. A few methods howeve
 attention.</p>
 <p>First we can consider the <code class="docutils literal notranslate"><span class="pre">energy</span></code> and <code class="docutils literal notranslate"><span class="pre">gradient</span></code> attributes, that read the data from the
 <code class="docutils literal notranslate"><span class="pre">$energy</span></code> and <code class="docutils literal notranslate"><span class="pre">$gradient</span></code> data groups, respectively and generate instances of the
-<code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.control.Energy</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.control.Gradient</span></code> objects.
+<a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.control.Energy" title="turbomoleio.core.control.Energy"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.control.Energy</span></code></a> and <a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.control.Gradient" title="turbomoleio.core.control.Gradient"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.control.Gradient</span></code></a> objects.
 These will not only provide the parsed numerical values of the energies and gradients organized
 in lists, but also offer some methods for analysing and plotting the data. For example the
 evolution of the energy during the steps of a geometry optimization can be obtained with:</p>
@@ -278,20 +284,20 @@ evolution of the energy during the steps of a geometry optimization can be obtai
 <a class="reference internal image-reference" href="_images/energy_geopt.png"><img alt="energy" class="align-center" src="_images/energy_geopt.png" style="width: 500px;" /></a>
 <p>Another important method is <code class="docutils literal notranslate"><span class="pre">get_shells</span></code> that extracts the list of occupied shells
 divided according to the irreducible representation from the the <code class="docutils literal notranslate"><span class="pre">alpha/beta/closed</span> <span class="pre">shells</span></code>
-data groups and generate an instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.control.Shells</span></code> object.
+data groups and generate an instance of the <a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.control.Shells" title="turbomoleio.core.control.Shells"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.control.Shells</span></code></a> object.
 This is used to generate the list of occupied states.</p>
 <p>Finally we mention the <code class="docutils literal notranslate"><span class="pre">cpc</span></code> that reproduces the <code class="docutils literal notranslate"><span class="pre">cpc</span></code> script command available in
 TURBOMOLE. Note that this does not call the original script, but it is a python implementation
 that reproduces a similar effect.</p>
-<p>It should also be noted that the <code class="xref py py-mod docutils literal notranslate"><span class="pre">turbomoleio.core.control</span></code> module contains a set of functions
+<p>It should also be noted that the <a class="reference internal" href="api/turbomoleio.core.html#module-turbomoleio.core.control" title="turbomoleio.core.control"><code class="xref py py-mod docutils literal notranslate"><span class="pre">turbomoleio.core.control</span></code></a> module contains a set of functions
 that allow to directly access and modify a control file without passing explicitly through the object.
 The <code class="docutils literal notranslate"><span class="pre">sdg</span></code>, <code class="docutils literal notranslate"><span class="pre">kdg</span></code>, <code class="docutils literal notranslate"><span class="pre">cdg</span></code>, <code class="docutils literal notranslate"><span class="pre">sdgo</span></code>, <code class="docutils literal notranslate"><span class="pre">mdgo</span></code> and <code class="docutils literal notranslate"><span class="pre">cpc</span></code> functions read the file from
 the specified path and convert it to a <code class="docutils literal notranslate"><span class="pre">Control</span></code> object, apply the corresponding method
 and, if needed, directly write the modified version to the file system. Note that since these
 operations all use the <code class="docutils literal notranslate"><span class="pre">Control</span></code> object you will still have all the side effects of parsing
 a data group file mentioned above (e.g. removing the comments).</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
