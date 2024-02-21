@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Output logs parsing &mdash; turbomoleio 1.3.1 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=992bbb82"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -28,14 +30,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> turbomoleio
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            turbomoleio
           </a>
               <div class="version">
                 1.3.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -83,7 +89,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Output logs parsing</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/developer/parsing_logs.rst.txt" rel="nofollow"> View page source</a>
@@ -94,20 +100,20 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="output-logs-parsing">
+  <section id="output-logs-parsing">
 <span id="developer-parse-logs"></span><h1>Output logs parsing<a class="headerlink" href="#output-logs-parsing" title="Permalink to this heading"></a></h1>
 <p>Most of the details about how the parsing of log output files is explained in the
 <a class="reference internal" href="../output_parsing.html#parsing-outputs"><span class="std std-ref">Outputs parsing</span></a> section of the user guide. Here we will provide more information
 about the different objects involved and what are the constraints that should be
 followed to add the parsing of new quantities or of new types of outputs to the
 current implementation.</p>
-<p>Let us first have a more in-depth inspection of the <code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.output.parser.Parser</span></code>
+<p>Let us first have a more in-depth inspection of the <a class="reference internal" href="../api/turbomoleio.output.html#turbomoleio.output.parser.Parser" title="turbomoleio.output.parser.Parser"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.output.parser.Parser</span></code></a>
 object. The <code class="docutils literal notranslate"><span class="pre">Parser</span></code> takes the string of a TURBOMOLE log file as an input. It is then used to extract
 the relevant data information required for each Data or File object. The Parser is made of several
 parsing methods, each of which is in charge of parsing a specific portion of the log file.
 Some of the parsing methods are very specific to one type of calculation (e.g. only relevant for an escf
 output, or for a statpt output), while others are common to several of them (e.g.
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">turbomoleio.output.parser.Parser.basis()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">turbomoleio.output.parser.Parser.header()</span></code>).
+<a class="reference internal" href="../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.basis" title="turbomoleio.output.parser.Parser.basis"><code class="xref py py-meth docutils literal notranslate"><span class="pre">turbomoleio.output.parser.Parser.basis()</span></code></a>, <a class="reference internal" href="../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.header" title="turbomoleio.output.parser.Parser.header"><code class="xref py py-meth docutils literal notranslate"><span class="pre">turbomoleio.output.parser.Parser.header()</span></code></a>).
 Each parsing method returns a dictionary with the data parsed or <code class="docutils literal notranslate"><span class="pre">None</span></code> if the section to be parsed
 could not be found in the string. This dictionary is meant to be used by the Data and File objects
 during their instantiation.</p>
@@ -125,7 +131,7 @@ needed. This is usually because the outputs of TURBOMOLE do not have an organize
 and this allows to have a target specific lines of the output more easily.</p>
 <p>The information parsed with the <code class="docutils literal notranslate"><span class="pre">Parser</span></code> are meant to be used by the Data objects to create
 an instance. In particular all the Data and File objects are subclasses of the
-<code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.output.data.BaseData</span></code> abstract class. This has a single abstract method,
+<a class="reference internal" href="../api/turbomoleio.output.html#turbomoleio.output.data.BaseData" title="turbomoleio.output.data.BaseData"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.output.data.BaseData</span></code></a> abstract class. This has a single abstract method,
 <code class="docutils literal notranslate"><span class="pre">from_parser</span></code>, that should implemented by subclasses and should be able to create a new instance
 of the Data or File object from a <code class="docutils literal notranslate"><span class="pre">Parser</span></code> instance. The <code class="docutils literal notranslate"><span class="pre">BaseData</span></code> class provides a
 <code class="docutils literal notranslate"><span class="pre">from_string</span></code> and a <code class="docutils literal notranslate"><span class="pre">from_file</span></code> method that rely on <code class="docutils literal notranslate"><span class="pre">from_parser</span></code> to create an instance of
@@ -145,7 +151,7 @@ without the waste of parsing all the rest of the file.</p></li>
 other parsing methods. This is possible since the parsing methods for the different sections
 are isolated.</p></li>
 </ul>
-<div class="section" id="parsing-a-new-quantity">
+<section id="parsing-a-new-quantity">
 <span id="developer-parse-new-quantity"></span><h2>Parsing a new quantity<a class="headerlink" href="#parsing-a-new-quantity" title="Permalink to this heading"></a></h2>
 <p>If you want to start parsing a new quantity for one of the types of log files that are already
 handled you should proceed from the bottom up. First check if the quantity that you want to parse
@@ -175,8 +181,8 @@ be missing). If instead you change or remove one of the existing attributes the 
 data will not be deserialized anymore. Backward compatibility changes as these should
 be though carefully and agreed upon by the community of users.</p>
 </div>
-</div>
-<div class="section" id="parsing-a-new-type-of-log">
+</section>
+<section id="parsing-a-new-type-of-log">
 <h2>Parsing a new type of log<a class="headerlink" href="#parsing-a-new-type-of-log" title="Permalink to this heading"></a></h2>
 <p>When parsing the output provided by an executable that is not supported by the current
 version of turbomoleio you should proceed in a similar manner as when
@@ -192,8 +198,8 @@ The same recommendations given in the previous sections hold here as well.</p>
 dictionary. This will be used as a reference to decide which File object to use when
 running a specific executable. In particular it will be used in the unit tests, as
 explained below.</p>
-</div>
-<div class="section" id="tests">
+</section>
+<section id="tests">
 <h2>Tests<a class="headerlink" href="#tests" title="Permalink to this heading"></a></h2>
 <p>For the main discussion concerning the testing in turbomoleio you should refer to the
 <a class="reference internal" href="testing.html#developer-testing"><span class="std std-ref">Testing</span></a> section of this developer guide. However, given the particular
@@ -212,7 +218,7 @@ If instead you are adding one or more new methods to the <code class="docutils l
 to the list in <code class="xref py py-data docutils literal notranslate"><span class="pre">turbomoleio.output.tests.test_parser.parser_methods</span></code>.</p>
 <p>In case you need to generate the reference JSON file again, maybe because you have modified
 one of the existing <code class="docutils literal notranslate"><span class="pre">Parser</span></code>’s method or because you added a new one, you can use the
-<code class="xref py py-func docutils literal notranslate"><span class="pre">turbomoleio.output.tests.test_parser.generate_files()</span></code> helper function. This will
+<a class="reference internal" href="../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_parser.generate_files" title="turbomoleio.output.tests.test_parser.generate_files"><code class="xref py py-func docutils literal notranslate"><span class="pre">turbomoleio.output.tests.test_parser.generate_files()</span></code></a> helper function. This will
 generate a new JSON and <strong>overwrite the old one</strong> for all the files and methods that have
 been given in input. So you should be extremely careful when running it, since the generated
 files will become the new reference. If a bug is introduced in the <code class="docutils literal notranslate"><span class="pre">Parser</span></code>, the reference
@@ -228,13 +234,13 @@ to a dictionary and compared with the reference stored in the corresponding JSON
 <code class="docutils literal notranslate"><span class="pre">testfiles</span></code> folder and in the list in <code class="xref py py-data docutils literal notranslate"><span class="pre">turbomoleio.output.tests.test_files.files_list</span></code>.
 In addition if you want to add a new type of File object you should either add it to the
 <code class="xref py py-data docutils literal notranslate"><span class="pre">turbomoleio.outputs.files.exec_to_out_obj</span></code> or make it available in the
-<code class="xref py py-func docutils literal notranslate"><span class="pre">turbomoleio.output.tests.test_files.cls_dict_path()</span></code> fixture (follow the example
+<a class="reference internal" href="../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_files.cls_dict_path" title="turbomoleio.output.tests.test_files.cls_dict_path"><code class="xref py py-func docutils literal notranslate"><span class="pre">turbomoleio.output.tests.test_files.cls_dict_path()</span></code></a> fixture (follow the example
 in the case of <code class="docutils literal notranslate"><span class="pre">EscfOnlyOutput</span></code> there).</p>
 <p>A function to generate the reference JSON files similar to the one described above is available:
-<code class="xref py py-func docutils literal notranslate"><span class="pre">turbomoleio.output.tests.test_files.generate_files()</span></code>. The same warnings of dealing
+<a class="reference internal" href="../api/turbomoleio.output.tests.html#turbomoleio.output.tests.test_files.generate_files" title="turbomoleio.output.tests.test_files.generate_files"><code class="xref py py-func docutils literal notranslate"><span class="pre">turbomoleio.output.tests.test_files.generate_files()</span></code></a>. The same warnings of dealing
 with it carefully should be kept in mind here as well.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

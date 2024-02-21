@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The coord file &mdash; turbomoleio 1.3.1 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=992bbb82"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -28,14 +30,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> turbomoleio
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            turbomoleio
           </a>
               <div class="version">
                 1.3.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -81,7 +87,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">The coord file</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/coord.rst.txt" rel="nofollow"> View page source</a>
@@ -92,7 +98,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="the-coord-file">
+  <section id="the-coord-file">
 <h1>The coord file<a class="headerlink" href="#the-coord-file" title="Permalink to this heading"></a></h1>
 <p>In TURBOMOLE the coord file mainly contains the coordinates and the types of the atoms
 of the molecule that should be simulated. These information can be stored in
@@ -100,16 +106,16 @@ of the molecule that should be simulated. These information can be stored in
 of data, stored in different data groups, that provide further information
 about the geometry of the molecule, more precisely on the dynamic during a geometry
 optimization. For this reason in turbomoleio the <code class="docutils literal notranslate"><span class="pre">coord</span></code> file is represented
-through a <code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.molecule.MoleculeSystem</span></code> object. This has methods
+through a <a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem" title="turbomoleio.core.molecule.MoleculeSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.molecule.MoleculeSystem</span></code></a> object. This has methods
 to read and generate a <code class="docutils literal notranslate"><span class="pre">coord</span></code> file that can be read by TURBOMOLE. Other file formats
 can be written taking advantage of the conversion from <code class="docutils literal notranslate"><span class="pre">Molecule</span></code>, but the output will be
 limited to the geometry of the molecule.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>TURBOMOLE is also capable of performing periodic calculations (1, 2 or 3-dimensional).
-The <code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.molecule.MoleculeSystem</span></code> object is only used for isolated
+The <a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem" title="turbomoleio.core.molecule.MoleculeSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.molecule.MoleculeSystem</span></code></a> object is only used for isolated
 systems, i.e. molecules. For periodic systems, the
-<code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.periodic.PeriodicSystem</span></code> should be used.
+<a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.periodic.PeriodicSystem" title="turbomoleio.core.periodic.PeriodicSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.periodic.PeriodicSystem</span></code></a> should be used.
 See <a class="reference internal" href="#periodic-systems"><span class="std std-ref">Periodic systems</span></a> below for more information.</p>
 </div>
 <p>Internally the <code class="docutils literal notranslate"><span class="pre">MoleculeSystem</span></code> stores the geometry of the molecule using a
@@ -137,9 +143,9 @@ is done internally and you should always use 0-based indices in the python code.
 </div>
 <p>An important and more complicated attribute is <code class="docutils literal notranslate"><span class="pre">int_def</span></code> that, if present, is used to
 fill the <code class="docutils literal notranslate"><span class="pre">$intdef</span></code> data group in the <code class="docutils literal notranslate"><span class="pre">coord</span></code> file. The attribute should be a list of
-internal coordinates given as subclasses of <code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.molecule.InternalDefinition</span></code>.
+internal coordinates given as subclasses of <a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.molecule.InternalDefinition" title="turbomoleio.core.molecule.InternalDefinition"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.molecule.InternalDefinition</span></code></a>.
 Each subclass define a type of internal variable as defined from TURBOMOLE. For example the
-<code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.molecule.Distance</span></code> represent an internal variable of type <code class="docutils literal notranslate"><span class="pre">stre</span></code>.
+<a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.molecule.Distance" title="turbomoleio.core.molecule.Distance"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.molecule.Distance</span></code></a> represent an internal variable of type <code class="docutils literal notranslate"><span class="pre">stre</span></code>.
 For the internal definitions that are most commonly used (<code class="docutils literal notranslate"><span class="pre">stre</span></code>, <code class="docutils literal notranslate"><span class="pre">bend</span></code> and <code class="docutils literal notranslate"><span class="pre">tors</span></code>) helper
 methods are provided in <code class="docutils literal notranslate"><span class="pre">MoleculeSystem</span></code> to append additional internal definition to an existing
 instance. For example the following python code:</p>
@@ -181,7 +187,7 @@ but in general this would be more useful to define a few of them and call <code 
 the <code class="docutils literal notranslate"><span class="pre">ired</span></code> option to let it generate a complete list of redundant internal coordinates. Given its
 potentially complicated structure, the <code class="docutils literal notranslate"><span class="pre">$redundant</span></code> data group is never parsed nor stored when
 reading a <code class="docutils literal notranslate"><span class="pre">coord</span></code> file that contains it.</p>
-<div class="section" id="periodic-systems">
+<section id="periodic-systems">
 <span id="id1"></span><h2>Periodic systems<a class="headerlink" href="#periodic-systems" title="Permalink to this heading"></a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -189,11 +195,11 @@ reading a <code class="docutils literal notranslate"><span class="pre">coord</sp
 change without prior notice.</p>
 </div>
 <p>For periodic systems, the <code class="docutils literal notranslate"><span class="pre">coord</span></code> file and the periodicity is represented
-through a <code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.periodic.PeriodicSystem</span></code> object. This has methods
+through a <a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.periodic.PeriodicSystem" title="turbomoleio.core.periodic.PeriodicSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.periodic.PeriodicSystem</span></code></a> object. This has methods
 to read and generate a <code class="docutils literal notranslate"><span class="pre">coord</span></code> file that can be read by TURBOMOLE, as well as the corresponding
 periodic attributes.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
