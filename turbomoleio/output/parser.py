@@ -2366,7 +2366,20 @@ class Parser:
         rot = {}
         rot_lines = split2[0].splitlines()
 
-        rot["dipole_moment"] = [convert_float(f) for f in rot_lines[1].split()]
+        line1 = rot_lines[1].strip()
+        if line1.startswith("norm"):
+            # Example output in TM versions >=7.7:
+            #  dipole moment in principle axis system (a.u.) :     0.0000000000     0.0000000000     0.8330302255  # noqa: E501
+            #  norm :  0.8330302255
+            rot["dipole_moment"] = [
+                convert_float(f) for f in rot_lines[0].split(":")[1].split()
+            ]
+        else:
+            # Example output in TM versions < 7.7:
+            #  dipole moment in principle axis system (a.u.) :
+            #     -0.0000000000     0.0000000000     0.8436248828
+            #  norm :  0.843624882772472
+            rot["dipole_moment"] = [convert_float(f) for f in rot_lines[1].split()]
         b = None
         rot_intensities = None
         m = None
@@ -2375,7 +2388,17 @@ class Parser:
             if line.startswith("b ") and "cm" in line:
                 s = line.split()
                 b = [convert_float(s[i]) for i in (2, 3, 4)]
-            if line.startswith("int."):
+            if line.startswith("int.") or (line.startswith("b") and "(a.u.)" in line):
+                # Weird new output for the intensities from TM >= 7.7:
+                #  b   :    28.3859581012     9.7579343128    14.8694417457   (cm**(-1))
+                #
+                #  b   :  ***************  ***************  ***************     (MHz)
+                #
+                #  b   :     0.0000000000     0.0000000000     0.6939393566     (a.u.)
+                # While this was before TM 7.7:
+                #  b   :    28.3859581012     9.7579343128    14.8694417457   (cm**(-1))
+                #  b   :      850989.6152      292535.5113      445774.6490     (MHz)
+                # int. :     0.0000000000     0.0000000000     0.6939393566     (a.u.)
                 s = line.split()
                 rot_intensities = [convert_float(s[i]) for i in (2, 3, 4)]
             if line.startswith("x "):
