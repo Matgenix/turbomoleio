@@ -34,7 +34,7 @@ import pandas as pd
 from monty.json import MSONable
 from pymatgen.core.structure import Molecule
 from pymatgen.core.units import bohr_to_ang
-from pymatgen.util.plotting import add_fig_kwargs, get_ax_fig_plt
+from pymatgen.util.plotting import add_fig_kwargs
 
 from turbomoleio.output.parser import Parser
 
@@ -655,7 +655,14 @@ class ScfIterationData(BaseData):
         Returns:
             A matplotlib Figure.
         """
-        ax, fig, plt = get_ax_fig_plt(ax=ax)
+        try:
+            from pymatgen.util.plotting import get_ax_fig_plt
+
+            ax, fig, plt = get_ax_fig_plt(ax=ax)
+        except ImportError:
+            from pymatgen.util.plotting import get_ax_fig
+
+            ax, fig = get_ax_fig(ax=ax)
 
         ax.plot(range(len(self.energies)), self.energies, **kwargs)
         ax.set_xlabel("Steps")
