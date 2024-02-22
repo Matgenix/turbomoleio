@@ -1544,11 +1544,39 @@ class Parser:
         if match is not None:
             d["max_treated_vectors"] = convert_int(match.group().split()[-1])
 
+        # In TM versions < 7.7, IRREP's block is like:
+        #          IRREP   tensor space dimension   number of roots
+        #
+        #           a1               24                  12
+        #           a2                9                   9
+        #           b1               19                  12
+        #           b2               13                  12
+        #
+        # maximum number of Davidson iterations set to   35
+        #
+        #
+        # machine precision: 2.22D-16
+        #
+        # While in TM versions >= 7.7, the "maximum number of Davidson" disappeared:
+        #          IRREP   tensor space dimension   number of roots
+        #
+        #           a1                 24                     12
+        #           a2                  9                      9
+        #           b1                 19                     12
+        #           b2                 13                     12
+        #
+        # machine precision: 2.22D-16
         r = (
             r"IRREP\s+tensor\s+space\s+dimension\s+number\s+of\s+roots(.+)"
             r"maximum number of Davidson"
         )
         match = re.search(r, match_str, re.DOTALL)
+        if match is None:
+            r = (
+                r"IRREP\s+tensor\s+space\s+dimension\s+number\s+of\s+roots(.+)"
+                r"machine precision:"
+            )
+            match = re.search(r, match_str, re.DOTALL)
         if match is not None:
             irrep_data = {}
             for line in match.group(1).splitlines():
