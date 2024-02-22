@@ -60,8 +60,9 @@ $freeze
  implicit core=    1 virt=    0
 $cbas    file=auxbasis
 $ricc2
-  adc(2)
-  geoopt model=adc(2)    state=(x)
+    adc(2)
+    geoopt model=adc(2)  state=(x)
+    maxiter = 100
 $ricore      500
 $rij
 $jkbas    file=auxbasis

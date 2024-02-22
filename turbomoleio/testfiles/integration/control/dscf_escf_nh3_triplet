@@ -57,8 +57,8 @@ $soes
  e           10
 $denconv 1d-7
 $dft
-   functional b-p
-   gridsize   m3
+    functional   b-p
+    gridsize   m3
 $scfconv   7
 $rundimensions
    natoms=4

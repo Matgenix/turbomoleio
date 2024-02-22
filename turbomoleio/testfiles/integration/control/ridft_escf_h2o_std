@@ -62,8 +62,8 @@ $soes
  b2          12
 $denconv 1d-7
 $dft
-   functional b-p
-   gridsize   m3
+    functional   b-p
+    gridsize   m3
 $scfconv   7
 $ricore      500
 $rij
