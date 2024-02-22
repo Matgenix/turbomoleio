@@ -1545,6 +1545,8 @@ class Parser:
             d["max_treated_vectors"] = convert_int(match.group().split()[-1])
 
         # In TM versions < 7.7, IRREP's block is like:
+        #  dimension of super-tensorspace: 1
+        #
         #          IRREP   tensor space dimension   number of roots
         #
         #           a1               24                  12
@@ -1557,7 +1559,10 @@ class Parser:
         #
         # machine precision: 2.22D-16
         #
-        # While in TM versions >= 7.7, the "maximum number of Davidson" disappeared:
+        # While in TM versions >= 7.7, the "maximum number of Davidson" disappeared
+        # (it actually went somewhere else in the output file), so the blocks is like:
+        #  dimension of super-tensorspace: 1
+        #
         #          IRREP   tensor space dimension   number of roots
         #
         #           a1                 24                     12
@@ -1566,29 +1571,26 @@ class Parser:
         #           b2                 13                     12
         #
         # machine precision: 2.22D-16
+        #
+        # => Matching regex using the line before the IRREPs ("dimension of super...").
+
         r = (
-            r"IRREP\s+tensor\s+space\s+dimension\s+number\s+of\s+roots(.+)"
-            r"maximum number of Davidson"
+            r"dimension\s+of\s+super-tensorspace:\s+\d\s+"
+            r"IRREP\s+tensor\s+space\s+dimension\s+number\s+of\s+roots\s*\n\s*"
+            r"(\S+\s+\d+\s+\d+\s*\n\s*)+\n"
         )
+
         match = re.search(r, match_str, re.DOTALL)
-        if match is None:
-            r = (
-                r"IRREP\s+tensor\s+space\s+dimension\s+number\s+of\s+roots(.+)"
-                r"machine precision:"
-            )
-            match = re.search(r, match_str, re.DOTALL)
         if match is not None:
             irrep_data = {}
-            for line in match.group(1).splitlines():
-                line = line.strip()
-                if not line:
-                    continue
-                split = line.split()
-                irrep_data[split[0]] = {
-                    "tensor_space_dim": convert_int(split[1]),
-                    "n_roots": convert_int(split[2]),
-                }
 
+            line_pattern = re.compile(r"\s*(\S+)\s+(\d+)\s+(\d+)\s*")
+            for line_match in line_pattern.finditer(match.group(0)):
+                irrep_name, tensor_space_dim, n_roots = line_match.groups()
+                irrep_data[irrep_name] = {
+                    "tensor_space_dim": convert_int(tensor_space_dim),
+                    "n_roots": convert_int(n_roots),
+                }
             d["irrep_data"] = irrep_data
 
         return d
