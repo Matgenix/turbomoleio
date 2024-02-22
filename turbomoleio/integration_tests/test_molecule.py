@@ -38,7 +38,7 @@ from turbomoleio.core.molecule import (
     OutOfPlaneAngle,
     PerpendicularBendingAngle,
 )
-from turbomoleio.input.define import DefineRunner
+from turbomoleio.input.define import DefineIredError, DefineRunner
 from turbomoleio.testfiles.utils import assert_MSONable, temp_dir
 
 dr_parameters = dict(ired=True)
@@ -49,7 +49,16 @@ dr_parameters = dict(ired=True)
 @pytest.mark.parametrize("molecule_filename", ["ch4.json"])
 class TestMoleculeSystem:
     def test_distance(self, molecule, control_filepath, delete_tmp_dir):
-        ms = MoleculeSystem(molecule, frozen_indices={2, 3})
+        # Having frozen cartesian coordinates AND internal coordinates frozen
+        # is (currently) not supported by Turbomole. Before version 7.7,
+        # the define executable would still allow to update the internal
+        # coordinates, but then the Turbomole executable (e.g. dscf, ridft, ...)
+        # would anyway fail. For Turbomole >= 7.7, define directly forbids to
+        # freeze cartesian and internal coordinates.
+        # A new integration test checks that.
+        # ms = MoleculeSystem(molecule, frozen_indices={2, 3})
+        ms = MoleculeSystem(molecule)
+
         ms.add_distance(0, 1, weights=1.0, value=2.5)
         assert ms.has_inconsistencies()
 
@@ -82,6 +91,19 @@ class TestMoleculeSystem:
             assert str(ms_new.int_def[0])
 
             assert_MSONable(ms_new)
+
+    def test_distance_frozen_cart_int(self, molecule, control_filepath, delete_tmp_dir):
+        ms = MoleculeSystem(molecule, frozen_indices={2, 3})
+
+        ms.add_distance(0, 1, weights=1.0, value=2.5)
+        assert ms.has_inconsistencies()
+        with temp_dir(delete_tmp_dir):
+            ms.to_file("coord", fmt="coord")
+            shutil.copy2(control_filepath, "control")
+            dr = DefineRunner(parameters=dr_parameters)
+            # This raises for Turbomole version >= 7.7.
+            with pytest.raises(DefineIredError):
+                dr.run_update_internal_coords()
 
     def test_distance_no_val(self, molecule, control_filepath, delete_tmp_dir):
         ms = MoleculeSystem(molecule)

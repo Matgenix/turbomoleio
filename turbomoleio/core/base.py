@@ -89,7 +89,7 @@ def get_mol_and_indices_frozen(
     # with the final f meaning that the coordinate is frozen.
     for line in lines:
         s = line.split()
-        if not s or s[0].startswith("#"):
+        if not s or s[0].startswith("#") or s[0].strip().startswith("natoms="):
             continue
         iatom += 1
         coords.append([float(i) * bohr_to_ang for i in s[0:3]])
