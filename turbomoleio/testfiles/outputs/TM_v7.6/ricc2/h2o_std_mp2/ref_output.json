@@ -1,0 +1,37 @@
+{
+  "@module": "turbomoleio.output.files",
+  "@class": "Ricc2Output",
+  "@version": "1.3.0",
+  "mp2": {
+    "@module": "turbomoleio.output.data",
+    "@class": "MP2Results",
+    "@version": "1.3.0",
+    "energy": -76.1252418683
+  },
+  "run": {
+    "@module": "turbomoleio.output.data",
+    "@class": "RunData",
+    "@version": "1.3.0",
+    "host": "frontal3",
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2023-01-25 00:21:53.996000"
+    },
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2023-01-25 00:21:57.366000"
+    },
+    "cpu_time": 0.35,
+    "wall_time": 3.41
+  },
+  "tm": {
+    "@module": "turbomoleio.output.data",
+    "@class": "TurbomoleData",
+    "@version": "1.3.0",
+    "version": "7.6",
+    "build": null,
+    "executable": "ricc2"
+  }
+}
