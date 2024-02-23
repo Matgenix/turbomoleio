@@ -1,0 +1,76 @@
+$symmetry c1 n
+$user-defined bonds    file=coord
+$coord    file=coord
+$optimize
+ internal   off
+ redundant  off
+ cartesian  on
+ global     off
+ basis      off
+$atoms
+li 1                                                                           \
+   basis =li SV(P)
+h  2                                                                           \
+   basis =h SV(P)
+$basis    file=basis
+$scfmo   file=mos
+$scfiterlimit      200
+$thize     0.10000000E-04
+$thime        5
+$scfdamp   start=0.300  step=0.050  min=0.100
+$scfdump
+$scfintunit
+ unit=30       size=0        file=twoint
+$scfdiis
+$maxcor    500 MiB  per_core
+$scforbitalshift  automatic=.1
+$drvopt
+   cartesian  on
+   basis      off
+   global     off
+   hessian    on
+   dipole     on
+   nuclear polarizability
+$interconversion  off
+   qconv=1.d-7
+   maxiter=25
+$coordinateupdate
+   dqmax=0.3
+   interpolate  on
+   statistics    5
+$forceupdate
+   ahlrichs numgeo=0  mingeo=3 maxgeo=4 modus=<g|dq> dynamic fail=0.3
+   threig=0.005  reseig=0.005  thrbig=3.0  scale=1.00  damping=0.0
+$forceinit on
+   diag=default
+$energy    file=energy
+$grad    file=gradient
+$forceapprox    file=forceapprox
+$dft
+   functional b-p
+   gridsize   m3
+$rundimensions
+   natoms=2
+   nbf(CAO)=8
+   nbf(AO)=8
+$last step     define
+$periodic 3
+$cell
+   5.345185132166401   5.345185132166401   5.345185132166402   60.0 60.0 60.0
+$kpoints
+   nkpoints 1 1 1
+$riper
+   lmaxmom 3
+   sigma 0.01
+   nctrgt 3
+   wsicl 2.0
+   epsbext 1.0d-2
+   thrints 1.0d-8
+   lenonly on
+$optcell
+$scfconv 3
+$title
+dscf
+$closed shells
+ a       1-2                                    ( 2 )
+$end

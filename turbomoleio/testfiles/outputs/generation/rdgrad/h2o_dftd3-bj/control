@@ -1,3 +1,5 @@
+$title
+ridft
 $symmetry c1
 $redundant    file=coord
 $user-defined bonds    file=coord
@@ -17,6 +19,8 @@ h  2-3                                                                         \
    jbas  =h def-SV(P)
 $basis    file=basis
 $scfmo   file=mos
+$closed shells
+ a       1-5                                    ( 2 )
 $scfiterlimit      200
 $thize     0.10000000E-04
 $thime        5
@@ -50,8 +54,8 @@ $energy    file=energy
 $grad    file=gradient
 $forceapprox    file=forceapprox
 $dft
-   functional b-p
-   gridsize   m3
+    functional   b-p
+    gridsize   m3
 $ricore      500
 $rij
 $jbas    file=auxbasis
@@ -62,8 +66,4 @@ $rundimensions
 $last step     define
 $disp3 bj
 $scfconv 8
-$title
-ridft
-$closed shells
- a       1-5                                    ( 2 )
 $end

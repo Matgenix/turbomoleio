@@ -1,3 +1,5 @@
+$title
+dscf_escf
 $symmetry c1
 $redundant    file=coord
 $user-defined bonds    file=coord
@@ -18,6 +20,8 @@ br 5                                                                           \
    basis =br def-SV(P)
 $basis    file=basis
 $scfmo   file=mos
+$closed shells
+ a       1-22                                   ( 2 )
 $scfiterlimit      200
 $thize     0.10000000E-04
 $thime        5
@@ -54,17 +58,12 @@ $soes
  a           10
 $denconv 1d-7
 $dft
-   functional b-p
-   gridsize   m3
+    functional   b-p
+    gridsize   m3
 $scfconv   7
 $rundimensions
    natoms=5
    nbf(CAO)=56
    nbf(AO)=52
 $last step     define
-$maxcor    500 MiB  per_core
-$title
-dscf_escf
-$closed shells
- a       1-22                                   ( 2 )
 $end

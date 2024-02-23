@@ -1,0 +1,190 @@
+
+ mpgrad (fedora) : TURBOMOLE rev. V7-7-1 compiled 3 Feb 2023 at 10:04:44
+ Copyright (C) 2023 TURBOMOLE GmbH, Karlsruhe
+
+
+    2024-02-23 14:24:33.584 
+
+
+
+                             m p g r a d - program
+
+                  F.Haase & R.Ahlrichs (JCompChem 14(1993)907)
+               restructured and UMP2 added: M.Kollwitz (1995/6)
+                     parallel version: G.Corongiu (1997) 
+            symmetry: M.Haeser,J.Almloef,M.Feyereisen (TCA 79(1991)115)
+     energy: R.Ahlrichs,M.Baer,M.Haeser,H.Horn,C.Koelmel (CPL 162(1989)165)
+
+                            quantum chemistry group
+                             university  karlsruhe
+                                   germany
+
+
+  you specified                     11  scratch files in the control file
+
+
+              +--------------------------------------------------+
+              | Atomic coordinate, charge and isotop information |
+              +--------------------------------------------------+
+
+                    atomic coordinates            atom    charge  isotop
+          0.00000000    0.00000000   -0.72557892    o      8.000     0
+          1.41713421    0.00000000    0.36278946    h      1.000     0
+         -1.41713421    0.00000000    0.36278946    h      1.000     0
+ 
+       center of nuclear mass  :    0.00000000    0.00000000   -0.60378908
+       center of nuclear charge:    0.00000000    0.00000000   -0.50790525
+
+              +--------------------------------------------------+
+              |               basis set information              |
+              +--------------------------------------------------+
+
+              we will work with the 1s 3p 5d 7f 9g ... basis set
+              ...i.e. with spherical basis functions...
+
+   type   atoms  prim   cont   basis
+   ---------------------------------------------------------------------------
+    o        1     24     14   def-SV(P)   [3s2p1d|7s4p1d]
+    h        2      4      2   def-SV(P)   [2s|4s]
+   ---------------------------------------------------------------------------
+   total:    3     32     18
+   ---------------------------------------------------------------------------
+
+   total number of primitive shells          :   16
+   total number of contracted shells         :   10
+   total number of cartesian basis functions :   19
+   total number of SCF-basis functions       :   18
+
+
+ MAXIMUM CORE MEMORY WHICH CAN BE ALLOCATED DYNAMICALLY =  500 Mbytes
+              ( or   65536000 double words )
+
+
+ symmetry group of the molecule :   c1 
+
+ the group has the following generators :
+   c1(z)
+
+    1 symmetry operations found
+
+ there are 1 real representations :   a   
+
+ maximum number of shells which are related by symmetry :  1
+
+
+ determining totally symmetric integral contributions 
+    - equivalent to irreducible tensor elements - 
+ which can be formed within each quadruple of representations :
+
+             representation quadruple      contributions
+
+   1   1       a     a     a     a               1
+
+
+ total number of totally symmetric contributions    :       1
+ total number of non-equal integral types           :       1
+ total number of non-zero  integral types           :       1
+ t.number of mat.elements of symmetrizing projectors:       1
+ total number of back-transformation matrix elements:       1
+
+    mo occupation :
+   irrep   mo's   occupied
+    a       18        5
+ 
+ number of basis functions   :    18
+ number of occupied orbitals :     5
+ 
+  MOs are in ASCII format !
+
+
+ reading orbital data $scfmo  from file mos
+ orbital characterization : scfconv=7
+ time elapsed for calculating density matrices :   0.000 sec
+ 
+
+ freezing orbitals : 
+ frozen occupied orbitals:
+     1 a     -20.540108 H
+
+ number of non-frozen orbitals          :    17
+ number of non-frozen occupied orbitals :     4
+
+ biggest AO integral is expected to be     4.776656448
+ sqrt of biggest ao-integral is expected to be      2.1855563    
+
+ number of basis function pairs which contribute 
+ to half-transformed integrals is expected to be :       189
+  iloop=                     1
+ 
+            MULTIPLE PASS Statistics 
+ ----------------------------------------------------
+  pass       irrep     lambda      batch : MO  to  MO
+ ----------------------------------------------------
+   1       1  ->  1    1  ->  4             1  ->   4
+
+
+ **************************************************************
+ RESULTING NUMBER OF INTEGRAL AND DERIVATIVE EVALUATIONS   1
+ **************************************************************
+ 
+ 
+ -----------------------------------------------
+            PASS :   1
+ -----------------------------------------------
+
+ record length scale factor =        8
+
+
+ actual number of basis function pairs which contr. 
+ to half-transformed integrals is                :       189
+
+ cpu for first half-transformation                          0.03 s
+
+ cpu for second half-transformation                         0.00 s
+
+ cpu for calculation of T2-amplitudes                       0.00 s
+
+            Largest euclidian normes of T2 (for fixed ij)
+            ---------------------------------------------
+                [ i   j ]      norm[ T2(ij) ]
+            ---------------------------------------------
+                  3   2       0.09012660497532
+                  4   3       0.08813098175525
+                  4   2       0.08729150163713
+                  2   2       0.07119945957103
+                  3   3       0.06548673106349
+ 
+
+            Largest T2 amplitudes 
+            ---------------------------------------------
+                [ i   j   a   b ]          T2(ij,ab)
+            ---------------------------------------------
+                  4   3  10   9       0.06127357411345
+                  4   2  11   9       0.04899917953767
+                  4   4   9   9       0.04716366216689
+                  4   2   6   9       0.04302003570567
+                  3   2  11  10       0.04300241961681
+ 
+
+             *****************************************************
+             *                                                   *
+             *      SCF-energy   :     -75.93831931312000        *
+             *      MP2-energy   :      -0.18709123810377        *
+             *      total        :     -76.12541055122378        *
+             *                                                   *
+             *     (MP2-energy evaluated from T2 amplitudes)     *
+             *                                                   *
+             *****************************************************
+
+
+
+    ------------------------------------------------------------------------
+         total  cpu-time :   0.03 seconds
+         total wall-time :   0.03 seconds
+    ------------------------------------------------------------------------
+
+   ****  mpgrad : all done  ****
+
+
+    2024-02-23 14:24:33.602 
+

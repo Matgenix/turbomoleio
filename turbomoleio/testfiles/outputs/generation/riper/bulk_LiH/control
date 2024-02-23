@@ -1,4 +1,6 @@
-$symmetry c1 n
+$title
+dscf
+$symmetry c1
 $user-defined bonds    file=coord
 $coord    file=coord
 $optimize
@@ -14,6 +16,8 @@ h  2                                                                           \
    basis =h SV(P)
 $basis    file=basis
 $scfmo   file=mos
+$closed shells
+ a       1-2                                    ( 2 )
 $scfiterlimit      200
 $thize     0.10000000E-04
 $thime        5
@@ -47,8 +51,8 @@ $energy    file=energy
 $grad    file=gradient
 $forceapprox    file=forceapprox
 $dft
-   functional b-p
-   gridsize   m3
+    functional   b-p
+    gridsize   m3
 $rundimensions
    natoms=2
    nbf(CAO)=8
@@ -69,8 +73,4 @@ $riper
    lenonly on
 $optcell
 $scfconv 3
-$title
-dscf
-$closed shells
- a       1-2                                    ( 2 )
 $end

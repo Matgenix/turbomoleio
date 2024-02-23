@@ -1,3 +1,5 @@
+$title
+ridft_escf
 $symmetry c1
 $user-defined bonds    file=coord
 $coord    file=coord
@@ -18,6 +20,10 @@ $basis    file=basis
 $uhfmo_alpha   file=alpha
 $uhfmo_beta   file=beta
 $uhf
+$alpha shells
+ a       1-16                                   ( 1 )
+$beta shells
+ a       1-15                                   ( 1 )
 $scfiterlimit      200
 $thize     0.10000000E-04
 $thime        5
@@ -53,8 +59,8 @@ $soes
  a           10
 $denconv 1d-7
 $dft
-   functional b-p
-   gridsize   m3
+    functional   b-p
+    gridsize   m3
 $scfconv   7
 $scforbitalshift  closedshell=.05
 $ricore      500
@@ -67,11 +73,4 @@ $rundimensions
 $last step     define
 $cosmo
 $cosmo_out = out.cosmo
-$maxcor    500 MiB  per_core
-$title
-ridft_escf
-$alpha shells
- a       1-16                                   ( 1 )
-$beta shells
- a       1-15                                   ( 1 )
 $end

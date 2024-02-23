@@ -1,3 +1,5 @@
+$title
+jobex_mp2_dscf_mpgrad_cosmo_nosym
 $symmetry c1
 $redundant    file=coord
 $user-defined bonds    file=coord
@@ -18,6 +20,8 @@ h  2-3                                                                         \
    cbas  =h def-SV(P)
 $basis    file=basis
 $scfmo   file=mos
+$closed shells
+ a       1-5                                    ( 2 )
 $scfiterlimit      200
 $scfconv        7
 $thize     0.10000000E-04
@@ -56,8 +60,8 @@ $freeze
  implicit core=    1 virt=    0
 $cbas    file=auxbasis
 $ricc2
-  mp2
-  geoopt model=mp2       state=(x)
+    mp2
+    geoopt model=mp2  state=(x)
 $rundimensions
    natoms=3
    nbf(CAO)=19
@@ -65,8 +69,4 @@ $rundimensions
 $last step     define
 $cosmo
 $cosmo_out = out.cosmo
-$title
-jobex_mp2_dscf_mpgrad_cosmo_nosym
-$closed shells
- a       1-5                                    ( 2 )
 $end

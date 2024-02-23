@@ -1,3 +1,5 @@
+$title
+dscf
 $symmetry c1
 $user-defined bonds    file=coord
 $coord    file=coord
@@ -16,6 +18,8 @@ h  5-10                                                                        \
    basis =h def-TZVP
 $basis    file=basis
 $scfmo   file=mos
+$closed shells
+ a       1-16                                   ( 2 )
 $scfiterlimit      200
 $thize     0.10000000E-04
 $thime        5
@@ -49,8 +53,8 @@ $energy    file=energy
 $grad    file=gradient
 $forceapprox    file=forceapprox
 $dft
-   functional b-p
-   gridsize   m3
+    functional   b-p
+    gridsize   m3
 $scfconv   7
 $rundimensions
    natoms=10
@@ -58,8 +62,4 @@ $rundimensions
    nbf(AO)=112
 $last step     define
 $disp3
-$title
-dscf
-$closed shells
- a       1-16                                   ( 2 )
 $end
