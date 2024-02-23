@@ -1363,7 +1363,12 @@ class Parser:
             bool.
         """
         # "mode" appears in dscf and escf, while "modus" in ridft and grad.
-        is_uhf = re.search("UHF (mode|modus) switched on", self.string) is not None
+        # "UHF mode switched on" has also disappeared in TM >= 7.7. Checking from
+        # "RPA UHF-EXCITATION-CALCULATION" instead.
+        is_uhf = (
+            re.search("UHF (mode|modus) switched on", self.string) is not None
+            or re.search("RPA UHF-EXCITATION-CALCULATION", self.string) is not None
+        )
         return is_uhf
 
     @lazy_property

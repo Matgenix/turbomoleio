@@ -132,7 +132,7 @@
     }
   },
   "s2": null,
-  "is_uhf": false,
+  "is_uhf": true,
   "fermi": null,
   "integral": {
     "integral_neglect_threshold": 2.9e-11,
