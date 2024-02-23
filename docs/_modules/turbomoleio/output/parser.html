@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>turbomoleio.output.parser &mdash; turbomoleio 1.4.0 documentation</title>
+  <title>turbomoleio.output.parser &mdash; turbomoleio 1.5.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,7 +14,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=b308ce55"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=c2dd840c"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -34,7 +34,7 @@
             turbomoleio
           </a>
               <div class="version">
-                1.4.0
+                1.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -1458,7 +1458,12 @@
 <span class="sd">            bool.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># &quot;mode&quot; appears in dscf and escf, while &quot;modus&quot; in ridft and grad.</span>
-        <span class="n">is_uhf</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;UHF (mode|modus) switched on&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="c1"># &quot;UHF mode switched on&quot; has also disappeared in TM &gt;= 7.7. Checking from</span>
+        <span class="c1"># &quot;RPA UHF-EXCITATION-CALCULATION&quot; instead.</span>
+        <span class="n">is_uhf</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;UHF (mode|modus) switched on&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">or</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;RPA UHF-EXCITATION-CALCULATION&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">is_uhf</span></div>
 
 <div class="viewcode-block" id="Parser.fermi"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.fermi">[docs]</a>    <span class="nd">@lazy_property</span>
@@ -1639,23 +1644,53 @@
         <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">d</span><span class="p">[</span><span class="s2">&quot;max_treated_vectors&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
+        <span class="c1"># In TM versions &lt; 7.7, IRREP&#39;s block is like:</span>
+        <span class="c1">#  dimension of super-tensorspace: 1</span>
+        <span class="c1">#</span>
+        <span class="c1">#          IRREP   tensor space dimension   number of roots</span>
+        <span class="c1">#</span>
+        <span class="c1">#           a1               24                  12</span>
+        <span class="c1">#           a2                9                   9</span>
+        <span class="c1">#           b1               19                  12</span>
+        <span class="c1">#           b2               13                  12</span>
+        <span class="c1">#</span>
+        <span class="c1"># maximum number of Davidson iterations set to   35</span>
+        <span class="c1">#</span>
+        <span class="c1">#</span>
+        <span class="c1"># machine precision: 2.22D-16</span>
+        <span class="c1">#</span>
+        <span class="c1"># While in TM versions &gt;= 7.7, the &quot;maximum number of Davidson&quot; disappeared</span>
+        <span class="c1"># (it actually went somewhere else in the output file), so the blocks is like:</span>
+        <span class="c1">#  dimension of super-tensorspace: 1</span>
+        <span class="c1">#</span>
+        <span class="c1">#          IRREP   tensor space dimension   number of roots</span>
+        <span class="c1">#</span>
+        <span class="c1">#           a1                 24                     12</span>
+        <span class="c1">#           a2                  9                      9</span>
+        <span class="c1">#           b1                 19                     12</span>
+        <span class="c1">#           b2                 13                     12</span>
+        <span class="c1">#</span>
+        <span class="c1"># machine precision: 2.22D-16</span>
+        <span class="c1">#</span>
+        <span class="c1"># =&gt; Matching regex using the line before the IRREPs (&quot;dimension of super...&quot;).</span>
+
         <span class="n">r</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="sa">r</span><span class="s2">&quot;IRREP\s+tensor\s+space\s+dimension\s+number\s+of\s+roots(.+)&quot;</span>
-            <span class="sa">r</span><span class="s2">&quot;maximum number of Davidson&quot;</span>
+            <span class="sa">r</span><span class="s2">&quot;dimension\s+of\s+super-tensorspace:\s+\d\s+&quot;</span>
+            <span class="sa">r</span><span class="s2">&quot;IRREP\s+tensor\s+space\s+dimension\s+number\s+of\s+roots\s*\n\s*&quot;</span>
+            <span class="sa">r</span><span class="s2">&quot;(\S+\s+\d+\s+\d+\s*\n\s*)+\n&quot;</span>
         <span class="p">)</span>
+
         <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">match_str</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">irrep_data</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
-                <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
-                    <span class="k">continue</span>
-                <span class="n">split</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-                <span class="n">irrep_data</span><span class="p">[</span><span class="n">split</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
-                    <span class="s2">&quot;tensor_space_dim&quot;</span><span class="p">:</span> <span class="n">convert_int</span><span class="p">(</span><span class="n">split</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
-                    <span class="s2">&quot;n_roots&quot;</span><span class="p">:</span> <span class="n">convert_int</span><span class="p">(</span><span class="n">split</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
-                <span class="p">}</span>
 
+            <span class="n">line_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\s*(\S+)\s+(\d+)\s+(\d+)\s*&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">line_match</span> <span class="ow">in</span> <span class="n">line_pattern</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)):</span>
+                <span class="n">irrep_name</span><span class="p">,</span> <span class="n">tensor_space_dim</span><span class="p">,</span> <span class="n">n_roots</span> <span class="o">=</span> <span class="n">line_match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+                <span class="n">irrep_data</span><span class="p">[</span><span class="n">irrep_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;tensor_space_dim&quot;</span><span class="p">:</span> <span class="n">convert_int</span><span class="p">(</span><span class="n">tensor_space_dim</span><span class="p">),</span>
+                    <span class="s2">&quot;n_roots&quot;</span><span class="p">:</span> <span class="n">convert_int</span><span class="p">(</span><span class="n">n_roots</span><span class="p">),</span>
+                <span class="p">}</span>
             <span class="n">d</span><span class="p">[</span><span class="s2">&quot;irrep_data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">irrep_data</span>
 
         <span class="k">return</span> <span class="n">d</span></div>
@@ -2461,7 +2496,20 @@
         <span class="n">rot</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">rot_lines</span> <span class="o">=</span> <span class="n">split2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
 
-        <span class="n">rot</span><span class="p">[</span><span class="s2">&quot;dipole_moment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">convert_float</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">rot_lines</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
+        <span class="n">line1</span> <span class="o">=</span> <span class="n">rot_lines</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">line1</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;norm&quot;</span><span class="p">):</span>
+            <span class="c1"># Example output in TM versions &gt;=7.7:</span>
+            <span class="c1">#  dipole moment in principle axis system (a.u.) :     0.0000000000     0.0000000000     0.8330302255  # noqa: E501</span>
+            <span class="c1">#  norm :  0.8330302255</span>
+            <span class="n">rot</span><span class="p">[</span><span class="s2">&quot;dipole_moment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">convert_float</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">rot_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Example output in TM versions &lt; 7.7:</span>
+            <span class="c1">#  dipole moment in principle axis system (a.u.) :</span>
+            <span class="c1">#     -0.0000000000     0.0000000000     0.8436248828</span>
+            <span class="c1">#  norm :  0.843624882772472</span>
+            <span class="n">rot</span><span class="p">[</span><span class="s2">&quot;dipole_moment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">convert_float</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">rot_lines</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
         <span class="n">b</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">rot_intensities</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">m</span> <span class="o">=</span> <span class="kc">None</span>
@@ -2470,7 +2518,17 @@
             <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;b &quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;cm&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
                 <span class="n">s</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
                 <span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="n">convert_float</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
-            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;int.&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;int.&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;(a.u.)&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">):</span>
+                <span class="c1"># Weird new output for the intensities from TM &gt;= 7.7:</span>
+                <span class="c1">#  b   :    28.3859581012     9.7579343128    14.8694417457   (cm**(-1))</span>
+                <span class="c1">#</span>
+                <span class="c1">#  b   :  ***************  ***************  ***************     (MHz)</span>
+                <span class="c1">#</span>
+                <span class="c1">#  b   :     0.0000000000     0.0000000000     0.6939393566     (a.u.)</span>
+                <span class="c1"># While this was before TM 7.7:</span>
+                <span class="c1">#  b   :    28.3859581012     9.7579343128    14.8694417457   (cm**(-1))</span>
+                <span class="c1">#  b   :      850989.6152      292535.5113      445774.6490     (MHz)</span>
+                <span class="c1"># int. :     0.0000000000     0.0000000000     0.6939393566     (a.u.)</span>
                 <span class="n">s</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
                 <span class="n">rot_intensities</span> <span class="o">=</span> <span class="p">[</span><span class="n">convert_float</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
             <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;x &quot;</span><span class="p">):</span>
