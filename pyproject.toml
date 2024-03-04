@@ -5,6 +5,10 @@ description = """\
     Turbomoleio is a python package containing a set of tools \
     for the generation of inputs and parsing of outputs for \
     TURBOMOLE."""
+long_description = """\
+    Turbomoleio is a python package containing a set of tools \
+    for the generation of inputs and parsing of outputs for \
+    TURBOMOLE."""
 authors = ["davidwaroquiers <david.waroquiers@matgenix.com>"]
 license = "GPL V3"
 #packages = [
