@@ -2,13 +2,10 @@
 name = "turbomoleio"
 version = "1.4.0"
 description = """\
-    Turbomoleio is a python package containing a set of tools \
-    for the generation of inputs and parsing of outputs for \
-    TURBOMOLE."""
-long_description = """\
-    Turbomoleio is a python package containing a set of tools \
-    for the generation of inputs and parsing of outputs for \
-    TURBOMOLE."""
+Turbomoleio is a python package containing a set of tools \
+for the generation of inputs and parsing of outputs for \
+TURBOMOLE."""
+readme = "README.rst"
 authors = ["davidwaroquiers <david.waroquiers@matgenix.com>"]
 license = "GPL V3"
 #packages = [
