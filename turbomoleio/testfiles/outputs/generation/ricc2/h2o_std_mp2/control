@@ -21,8 +21,6 @@ h  2-3                                                                         \
    jkbas =h def-SV(P)
 $basis    file=basis
 $scfmo   file=mos
-$closed shells
- a       1-5                                    ( 2 )
 $scfiterlimit      200
 $scfconv        7
 $thize     0.10000000E-04
@@ -72,4 +70,8 @@ $rundimensions
    nbf(CAO)=19
    nbf(AO)=18
 $last step     define
+$title
+ridft_rimp2
+$closed shells
+ a       1-5                                    ( 2 )
 $end

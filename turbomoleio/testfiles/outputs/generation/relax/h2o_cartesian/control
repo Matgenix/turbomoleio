@@ -1,5 +1,3 @@
-$title
-dscf
 $symmetry c1
 $redundant    file=coord
 $user-defined bonds    file=coord
@@ -19,10 +17,6 @@ $basis    file=basis
 $uhfmo_alpha   file=alpha
 $uhfmo_beta   file=beta
 $uhf
-$alpha shells
- a       1-5                                    ( 1 )
-$beta shells
- a       1-4                                    ( 1 )
 $scfiterlimit      200
 $thize     0.10000000E-04
 $thime        5
@@ -64,4 +58,10 @@ $rundimensions
    nbf(CAO)=19
    nbf(AO)=18
 $last step     define
+$title
+dscf
+$alpha shells
+ a       1-5                                    ( 1 )
+$beta shells
+ a       1-4                                    ( 1 )
 $end
