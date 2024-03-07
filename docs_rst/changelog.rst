@@ -24,6 +24,26 @@
 Changelog
 =========
 
+Release 1.5.0 (Mar XX, 2024)
+============================
+
+* Update of reference test files for Turbomole version 7.7.1.
+* Checked consistency of package with Turbomole version 7.7.1.
+* Documentation updated.
+
+Developer changes
+-----------------
+
+* Switch to src layout.
+* Moved tests from the src code to a tests directory.
+* Switch from poetry to setuptools.
+
+Release 1.4.0 (Mar 4, 2024)
+============================
+
+* Update of reference test files for Turbomole version 7.6.
+* Checked consistency of package with Turbomole version 7.6.
+* Documentation updated.
 
 Release 1.3.0 (Feb 24, 2022)
 ============================
