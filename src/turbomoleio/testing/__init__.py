@@ -105,9 +105,6 @@ def get_test_data_dir(module=None):
     return found_paths[0]
 
 
-TEST_DATA = get_test_data_dir(__file__)
-
-
 def get_tests_configs_tm_versions(test_data_dir):
     """Get the test configs for all supported tm versions."""
     from monty.serialization import loadfn
@@ -713,7 +710,7 @@ def get_tfp(file_name=None):
         return tfp / file_name
 
 
-def get_sp(struc, test_data=TEST_DATA):
+def get_sp(struc, test_data=None):
     """
     Get the path to a structure in the testfiles/structures folder.
 
@@ -723,10 +720,11 @@ def get_sp(struc, test_data=TEST_DATA):
     Returns:
         str: the absolute path to the coord file.
     """
+    test_data = test_data or get_test_data_dir(__file__)
     return test_data / "structures" / struc
 
 
-def get_control_integration(filename, test_data=TEST_DATA):
+def get_control_integration(filename, test_data=None):
     """
     Get the path to a reference control file.
 
@@ -738,6 +736,7 @@ def get_control_integration(filename, test_data=TEST_DATA):
     Returns:
         str: the absolute path to the coord file.
     """
+    test_data = test_data or get_test_data_dir(__file__)
     return test_data / "integration" / "control" / filename
 
 
@@ -783,7 +782,7 @@ def run_itest(
     file_classes,
     arguments=None,
     datagroups_options=None,
-    test_data=TEST_DATA,
+    test_data=None,
 ):
     """
     Run the integration tests.
@@ -814,6 +813,7 @@ def run_itest(
     Returns:
         bool: True if the test passed successfully
     """
+    test_data = test_data or get_test_data_dir(__file__)
     if not isinstance(executables, (list, tuple)):
         executables = [executables]
 
