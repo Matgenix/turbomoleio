@@ -87,7 +87,9 @@ class TestFunctions(object):
         dpath = get_tfp()
         assert os.path.isdir(dpath)
         cpath = get_control_integration("dscf", test_data=test_data)
-        assert cpath == get_tfp(os.path.join("integration", "control", "dscf"))
+        assert cpath == get_tfp(
+            os.path.join("integration", "control", "dscf"), test_data=test_data
+        )
 
     def test_assert_almost_equal(self):
         d1 = {"a": 1}

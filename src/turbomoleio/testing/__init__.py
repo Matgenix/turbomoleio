@@ -691,7 +691,7 @@ def has_matplotlib():
         return False
 
 
-def get_tfp(file_name=None):
+def get_tfp(file_name=None, test_data=None):
     """
     Get test file path.
 
@@ -703,11 +703,11 @@ def get_tfp(file_name=None):
         The full path if a file is given or the path of the testfile directory
         if file_name is None.
     """
-    tfp = get_test_data_dir()
+    test_data = test_data or get_test_data_dir(__file__)
     if file_name is None:
-        return tfp
+        return test_data
     else:
-        return tfp / file_name
+        return test_data / file_name
 
 
 def get_sp(struc, test_data=None):
