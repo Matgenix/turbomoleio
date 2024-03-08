@@ -79,12 +79,12 @@ class TestFunctions(object):
         """
         tesing the test file provider tool
         """
-        fpath = get_tfp(os.path.join("structures", "methanol"))
+        fpath = get_tfp(os.path.join("structures", "methanol"), test_data=test_data)
         assert os.path.isfile(fpath)
         spath = get_sp("methanol", test_data=test_data)
         assert os.path.isfile(spath)
         assert fpath == spath
-        dpath = get_tfp()
+        dpath = get_tfp(test_data=test_data)
         assert os.path.isdir(dpath)
         cpath = get_control_integration("dscf", test_data=test_data)
         assert cpath == get_tfp(
