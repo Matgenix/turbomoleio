@@ -75,18 +75,18 @@ class TestFunctions(object):
         m = MSONableExample(1, 2)
         assert_MSONable(m)
 
-    def test_get_tfp(self):
+    def test_get_tfp(self, test_data):
         """
         tesing the test file provider tool
         """
         fpath = get_tfp(os.path.join("structures", "methanol"))
         assert os.path.isfile(fpath)
-        spath = get_sp("methanol")
+        spath = get_sp("methanol", test_data=test_data)
         assert os.path.isfile(spath)
         assert fpath == spath
         dpath = get_tfp()
         assert os.path.isdir(dpath)
-        cpath = get_control_integration("dscf")
+        cpath = get_control_integration("dscf", test_data=test_data)
         assert cpath == get_tfp(os.path.join("integration", "control", "dscf"))
 
     def test_assert_almost_equal(self):

@@ -713,7 +713,7 @@ def get_tfp(file_name=None):
         return tfp / file_name
 
 
-def get_sp(struc):
+def get_sp(struc, test_data=TEST_DATA):
     """
     Get the path to a structure in the testfiles/structures folder.
 
@@ -723,10 +723,10 @@ def get_sp(struc):
     Returns:
         str: the absolute path to the coord file.
     """
-    return TEST_DATA / "structures" / struc
+    return test_data / "structures" / struc
 
 
-def get_control_integration(filename):
+def get_control_integration(filename, test_data=TEST_DATA):
     """
     Get the path to a reference control file.
 
@@ -738,7 +738,7 @@ def get_control_integration(filename):
     Returns:
         str: the absolute path to the coord file.
     """
-    return TEST_DATA / "integration" / "control" / filename
+    return test_data / "integration" / "control" / filename
 
 
 class ItestConfig:
@@ -783,6 +783,7 @@ def run_itest(
     file_classes,
     arguments=None,
     datagroups_options=None,
+    test_data=TEST_DATA,
 ):
     """
     Run the integration tests.
@@ -834,7 +835,7 @@ def run_itest(
 
     with temp_dir(ItestConfig.delete_tmp_dir):
         # get the coord file (for the structure defined in the string)
-        shutil.copyfile(get_sp(coord_filename), "coord")
+        shutil.copyfile(get_sp(coord_filename, test_data=test_data), "coord")
 
         dr = DefineRunner(define_options, timeout=opt_define_timeout)
         define_out = dr.run_full()
@@ -850,17 +851,27 @@ def run_itest(
             c.to_file()
 
         if opt_generate_ref:  # pragma: no cover
-            shutil.copy2("control", get_control_integration(control_reference_filename))
+            shutil.copy2(
+                "control",
+                get_control_integration(
+                    control_reference_filename, test_data=test_data
+                ),
+            )
 
         ref_control = Control.from_file(
-            get_control_integration(control_reference_filename)
+            get_control_integration(control_reference_filename, test_data=test_data)
         )
 
         current_control = Control.from_file("control")
         compare_control = current_control.compare(ref_control, tol=opt_tol)
         if ItestConfig.dryrun_use_ref_control:
             shutil.copy("control", "control_generated")
-            shutil.copy(get_control_integration(control_reference_filename), "control")
+            shutil.copy(
+                get_control_integration(
+                    control_reference_filename, test_data=test_data
+                ),
+                "control",
+            )
         # print the output of Control.compare if the compare fails
         if opt_dryrun and compare_control is not None:
             dryrun_differences.append(("control", compare_control))
@@ -904,7 +915,7 @@ def run_itest(
                     else:
                         out = out_parser.from_string(program_std_out).as_dict()
                     out_ref_path = (
-                        TEST_DATA
+                        test_data
                         / "integration"
                         / "logs_json"
                         / "{}_{}.json".format(control_reference_filename, executable)
@@ -930,7 +941,7 @@ def run_itest(
                 e = c.energy
                 if e is not None:
                     e_ref_path = (
-                        TEST_DATA
+                        test_data
                         / "integration"
                         / "energy"
                         / "{}_{}.json".format(control_reference_filename, executable)
@@ -956,7 +967,7 @@ def run_itest(
                 g = c.gradient
                 if g is not None:
                     g_ref_path = (
-                        TEST_DATA
+                        test_data
                         / "integration"
                         / "gradient"
                         / "{}_{}.json".format(control_reference_filename, executable)

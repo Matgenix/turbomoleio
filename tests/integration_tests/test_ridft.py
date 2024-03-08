@@ -34,7 +34,7 @@ structures = ["h2o", "nh3"]
 @pytest.mark.integration
 class TestRidft:
     @pytest.mark.parametrize("structure", structures)
-    def test_run_ridft(self, structure):
+    def test_run_ridft(self, structure, test_data):
 
         assert run_itest(
             "ridft",
@@ -42,20 +42,26 @@ class TestRidft:
             structure,
             "ridft_{}_std".format(structure),
             ScfOutput,
+            test_data=test_data,
         )
 
     @pytest.mark.parametrize("structure", structures)
-    def test_run_ridft_rijk(self, structure):
+    def test_run_ridft_rijk(self, structure, test_data):
         define_opt = get_define_template("ridft")
         define_opt["ri"] = False
         define_opt["rijk"] = True
 
         assert run_itest(
-            "ridft", define_opt, structure, "ridft_{}_rik".format(structure), ScfOutput
+            "ridft",
+            define_opt,
+            structure,
+            "ridft_{}_rik".format(structure),
+            ScfOutput,
+            test_data=test_data,
         )
 
     @pytest.mark.parametrize("structure", structures)
-    def test_run_ridft_marij(self, structure):
+    def test_run_ridft_marij(self, structure, test_data):
         define_opt = get_define_template("ridft")
         define_opt["ri"] = True
         define_opt["marij"] = True
@@ -66,10 +72,11 @@ class TestRidft:
             structure,
             "ridft_{}_marij".format(structure),
             ScfOutput,
+            test_data=test_data,
         )
 
     @pytest.mark.parametrize("structure", structures)
-    def test_run_ridft_fermi(self, structure):
+    def test_run_ridft_fermi(self, structure, test_data):
         define_opt = get_define_template("ridft")
         define_opt["ri"] = False
         define_opt["rijk"] = True
@@ -82,4 +89,5 @@ class TestRidft:
             "ridft_{}_fermi".format(structure),
             ScfOutput,
             datagroups_options=datagroups_options,
+            test_data=test_data,
         )
