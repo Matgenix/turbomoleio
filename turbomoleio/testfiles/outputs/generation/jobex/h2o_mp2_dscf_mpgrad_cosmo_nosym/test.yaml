@@ -1,0 +1,25 @@
+# Define parameters are taken
+#  - from a template
+#  - from the explicit parameters
+#  - from a template and explicit parameters overriding those in the template
+define:
+  template: "dscf"
+  parameters:
+    desy: False
+    ired: True
+    method: mp2
+    title: jobex_mp2_dscf_mpgrad_cosmo_nosym
+    use_cosmo: True
+
+# Data groups to add to or change in the control file after running define
+#datagroups:
+#  add:
+#    disp3: 'bj'
+#  change:
+#    scfconv: '8'
+
+# List of TM commands to be run
+commands:
+  - dscf
+  - "mp2prep -g"
+  - "jobex -level mp2"

@@ -23,3 +23,5 @@ commands:
   - dscf
   - "mp2prep -g"
   - "jobex -level mp2"
+
+disable: True # disable starting from v7.6 because TM does not support gradients aalculations with symmetries and COSMO anymore

@@ -1,0 +1,210 @@
+{
+  "all_done": true,
+  "header": {
+    "executable": "ridft",
+    "host": "frontal3",
+    "tm_version": "7.6",
+    "tm_build": null,
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2023-01-25 00:22:05.878000"
+    }
+  },
+  "centers": {
+    "center_of_mass": [
+      0.0,
+      0.0,
+      -0.60378908
+    ],
+    "center_of_charge": [
+      0.0,
+      0.0,
+      -0.50790525
+    ]
+  },
+  "coordinates": {
+    "coords": [
+      [
+        0.0,
+        0.0,
+        -0.72557892
+      ],
+      [
+        1.41713421,
+        0.0,
+        0.36278946
+      ],
+      [
+        -1.41713421,
+        0.0,
+        0.36278946
+      ]
+    ],
+    "species": [
+      "o",
+      "h",
+      "h"
+    ],
+    "charges": [
+      8.0,
+      1.0,
+      1.0
+    ],
+    "isotopes": [
+      0,
+      0,
+      0
+    ]
+  },
+  "basis": {
+    "basis_per_specie": {
+      "o": "def-SV(P)",
+      "h": "def-SV(P)"
+    },
+    "aux_basis_per_specie": {
+      "o": "def-SV(P)",
+      "h": "def-SV(P)"
+    },
+    "number_scf_basis_func": 18,
+    "number_scf_aux_basis_func": 47
+  },
+  "symmetry": {
+    "symbol": "c1",
+    "n_reps": 1,
+    "reps": [
+      "a"
+    ]
+  },
+  "cosmo_header": null,
+  "density_functional_data": {
+    "functional_msg": "B-P86 functional\n exchange:    LDA + Becke (B88)\n correlation: LDA (VWN) + Perdew (P86)",
+    "functional_name": "b-p",
+    "functional_type": "GGA",
+    "xcfun": null,
+    "spherical_gridsize": 3,
+    "gridpoints": 302
+  },
+  "rij_info": {
+    "marij": true,
+    "rij_memory": 1,
+    "rik": false,
+    "ricore": 500
+  },
+  "dftd": {
+    "correction": "D2",
+    "en_corr": -3.4691e-05
+  },
+  "pre_scf_run": {
+    "diis": true,
+    "diis_error_vect": "FDS-SDF",
+    "conv_tot_en": 1e-07,
+    "conv_one_e_en": 0.0001,
+    "virtual_orbital_shift_on": true,
+    "virtual_orbital_shift_limit": 0.1,
+    "orbital_characterization": "expanded",
+    "restart_file": "mos",
+    "n_occupied_orbitals": 5
+  },
+  "scf_iterations": {
+    "energies": [
+      -76.143984807101,
+      -76.317816923608,
+      -76.337678025158,
+      -76.342530285717,
+      -76.342755527926,
+      -76.34276301244,
+      -76.342763176485,
+      -76.343040873323
+    ],
+    "first_index": 1,
+    "n_steps": 8,
+    "dampings": [
+      0.3,
+      0.25,
+      0.2,
+      0.25,
+      0.3,
+      0.15,
+      0.1,
+      0.15
+    ],
+    "converged": true
+  },
+  "scf_energies": {
+    "total_energy": -76.34304087332,
+    "kinetic_energy": 75.98693877248,
+    "potential_energy": -152.32997964581,
+    "virial_theorem": 1.99533550017,
+    "wavefunction_norm": 1.0
+  },
+  "cosmo_results": null,
+  "electrostatic_moments": {
+    "unrestricted_electrons": null,
+    "charge": -0.0,
+    "dipole": {
+      "norm": 0.833,
+      "moment": [
+        0.0,
+        -0.0,
+        0.83303
+      ]
+    },
+    "quadrupole": {
+      "trace": -13.841021999999999,
+      "anisotropy": 2.063359,
+      "moment": [
+        [
+          -3.238776,
+          0.0,
+          -0.0
+        ],
+        [
+          0.0,
+          -5.263831,
+          -0.0
+        ],
+        [
+          -0.0,
+          -0.0,
+          -5.338416
+        ]
+      ]
+    }
+  },
+  "timings": {
+    "cpu_time": 0.18,
+    "wall_time": 1.03,
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2023-01-25 00:22:06.849000"
+    }
+  },
+  "s2": null,
+  "is_uhf": false,
+  "fermi": null,
+  "integral": {
+    "integral_neglect_threshold": 1.8e-10,
+    "thize": 1e-05,
+    "thime": 5
+  },
+  "pre_escf_run": null,
+  "escf_iterations": null,
+  "escf_gs_total_en": null,
+  "escf_excitations": null,
+  "rdgrad_memory": null,
+  "gradient": null,
+  "egrad_excited_state": null,
+  "statpt_info": null,
+  "relax_info": null,
+  "relax_gradient_values": null,
+  "relax_conv_info": null,
+  "aoforce_numerical_integration": null,
+  "aoforce_analysis": null,
+  "mp2_results": {
+    "energy": null
+  },
+  "riper_scf_energies": null,
+  "periodicity_data": null
+}
