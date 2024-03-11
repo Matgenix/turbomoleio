@@ -530,6 +530,8 @@ class TestControl(object):
             shutil.copy2(test_data / "control" / "control_test-energy", "control")
 
             c = Control.from_file()
+            e = c.energy
+            assert len(e.scf) == 1
 
             with pytest.raises(ValueError):
                 c.remove_last_energy(filename=None)
@@ -541,6 +543,18 @@ class TestControl(object):
 
             with pytest.raises(RuntimeError):
                 c.remove_last_energy()
+
+        with temp_dir(delete_tmp_dir):
+            shutil.copy2(test_data / "control" / "control_test-energy", "control")
+
+            c = Control.from_file()
+            e = c.energy
+            assert len(e.scf) == 1
+
+            c.remove_last_energy(backup_suffix=None)
+            assert os.listdir(".") == ["control"]
+            e = c.energy
+            assert len(e.scf) == 0
 
     def test_remove_gradient(self, test_data, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
@@ -570,6 +584,8 @@ class TestControl(object):
             shutil.copy2(test_data / "control" / "control_test-gradient", "control")
 
             c = Control.from_file()
+            g = c.gradient
+            assert len(g.gradients) == 1
 
             with pytest.raises(ValueError):
                 c.remove_last_gradient(filename=None)
@@ -581,6 +597,18 @@ class TestControl(object):
 
             with pytest.raises(RuntimeError):
                 c.remove_last_gradient()
+
+        with temp_dir(delete_tmp_dir):
+            shutil.copy2(test_data / "control" / "control_test-gradient", "control")
+
+            c = Control.from_file()
+            g = c.gradient
+            assert len(g.gradients) == 1
+
+            c.remove_last_gradient(backup_suffix=None)
+            assert os.listdir(".") == ["control"]
+            g = c.gradient
+            assert len(g.gradients) == 0
 
     def test_from_metric(self):
         c = Control.from_metric(2)
@@ -714,6 +742,15 @@ class TestDatagroupFunctions(object):
                 matches = re.findall(r"\$operating system unix", s, re.MULTILINE)
                 assert matches == ["$operating system unix"]
 
+        with temp_dir(delete_tmp_dir):
+            shutil.copy2(control_filepath, "control")
+            with open("control") as f:
+                s = f.read()
+                matches = re.findall(r"\$operating system unix", s, re.MULTILINE)
+                assert matches == ["$operating system unix"]
+            kdg("operating system", backup_file=None)
+            assert os.listdir(".") == ["control"]
+
     def test_adg(self, control_filepath, delete_tmp_dir):
 
         with temp_dir(delete_tmp_dir):
@@ -735,6 +772,20 @@ class TestDatagroupFunctions(object):
                 s = f.read()
                 matches = re.findall(r"\$scfconv 6", s, re.MULTILINE)
                 assert matches == []
+
+        with temp_dir(delete_tmp_dir):
+            shutil.copy2(control_filepath, "control")
+            with open("control") as f:
+                s = f.read()
+                matches = re.findall(r"\$scfconv 6", s, re.MULTILINE)
+                assert matches == []
+            adg("scfconv", "6", backup_file=None)
+            assert os.listdir(".") == ["control"]
+
+            with open("control") as f:
+                s = f.read()
+                matches = re.findall(r"\$scfconv 6", s, re.MULTILINE)
+                assert matches == ["$scfconv 6"]
 
     def test_cdg(self, control_filepath, delete_tmp_dir):
 
@@ -760,6 +811,23 @@ class TestDatagroupFunctions(object):
                 matches = re.findall(r"\$operating system unix", s, re.MULTILINE)
                 assert matches == ["$operating system unix"]
                 matches = re.findall(r"\$operating system windows", s, re.MULTILINE)
+                assert matches == []
+
+        with temp_dir(delete_tmp_dir):
+            shutil.copy2(control_filepath, "control")
+            with open("control") as f:
+                s = f.read()
+                matches = re.findall(r"\$operating system unix", s, re.MULTILINE)
+                assert matches == ["$operating system unix"]
+
+            cdg("operating system", "windows", backup_file=None)
+            assert os.listdir(".") == ["control"]
+
+            with open("control") as f:
+                s = f.read()
+                matches = re.findall(r"\$operating system windows", s, re.MULTILINE)
+                assert matches == ["$operating system windows"]
+                matches = re.findall(r"\$operating system unix", s, re.MULTILINE)
                 assert matches == []
 
     def test_mdgo(self, control_filepath, delete_tmp_dir):
