@@ -24,7 +24,7 @@ sys.path.insert(
 
 about = {}
 with open(
-    os.path.join(os.path.dirname(__file__), "..", "turbomoleio", "__version__.py"), "r"
+    os.path.join(os.path.dirname(__file__), "..", "src", "turbomoleio", "_version.py"), "r"
 ) as f:
     exec(f.read(), about)  # nosec
 
