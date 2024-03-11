@@ -160,7 +160,7 @@ class Energy(MSONable):
         try:
             from pymatgen.util.plotting import get_ax_fig_plt
 
-            ax, fig, plt = get_ax_fig_plt(ax=ax)
+            ax, fig, plt = get_ax_fig_plt(ax=ax)  # pragma: no cover (old pymatgen)
         except ImportError:
             from pymatgen.util.plotting import get_ax_fig
 

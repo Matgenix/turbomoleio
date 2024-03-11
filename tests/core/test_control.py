@@ -140,7 +140,10 @@ class TestEnergy:
             assert_MSONable(energy)
 
             if has_matplotlib():
-                assert energy.plot(show=False)
+                import matplotlib.figure
+
+                fig = energy.plot(show=False)
+                assert isinstance(fig, matplotlib.figure.Figure)
 
 
 class TestGradient:
@@ -448,6 +451,28 @@ class TestControl(object):
         assert "rsolv" in dg
         assert "routf" in dg
         assert "cavity" in dg
+        assert "use_old_amat" not in dg
+
+        control.add_cosmo(
+            epsilon=0.1,
+            nppa=1,
+            nspa=1,
+            disex=0.1,
+            rsolv=0.1,
+            routf=0.1,
+            cavity="closed",
+            use_old_amat=True,
+        )
+
+        dg = control.show_data_group("$cosmo")
+        assert "epsilon" in dg
+        assert "nppa" in dg
+        assert "disex" in dg
+        assert "rsolv" in dg
+        assert "routf" in dg
+        assert "cavity" in dg
+        assert "use_old_amat" in dg
+        assert dg.count("epsilon") == 1
 
     def test_energy(self, test_data, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
