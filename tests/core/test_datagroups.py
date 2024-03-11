@@ -747,6 +747,10 @@ def test_compare(test_data):
     cc1 = DataGroups.from_file(test_data / "control" / "control_test-energy")
     cc2 = DataGroups.from_file(test_data / "control" / "control_test-energy")
     assert cc1.compare(cc2) is None
+    assert cc2.compare(cc1) is None
+    assert cc1.compare(cc2, return_all_diffs=True) is None
+    assert cc2.compare(cc1, return_all_diffs=True) is None
+    assert cc2.compare(cc1, ignored_dg=["inexistent_datagroup"]) is None
 
     dg_missing = cc2.dg_list.pop(0)
     assert dg_missing in cc1.compare(cc2)
@@ -776,3 +780,16 @@ def test_compare(test_data):
     assert "thize" in cc1.compare(cc2)
     assert "thize" in cc1.compare(cc2, tol=1e-6)
     assert cc1.compare(cc2, tol=1e-2) is None
+
+    cc2 = DataGroups.from_file(test_data / "control" / "control_test-energy")
+    cc2.kdg("symmetry")
+    assert (
+        cc2.compare(cc1)
+        == "Datagroup in the reference does not match to any of the current control: "
+        "$symmetry c2v\n"
+    )
+    assert (
+        cc2.compare(cc1, ignored_dg=["inexistent_datagroup"])
+        == "Datagroup in the reference does not match to any of the current control: "
+        "$symmetry c2v\n"
+    )
