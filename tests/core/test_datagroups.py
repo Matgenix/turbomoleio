@@ -754,6 +754,22 @@ def test_compare(test_data):
     cc2 = DataGroups.from_file(test_data / "control" / "control_test-energy")
     cc2.cdg("symmetry", "c1")
     assert "symmetry" in cc1.compare(cc2)
+    assert cc1.compare(cc2, ignored_dg=["symmetry"]) is None
+    assert cc1.compare(cc2, ignored_dg=["$symmetry"]) is None
+    assert cc2.compare(cc1, ignored_dg=["symmetry"]) is None
+    assert cc2.compare(cc1, ignored_dg=["$symmetry"]) is None
+
+    all_diffs = cc1.compare(cc2, return_all_diffs=True)
+    assert isinstance(all_diffs, list)
+    assert len(all_diffs) == 2
+    assert (
+        "Datagroup does not match to any of the references: $symmetry c2v\n"
+        in all_diffs
+    )
+    assert (
+        "Datagroup in the reference does not match to any of the current control: "
+        "$symmetry c1\n" in all_diffs
+    )
 
     cc2 = DataGroups.from_file(test_data / "control" / "control_test-energy")
     cc2.cdg("thize", "0.001")
