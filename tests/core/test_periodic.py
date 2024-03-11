@@ -117,6 +117,11 @@ class TestPeriodicSystem:
         ps = PeriodicSystem.from_file(structure_filepath)
         assert ps.structure == structure
 
+        with open(structure_filepath, "r") as f:
+            string = f.read()
+        ps = PeriodicSystem.from_string(string, fmt="json")
+        assert ps.structure == structure
+
     @pytest.mark.parametrize("control_filename", ["control_test-Control"])
     def test_from_file_control(self, control_filepath, delete_tmp_dir):
 
@@ -205,3 +210,19 @@ $end
             match=r"User-defined bonds for periodic systems is not supported.",
         ):
             PeriodicSystem.from_string(string)
+
+    @pytest.mark.parametrize("structure_filename", ["graphene.json"])
+    def test_to_coord_string(self, structure):
+        ps = PeriodicSystem(structure, periodicity=1)
+        coord_string = ps.to_coord_string()
+        dg = DataGroups(coord_string)
+        cell = dg.show_data_group("cell")
+        assert len(cell.split()) == 1
+        assert 0.529177249 * float(cell.strip()) == pytest.approx(structure.lattice.a)
+
+        ps.periodicity = 4
+        with pytest.raises(
+            ValueError,
+            match=r"Periodicity should be 1, 2 or 3 for use in riper calculations.",
+        ):
+            ps.to_coord_string()
