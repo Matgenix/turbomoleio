@@ -53,6 +53,10 @@ class PeriodicSystem(BaseSystem):
             periodicity (int): periodicity of the system when a Structure object
                 is given. Can be 1, 2, or 3.
         """
+        if not isinstance(structure, Structure):
+            raise ValueError(
+                "A Structure object should be provided for periodic systems."
+            )
         if not structure.is_ordered:
             raise ValueError("PeriodicSystem does not handle disordered structures.")
 
@@ -60,12 +64,9 @@ class PeriodicSystem(BaseSystem):
         if periodicity not in (1, 2, 3):
             raise ValueError(
                 "Periodicity should be 1, 2 or 3. For molecules (i.e. "
-                "periodicity = 0), use the MoleculeSystem)"
+                "periodicity = 0), use the MoleculeSystem."
             )
-        if not isinstance(structure, Structure):
-            raise ValueError(
-                "A Structure object should be provided for periodic systems."
-            )
+
         super().__init__(
             molecule_or_structure=structure,
             frozen_indices=frozen_indices,

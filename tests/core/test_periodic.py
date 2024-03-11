@@ -20,14 +20,39 @@
 # along with turbomoleio (see ~turbomoleio/COPYING). If not,
 # see <https://www.gnu.org/licenses/>.
 
+import shutil
+
 import pytest
 from pymatgen.core.structure import Structure
 
+from turbomoleio.core.control import kdg
 from turbomoleio.core.datagroups import DataGroups
 from turbomoleio.core.periodic import PeriodicSystem
+from turbomoleio.testing import assert_MSONable, temp_dir
 
 
 class TestPeriodicSystem:
+    @pytest.mark.parametrize("structure_filename", ["SiO2.json"])
+    def test_init(self, structure):
+        with pytest.raises(
+            ValueError,
+            match=r"A Structure object should be provided for periodic systems.",
+        ):
+            PeriodicSystem("notastructureobject")
+        with pytest.raises(
+            ValueError,
+            match=r"Periodicity should be 1, 2 or 3. "
+            r"For molecules \(i.e. periodicity = 0\), use the MoleculeSystem.",
+        ):
+            PeriodicSystem(structure, periodicity=4)
+        structure.replace_species({"Si": {"Ge": 0.5, "Si": 0.5}})
+        print(type(structure))
+        assert not structure.is_ordered
+        with pytest.raises(
+            ValueError, match=r"PeriodicSystem does not handle disordered structures."
+        ):
+            PeriodicSystem(structure)
+
     @pytest.mark.parametrize("structure_filename", ["SiO2.json"])
     def test_periodic_3d(self, structure):
         ps = PeriodicSystem(structure=structure)
@@ -81,3 +106,102 @@ class TestPeriodicSystem:
             structure_filepath, fmt="coord", periodic_extension=7.0
         )
         assert ps.structure.lattice.c == pytest.approx(7.0)
+
+    @pytest.mark.parametrize("structure_filename", ["SiO2_rotated.json"])
+    def test_msonable(self, structure):
+        ps = PeriodicSystem(structure=structure, periodicity=3)
+        assert_MSONable(ps)
+
+    @pytest.mark.parametrize("structure_filename", ["SiO2_rotated.json"])
+    def test_from_file_pymatgen(self, structure_filepath, structure):
+        ps = PeriodicSystem.from_file(structure_filepath)
+        assert ps.structure == structure
+
+    @pytest.mark.parametrize("control_filename", ["control_test-Control"])
+    def test_from_file_control(self, control_filepath, delete_tmp_dir):
+
+        with temp_dir(delete_tmp_dir):
+            shutil.copy2(control_filepath, "control")
+            kdg("coord")
+
+            with pytest.raises(
+                ValueError, match=r"The string does not contain \$coord!"
+            ):
+                PeriodicSystem.from_file("control", fmt="coord")
+
+    def test_from_string(self):
+        string = """
+$coord
+-0.00000004042336 2.69312551198194 0.00000000000000 c
+2.33231510895633 1.34656275599097 0.00000000000000 c
+$cell
+  4.664630258336029   4.664630258336029   120.00000085999999
+$end
+"""
+        with pytest.raises(
+            ValueError,
+            match=r"The \$periodic data group should be set for periodic systems.",
+        ):
+            PeriodicSystem.from_string(string)
+
+        string = """
+$coord
+-0.00000004042336 2.69312551198194 0.00000000000000 c
+2.33231510895633 1.34656275599097 0.00000000000000 c
+$periodic 2
+$end
+"""
+        with pytest.raises(
+            ValueError,
+            match=r"The \$cell or \$lattice data group should be set "
+            r"for periodic systems.",
+        ):
+            PeriodicSystem.from_string(string)
+        string = """
+$coord
+-0.00000004042336 2.69312551198194 0.00000000000000 c
+2.33231510895633 1.34656275599097 0.00000000000000 c
+$periodic 2
+$cell
+  4.664630258336029   4.664630258336029   120.00000085999999
+$lattice 1.0 1.0 1.0
+$end
+"""
+        with pytest.raises(
+            ValueError,
+            match=r"Only one of \$cell and \$lattice data group should be set "
+            r"for periodic systems.",
+        ):
+            PeriodicSystem.from_string(string)
+
+        string = """
+$coord
+-0.00000004042336 2.69312551198194 0.00000000000000 c
+2.33231510895633 1.34656275599097 0.00000000000000 c
+$periodic 2
+$cell
+  4.664630258336029   4.664630258336029   120.00000085999999
+$intdef abc
+$end
+"""
+        with pytest.raises(
+            ValueError,
+            match=r"Internal definitions for periodic systems is not supported.",
+        ):
+            PeriodicSystem.from_string(string)
+
+        string = """
+$coord
+-0.00000004042336 2.69312551198194 0.00000000000000 c
+2.33231510895633 1.34656275599097 0.00000000000000 c
+$periodic 2
+$cell
+  4.664630258336029   4.664630258336029   120.00000085999999
+$user-defined bonds abc
+$end
+"""
+        with pytest.raises(
+            ValueError,
+            match=r"User-defined bonds for periodic systems is not supported.",
+        ):
+            PeriodicSystem.from_string(string)
