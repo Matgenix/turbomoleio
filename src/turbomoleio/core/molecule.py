@@ -433,7 +433,7 @@ class MoleculeSystem(BaseSystem):
                 tol = ltol
             elif idef.coord_type == "angle":
                 tol = atol
-            else:
+            else:  # pragma: no cover (internal coordinates are length or angle)
                 raise ValueError("unknow coord_type {}".format(idef.coord_type))
             if not idef.is_valid(self.molecule, tol):
                 errors.append(idef)

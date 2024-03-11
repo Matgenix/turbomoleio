@@ -363,6 +363,13 @@ class TestInternalDefinition:
 
 
 class TestMoleculeSystem:
+    def test_init(self):
+        with pytest.raises(
+            ValueError,
+            match=r"A Molecule object should be provided for molecule systems.",
+        ):
+            MoleculeSystem(molecule="notamoleculeobject")
+
     def test_from_string(self):
         # basic test
         string = """
@@ -460,6 +467,20 @@ $coord
 -1.15103063747470      1.99364354517457       .00000000000000      o
 $user-defined bonds
 1-2, 2 3,3|4
+$end
+"""
+        with pytest.raises(ValueError, match="Cannot parse user-defined bonds.*"):
+            MoleculeSystem.from_string(string=string, fmt="coord")
+
+        # malformed user-defined bonds
+        string = """
+$coord
+ .00000000000000       .00000000000000       .00000000000000      n
+-1.15103063747470     -1.99364354517457       .00000000000000      o
+2.30206127494940       .00000000000000       .00000000000000      o
+-1.15103063747470      1.99364354517457       .00000000000000      o
+$user-defined bonds
+1-2-3, 2 3,3|4
 $end
 """
         with pytest.raises(ValueError, match="Cannot parse user-defined bonds.*"):
