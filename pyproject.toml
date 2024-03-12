@@ -88,7 +88,7 @@ exclude_lines = [
     "pragma: no cover",
     "raise NotImplementedError",
 ]
-#fail_under = 100
+fail_under = 100
 
 [tool.coverage.html]
 directory = "htmlcov"
