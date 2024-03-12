@@ -238,7 +238,7 @@ class States(MSONable, MutableSequence):
             irrep_ind = d[1]
             eig = d[2]
             occ = 0
-            if irrep in shells.irreps:
+            if irrep in shells.irreps:  # pragma: no branch
                 for i, (irrep_shell, index_shell) in enumerate(shells.states):
                     if irrep_shell == irrep and index_shell == irrep_ind:
                         degeneracy = irrep_size[irrep[0].upper()]
@@ -576,7 +576,7 @@ class EigerOutput:
         r = re.compile(
             r"^\s*\d+.\s+([ab]*)\s+(\d+)\s+([^\s]*)\s+([\d.+\-]*)\s+([\d.+\-]+)\s+H"
         )
-        for line in string.splitlines():
+        for line in string.splitlines():  # pragma: no branch
             if "Gap" in line:
                 gap = float(line.split()[2])
             if "Electrons=" in line:

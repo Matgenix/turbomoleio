@@ -738,10 +738,10 @@ class Parser:
                 func_msg = func_match.group(1).strip()
                 d["functional_msg"] = func_msg
 
-                for (
+                for (  # pragma: no branch
                     func_name,
                     desc_list,
-                ) in functional_strings.items():  # pragma: no branch
+                ) in functional_strings.items():
 
                     found = False
                     for desc in desc_list:

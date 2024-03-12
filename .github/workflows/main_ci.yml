@@ -51,4 +51,5 @@ jobs:
 
       - name: Run pytest
         shell: bash
-        run: pytest -m 'not integration'
+        run: pytest --cov=turbomoleio --cov-report=xml -m "not integration"
+#        run: pytest -m 'not integration'

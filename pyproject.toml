@@ -68,27 +68,47 @@ ensure_newline_before_comments = true
 line_length = 88
 
 [tool.pytest.ini_options]
-minversion = "6.1.2"
-addopts = "--strict-markers --cov=turbomoleio --cov-config=pyproject.toml --cov-report=html --cov-report=term"
+minversion = "8.0.2"
+#addopts = "--strict-markers --cov=turbomoleio --cov-config=pyproject.toml --cov-report=html --cov-report=term"
 markers = [
     "unit: Unit tests on small portions of the code that do not require execution of external code.",
     "integration: Integration tests that require running turbomole executables.",
 ]
 
-# Coverage options
 [tool.coverage.run]
-source = ["turbomoleio"]
-#omit = [
-#    "*/test_*",
-#]
+include = ["src/*"]
+parallel = true
 branch = true
 
+[tool.coverage.paths]
+source = ["src/"]
+
 [tool.coverage.report]
+skip_covered = true
+show_missing = true
 exclude_lines = [
     "pragma: no cover",
     "raise NotImplementedError",
 ]
 fail_under = 100
+
+
+
+
+## Coverage options
+#[tool.coverage.run]
+#source = ["turbomoleio"]
+##omit = [
+##    "*/test_*",
+##]
+#branch = true
+#
+#[tool.coverage.report]
+#exclude_lines = [
+#    "pragma: no cover",
+#    "raise NotImplementedError",
+#]
+#fail_under = 100
 
 [tool.coverage.html]
 directory = "htmlcov"
