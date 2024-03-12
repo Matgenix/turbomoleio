@@ -20,16 +20,29 @@
 # along with turbomoleio (see ~turbomoleio/COPYING). If not,
 # see <https://www.gnu.org/licenses/>.
 
-"""Module for define templates."""
+import pytest
 
-import os
+from turbomoleio.input.templates import available_templates, get_define_template
 
 
-def available_templates():
-    """Get the list of available define templates."""
-    templates_dir = os.path.abspath(os.path.dirname(__file__))
-    return [
-        os.path.splitext(fname)[0]
-        for fname in os.listdir(templates_dir)
-        if fname.endswith(".yaml")
+def test_get_define_template():
+    """Testing get define template util function."""
+
+    dscf_dict = get_define_template("dscf")
+    assert dscf_dict["basis"] == "def-SV(P)"
+
+    with pytest.raises(
+        ValueError,
+        match=r"^Could not find template file " r"\S*non_existing_template.yaml$",
+    ):
+        get_define_template("non_existing_template.yaml")
+
+
+def test_available_templates():
+    assert available_templates() == [
+        "dscf",
+        "dscf_escf",
+        "ridft",
+        "ridft_escf",
+        "ridft_rimp2",
     ]
