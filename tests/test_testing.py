@@ -447,6 +447,12 @@ class TestFunctions(object):
         assert len(diffs) == 1
         assert diffs[0][1].startswith(f">>>{STRINGS_DIFFER}<<<")
 
+        diffs = compare_differences("samestring", "samestring")
+        assert len(diffs) == 0
+
         diffs = compare_differences([1, 2, 3], [1, 2, [3, 4]])
         assert len(diffs) == 1
         assert diffs[0][1].startswith(f">>>{ARRAYS_DIFFER}<<<")
+
+        diffs = compare_differences([1, 2, [4, 5]], [1, 2, [4, 5]])
+        assert len(diffs) == 0

@@ -614,7 +614,7 @@ def compare_differences(actual, desired, rtol=1e-7, atol=0, current_level=None):
                 )
             return differences
     except ValueError as err:
-        if "setting an array element with a sequence." in str(err):
+        if "setting an array element with a sequence." in str(err):  # pragma: no branch
             pass
 
     if isinstance(desired, (list, tuple)):
