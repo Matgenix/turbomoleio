@@ -389,7 +389,7 @@ def assert_almost_equal(
         isdesnat = np.core.isnat(desired)
         isactnat = np.core.isnat(actual)
         dtypes_match = np.array(desired).dtype.type == np.array(actual).dtype.type
-        if isdesnat and isactnat:
+        if isdesnat and isactnat:  # pragma: no branch
             # If both are NaT (and have the same dtype -- datetime or
             # timedelta) they are considered equal.
             if dtypes_match:
