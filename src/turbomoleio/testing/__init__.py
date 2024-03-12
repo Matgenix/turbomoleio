@@ -373,11 +373,11 @@ def assert_almost_equal(
         isactnan = gisnan(actual) and not isinstance(
             actual, (np.datetime64, np.timedelta64)
         )
-        if isdesnan and isactnan:
+        if isdesnan and isactnan:  # pragma: no cover (nan's are now Numbers)
             return  # both nan, so equal
 
         # allow 0.0 and -0.0 to match
-        if desired == 0 and actual == 0:
+        if desired == 0 and actual == 0:  # pragma: no cover (0.0/-0.0 are now Numbers)
             return
             # if not signbit(desired) == signbit(actual):
             #     raise AssertionError(msg)

@@ -229,6 +229,8 @@ class TestFunctions(object):
         d2 = [np.datetime64("NaT")]
         with pytest.raises(AssertionError):
             assert_almost_equal(d1, d2)
+        with pytest.raises(AssertionError):
+            assert_almost_equal(d2, d1)
 
     def test_compare_differences(self):
         diffs = compare_differences({}, {})
