@@ -28,8 +28,10 @@ import os
 def available_templates():
     """Get the list of available define templates."""
     templates_dir = os.path.abspath(os.path.dirname(__file__))
-    return [
-        os.path.splitext(fname)[0]
-        for fname in os.listdir(templates_dir)
-        if fname.endswith(".yaml")
-    ]
+    return sorted(
+        [
+            os.path.splitext(fname)[0]
+            for fname in os.listdir(templates_dir)
+            if fname.endswith(".yaml")
+        ]
+    )
