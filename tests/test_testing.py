@@ -26,6 +26,7 @@ import shutil
 import numpy as np
 import pytest
 from monty.json import MSONable
+from monty.os import makedirs_p
 from pymatgen.core.structure import Molecule
 
 from turbomoleio.testing import (
@@ -46,6 +47,7 @@ from turbomoleio.testing import (
     compare_differences,
     get_control_integration,
     get_sp,
+    get_test_data_dir,
     get_tfp,
     temp_dir,
     touch_file,
@@ -65,6 +67,21 @@ class TestFunctions(object):
         with temp_dir(delete=False) as tmp_dir:
             assert tmp_dir == os.getcwd()
             shutil.rmtree(tmp_dir)
+
+    def test_get_test_data_dir(self, delete_tmp_dir):
+        with temp_dir(delete_tmp_dir) as tmp_dir:
+            with pytest.raises(RuntimeError, match=r"test_data directory not found."):
+                get_test_data_dir(tmp_dir)
+
+        with temp_dir(delete_tmp_dir) as tmp_dir:
+            module_dir = os.path.join(
+                tmp_dir, "tests", "test_data", "tests", "test_data"
+            )
+            makedirs_p(module_dir)
+            with pytest.raises(
+                RuntimeError, match=r"Found multiple turbomoleio directories."
+            ):
+                get_test_data_dir(module_dir)
 
     def test_touch_file(self, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
