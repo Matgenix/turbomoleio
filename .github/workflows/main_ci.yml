@@ -51,4 +51,4 @@ jobs:
 
       - name: Run pytest
         shell: bash
-        run: pytest -m 'not integration'
+        run: pytest --strict-markers -m 'not integration' --cov=turbomoleio --cov-config=pyproject.toml --cov-report term
