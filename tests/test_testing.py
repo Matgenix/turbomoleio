@@ -20,6 +20,7 @@
 # along with turbomoleio (see ~turbomoleio/COPYING). If not,
 # see <https://www.gnu.org/licenses/>.
 
+import json
 import os
 import shutil
 
@@ -27,6 +28,7 @@ import numpy as np
 import pytest
 from monty.json import MSONable
 from monty.os import makedirs_p
+from monty.serialization import MontyEncoder
 from pymatgen.core.structure import Molecule
 
 from turbomoleio.testing import (
@@ -49,6 +51,7 @@ from turbomoleio.testing import (
     get_sp,
     get_test_data_dir,
     get_tfp,
+    gisnan,
     temp_dir,
     touch_file,
 )
@@ -60,6 +63,28 @@ class MSONableExample(MSONable):
         self.b = b
 
 
+class ExplicitAsFromDictExample:
+    def __init__(self, d, e):
+        self.d = d
+        self.e = e
+
+    def as_dict(self):
+        return {
+            "@module": "tests.test_testing",
+            "@class": "ExplicitAsFromDictExample",
+            "@version": None,
+            "d": self.d,
+            "e": self.e,
+        }
+
+    @classmethod
+    def from_dict(cls, d):
+        return cls(d=d["d"], e=d["e"])
+
+    def to_json(self) -> str:
+        return json.dumps(self, cls=MontyEncoder)
+
+
 class TestFunctions(object):
     def test_temp_dir(self):
         # test that the file is not deleted if delete=False
@@ -67,6 +92,11 @@ class TestFunctions(object):
         with temp_dir(delete=False) as tmp_dir:
             assert tmp_dir == os.getcwd()
             shutil.rmtree(tmp_dir)
+
+        # test without changing to the directory
+        with temp_dir(delete=True, changedir=False) as tmp_dir:
+            assert os.path.exists(tmp_dir)
+            assert tmp_dir != os.getcwd()
 
     def test_get_test_data_dir(self, delete_tmp_dir):
         with temp_dir(delete_tmp_dir) as tmp_dir:
@@ -91,6 +121,13 @@ class TestFunctions(object):
     def test_assert_MSONable(self):
         m = MSONableExample(1, 2)
         assert_MSONable(m)
+        m = ExplicitAsFromDictExample(5, 12)
+        assert not isinstance(m, MSONable)
+        assert_MSONable(m, test_if_subclass=False)
+
+    def test_gisnan(self):
+        assert gisnan(np.nan)
+        assert not gisnan(1)
 
     def test_get_tfp(self, test_data):
         """
@@ -152,6 +189,21 @@ class TestFunctions(object):
         with pytest.raises(AssertionError):
             assert_almost_equal(d1, d2, rtol=1e-8)
         assert_almost_equal(d1, d2, rtol=1e-3)
+
+        d1 = 1
+        d2 = {"b": 1}
+        with pytest.raises(AssertionError):
+            assert_almost_equal(d1, d2)
+
+        d1 = 1
+        d2 = complex(1, 0)
+        assert_almost_equal(d1, d2)
+        assert_almost_equal(d2, d1)
+
+        d1 = complex(3, 5)
+        d2 = complex(3, 5)
+        assert_almost_equal(d1, d2)
+        assert_almost_equal(d2, d1)
 
     def test_compare_differences(self):
         diffs = compare_differences({}, {})

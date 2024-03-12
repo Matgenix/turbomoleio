@@ -225,7 +225,7 @@ def gisnan(x):
     This should be removed once this problem is solved at the Ufunc level.
     """
     st = np.core.isnan(x)
-    if isinstance(st, type(NotImplemented)):
+    if isinstance(st, type(NotImplemented)):  # pragma: no cover (to be solved at Ufunc)
         raise TypeError("isnan not supported for this type")
     return st
 
@@ -323,7 +323,7 @@ def assert_almost_equal(
     # XXX: catch ValueError for subclasses of ndarray where iscomplex fail
     try:
         usecomplex = iscomplexobj(actual) or iscomplexobj(desired)
-    except (ValueError, TypeError):
+    except (ValueError, TypeError):  # pragma: no cover (no idea when this can occur)
         usecomplex = False
 
     if usecomplex:
