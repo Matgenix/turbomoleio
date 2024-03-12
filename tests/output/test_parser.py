@@ -143,6 +143,20 @@ following line"""
             ):
                 Parser.from_file("test.log")
 
+    def test_basis_empty(self):
+        p = Parser("nothing here")
+        assert p.basis is None
+        mystring = """basis set information
+nothing here...
+symmetry group of the molecule"""
+        p = Parser(mystring)
+        assert p.basis == {
+            "aux_basis_per_specie": {},
+            "basis_per_specie": {},
+            "number_scf_aux_basis_func": None,
+            "number_scf_basis_func": None,
+        }
+
 
 class TestFunctions:
     def test_convert_float(self):

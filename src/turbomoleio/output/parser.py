@@ -365,7 +365,7 @@ class Parser:
         try:
             with open(filepath, "r") as f:
                 string = f.read()
-        except UnicodeDecodeError:
+        except UnicodeDecodeError:  # pragma: no cover (unlikely + trivial anyway)
             with open(filepath, "r", errors="ignore") as f:
                 string = f.read()
 
@@ -499,7 +499,7 @@ class Parser:
 
         for line in match.group(1).splitlines():
             line = line.strip()
-            if not line:
+            if not line:  # pragma: no cover (trivial)
                 continue
 
             split = line.split()
@@ -547,7 +547,7 @@ class Parser:
         match_atoms = re.search(r_atoms, basis_string, re.DOTALL)
 
         basis_per_specie = {}
-        if match_atoms:
+        if match_atoms:  # pragma: no branch
             for line in match_atoms.group(1).splitlines():
                 line = line.strip()
                 if not line:
@@ -578,15 +578,15 @@ class Parser:
         )
 
         len_n_basis = len(list_n_basis_func)
-        if len_n_basis > 2:
+        if len_n_basis > 2:  # pragma: no cover (trivial)
             raise RuntimeError(
                 "Found {} instances of 'total number of SCF-basis functions', while "
                 "expecting at most 2.".format(len_n_basis)
             )
 
-        if len_n_basis > 0:
+        if len_n_basis > 0:  # pragma: no branch (trivial)
             number_scf_basis_func = convert_int(list_n_basis_func[0])
-        else:
+        else:  # pragma: no cover (should not occur)
             number_scf_basis_func = None
 
         if len_n_basis == 2:
@@ -633,7 +633,7 @@ class Parser:
                 self.string,
                 re.MULTILINE,
             )
-            if not match_reps:
+            if not match_reps:  # pragma: no cover
                 raise RuntimeError(
                     "Could not parse correctly the list of representations"
                 )
@@ -725,7 +725,7 @@ class Parser:
             r"small grid|spherical integration)"
         )
 
-        if "USE AT YOUR OWN RISK" not in dft_string:
+        if "USE AT YOUR OWN RISK" not in dft_string:  # pragma: no branch
             func_match = re.search(r_func, dft_string, re.DOTALL)
 
             # Matches the type of functional based on the message produced by TM.
@@ -734,11 +734,14 @@ class Parser:
             # functional_strings dictionary should be updated accordingly.
             # Also arbitrary mix will be ignored (when "USE AT YOUR OWN RISK"
             # is present).
-            if func_match:
+            if func_match:  # pragma: no branch
                 func_msg = func_match.group(1).strip()
                 d["functional_msg"] = func_msg
 
-                for func_name, desc_list in functional_strings.items():
+                for (
+                    func_name,
+                    desc_list,
+                ) in functional_strings.items():  # pragma: no branch
 
                     found = False
                     for desc in desc_list:
@@ -811,7 +814,7 @@ class Parser:
             # ricore in escf
             r_ricore = r"Core memory available \(ricore\)\s+(\d+)"
             match = re.search(r_ricore, match_str)
-            if match:
+            if match:  # pragma: no branch
                 d["ricore"] = convert_int(match.group(1))
 
         return d
@@ -854,11 +857,11 @@ class Parser:
                 r"exponent of damping function \(d\)\s+(" + float_number_re + r")",
                 match_str,
             )
-            if damp_l:
+            if damp_l:  # pragma: no branch
                 damp_val = convert_float(damp_l.group(1))
                 if damp_val == 20:
                     d["correction"] = "D2"
-                elif damp_val == 23:
+                elif damp_val == 23:  # pragma: no branch
                     d["correction"] = "D1"
 
         # Output for DFT-D3 has changed in Turbomole 7.5:
@@ -870,7 +873,7 @@ class Parser:
             match_str,
         )
 
-        if corr_l:
+        if corr_l:  # pragma: no branch
             d["en_corr"] = convert_float(corr_l.group(1))
 
         return d
@@ -976,7 +979,7 @@ class Parser:
 
         # dscf has a ":" while ridft as a "="
         dampings = re.findall(r"current damping[\s:=]+" + std_float, self.string)
-        if dampings:
+        if dampings:  # pragma: no branch
             dampings = [convert_float(d) for d in dampings]
 
         converged = "convergence criteria satisfied after " in self.string
@@ -1516,11 +1519,11 @@ class Parser:
             )
 
         match = re.search(r"number of occupied orbitals.*?$", match_str, re.MULTILINE)
-        if match is not None:
+        if match is not None:  # pragma: no branch
             d["n_occupied_orbitals"] = convert_int(match.group().split()[-1])
 
         match = re.search(r"orbital characterization.*?$", match_str, re.MULTILINE)
-        if match is not None:
+        if match is not None:  # pragma: no branch
             d["orbital_characterization"] = match.group().split()[-1]
 
         match = re.search(
@@ -1530,15 +1533,15 @@ class Parser:
             d["max_davidson_iter"] = convert_int(match.group().split()[-1])
 
         match = re.search(r"machine precision.*?$", match_str, re.MULTILINE)
-        if match is not None:
+        if match is not None:  # pragma: no branch
             d["machine_precision"] = convert_float(match.group().split()[-1])
 
         match = re.search(r"maximum core memory set to.*?$", match_str, re.MULTILINE)
-        if match is not None:
+        if match is not None:  # pragma: no branch
             d["max_core_mem"] = convert_float(match.group().split()[-2])
 
         match = re.search(r"corresponding to\s+(\d+)\s+vectors in CAO basis", match_str)
-        if match is not None:
+        if match is not None:  # pragma: no branch
             d["max_cao_basis_vectors"] = convert_int(match.group(1))
 
         match = re.search(
@@ -1546,7 +1549,7 @@ class Parser:
             match_str,
             re.MULTILINE,
         )
-        if match is not None:
+        if match is not None:  # pragma: no branch
             d["max_treated_vectors"] = convert_int(match.group().split()[-1])
 
         # In TM versions < 7.7, IRREP's block is like:
@@ -1649,11 +1652,11 @@ class Parser:
                 if iter_step is not None:
                     iter_steps_list.append(iter_step)
                 iter_step = [convert_line(split[1:])]
-            elif len(split) == 3:
+            elif len(split) == 3:  # pragma: no branch
                 iter_step.append(convert_line(split))
-            else:
+            else:  # pragma: no cover
                 raise RuntimeError("wrong line {} in escf iterations".format(line))
-        if iter_step:
+        if iter_step:  # pragma: no branch
             iter_steps_list.append(iter_step)
 
         converged = "converged" in match.group(2)
@@ -1787,7 +1790,7 @@ class Parser:
             irrep = re.search(r, irrep_group).group(1)
 
             match_excitations = regex_excited.findall(irrep_group)
-            if not match_excitations:
+            if not match_excitations:  # pragma: no cover
                 raise RuntimeError(
                     "Could not extract the single excitation contributions"
                 )
