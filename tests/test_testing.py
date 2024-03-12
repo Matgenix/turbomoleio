@@ -205,6 +205,31 @@ class TestFunctions(object):
         assert_almost_equal(d1, d2)
         assert_almost_equal(d2, d1)
 
+        d1 = [np.nan]
+        d2 = np.nan
+        with pytest.raises(AssertionError):
+            assert_almost_equal(d1, d2)
+        with pytest.raises(AssertionError):
+            assert_almost_equal(d2, d1)
+
+        d1 = 0.0
+        d2 = -0.0
+        assert_almost_equal(d1, d2)
+        assert_almost_equal(d2, d1)
+
+        d1 = [np.datetime64("NaT")]
+        d2 = [np.datetime64("NaT")]
+        assert_almost_equal(d1, d2)
+
+        d1 = [np.timedelta64("NaT")]
+        d2 = [np.timedelta64("NaT")]
+        assert_almost_equal(d1, d2)
+
+        d1 = [np.timedelta64("NaT")]
+        d2 = [np.datetime64("NaT")]
+        with pytest.raises(AssertionError):
+            assert_almost_equal(d1, d2)
+
     def test_compare_differences(self):
         diffs = compare_differences({}, {})
         assert len(diffs) == 0

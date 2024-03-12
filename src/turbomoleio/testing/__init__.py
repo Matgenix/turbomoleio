@@ -349,8 +349,12 @@ def assert_almost_equal(
     if isscalar(desired) != isscalar(actual):
         raise AssertionError(msg)
 
-    a_is_number = isinstance(actual, numbers.Number)
-    d_is_number = isinstance(desired, numbers.Number)
+    a_is_number = isinstance(actual, numbers.Number) and not isinstance(
+        actual, np.timedelta64
+    )
+    d_is_number = isinstance(desired, numbers.Number) and not isinstance(
+        desired, np.timedelta64
+    )
 
     if a_is_number != d_is_number:
         raise AssertionError(msg)
@@ -363,8 +367,12 @@ def assert_almost_equal(
 
     # Inf/nan/negative zero handling
     try:
-        isdesnan = gisnan(desired)
-        isactnan = gisnan(actual)
+        isdesnan = gisnan(desired) and not isinstance(
+            desired, (np.datetime64, np.timedelta64)
+        )
+        isactnan = gisnan(actual) and not isinstance(
+            actual, (np.datetime64, np.timedelta64)
+        )
         if isdesnan and isactnan:
             return  # both nan, so equal
 
@@ -402,7 +410,7 @@ def assert_almost_equal(
             # except (AssertionError, TypeError):
             #     raise AssertionError(msg)
 
-    except (DeprecationWarning, FutureWarning) as e:
+    except (DeprecationWarning, FutureWarning) as e:  # pragma: no cover
         # this handles the case when the two types are not even comparable
         if "elementwise == comparison" in e.args[0]:
             raise AssertionError(msg)
