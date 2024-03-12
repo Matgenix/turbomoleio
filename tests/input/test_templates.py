@@ -20,22 +20,7 @@
 # along with turbomoleio (see ~turbomoleio/COPYING). If not,
 # see <https://www.gnu.org/licenses/>.
 
-import pytest
-
-from turbomoleio.input.templates import available_templates, get_define_template
-
-
-def test_get_define_template():
-    """Testing get define template util function."""
-
-    dscf_dict = get_define_template("dscf")
-    assert dscf_dict["basis"] == "def-SV(P)"
-
-    with pytest.raises(
-        ValueError,
-        match=r"^Could not find template file " r"\S*non_existing_template.yaml$",
-    ):
-        get_define_template("non_existing_template.yaml")
+from turbomoleio.input.templates import available_templates
 
 
 def test_available_templates():

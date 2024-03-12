@@ -64,3 +64,5 @@ def test_validate_parameters():
     assert validate_parameters({"disp": "DFT-D1"})
     # value not in possible options
     assert not validate_parameters({"disp": "wrong_value"})
+
+    assert validate_parameters({"ex_method": "rpa", "ex_multi": "singlet"})
