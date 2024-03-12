@@ -30,7 +30,7 @@ from monty.tempfile import ScratchDir
 from turbomoleio.output.data import TurbomoleData
 
 
-def define_quit():
+def define_quit():  # pragma: no cover (only covered by integration tests)
     """Run define but directly quits by sending "qq" interactively."""
     with open("define.log", "wb") as logf:
         spawn = pexpect.popen_spawn.PopenSpawn("define", timeout=2, logfile=logf)

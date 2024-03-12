@@ -372,6 +372,34 @@ class TestDefineRunner(object):
                 dr_data.dr.define.close.assert_called_once_with(force=True)
             self.assert_sendline_calls(dr_data.sendline_mock, dr_data.dr.sent_commands)
 
+    def test_run_full_3(self, dr_data, delete_tmp_dir):
+        with temp_dir(delete_tmp_dir) as tmp_dir:
+            dr_data.dr.workdir = tmp_dir
+            dr_data.dr.parameters = {"method": "adc(2)", "ex_method": "rpa"}
+            dr_data.expect_mock.side_effect = iter(int, 1)
+            dr_data.dr._copy_mo_files = mock.MagicMock()
+            dr_data.dr._spawn = mock.MagicMock()
+            dr_data.dr._spawn.return_value = dr_data.dr.define
+            se = [
+                match_ex_response_st_off,
+                match_ex_response_rpas_on,
+                match_ex_state_selection,
+            ]
+            type(dr_data.dr.define).match = mock.PropertyMock(side_effect=se)
+            if dr_data.use_popen:
+                # set poll to None so that kill is called and cover all cases
+                dr_data.dr.define.proc.poll.return_value = None
+
+            # create an empty control file for the postprocess
+            Control.empty().to_file()
+
+            assert dr_data.dr.run_full()
+            if dr_data.use_popen:
+                dr_data.dr.define.kill.assert_called_once_with(sig=signal.SIGKILL)
+            else:
+                dr_data.dr.define.close.assert_called_once_with(force=True)
+            self.assert_sendline_calls(dr_data.sendline_mock, dr_data.dr.sent_commands)
+
     @pytest.mark.parametrize("dir_name", ["mos_nh3"])
     def test_run_update_internal_coords(self, dr_data, mo_dirpath, delete_tmp_dir):
         with temp_dir(delete_tmp_dir) as tmp_dir:
@@ -455,6 +483,10 @@ class TestDefineRunner(object):
 
     def test_get_bin_path(self, dr_data):
         assert dr_data.dr._get_bin_path() == "define"
+
+    def test_get_bin_path_exec(self):
+        dr = DefineRunner(parameters={}, executable="mydefine")
+        assert dr._get_bin_path() == "mydefine"
 
     def test_set_metric(self, dr_data, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
@@ -686,6 +718,11 @@ class TestDefineRunner(object):
         with pytest.raises(UnsupportedDefineStateError):
             dr_data.dr._skip_atomic_attribute_menu()
 
+    def test_skip_atomic_attribute_menu_noerror(self, dr_data):
+        dr_data.expect_mock.side_effect = [1]
+        with pytest.raises(UnsupportedDefineStateError):
+            dr_data.dr._skip_atomic_attribute_menu()
+
     def test_set_basis(self, dr_data):
 
         dr_data.expect_mock.side_effect = [0, 0]
@@ -804,12 +841,31 @@ class TestDefineRunner(object):
             makedirs_p(dir_path)
             control_path = os.path.join(tmp_dir, dir_path, "control")
             touch_file(control_path)
-            dr_data.dr.parameters = {"usemo": dir_path}
+            dr_data.dr.parameters = {"usemo": os.path.join(tmp_dir, dir_path)}
             dr_data.dr.workdir = tmp_dir
             dr_data.expect_mock.side_effect = [1, 0]
             dr_data.dr._set_mo_from_control_file()
             self.assert_sendline_calls(
                 dr_data.sendline_mock, ["use {}".format("tmp_mo/control"), ""]
+            )
+
+    def test_set_mo_from_control_file_longpath_2(self, dr_data, delete_tmp_dir):
+        with temp_dir(delete_tmp_dir) as tmp_dir:
+            dir_path = os.path.join(*(["mylongfilepath"] * 4))
+            makedirs_p(dir_path)
+            control_path = os.path.join(tmp_dir, dir_path, "control")
+            touch_file(control_path)
+            dr_data.dr.parameters = {"usemo": os.path.join(tmp_dir, dir_path)}
+            dr_data.dr.workdir = tmp_dir
+            dr_data.expect_mock.side_effect = [1, 0]
+            dr_data.dr._set_mo_from_control_file()
+            self.assert_sendline_calls(
+                dr_data.sendline_mock,
+                [
+                    "use mylongfilepath/mylongfilepath/mylongfilepath/"
+                    "mylongfilepath/control",
+                    "",
+                ],
             )
 
     def test_set_mo_from_control_file_error(self, dr_data):
@@ -954,28 +1010,40 @@ class TestDefineRunner(object):
         ):
             dr_data.dr._excited_state_menu()
 
-    def test_excited_state_menu_frequency(self, dr_data):
-        se = [match_ex_response_st_off, match_ex_response_rpas_on]
-        type(dr_data.dr.define).match = mock.PropertyMock(side_effect=se)
-        dr_data.dr.parameters = {"ex_frequency": 100}
-        dr_data.expect_mock.side_effect = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
-        dr_data.dr._excited_state_menu()
-        self.assert_sendline_calls(
-            dr_data.sendline_mock,
-            ["ex", "rpas", "*", "nm", "a", "100", "*", "*", "*", "y"],
-        )
+    def test_excited_state_menu_frequency(self, dr_data, delete_tmp_dir):
+        with temp_dir(delete_tmp_dir):
+            c = Control.empty()
+            c.to_file("control")
+            se = [match_ex_response_st_off, match_ex_response_rpas_on]
+            type(dr_data.dr.define).match = mock.PropertyMock(side_effect=se)
+            dr_data.dr.parameters = {"ex_frequency": 100, "ex_exopt": 1}
+            dr_data.expect_mock.side_effect = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+            dr_data.dr._excited_state_menu()
+            self.assert_sendline_calls(
+                dr_data.sendline_mock,
+                ["ex", "rpas", "*", "nm", "a", "100", "*", "*", "*", "y"],
+            )
+            with open("control", "r") as f:
+                cstring = f.read()
+            assert "$exopt    1" in cstring
 
-    def test_set_ri_state(self, dr_data):
+    def test_set_ri_state_rijk(self, dr_data):
         dr_data.dr.parameters = {"rijk": True}
         dr_data.expect_mock.side_effect = [0, 0, 0]
         dr_data.dr._set_ri_state()
         self.assert_sendline_calls(dr_data.sendline_mock, ["rijk", "on", ""])
 
-    def test_set_ri_state_marij(self, dr_data):
+    def test_set_ri_state_ri_marij(self, dr_data):
         dr_data.dr.parameters = {"ri": True, "marij": True}
         dr_data.expect_mock.side_effect = [0, 0, 0, 0, 0]
         dr_data.dr._set_ri_state()
         self.assert_sendline_calls(dr_data.sendline_mock, ["ri", "on", "", "marij", ""])
+
+    def test_set_ri_state_ri(self, dr_data):
+        dr_data.dr.parameters = {"ri": True, "marij": False}
+        dr_data.expect_mock.side_effect = [0, 0, 0, 0, 0]
+        dr_data.dr._set_ri_state()
+        self.assert_sendline_calls(dr_data.sendline_mock, ["ri", "on", ""])
 
     def test_set_dft_options_use_dft(self, dr_data):
         dr_data.dr.parameters = {"gridsize": "m3", "functional": "pbe"}

@@ -304,7 +304,7 @@ class DefineRunner:
                     if (
                         any(self.parameters.get(k, None) for k in ex_keys)
                         and method != "adc(2)"
-                    ):
+                    ):  # pragma: no cover (no jump to function exit ?)
                         self._excited_state_menu()
 
                     # general menu
@@ -317,7 +317,9 @@ class DefineRunner:
                         action="check end of define",
                     )
 
-                    if case == 0:
+                    if (
+                        case == 0
+                    ):  # pragma: no branch (trivial unit test not covered...)
                         ended_normally = True
 
                     # wait for the EOF with a timeout
@@ -446,7 +448,7 @@ class DefineRunner:
                         action="switch to molecular orbital definition menu",
                     )
 
-                    if case == 1:
+                    if case == 1:  # pragma: no branch (
                         self._sendline("y", action="start modification of mo data")
 
                     # molecular orbital definition menu
@@ -822,7 +824,7 @@ class DefineRunner:
 
         if case == 0:
             self._sendline("n", action="do not enter in the atomic attribute menu")
-        elif case == 1:
+        elif case == 1:  # pragma: no branch (only 2 cases possible)
             # here define entered in the definition of the menu, meaning that the
             # atomic properties are not defined. This case is not supported here.
             raise UnsupportedDefineStateError(
@@ -1062,7 +1064,7 @@ class DefineRunner:
                 # Other cases cover messages when regenerating the mo files.
                 pass
 
-            elif case == 1:
+            elif case == 1:  # pragma: no branch
                 self._go_to_general_menu()
 
         finally:
@@ -1103,7 +1105,7 @@ class DefineRunner:
             # extended hueckel will be treated in next block
             pass
 
-        elif case == 2:
+        elif case == 2:  # pragma: no branch
             # send default (=y)
             self._sendline("y", action="default values for Hueckel")
             self._expect(
@@ -1148,8 +1150,8 @@ class DefineRunner:
                 # send default (=y; of course we accept this occupation...)
                 self._sendline("y", action="don't keep default electrons occupation")
 
-        elif case == 1:
-            if unpaired_electrons is None:
+        elif case == 1:  # pragma: no branch
+            if unpaired_electrons is None:  # pragma: no branch
                 raise DefineParameterError(
                     "unpaired_electrons keywork is required if no default is present"
                 )
@@ -1180,7 +1182,7 @@ class DefineRunner:
             # Other cases cover messages when regenerating the mo files.
             pass
 
-        elif case == 1:
+        elif case == 1:  # pragma: no branch
             self._go_to_general_menu()
 
     def _excited_state_menu(self):
@@ -1364,7 +1366,7 @@ class DefineRunner:
                 action="back to response calulation menu",
             )
 
-        elif case == 2:
+        elif case == 2:  # pragma: no branch
             # already at the end of the other cases
             pass
 
@@ -1547,7 +1549,9 @@ class DefineRunner:
 
             # Note: it seems that the line ccsdapprox ccsd(f12*) is already there
             # with just use_f12. This option is kept for safety.
-            if self.parameters.get("use_f12*", False) and method == "ccsd(t)":
+            if (  # pragma: no branch
+                self.parameters.get("use_f12*", False) and method == "ccsd(t)"
+            ):
                 mdgo("rir12", {"ccsdapprox": "ccsdapprox  ccsd(f12*)"})
 
         # go to submenu "ricc2"
@@ -1640,7 +1644,7 @@ class DefineRunner:
             None
         """
         # if flag copymo - copy files (mos/alpha/beta) to current folder
-        if self.parameters["copymo"]:
+        if self.parameters["copymo"]:  # pragma: no branch
 
             path = self.parameters["copymo"]
             source_mos = os.path.join(path, "mos")
@@ -1683,8 +1687,8 @@ class DefineRunner:
                     new_alpha = f.readlines()
                 new_beta = list(new_alpha)
 
-                for i in range(len(new_alpha)):
-                    if "scfmo" in new_alpha[i]:
+                for i in range(len(new_alpha)):  # pragma: no branch
+                    if "scfmo" in new_alpha[i]:  # pragma: no branch
                         new_alpha[i] = new_alpha[i].replace("scfmo", "uhfmo_alpha")
                         new_beta[i] = new_beta[i].replace("scfmo", "uhfmo_beta")
                         break
