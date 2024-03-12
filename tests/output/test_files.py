@@ -34,11 +34,14 @@ from monty.serialization import loadfn
 from pymatgen.core.structure import Molecule
 
 from turbomoleio.output.files import (
+    EgradOutput,
     EscfOnlyOutput,
     EscfOutput,
+    GradOutput,
     JobexOutput,
     exec_to_out_obj,
 )
+from turbomoleio.output.parser import Parser
 from turbomoleio.testing import (  # TESTS_CONFIGS_TM_VERSIONS,
     TM_VERSIONS,
     assert_almost_equal,
@@ -189,3 +192,15 @@ def generate_files(files=None, overwrite=False):
             from monty.json import jsanitize
 
             json.dump(jsanitize(parsed_data), f, indent=2)
+
+
+def test_GradOutput_empty():
+    p = Parser("nothing here")
+    go = GradOutput.from_parser(p)
+    assert go is None
+
+
+def test_EgradOutput_empty():
+    p = Parser("nothing here")
+    eo = EgradOutput.from_parser(p)
+    assert eo is None

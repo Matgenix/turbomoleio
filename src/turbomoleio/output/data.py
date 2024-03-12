@@ -1796,7 +1796,6 @@ class MP2Results(BaseData):
             MP2Results.
         """
         data = parser.mp2_results
-        print(data)
         if not data or "energy" not in data or data["energy"] is None:
             return None
 

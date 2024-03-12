@@ -719,13 +719,13 @@ class JobexOutput(BaseData):
         ) = parser.get_split_jobex_parsers()
 
         energy = gradient = relax = None
-        if exec_en in exec_to_out_obj:
+        if exec_en in exec_to_out_obj:  # pragma: no branch (trivial)
             energy = exec_to_out_obj[exec_en].from_parser(p_en)
 
-        if exec_grad in exec_to_out_obj:
+        if exec_grad in exec_to_out_obj:  # pragma: no branch (trivial)
             gradient = exec_to_out_obj[exec_grad].from_parser(p_grad)
 
-        if exec_relax in exec_to_out_obj:
+        if exec_relax in exec_to_out_obj:  # pragma: no branch (trivial)
             relax = exec_to_out_obj[exec_relax].from_parser(p_relax)
 
         return cls(energy=energy, gradient=gradient, relax=relax)
