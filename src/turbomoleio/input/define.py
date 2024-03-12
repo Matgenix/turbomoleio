@@ -317,9 +317,9 @@ class DefineRunner:
                         action="check end of define",
                     )
 
-                    if (
+                    if (  # pragma: no branch (trivial unit test not covered...)
                         case == 0
-                    ):  # pragma: no branch (trivial unit test not covered...)
+                    ):
                         ended_normally = True
 
                     # wait for the EOF with a timeout
