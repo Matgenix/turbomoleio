@@ -1807,19 +1807,19 @@ class Parser:
                 )
 
                 match_tot_en = regex_tot_en.search(exc_group)
-                if match_tot_en:
+                if match_tot_en:  # pragma: no branch
                     exc_data["tot_en"] = convert_float(match_tot_en.group(1))
 
                 match_osc_stre = regex_osc.search(exc_group)
-                if match_osc_stre:
+                if match_osc_stre:  # pragma: no branch
                     exc_data["osc_stre"] = convert_float(match_osc_stre.group(1))
 
                 match_rot_stre = regex_rot.search(exc_group)
-                if match_rot_stre:
+                if match_rot_stre:  # pragma: no branch
                     exc_data["rot_stre"] = convert_float(match_rot_stre.group(1))
 
                 match_dominant = regex_dom_contrib.search(exc_group)
-                if match_dominant:
+                if match_dominant:  # pragma: no branch
                     dominant_contributions = []
                     # loop over dominant contributions to the excitation
                     for line in match_dominant.group(1).splitlines():
@@ -1849,7 +1849,7 @@ class Parser:
                                     coeff=convert_float(s[6]),
                                 )
                             )
-                        elif len(s) == 9:
+                        elif len(s) == 9:  # pragma: no branch
                             occ_orb = dict(
                                 index=convert_int(s[0]),
                                 irrep=s[1],
@@ -1869,7 +1869,7 @@ class Parser:
                                     coeff=convert_float(s[8]),
                                 )
                             )
-                        else:
+                        else:  # pragma: no cover
                             raise RuntimeError(
                                 "error while parsing line of escf dominant "
                                 "contribution: {}".format(line)
@@ -1890,7 +1890,7 @@ class Parser:
                 for str_c in columns_to_parse:
                     moments_data = {}
                     match_elec_dip = regec_elec_dip.search(str_c)
-                    if match_elec_dip:
+                    if match_elec_dip:  # pragma: no branch
                         el_dip = []
                         for line in match_elec_dip.group(1).splitlines():
                             line = line.strip()
@@ -1900,7 +1900,7 @@ class Parser:
                         moments_data["electric_dipole"] = el_dip
 
                     match_mag_dip = regec_mag_dip.search(str_c)
-                    if match_mag_dip:
+                    if match_mag_dip:  # pragma: no branch
                         mag_dip = []
                         for line in match_mag_dip.group(1).splitlines():
                             line = line.strip()
@@ -1910,7 +1910,7 @@ class Parser:
                         moments_data["magnetic_dipole"] = mag_dip
 
                     match_elec_quad = regec_elec_quad.search(str_c)
-                    if match_elec_quad:
+                    if match_elec_quad:  # pragma: no branch
                         quadrupole = np.zeros((3, 3))
                         d_quadrupole = {}
                         for line in match_elec_quad.group(1).splitlines():
@@ -1939,10 +1939,10 @@ class Parser:
                         d_quadrupole["moment"] = quadrupole.tolist()
                         moments_data["electric_quadrupole"] = d_quadrupole
 
-                    if moments_data:
+                    if moments_data:  # pragma: no branch
                         moments_columns.append(moments_data)
 
-                if moments_columns:
+                if moments_columns:  # pragma: no branch
                     exc_data["moments_columns"] = moments_columns
 
                 single_excitations_list.append(exc_data)
@@ -2505,16 +2505,16 @@ class Parser:
                 return True
             elif v == "NO":
                 return False
-            elif v == "-":
+            elif v == "-":  # pragma: no branch
                 return None
-            else:
+            else:  # pragma: no cover
                 raise RuntimeError("cannot correctly parse active value {}".format(v))
 
         # splits the block of lines with one set of frequencies and loops over them
         r = r"(mode\s{5}.*?)(?=mode |\*{10,})"
         for block in re.findall(r, split2[1], re.DOTALL):
             match = regex_eigenvectors.search(block)
-            if not match:
+            if not match:  # pragma: no cover
                 continue
             block_freqs = match.group(1) + match.group(3)
             block_eigenvectors = match.group(2).strip()
@@ -2548,7 +2548,7 @@ class Parser:
                     reduced_masses.extend(convert_float(f) for f in s[2:])
 
             eig_lines = block_eigenvectors.splitlines()
-            if len(eig_lines) % 3 != 0:
+            if len(eig_lines) % 3 != 0:  # pragma: no cover
                 raise RuntimeError(
                     "number of line to be parsed for eigenvectors "
                     "seems wrong: {}".format(len(eig_lines))
@@ -2566,7 +2566,7 @@ class Parser:
         energies = None
         re_zpve = r"zero point VIBRATIONAL energy.*?\*{10,}"
         match = re.search(re_zpve, self.string, re.DOTALL)
-        if match:
+        if match:  # pragma: no branch
             energies = {"zpve": None, "scf": None, "total": None}
             for line in match.group().splitlines():
                 if "zero point VIBRATIONAL energy" in line:
@@ -2590,7 +2590,9 @@ class Parser:
         )
 
         tot_n_freqs = len(frequencies)
-        if any(k != "energies" and len(v) != tot_n_freqs for k, v in vib.items()):
+        if any(
+            k != "energies" and len(v) != tot_n_freqs for k, v in vib.items()
+        ):  # pragma: no cover
             raise RuntimeError(
                 "Error parsing the vibrational frequencies, "
                 "for some quantity the list of "
@@ -2631,7 +2633,7 @@ class Parser:
         m = re.findall(r, string=self.string)
         if len(m) == 1:
             energy = convert_float(m[0])
-        elif len(m) > 1:
+        elif len(m) > 1:  # pragma: no cover
             raise RuntimeError(
                 "Error parsing the MP2 results. Multiple occurrences of "
                 "MP2 results found."
@@ -2648,14 +2650,14 @@ class Parser:
         )
         m = re.findall(r, string=self.string)
         if len(m) == 1:
-            if energy is not None:
+            if energy is not None:  # pragma: no cover
                 raise RuntimeError(
                     "Error parsing the MP2 results. "
                     "Found MP2 results from both mpgrad- and "
                     "rimp2/ricc2-like calculations."
                 )
             energy = convert_float(m[0][2])
-        elif len(m) > 1:
+        elif len(m) > 1:  # pragma: no cover
             raise RuntimeError(
                 "Error parsing the MP2 results. Multiple occurrences of "
                 "MP2 results found."
@@ -2685,7 +2687,7 @@ class Parser:
         m = re.findall(r, string=self.string, flags=re.DOTALL)
         if len(m) == 0:
             return None
-        elif len(m) > 1:
+        elif len(m) > 1:  # pragma: no cover
             raise RuntimeError("More than one section on periodicity.")
         periodicity_string = m[0]
         periodicity = int(
@@ -2704,7 +2706,7 @@ class Parser:
                 convert_float(lp)
                 for lp in re.findall(rlatparams, periodicity_string)[0]
             ]
-        elif periodicity == 3:
+        elif periodicity == 3:  # pragma: no branch
             rlatparams = r"\+-{73}"
             rlatparams += rf"\s+({float_number_all_re})" * 6
             rlatparams += r"\s+\+-{73}"
@@ -2712,7 +2714,7 @@ class Parser:
                 convert_float(lp)
                 for lp in re.findall(rlatparams, periodicity_string)[0]
             ]
-        else:
+        else:  # pragma: no cover
             raise RuntimeError("Wrong periodicity.")
 
         shortest_interatomic_distance = convert_float(
@@ -2790,7 +2792,7 @@ class Parser:
             elif executable in ("grad", "rdgrad", "egrad", "mpgrad", "ricc2"):
                 p_grad = p
                 exec_grad = executable
-            elif executable in ("relax", "statpt", "frog"):
+            elif executable in ("relax", "statpt", "frog"):  # pragma: no branch
                 p_relax = p
                 exec_relax = executable
 

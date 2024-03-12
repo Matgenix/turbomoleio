@@ -125,8 +125,13 @@ following line"""
 
     def test_get_value(self):
         p = Parser("line to match 0.1 xxx")
-
         assert p.get_value("line to", -2, 0, float) == pytest.approx(0.1)
+
+        p = Parser("line to match 0.1 xxx")
+        assert p.get_value("toto", -2, 0, float) is None
+
+        p = Parser("line to match 0.1 xxx")
+        assert p.get_value("line to", -2, 0) == "0.1"
 
     def test_fail_all_done_check(self, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
@@ -156,6 +161,13 @@ symmetry group of the molecule"""
             "number_scf_aux_basis_func": None,
             "number_scf_basis_func": None,
         }
+
+    def test_aoforce_analysis_empty(self):
+        mystring = """nothing
+dipole moment in principle axis system
+nothing"""
+        p = Parser(mystring)
+        assert p.aoforce_analysis is None
 
 
 class TestFunctions:
