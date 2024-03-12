@@ -428,3 +428,25 @@ class TestFunctions(object):
             ("hi", "<class 'pymatgen.core.structure.Molecule'>"),
         ]
         assert diffs[0][1].startswith(f">>>{TEST_NUMBER_REF_OTHER}<<<")
+
+        diffs = compare_differences({"start_time": 1}, {"start_time": 5})
+        assert len(diffs) == 0
+
+        diffs = compare_differences(
+            {"start_time": 1, "abc": 5}, {"start_time": 5, "abc": 5}
+        )
+        assert len(diffs) == 0
+
+        diffs = compare_differences(
+            {"subdict": {"start_time": 1}, "abc": 5},
+            {"subdict": {"start_time": 5}, "abc": 5},
+        )
+        assert len(diffs) == 0
+
+        diffs = compare_differences("someotherstring", "somestring")
+        assert len(diffs) == 1
+        assert diffs[0][1].startswith(f">>>{STRINGS_DIFFER}<<<")
+
+        diffs = compare_differences([1, 2, 3], [1, 2, [3, 4]])
+        assert len(diffs) == 1
+        assert diffs[0][1].startswith(f">>>{ARRAYS_DIFFER}<<<")

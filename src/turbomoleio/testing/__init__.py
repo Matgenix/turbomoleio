@@ -447,14 +447,14 @@ DIFFERENCE_TYPES = [
 
 
 def _update_differences(differences, level, difference_type, message=None):
-    if difference_type not in DIFFERENCE_TYPES:
+    if difference_type not in DIFFERENCE_TYPES:  # pragma: no cover (should not occur)
         raise ValueError(f'Difference type "{difference_type}" is not valid')
     msg = f">>>{difference_type}<<<"
-    if message is not None:
+    if message is not None:  # pragma: no branch (trivial)
         msg += f"\n{message}"
     all_levels = [tuple(item[0]) for item in differences]
     level_t = tuple(level)
-    if level_t in all_levels:
+    if level_t in all_levels:  # pragma: no cover (should not occur)
         raise RuntimeError("Should not be reached here")
     differences.append((level, msg))
 
@@ -695,7 +695,7 @@ def has_matplotlib():
         import matplotlib  # noqa: F401
 
         return True
-    except ImportError:
+    except ImportError:  # pragma: no cover (trivial)
         return False
 
 
