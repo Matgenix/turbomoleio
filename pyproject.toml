@@ -69,7 +69,7 @@ line_length = 88
 
 [tool.pytest.ini_options]
 minversion = "6.1.2"
-addopts = "--strict-markers --cov=turbomoleio --cov-config=pyproject.toml --cov-report html --cov-report term"
+addopts = "--strict-markers --cov=turbomoleio --cov-config=pyproject.toml --cov-report=html --cov-report=term"
 markers = [
     "unit: Unit tests on small portions of the code that do not require execution of external code.",
     "integration: Integration tests that require running turbomole executables.",
