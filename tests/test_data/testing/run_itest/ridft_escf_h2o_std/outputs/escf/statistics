@@ -1,0 +1,189 @@
+
+ STATISTICS OUTPUT FOR PROJECT :
+   --->  ridft_escf  <---
+
+ integral neglect threshold       :  0.33E-10
+ integral storage threshold THIZE :  0.10E-04
+ integral storage threshold THIME :         5
+
+ cpu-time for construction of rho     :        0.001 s
+
+
+
+ --------------------    1.ITERATION  --------------------
+  cpu-time for ri-coulomb part        :        0.001 s
+ wall-time for ri-coulomb part        :        0.001 s
+
+  cpu-time for xc part                :        0.018 s
+ wall-time for xc part                :        0.018 s
+
+ eigenvalue        1 after current iteration:   0.12694731D+00
+ eigenvalue        2 after current iteration:   0.40330314D+00
+ eigenvalue        3 after current iteration:   0.89902274D+00
+ eigenvalue        4 after current iteration:   0.96409130D+00
+ eigenvalue        5 after current iteration:   0.12028625D+01
+ eigenvalue        6 after current iteration:   0.13155720D+01
+ eigenvalue        7 after current iteration:   0.18298269D+01
+ eigenvalue        8 after current iteration:   0.20331168D+01
+ eigenvalue        9 after current iteration:   0.24176873D+01
+ eigenvalue       10 after current iteration:   0.30190779D+01
+ eigenvalue       11 after current iteration:   0.33158797D+01
+ eigenvalue       12 after current iteration:   0.47905303D+01
+ eigenvalue        1 after current iteration:   0.12360483D+00
+ eigenvalue        2 after current iteration:   0.60911164D+00
+ eigenvalue        3 after current iteration:   0.15665902D+01
+ eigenvalue        4 after current iteration:   0.17924067D+01
+ eigenvalue        5 after current iteration:   0.79118915D+01
+ eigenvalue        6 after current iteration:   0.90373625D+01
+ eigenvalue        7 after current iteration:   0.10477390D+02
+ eigenvalue        8 after current iteration:   0.12011922D+02
+ eigenvalue        9 after current iteration:   0.45137606D+03
+ eigenvalue        1 after current iteration:   0.19142248D+00
+ eigenvalue        2 after current iteration:   0.27843856D+00
+ eigenvalue        3 after current iteration:   0.81086371D+00
+ eigenvalue        4 after current iteration:   0.10981395D+01
+ eigenvalue        5 after current iteration:   0.14214773D+01
+ eigenvalue        6 after current iteration:   0.17626717D+01
+ eigenvalue        7 after current iteration:   0.18418898D+01
+ eigenvalue        8 after current iteration:   0.22536109D+01
+ eigenvalue        9 after current iteration:   0.25572114D+01
+ eigenvalue       10 after current iteration:   0.38107127D+01
+ eigenvalue       11 after current iteration:   0.79173824D+01
+ eigenvalue       12 after current iteration:   0.90748895D+01
+ eigenvalue        1 after current iteration:   0.76359601D-01
+ eigenvalue        2 after current iteration:   0.80215731D+00
+ eigenvalue        3 after current iteration:   0.12468096D+01
+ eigenvalue        4 after current iteration:   0.13825925D+01
+ eigenvalue        5 after current iteration:   0.18861126D+01
+ eigenvalue        6 after current iteration:   0.32308183D+01
+ eigenvalue        7 after current iteration:   0.74057092D+01
+ eigenvalue        8 after current iteration:   0.83421657D+01
+ eigenvalue        9 after current iteration:   0.91168404D+01
+ eigenvalue       10 after current iteration:   0.11171698D+02
+ eigenvalue       11 after current iteration:   0.12319685D+02
+ eigenvalue       12 after current iteration:   0.38543985D+03
+
+
+ --------------------    2.ITERATION  --------------------
+  cpu-time for ri-coulomb part        :        0.000 s
+ wall-time for ri-coulomb part        :        0.000 s
+
+  cpu-time for xc part                :        0.002 s
+ wall-time for xc part                :        0.002 s
+
+ eigenvalue        1 after current iteration:   0.12694602D+00
+ eigenvalue        2 after current iteration:   0.40330294D+00
+ eigenvalue        3 after current iteration:   0.89901907D+00
+ eigenvalue        4 after current iteration:   0.96403076D+00
+ eigenvalue        5 after current iteration:   0.12028394D+01
+ eigenvalue        6 after current iteration:   0.13155258D+01
+ eigenvalue        7 after current iteration:   0.18297124D+01
+ eigenvalue        8 after current iteration:   0.20330333D+01
+ eigenvalue        9 after current iteration:   0.24175803D+01
+ eigenvalue       10 after current iteration:   0.30187967D+01
+ eigenvalue       11 after current iteration:   0.33155967D+01
+ eigenvalue       12 after current iteration:   0.47893306D+01
+ eigenvalue        1 after current iteration:   0.12694602D+00
+ eigenvalue        2 after current iteration:   0.40330294D+00
+ eigenvalue        3 after current iteration:   0.89901907D+00
+ eigenvalue        4 after current iteration:   0.96403076D+00
+ eigenvalue        5 after current iteration:   0.12028394D+01
+ eigenvalue        6 after current iteration:   0.13155258D+01
+ eigenvalue        7 after current iteration:   0.18297124D+01
+ eigenvalue        8 after current iteration:   0.20330333D+01
+ eigenvalue        9 after current iteration:   0.24175803D+01
+ eigenvalue       10 after current iteration:   0.30187967D+01
+ eigenvalue       11 after current iteration:   0.33155967D+01
+ eigenvalue       12 after current iteration:   0.47893306D+01
+ eigenvalue        1 after current iteration:   0.12360483D+00
+ eigenvalue        2 after current iteration:   0.60911164D+00
+ eigenvalue        3 after current iteration:   0.15665902D+01
+ eigenvalue        4 after current iteration:   0.17924067D+01
+ eigenvalue        5 after current iteration:   0.79118915D+01
+ eigenvalue        6 after current iteration:   0.90373625D+01
+ eigenvalue        7 after current iteration:   0.10477390D+02
+ eigenvalue        8 after current iteration:   0.12011922D+02
+ eigenvalue        9 after current iteration:   0.45137606D+03
+ eigenvalue        1 after current iteration:   0.19142248D+00
+ eigenvalue        2 after current iteration:   0.27843856D+00
+ eigenvalue        3 after current iteration:   0.81086371D+00
+ eigenvalue        4 after current iteration:   0.10981395D+01
+ eigenvalue        5 after current iteration:   0.14214773D+01
+ eigenvalue        6 after current iteration:   0.17626717D+01
+ eigenvalue        7 after current iteration:   0.18418898D+01
+ eigenvalue        8 after current iteration:   0.22536109D+01
+ eigenvalue        9 after current iteration:   0.25572114D+01
+ eigenvalue       10 after current iteration:   0.38107127D+01
+ eigenvalue       11 after current iteration:   0.79173824D+01
+ eigenvalue       12 after current iteration:   0.90748895D+01
+ eigenvalue        1 after current iteration:   0.76359601D-01
+ eigenvalue        2 after current iteration:   0.80215731D+00
+ eigenvalue        3 after current iteration:   0.12468096D+01
+ eigenvalue        4 after current iteration:   0.13825925D+01
+ eigenvalue        5 after current iteration:   0.18861126D+01
+ eigenvalue        6 after current iteration:   0.32308183D+01
+ eigenvalue        7 after current iteration:   0.74057092D+01
+ eigenvalue        8 after current iteration:   0.83421657D+01
+ eigenvalue        9 after current iteration:   0.91168404D+01
+ eigenvalue       10 after current iteration:   0.11171698D+02
+ eigenvalue       11 after current iteration:   0.12319685D+02
+ eigenvalue       12 after current iteration:   0.38543985D+03
+ cpu-time for construction of rho     :        0.003 s
+
+
+
+ --------------------    3.ITERATION  --------------------
+  cpu-time for ri-coulomb part        :        0.000 s
+ wall-time for ri-coulomb part        :        0.000 s
+
+  cpu-time for xc part                :        0.043 s
+ wall-time for xc part                :        0.043 s
+
+ eigenvalue        1 after current iteration:   0.12695298D+00
+ eigenvalue        2 after current iteration:   0.40330971D+00
+ eigenvalue        3 after current iteration:   0.89906154D+00
+ eigenvalue        4 after current iteration:   0.96404013D+00
+ eigenvalue        5 after current iteration:   0.12028680D+01
+ eigenvalue        6 after current iteration:   0.13156603D+01
+ eigenvalue        7 after current iteration:   0.18298066D+01
+ eigenvalue        8 after current iteration:   0.20326807D+01
+ eigenvalue        9 after current iteration:   0.24177374D+01
+ eigenvalue       10 after current iteration:   0.30188721D+01
+ eigenvalue       11 after current iteration:   0.33155565D+01
+ eigenvalue       12 after current iteration:   0.47893705D+01
+ eigenvalue        1 after current iteration:   0.12358330D+00
+ eigenvalue        2 after current iteration:   0.60907086D+00
+ eigenvalue        3 after current iteration:   0.15669767D+01
+ eigenvalue        4 after current iteration:   0.17924585D+01
+ eigenvalue        5 after current iteration:   0.79120491D+01
+ eigenvalue        6 after current iteration:   0.90373548D+01
+ eigenvalue        7 after current iteration:   0.10477713D+02
+ eigenvalue        8 after current iteration:   0.12012078D+02
+ eigenvalue        9 after current iteration:   0.45137613D+03
+ eigenvalue        1 after current iteration:   0.19140380D+00
+ eigenvalue        2 after current iteration:   0.27841851D+00
+ eigenvalue        3 after current iteration:   0.81088634D+00
+ eigenvalue        4 after current iteration:   0.10981220D+01
+ eigenvalue        5 after current iteration:   0.14214517D+01
+ eigenvalue        6 after current iteration:   0.17626228D+01
+ eigenvalue        7 after current iteration:   0.18419863D+01
+ eigenvalue        8 after current iteration:   0.22535883D+01
+ eigenvalue        9 after current iteration:   0.25572471D+01
+ eigenvalue       10 after current iteration:   0.38107835D+01
+ eigenvalue       11 after current iteration:   0.79164438D+01
+ eigenvalue       12 after current iteration:   0.90743851D+01
+ eigenvalue        1 after current iteration:   0.76342408D-01
+ eigenvalue        2 after current iteration:   0.80212279D+00
+ eigenvalue        3 after current iteration:   0.12468476D+01
+ eigenvalue        4 after current iteration:   0.13825832D+01
+ eigenvalue        5 after current iteration:   0.18862221D+01
+ eigenvalue        6 after current iteration:   0.32309318D+01
+ eigenvalue        7 after current iteration:   0.74052615D+01
+ eigenvalue        8 after current iteration:   0.83423182D+01
+ eigenvalue        9 after current iteration:   0.91169021D+01
+ eigenvalue       10 after current iteration:   0.11171347D+02
+ eigenvalue       11 after current iteration:   0.12317760D+02
+ eigenvalue       12 after current iteration:   0.38543861D+03
+
+  escf  : cpu elapsed         0.116 s
+          wall                0.118 s
