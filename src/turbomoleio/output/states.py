@@ -526,7 +526,7 @@ class States(MSONable, MutableSequence):
         return d
 
 
-class EigerOutput:
+class EigerOutput(MSONable):
     """Class to read and store the output from the eiger command."""
 
     def __init__(

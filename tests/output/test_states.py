@@ -252,7 +252,9 @@ def test_eiger_runner(mo_dirpath, delete_tmp_dir):
         m.stdout = out.encode("utf-8")
         mock_run.return_value = m
         er.run()
+        eo = er.get_eiger_output()
         assert er.get_eiger_output()
+        assert_MSONable(eo)
 
         with temp_dir(delete_tmp_dir):
             er.to_file("out_test")

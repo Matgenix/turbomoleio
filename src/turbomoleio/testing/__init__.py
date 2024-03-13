@@ -858,7 +858,7 @@ def run_itest(
                 c.cdg(k, v)
             c.to_file()
 
-        if opt_generate_ref:  # pragma: no cover
+        if opt_generate_ref:
             shutil.copy2(
                 "control",
                 get_control_integration(
@@ -971,15 +971,17 @@ def run_itest(
                     else:
                         np.testing.assert_allclose(e.scf, e_ref.scf, atol=opt_tol)
                         np.testing.assert_allclose(e.total, e_ref.total, atol=opt_tol)
+                else:
+                    raise AssertionError("The energy should be there.")
 
                 g = c.gradient
+                g_ref_path = (
+                    test_data
+                    / "integration"
+                    / "gradient"
+                    / "{}_{}.json".format(control_reference_filename, executable)
+                )
                 if g is not None:
-                    g_ref_path = (
-                        test_data
-                        / "integration"
-                        / "gradient"
-                        / "{}_{}.json".format(control_reference_filename, executable)
-                    )
                     if opt_generate_ref:
                         dumpfn(g, g_ref_path)
                     g_ref = loadfn(g_ref_path)
@@ -995,12 +997,17 @@ def run_itest(
                         np.testing.assert_allclose(
                             g.gradients, g_ref.gradients, atol=opt_tol
                         )
+                else:
+                    if g_ref_path.exists():
+                        raise AssertionError("The gradient should be there.")
 
                 # check that the output from eiger and our parser give the same results
                 states = States.from_file()
                 eiger_runner = EigerRunner()
                 eiger_runner.run()
+                eiger_runner.to_file("eiger_output")
                 eiger_out = eiger_runner.get_eiger_output()
+
                 eiger_comp = eiger_out.compare_states(states)
                 if opt_dryrun:
                     if eiger_comp is not None:
