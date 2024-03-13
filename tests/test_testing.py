@@ -23,6 +23,7 @@
 import json
 import os
 import shutil
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -32,8 +33,10 @@ from monty.os import makedirs_p
 from monty.serialization import MontyEncoder
 from pymatgen.core.structure import Molecule
 
+import turbomoleio.testing
 from turbomoleio.input.utils import get_define_template
 from turbomoleio.output.files import ScfOutput
+from turbomoleio.output.states import EigerOutput
 from turbomoleio.testing import (
     ARRAYS_DIFFER,
     DICT_DIFFERENT_KEYS,
@@ -47,6 +50,7 @@ from turbomoleio.testing import (
     STRINGS_DIFFER,
     TEST_NUMBER_REF_OTHER,
     TEST_STRING_REF_OTHER,
+    DefineRunner,
     assert_almost_equal,
     assert_MSONable,
     compare_differences,
@@ -56,6 +60,7 @@ from turbomoleio.testing import (
     get_tfp,
     gisnan,
     run_itest,
+    subprocess,
     temp_dir,
     touch_file,
 )
@@ -493,8 +498,6 @@ class TestRunITest(object):
                 )
 
     def test_run_itest_1(self, test_data, mocker, delete_tmp_dir):
-        import turbomoleio.testing
-        from turbomoleio.testing import DefineRunner, subprocess
 
         with temp_dir(delete_tmp_dir):
             define_opt = get_define_template("dscf")
@@ -508,7 +511,6 @@ class TestRunITest(object):
             # Manually remove subprocess from the list of loaded modules
             # because it is used deep down in run_itest (actually in numpy, which
             # is used in the assert_almost_equal method).
-            import sys
 
             sys.modules.pop("subprocess")
             program_stdout = open(
@@ -522,7 +524,6 @@ class TestRunITest(object):
             mock_subprocess_Popen.return_value.wait.return_value = 0
             # Mock the EigerRunner
             mock_eiger_runner = mocker.patch.object(turbomoleio.testing, "EigerRunner")
-            from turbomoleio.output.states import EigerOutput
 
             eiger_stdout = open(
                 ref_test_dir / "outputs" / "eiger" / "eiger_output"

@@ -1005,7 +1005,7 @@ def run_itest(
                 states = States.from_file()
                 eiger_runner = EigerRunner()
                 eiger_runner.run()
-                eiger_runner.to_file("eiger_output")
+                eiger_runner.to_file(f"{executable}_eiger_output")
                 eiger_out = eiger_runner.get_eiger_output()
 
                 eiger_comp = eiger_out.compare_states(states)
