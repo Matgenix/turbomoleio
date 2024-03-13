@@ -35,7 +35,7 @@ from pymatgen.core.structure import Molecule
 
 import turbomoleio.testing
 from turbomoleio.input.utils import get_define_template
-from turbomoleio.output.files import ScfOutput
+from turbomoleio.output.files import EscfOutput, ScfOutput
 from turbomoleio.output.states import EigerOutput
 from turbomoleio.testing import (
     ARRAYS_DIFFER,
@@ -633,8 +633,8 @@ class TestRunITest(object):
                 define_options=define_opt,
                 coord_filename="h2o",
                 control_reference_filename="ridft_escf_h2o_std",
-                file_classes=ScfOutput,
-                # arguments=None,
+                file_classes=[ScfOutput, EscfOutput],
+                arguments=["-fakearg", None],
                 # datagroups_options=None,
                 test_data=test_data,
             )

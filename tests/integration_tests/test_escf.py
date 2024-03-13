@@ -118,5 +118,5 @@ class TestEscf:
             define_opt,
             "nh3_wrong_internal",
             "dscf_escf_nh3_set_dict",
-            ScfOutput,
+            [ScfOutput, EscfOutput],
         )

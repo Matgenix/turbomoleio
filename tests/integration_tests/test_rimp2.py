@@ -23,7 +23,7 @@
 import pytest
 
 from turbomoleio.input.utils import get_define_template
-from turbomoleio.output.files import Ricc2Output, ScfOutput
+from turbomoleio.output.files import MP2Output, Ricc2Output, ScfOutput
 from turbomoleio.testing import run_itest
 
 # structures = ['aceton', 'ch4', 'h2o', 'h3cbr', 'methanol',
@@ -41,7 +41,7 @@ class TestRimp2:
             get_define_template("ridft_rimp2"),
             structure,
             "ridft_rimp2_{}_std".format(structure),
-            [ScfOutput, Ricc2Output],
+            [ScfOutput, MP2Output],
         )
 
     def test_run_ridft_adc2(self):
@@ -57,7 +57,7 @@ class TestRimp2:
             define_opt,
             "nh3",
             "ridft_rimp2_nh3_adc2",
-            [ScfOutput, None],
+            [ScfOutput, MP2Output],
         )
 
     # FIXME according to TM: "CCSD(T) is no longer available in ricc2 : use ccsdf12"
@@ -103,8 +103,5 @@ class TestRimp2:
             define_options=define_opt,
             coord_filename=structure,
             control_reference_filename="ridft_rimp2_{}_f12*".format(structure),
-            file_classes=[ScfOutput, Ricc2Output],
+            file_classes=[ScfOutput, MP2Output],
         )
-
-
-# executables, define_options, coord_filename, control_reference_filename, file_classes

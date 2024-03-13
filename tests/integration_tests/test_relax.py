@@ -62,7 +62,7 @@ class TestRelax:
             dp,
             structure,
             "ridft_rdgrad_relax_{}_sym".format(structure),
-            [ScfOutput, GradOutput, StatptOutput],
+            [ScfOutput, GradOutput, RelaxOutput],
         )
 
     @pytest.mark.parametrize("structure", structures)
@@ -92,5 +92,5 @@ class TestRelax:
             dp,
             structure,
             "ridft_egrad_statpt_{}_ex_irrep".format(structure),
-            [ScfOutput, EgradOutput, RelaxOutput],
+            [ScfOutput, EgradOutput, StatptOutput],
         )

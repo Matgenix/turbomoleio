@@ -887,7 +887,7 @@ def run_itest(
             assert compare_control is None, compare_control
 
         for iexec, (executable, exec_args, out_parser) in enumerate(
-            zip(executables, arguments, file_classes)
+            zip(executables, arguments, file_classes, strict=True)
         ):
             cmd = [executable]
             if exec_args:
