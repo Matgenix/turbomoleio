@@ -886,8 +886,15 @@ def run_itest(
         else:
             assert compare_control is None, compare_control
 
+        if len(executables) != len(arguments) or len(executables) != len(file_classes):
+            # In python 3.9, zip does not have a strict argument
+            # When we drop support for 3.9, we can use:
+            # zip(executables, arguments, file_classes, strict=True)
+            raise TypeError(
+                "Number of executables, arguments and " "file_classes should be equal"
+            )
         for iexec, (executable, exec_args, out_parser) in enumerate(
-            zip(executables, arguments, file_classes, strict=True)
+            zip(executables, arguments, file_classes)
         ):
             cmd = [executable]
             if exec_args:
