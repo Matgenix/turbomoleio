@@ -924,10 +924,10 @@ def run_itest(
                         )
                     )
 
-                if out_parser:
+                if out_parser:  # pragma: no branch
                     # for jobex the outputs are not in the stdout but in
                     # the job.last file.
-                    if executable == "jobex":
+                    if executable == "jobex":  # pragma: no cover
                         out = out_parser.from_file("job.last").as_dict()
                     else:
                         out = out_parser.from_string(program_std_out).as_dict()
@@ -963,7 +963,7 @@ def run_itest(
                         / "energy"
                         / "{}_{}.json".format(control_reference_filename, executable)
                     )
-                    if opt_generate_ref:
+                    if opt_generate_ref:  # pragma: no cover
                         dumpfn(e, e_ref_path)
                     e_ref = loadfn(e_ref_path)
                     if opt_dryrun:  # pragma: no cover
