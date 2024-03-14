@@ -134,7 +134,7 @@ class MoleculeSystem(BaseSystem):
                 # splitting first on "," and then on "-" and "|"
                 for line in user_def_bonds_str.splitlines():
                     line = line.strip()
-                    if not line or line.startswith("#"):
+                    if not line or line.startswith("#"):  # pragma: no cover (trivial)
                         continue
                     for bond in line.split(","):
                         for separator in ("-", "|"):

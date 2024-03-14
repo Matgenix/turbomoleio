@@ -132,6 +132,16 @@ def test_get_mol_and_indices_frozen_lattice(molecule):
         )
 
 
+@pytest.mark.parametrize("molecule_filename", ["h2o_natoms"])
+def test_get_mol_and_indices_format_natoms(molecule_filepath):
+    dg = DataGroups.from_file(molecule_filepath)
+    coord_string = dg.show_data_group("coord")
+    coord_system = get_mol_and_indices_frozen(coord_string)
+    ms = MoleculeSystem.from_file(molecule_filepath, fmt="coord")
+    assert coord_system.molecule_or_structure == ms.molecule
+    assert coord_system.frozen_indices == set()
+
+
 @pytest.mark.parametrize("molecule_filename", ["co2.json"])
 def test_to_file_no_format(molecule, delete_tmp_dir):
     ms = MoleculeSystem(molecule)
