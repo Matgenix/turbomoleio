@@ -830,7 +830,7 @@ def run_itest(
 
     if arguments is None:
         arguments = [None] * len(executables)
-    elif not isinstance(arguments, (list, tuple)):
+    elif not isinstance(arguments, (list, tuple)):  # pragma: no branch (trivial)
         arguments = [arguments]
 
     opt_define_timeout = ItestConfig.define_timeout
@@ -858,7 +858,7 @@ def run_itest(
                 c.cdg(k, v)
             c.to_file()
 
-        if opt_generate_ref:
+        if opt_generate_ref:  # pragma: no cover
             shutil.copy2(
                 "control",
                 get_control_integration(
@@ -872,7 +872,7 @@ def run_itest(
 
         current_control = Control.from_file("control")
         compare_control = current_control.compare(ref_control, tol=opt_tol)
-        if ItestConfig.dryrun_use_ref_control:
+        if ItestConfig.dryrun_use_ref_control:  # pragma: no cover
             shutil.copy("control", "control_generated")
             shutil.copy(
                 get_control_integration(
@@ -881,12 +881,14 @@ def run_itest(
                 "control",
             )
         # print the output of Control.compare if the compare fails
-        if opt_dryrun and compare_control is not None:
+        if opt_dryrun and compare_control is not None:  # pragma: no cover
             dryrun_differences.append(("control", compare_control))
         else:
             assert compare_control is None, compare_control
 
-        if len(executables) != len(arguments) or len(executables) != len(file_classes):
+        if len(executables) != len(arguments) or len(executables) != len(
+            file_classes
+        ):  # pragma: no cover
             # In python 3.9, zip does not have a strict argument
             # When we drop support for 3.9, we can use:
             # zip(executables, arguments, file_classes, strict=True)
@@ -935,10 +937,10 @@ def run_itest(
                         / "logs_json"
                         / "{}_{}.json".format(control_reference_filename, executable)
                     )
-                    if opt_generate_ref:
+                    if opt_generate_ref:  # pragma: no cover
                         dumpfn(out, out_ref_path)
                     out_ref = loadfn(out_ref_path).as_dict()
-                    if opt_dryrun:
+                    if opt_dryrun:  # pragma: no cover
                         diffs = compare_differences(out, out_ref, atol=opt_tol)
                         if diffs:
                             dryrun_differences.append(
@@ -964,7 +966,7 @@ def run_itest(
                     if opt_generate_ref:
                         dumpfn(e, e_ref_path)
                     e_ref = loadfn(e_ref_path)
-                    if opt_dryrun:
+                    if opt_dryrun:  # pragma: no cover
                         diffs = compare_differences(e.scf, e_ref.scf, atol=opt_tol)
                         if diffs:
                             dryrun_differences.append(
@@ -989,10 +991,10 @@ def run_itest(
                     / "{}_{}.json".format(control_reference_filename, executable)
                 )
                 if g is not None:
-                    if opt_generate_ref:
+                    if opt_generate_ref:  # pragma: no cover
                         dumpfn(g, g_ref_path)
                     g_ref = loadfn(g_ref_path)
-                    if opt_dryrun:
+                    if opt_dryrun:  # pragma: no cover
                         diffs = compare_differences(
                             g.gradients, g_ref.gradients, atol=opt_tol
                         )
@@ -1016,7 +1018,7 @@ def run_itest(
                 eiger_out = eiger_runner.get_eiger_output()
 
                 eiger_comp = eiger_out.compare_states(states)
-                if opt_dryrun:
+                if opt_dryrun:  # pragma: no cover
                     if eiger_comp is not None:
                         dryrun_differences.append(
                             (f"{executable} ({iexec}) Eiger comparison", diffs)
@@ -1026,7 +1028,7 @@ def run_itest(
 
                 with open("{}_stdout".format(executable), "w") as f:
                     f.write(program_std_out)
-            except:  # noqa: E722
+            except:  # noqa: E722  #pragma: no cover
                 # if an exception is raised write down the output file for
                 # debugging then reraise.
                 with open("{}_stdout".format(executable), "w") as f:
@@ -1036,7 +1038,7 @@ def run_itest(
 
                 raise
 
-        if opt_dryrun:
+        if opt_dryrun:  # pragma: no cover
             if dryrun_differences:
                 frames = inspect.getouterframes(inspect.currentframe())
                 test_frame = frames[1]
@@ -1070,7 +1072,7 @@ def run_itest(
         return True
 
 
-def generate_control_for_test(test_definition):
+def generate_control_for_test(test_definition):  # pragma: no cover
     """
     Regenerate control from the definition of the test.
 
@@ -1104,7 +1106,7 @@ def generate_control_for_test(test_definition):
             cdg(dg, val)
 
 
-def generate_reference_out_parser_files(log_fpath, outdir=None):
+def generate_reference_out_parser_files(log_fpath, outdir=None):  # pragma: no cover
     """
     Generate the reference test files for the File and Parser objects.
 
@@ -1140,7 +1142,7 @@ def generate_reference_out_parser_files(log_fpath, outdir=None):
     shutil.copy(log_fpath, outdir)
 
 
-def generate_reference_output(
+def generate_reference_output(  # pragma: no cover
     test_definition,
 ):
     """
