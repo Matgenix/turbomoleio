@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>turbomoleio.core.utils &mdash; turbomoleio 1.5.0 documentation</title>
+  <title>turbomoleio.input.templates &mdash; turbomoleio 1.5.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -83,7 +83,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">turbomoleio.core.utils</li>
+      <li class="breadcrumb-item active">turbomoleio.input.templates</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -92,7 +92,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for turbomoleio.core.utils</h1><div class="highlight"><pre>
+  <h1>Source code for turbomoleio.input.templates</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1"># The turbomoleio package, a python interface to Turbomole</span>
 <span class="c1"># for preparing inputs, parsing outputs and other related tools.</span>
@@ -115,43 +115,23 @@
 <span class="c1"># along with turbomoleio (see ~turbomoleio/COPYING). If not,</span>
 <span class="c1"># see &lt;https://www.gnu.org/licenses/&gt;.</span>
 
-<span class="sd">&quot;&quot;&quot;Module containing miscellaneous utilities.&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;Module for define templates.&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">signal</span>
-
-<span class="kn">import</span> <span class="nn">pexpect.popen_spawn</span>
-<span class="kn">from</span> <span class="nn">monty.tempfile</span> <span class="kn">import</span> <span class="n">ScratchDir</span>
-
-<span class="kn">from</span> <span class="nn">turbomoleio.output.data</span> <span class="kn">import</span> <span class="n">TurbomoleData</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 
-<div class="viewcode-block" id="define_quit">
-<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.utils.define_quit">[docs]</a>
-<span class="k">def</span> <span class="nf">define_quit</span><span class="p">():</span>  <span class="c1"># pragma: no cover (only covered by integration tests)</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run define but directly quits by sending &quot;qq&quot; interactively.&quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;define.log&quot;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">logf</span><span class="p">:</span>
-        <span class="n">spawn</span> <span class="o">=</span> <span class="n">pexpect</span><span class="o">.</span><span class="n">popen_spawn</span><span class="o">.</span><span class="n">PopenSpawn</span><span class="p">(</span><span class="s2">&quot;define&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">logfile</span><span class="o">=</span><span class="n">logf</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">spawn</span><span class="o">.</span><span class="n">expect</span><span class="p">([</span><span class="s2">&quot;D E F I N E&quot;</span><span class="p">])</span>
-            <span class="n">spawn</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s2">&quot;qq&quot;</span><span class="p">)</span>
-        <span class="k">finally</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">spawn</span><span class="o">.</span><span class="n">proc</span><span class="o">.</span><span class="n">poll</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">spawn</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">sig</span><span class="o">=</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGKILL</span><span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="get_tm_version">
-<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.utils.get_tm_version">[docs]</a>
-<span class="k">def</span> <span class="nf">get_tm_version</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the turbomole version currently in use.</span>
-
-<span class="sd">    This basically runs a define and exits at the very beginning and extracts</span>
-<span class="sd">    the version from the header of the output.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="n">ScratchDir</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">):</span>
-        <span class="n">define_quit</span><span class="p">()</span>
-        <span class="n">tm_data</span> <span class="o">=</span> <span class="n">TurbomoleData</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;define.log&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">tm_data</span><span class="o">.</span><span class="n">version</span></div>
+<div class="viewcode-block" id="available_templates">
+<a class="viewcode-back" href="../../../api/turbomoleio.input.templates.html#turbomoleio.input.templates.available_templates">[docs]</a>
+<span class="k">def</span> <span class="nf">available_templates</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the list of available define templates.&quot;&quot;&quot;</span>
+    <span class="n">templates_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">templates_dir</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.yaml&quot;</span><span class="p">)</span>
+        <span class="p">]</span>
+    <span class="p">)</span></div>
 
 </pre></div>
 

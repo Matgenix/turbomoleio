@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,9 +14,9 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=c2dd840c"></script>
+        <script src="../../../_static/documentation_options.js?v=e0a75244"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -139,7 +139,9 @@
 <span class="kn">from</span> <span class="nn">monty.json</span> <span class="kn">import</span> <span class="n">MSONable</span>
 
 
-<div class="viewcode-block" id="cleanup_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.cleanup_string">[docs]</a><span class="k">def</span> <span class="nf">cleanup_string</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">cleanup_types</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="cleanup_string">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.cleanup_string">[docs]</a>
+<span class="k">def</span> <span class="nf">cleanup_string</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">cleanup_types</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a cleaned data groups string.</span>
 
 <span class="sd">    This function allows to clean up a data groups string. It allows to :</span>
@@ -212,7 +214,10 @@
     <span class="k">return</span> <span class="n">string</span></div>
 
 
-<div class="viewcode-block" id="remove_comments"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.remove_comments">[docs]</a><span class="k">def</span> <span class="nf">remove_comments</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">comment_types</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="remove_comments">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.remove_comments">[docs]</a>
+<span class="k">def</span> <span class="nf">remove_comments</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">comment_types</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a data group string with comment lines removed.</span>
 
 <span class="sd">    Comments or additional information in TurboMole is typically specified in</span>
@@ -275,7 +280,10 @@
     <span class="k">return</span> <span class="n">string</span></div>
 
 
-<div class="viewcode-block" id="split_string_to_dg_list"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.split_string_to_dg_list">[docs]</a><span class="k">def</span> <span class="nf">split_string_to_dg_list</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">cleanup_types</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">remove_comment_types</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="split_string_to_dg_list">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.split_string_to_dg_list">[docs]</a>
+<span class="k">def</span> <span class="nf">split_string_to_dg_list</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">cleanup_types</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">remove_comment_types</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Split a string into a list of data groups.</span>
 
 <span class="sd">    Args:</span>
@@ -320,7 +328,10 @@
     <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;$&quot;</span> <span class="o">+</span> <span class="n">dg</span> <span class="k">for</span> <span class="n">dg</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;$&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]]</span></div>
 
 
-<div class="viewcode-block" id="remove_dg_from_list"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.remove_dg_from_list">[docs]</a><span class="k">def</span> <span class="nf">remove_dg_from_list</span><span class="p">(</span><span class="n">dg_to_remove</span><span class="p">,</span> <span class="n">dg_list</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+
+<div class="viewcode-block" id="remove_dg_from_list">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.remove_dg_from_list">[docs]</a>
+<span class="k">def</span> <span class="nf">remove_dg_from_list</span><span class="p">(</span><span class="n">dg_to_remove</span><span class="p">,</span> <span class="n">dg_list</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return new list with a data group removed from the initial list.</span>
 
 <span class="sd">    This function will remove dg_to_remove from a list of data groups. If the</span>
@@ -356,7 +367,10 @@
     <span class="k">return</span> <span class="n">new_dg_list</span></div>
 
 
-<div class="viewcode-block" id="compare_datagroup_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.compare_datagroup_string">[docs]</a><span class="k">def</span> <span class="nf">compare_datagroup_string</span><span class="p">(</span><span class="n">dg1</span><span class="p">,</span> <span class="n">dg2</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="compare_datagroup_string">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.compare_datagroup_string">[docs]</a>
+<span class="k">def</span> <span class="nf">compare_datagroup_string</span><span class="p">(</span><span class="n">dg1</span><span class="p">,</span> <span class="n">dg2</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compare two datagroup strings as split from the DataGroups object.</span>
 
@@ -403,7 +417,10 @@
     <span class="k">return</span> <span class="kc">True</span></div>
 
 
-<div class="viewcode-block" id="DataGroups"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups">[docs]</a><span class="k">class</span> <span class="nc">DataGroups</span><span class="p">(</span><span class="n">MSONable</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DataGroups">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups">[docs]</a>
+<span class="k">class</span> <span class="nc">DataGroups</span><span class="p">(</span><span class="n">MSONable</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Generic class for data group formatted files and strings.</span>
 
 <span class="sd">    DataGroups is a generic class for parsing, manipulating and generating</span>
@@ -442,7 +459,9 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">initial_string</span> <span class="o">=</span> <span class="n">string</span>
 
-<div class="viewcode-block" id="DataGroups.kill_data_group"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.kill_data_group">[docs]</a>    <span class="k">def</span> <span class="nf">kill_data_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="DataGroups.kill_data_group">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.kill_data_group">[docs]</a>
+    <span class="k">def</span> <span class="nf">kill_data_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove `data_group` from this `DataGroups` object.</span>
 
 <span class="sd">        Args:</span>
@@ -455,9 +474,12 @@
             <span class="n">dg_to_remove</span><span class="o">=</span><span class="n">data_group</span><span class="p">,</span> <span class="n">dg_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dg_list</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="n">strict</span>
         <span class="p">)</span></div>
 
+
     <span class="n">kdg</span> <span class="o">=</span> <span class="n">kill_data_group</span>
 
-<div class="viewcode-block" id="DataGroups.add_data_group"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.add_data_group">[docs]</a>    <span class="k">def</span> <span class="nf">add_data_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="p">):</span>
+<div class="viewcode-block" id="DataGroups.add_data_group">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.add_data_group">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_data_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add `data_group`-&gt;`data_block` to this `DataGroups` object.</span>
 
 <span class="sd">        Args:</span>
@@ -488,9 +510,12 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dg_list</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="p">))</span></div>
 
+
     <span class="n">adg</span> <span class="o">=</span> <span class="n">add_data_group</span>
 
-<div class="viewcode-block" id="DataGroups.show_data_group"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.show_data_group">[docs]</a>    <span class="k">def</span> <span class="nf">show_data_group</span><span class="p">(</span>
+<div class="viewcode-block" id="DataGroups.show_data_group">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.show_data_group">[docs]</a>
+    <span class="k">def</span> <span class="nf">show_data_group</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data_group</span><span class="p">,</span>
         <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -592,9 +617,12 @@
 
         <span class="k">return</span> <span class="n">data_block</span></div>
 
+
     <span class="n">sdg</span> <span class="o">=</span> <span class="n">show_data_group</span>
 
-<div class="viewcode-block" id="DataGroups.change_data_group"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.change_data_group">[docs]</a>    <span class="k">def</span> <span class="nf">change_data_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="p">):</span>
+<div class="viewcode-block" id="DataGroups.change_data_group">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.change_data_group">[docs]</a>
+    <span class="k">def</span> <span class="nf">change_data_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Change the value of the `data_group` to the new `data_block`.</span>
 
 <span class="sd">        If the key is not present will be added.</span>
@@ -618,9 +646,12 @@
         <span class="k">if</span> <span class="n">data_block</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_data_group</span><span class="p">(</span><span class="n">data_group</span><span class="o">=</span><span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="o">=</span><span class="n">data_block</span><span class="p">)</span></div>
 
+
     <span class="n">cdg</span> <span class="o">=</span> <span class="n">change_data_group</span>
 
-<div class="viewcode-block" id="DataGroups.modify_data_group_options"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.modify_data_group_options">[docs]</a>    <span class="k">def</span> <span class="nf">modify_data_group_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+<div class="viewcode-block" id="DataGroups.modify_data_group_options">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.modify_data_group_options">[docs]</a>
+    <span class="k">def</span> <span class="nf">modify_data_group_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Modify a data group option.</span>
 
 <span class="sd">        Given a data group that allows several options on separate line</span>
@@ -683,9 +714,12 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">change_data_group</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">new_lines</span><span class="p">))</span></div>
 
+
     <span class="n">mdgo</span> <span class="o">=</span> <span class="n">modify_data_group_options</span>
 
-<div class="viewcode-block" id="DataGroups.show_data_group_option"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.show_data_group_option">[docs]</a>    <span class="k">def</span> <span class="nf">show_data_group_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="DataGroups.show_data_group_option">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.show_data_group_option">[docs]</a>
+    <span class="k">def</span> <span class="nf">show_data_group_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Show a data group option.</span>
 
 <span class="sd">        Given a data group that allows several options on separate line</span>
@@ -724,6 +758,7 @@
 
         <span class="k">return</span> <span class="n">default</span></div>
 
+
     <span class="n">sdgo</span> <span class="o">=</span> <span class="n">show_data_group_option</span>
 
     <span class="nd">@property</span>
@@ -733,7 +768,9 @@
 
     <span class="n">ndg</span> <span class="o">=</span> <span class="n">number_of_data_groups</span>
 
-<div class="viewcode-block" id="DataGroups.empty"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.empty">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="DataGroups.empty">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.empty">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">empty</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an empty DataGroups object.</span>
 
@@ -741,7 +778,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">dg_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;$end</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="DataGroups.as_dict"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.as_dict">[docs]</a>    <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DataGroups.as_dict">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.as_dict">[docs]</a>
+    <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a dictionary representing the DataGroups object.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;@module&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span>
@@ -750,10 +790,14 @@
             <span class="s2">&quot;dg_list&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dg_list</span><span class="p">,</span>
         <span class="p">}</span></div>
 
-<div class="viewcode-block" id="DataGroups.from_dict"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+
+<div class="viewcode-block" id="DataGroups.from_dict">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.from_dict">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create DataGroups object from a dictionary.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;string&quot;</span><span class="p">],</span> <span class="n">dg_list</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;dg_list&quot;</span><span class="p">])</span></div>
+
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a string representation of this DataGroups object.</span>
@@ -763,7 +807,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dg_list</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DataGroups.to_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.to_file">[docs]</a>    <span class="k">def</span> <span class="nf">to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<div class="viewcode-block" id="DataGroups.to_file">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.to_file">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Write this DataGroups object to a file.</span>
 
 <span class="sd">        If the file exists it will be overwritten.</span>
@@ -775,7 +821,10 @@
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="DataGroups.from_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.from_file">[docs]</a>    <span class="nd">@classmethod</span>
+
+<div class="viewcode-block" id="DataGroups.from_file">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.from_file">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create DataGroups object reading from a given file.</span>
 
@@ -786,6 +835,7 @@
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">string</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="n">string</span><span class="p">)</span></div>
+
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_get_subfile_fname</span><span class="p">(</span><span class="n">data_block</span><span class="p">,</span> <span class="n">raise_if_regular_and_subfile</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -821,7 +871,9 @@
             <span class="p">)</span>
         <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DataGroups.show_subfile_fname"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.show_subfile_fname">[docs]</a>    <span class="k">def</span> <span class="nf">show_subfile_fname</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">raise_if_regular_and_subfile</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="DataGroups.show_subfile_fname">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.show_subfile_fname">[docs]</a>
+    <span class="k">def</span> <span class="nf">show_subfile_fname</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_group</span><span class="p">,</span> <span class="n">raise_if_regular_and_subfile</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the name of the file from a datagroup.</span>
 
@@ -843,7 +895,10 @@
             <span class="n">raise_if_regular_and_subfile</span><span class="o">=</span><span class="n">raise_if_regular_and_subfile</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="DataGroups.compare"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.compare">[docs]</a>    <span class="k">def</span> <span class="nf">compare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datagroups</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignored_dg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_all_diffs</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DataGroups.compare">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups.compare">[docs]</a>
+    <span class="k">def</span> <span class="nf">compare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datagroups</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignored_dg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_all_diffs</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compare the current object with another DataGroups.</span>
 
@@ -924,7 +979,9 @@
 
         <span class="k">if</span> <span class="n">return_all_diffs</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">diffs</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">diffs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="kc">None</span></div></div>
+        <span class="k">return</span> <span class="kc">None</span></div>
+</div>
+
 </pre></div>
 
            </div>

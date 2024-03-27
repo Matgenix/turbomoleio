@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,9 +14,9 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=c2dd840c"></script>
+        <script src="../../../_static/documentation_options.js?v=e0a75244"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -140,7 +140,9 @@
 <span class="kn">from</span> <span class="nn">turbomoleio.core.symmetry</span> <span class="kn">import</span> <span class="n">irrep_size</span>
 
 
-<div class="viewcode-block" id="Defaults"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Defaults">[docs]</a><span class="k">class</span> <span class="nc">Defaults</span><span class="p">:</span>
+<div class="viewcode-block" id="Defaults">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Defaults">[docs]</a>
+<span class="k">class</span> <span class="nc">Defaults</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class collecting default values used by TM executables.</span>
 
@@ -150,7 +152,10 @@
     <span class="n">METRIC</span> <span class="o">=</span> <span class="mi">3</span></div>
 
 
-<div class="viewcode-block" id="Energy"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Energy">[docs]</a><span class="k">class</span> <span class="nc">Energy</span><span class="p">(</span><span class="n">MSONable</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Energy">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Energy">[docs]</a>
+<span class="k">class</span> <span class="nc">Energy</span><span class="p">(</span><span class="n">MSONable</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents the &quot;energy&quot; data group of TurboMole.</span>
 
@@ -176,7 +181,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">mp2</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scf</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Energy.from_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Energy.from_string">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Energy.from_string">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Energy.from_string">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create Energy object reading from a string.</span>
@@ -207,7 +214,10 @@
                 <span class="n">mp2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">lsp</span><span class="p">[</span><span class="n">h_ind</span><span class="p">[</span><span class="s2">&quot;MP2&quot;</span><span class="p">]]))</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">scf</span><span class="o">=</span><span class="n">scf</span><span class="p">,</span> <span class="n">scfkin</span><span class="o">=</span><span class="n">scfkin</span><span class="p">,</span> <span class="n">scfpot</span><span class="o">=</span><span class="n">scfpot</span><span class="p">,</span> <span class="n">mp2</span><span class="o">=</span><span class="n">mp2</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Energy.from_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Energy.from_file">[docs]</a>    <span class="nd">@classmethod</span>
+
+<div class="viewcode-block" id="Energy.from_file">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Energy.from_file">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;energy&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create Energy object reading from a given file.</span>
 
@@ -222,6 +232,7 @@
             <span class="s2">&quot;energy&quot;</span><span class="p">,</span> <span class="n">show_from_subfile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">raise_if_missing_subfile</span><span class="o">=</span><span class="kc">True</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">string</span><span class="p">)</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">n_steps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -240,7 +251,9 @@
 
         <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
 
-<div class="viewcode-block" id="Energy.plot"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Energy.plot">[docs]</a>    <span class="nd">@add_fig_kwargs</span>
+<div class="viewcode-block" id="Energy.plot">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Energy.plot">[docs]</a>
+    <span class="nd">@add_fig_kwargs</span>
     <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot the evolution of the energies.</span>
@@ -255,7 +268,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">pymatgen.util.plotting</span> <span class="kn">import</span> <span class="n">get_ax_fig_plt</span>
 
-            <span class="n">ax</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">plt</span> <span class="o">=</span> <span class="n">get_ax_fig_plt</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">plt</span> <span class="o">=</span> <span class="n">get_ax_fig_plt</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>  <span class="c1"># pragma: no cover (old pymatgen)</span>
         <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">pymatgen.util.plotting</span> <span class="kn">import</span> <span class="n">get_ax_fig</span>
 
@@ -265,10 +278,14 @@
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Steps&quot;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Energy&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">fig</span></div></div>
+        <span class="k">return</span> <span class="n">fig</span></div>
+</div>
 
 
-<div class="viewcode-block" id="Gradient"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Gradient">[docs]</a><span class="k">class</span> <span class="nc">Gradient</span><span class="p">(</span><span class="n">MSONable</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Gradient">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Gradient">[docs]</a>
+<span class="k">class</span> <span class="nc">Gradient</span><span class="p">(</span><span class="n">MSONable</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents the &quot;grad&quot; data group of TurboMole.</span>
 
@@ -311,7 +328,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">lattice_gradients</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Gradient.from_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Gradient.from_string">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Gradient.from_string">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Gradient.from_string">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">lattice_string</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create Gradient object reading from a given file.</span>
@@ -414,7 +433,10 @@
             <span class="n">lattice_gradients</span><span class="o">=</span><span class="n">lattice_gradients</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Gradient.from_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Gradient.from_file">[docs]</a>    <span class="nd">@classmethod</span>
+
+<div class="viewcode-block" id="Gradient.from_file">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Gradient.from_file">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;gradient&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create Gradient object reading from a given file.</span>
@@ -437,6 +459,7 @@
             <span class="s2">&quot;gradlatt&quot;</span><span class="p">,</span> <span class="n">show_from_subfile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">raise_if_missing_subfile</span><span class="o">=</span><span class="kc">True</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">lattice_string</span><span class="o">=</span><span class="n">lattice_string</span><span class="p">)</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">norms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -475,7 +498,9 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_gradients</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-<div class="viewcode-block" id="Gradient.plot"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Gradient.plot">[docs]</a>    <span class="nd">@add_fig_kwargs</span>
+<div class="viewcode-block" id="Gradient.plot">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Gradient.plot">[docs]</a>
+    <span class="nd">@add_fig_kwargs</span>
     <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot the evolution of the maximum and the norm of the gradient.</span>
@@ -498,10 +523,14 @@
         <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Steps&quot;</span><span class="p">)</span>
         <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Gradient max&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">fig</span></div></div>
+        <span class="k">return</span> <span class="n">fig</span></div>
+</div>
 
 
-<div class="viewcode-block" id="Shells"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Shells">[docs]</a><span class="k">class</span> <span class="nc">Shells</span><span class="p">(</span><span class="n">MSONable</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Shells">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Shells">[docs]</a>
+<span class="k">class</span> <span class="nc">Shells</span><span class="p">(</span><span class="n">MSONable</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Object describing the occupation of a type of shells.</span>
 
@@ -523,7 +552,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="o">=</span> <span class="n">states</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">occupations</span> <span class="o">=</span> <span class="n">occupations</span>
 
-<div class="viewcode-block" id="Shells.from_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Shells.from_string">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Shells.from_string">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Shells.from_string">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of Shells from a string.</span>
@@ -580,7 +611,10 @@
 
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">states</span><span class="p">,</span> <span class="n">occupations</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Shells.from_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Shells.from_file">[docs]</a>    <span class="nd">@classmethod</span>
+
+<div class="viewcode-block" id="Shells.from_file">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Shells.from_file">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">shells_type</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of Shells from a file containing the datagroup.</span>
@@ -605,6 +639,7 @@
 
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">string</span><span class="p">)</span></div>
 
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">irreps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the set of irreducible representations.&quot;&quot;&quot;</span>
@@ -625,7 +660,9 @@
 
         <span class="k">return</span> <span class="n">tot</span>
 
-<div class="viewcode-block" id="Shells.to_datagroup"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Shells.to_datagroup">[docs]</a>    <span class="k">def</span> <span class="nf">to_datagroup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Shells.to_datagroup">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Shells.to_datagroup">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_datagroup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a string that can be used to set the datagroup in control.</span>
 
@@ -669,14 +706,20 @@
 
         <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Shells.as_dict"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Shells.as_dict">[docs]</a>    <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Shells.as_dict">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Shells.as_dict">[docs]</a>
+    <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a JSON serializable dict representation of Shells.&quot;&quot;&quot;</span>
         <span class="n">occupations</span> <span class="o">=</span> <span class="p">[(</span><span class="n">o</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">o</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">occupations</span><span class="p">]</span>
         <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">states</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">,</span> <span class="n">occupations</span><span class="o">=</span><span class="n">occupations</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Shells.from_dict"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Shells.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+
+<div class="viewcode-block" id="Shells.from_dict">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Shells.from_dict">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of Shell from a JSON serialized representation.</span>
@@ -690,10 +733,14 @@
         <span class="n">occupations</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">Fraction</span><span class="p">(</span><span class="n">numerator</span><span class="o">=</span><span class="n">o</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">denominator</span><span class="o">=</span><span class="n">o</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;occupations&quot;</span><span class="p">]</span>
         <span class="p">]</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">states</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;states&quot;</span><span class="p">],</span> <span class="n">occupations</span><span class="o">=</span><span class="n">occupations</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">states</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;states&quot;</span><span class="p">],</span> <span class="n">occupations</span><span class="o">=</span><span class="n">occupations</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="Control"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control">[docs]</a><span class="k">class</span> <span class="nc">Control</span><span class="p">(</span><span class="n">DataGroups</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Control">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control">[docs]</a>
+<span class="k">class</span> <span class="nc">Control</span><span class="p">(</span><span class="n">DataGroups</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents the control string/file for TurboMole.</span>
 
 <span class="sd">    The `Control` class is used to store the parameters of a control file.</span>
@@ -713,7 +760,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Control</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="n">string</span><span class="p">,</span> <span class="n">dg_list</span><span class="o">=</span><span class="n">dg_list</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Control.from_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.from_file">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Control.from_file">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.from_file">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create Control object reading from a given file.</span>
 
@@ -723,7 +772,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Control.to_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.to_file">[docs]</a>    <span class="k">def</span> <span class="nf">to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Control.to_file">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.to_file">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Write this Control object to a file.</span>
 
 <span class="sd">        If the file exists it will be overwritten.</span>
@@ -734,7 +786,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Control</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Control.add_cosmo"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.add_cosmo">[docs]</a>    <span class="k">def</span> <span class="nf">add_cosmo</span><span class="p">(</span>
+
+<div class="viewcode-block" id="Control.add_cosmo">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.add_cosmo">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_cosmo</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">epsilon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">nppa</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -791,7 +846,10 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">cdg</span><span class="p">(</span><span class="s2">&quot;$cosmo_out&quot;</span><span class="p">,</span> <span class="s2">&quot; = out.cosmo&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Control.from_metric"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.from_metric">[docs]</a>    <span class="nd">@classmethod</span>
+
+<div class="viewcode-block" id="Control.from_metric">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.from_metric">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_metric</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">metric</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a new Control from a given metric.</span>
@@ -804,6 +862,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">metric_str</span> <span class="o">=</span> <span class="s2">&quot;$redund_inp</span><span class="se">\n</span><span class="s2">    metric </span><span class="si">{}</span><span class="se">\n</span><span class="s2">$coord</span><span class="se">\n</span><span class="s2">$end&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">metric</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="n">metric_str</span><span class="p">)</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -836,7 +895,9 @@
             <span class="n">string</span><span class="o">=</span><span class="n">grad_data_block</span><span class="p">,</span> <span class="n">lattice_string</span><span class="o">=</span><span class="n">gradlatt_data_block</span>
         <span class="p">)</span>
 
-<div class="viewcode-block" id="Control.set_disp"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.set_disp">[docs]</a>    <span class="k">def</span> <span class="nf">set_disp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dispersion_correction</span><span class="p">):</span>
+<div class="viewcode-block" id="Control.set_disp">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.set_disp">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_disp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dispersion_correction</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the dispersion correction.</span>
 
@@ -875,7 +936,10 @@
                 <span class="p">)</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Control.remove_last_energy"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.remove_last_energy">[docs]</a>    <span class="k">def</span> <span class="nf">remove_last_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">backup_suffix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Control.remove_last_energy">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.remove_last_energy">[docs]</a>
+    <span class="k">def</span> <span class="nf">remove_last_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">backup_suffix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove last energy step from the energy data group.</span>
 
@@ -928,7 +992,10 @@
                 <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span> <span class="o">+</span> <span class="n">backup_suffix</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Control.remove_last_gradient"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.remove_last_gradient">[docs]</a>    <span class="k">def</span> <span class="nf">remove_last_gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">backup_suffix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Control.remove_last_gradient">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.remove_last_gradient">[docs]</a>
+    <span class="k">def</span> <span class="nf">remove_last_gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">backup_suffix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove last gradient step from the grad data group.</span>
 
@@ -982,7 +1049,10 @@
                 <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span> <span class="o">+</span> <span class="n">backup_suffix</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Control.get_shells"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.get_shells">[docs]</a>    <span class="k">def</span> <span class="nf">get_shells</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shells_type</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Control.get_shells">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.get_shells">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_shells</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shells_type</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract a Shell object for a specific type of shell.</span>
 
 <span class="sd">        Args:</span>
@@ -997,12 +1067,15 @@
 
         <span class="k">return</span> <span class="n">Shells</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">string</span><span class="p">)</span></div>
 
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_uhf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if the $uhf datagroup is present in control.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_data_group</span><span class="p">(</span><span class="s2">&quot;uhf&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Control.get_charge"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.get_charge">[docs]</a>    <span class="k">def</span> <span class="nf">get_charge</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Control.get_charge">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.get_charge">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_charge</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the charge from the &quot;$charge from xxx&quot; datagroup.</span>
 
@@ -1015,7 +1088,10 @@
 
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">dg</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="Control.get_subfiles_list"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.get_subfiles_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_subfiles_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Control.get_subfiles_list">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.get_subfiles_list">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_subfiles_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the list of files referenced in the datagroups with &quot;file directives&quot;.</span>
 
@@ -1033,7 +1109,10 @@
 
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">files</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Control.cpc"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.cpc">[docs]</a>    <span class="k">def</span> <span class="nf">cpc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest_dir</span><span class="p">,</span> <span class="n">force_overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Control.cpc">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.cpc">[docs]</a>
+    <span class="k">def</span> <span class="nf">cpc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest_dir</span><span class="p">,</span> <span class="n">force_overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Copy the control file and all files referenced here.</span>
 
@@ -1056,10 +1135,14 @@
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span>
                 <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">dest_file_path</span><span class="p">)</span> <span class="ow">or</span> <span class="n">force_overwrite</span>
             <span class="p">):</span>
-                <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">dest_file_path</span><span class="p">)</span></div></div>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">dest_file_path</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="kdg"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.kdg">[docs]</a><span class="k">def</span> <span class="nf">kdg</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">backup_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="kdg">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.kdg">[docs]</a>
+<span class="k">def</span> <span class="nf">kdg</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">backup_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Remove `data_group` from the control file specified by the path.</span>
 
@@ -1083,7 +1166,10 @@
     <span class="n">c</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="sdg"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.sdg">[docs]</a><span class="k">def</span> <span class="nf">sdg</span><span class="p">(</span>
+
+<div class="viewcode-block" id="sdg">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.sdg">[docs]</a>
+<span class="k">def</span> <span class="nf">sdg</span><span class="p">(</span>
     <span class="n">data_group</span><span class="p">,</span>
     <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span>
     <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1137,7 +1223,10 @@
     <span class="k">return</span> <span class="n">str_dg</span></div>
 
 
-<div class="viewcode-block" id="adg"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.adg">[docs]</a><span class="k">def</span> <span class="nf">adg</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">backup_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="adg">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.adg">[docs]</a>
+<span class="k">def</span> <span class="nf">adg</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">backup_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Add `data_group` with `data_block` from the control file specified by the path.</span>
 
@@ -1164,7 +1253,10 @@
     <span class="n">c</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="cdg"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.cdg">[docs]</a><span class="k">def</span> <span class="nf">cdg</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">backup_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="cdg">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.cdg">[docs]</a>
+<span class="k">def</span> <span class="nf">cdg</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">data_block</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">backup_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Replace an existing `data_group` with `data_block` from the control file.</span>
 
@@ -1193,7 +1285,10 @@
     <span class="n">c</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="mdgo"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.mdgo">[docs]</a><span class="k">def</span> <span class="nf">mdgo</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">backup_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="mdgo">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.mdgo">[docs]</a>
+<span class="k">def</span> <span class="nf">mdgo</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">backup_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Modify a data group option.</span>
 
@@ -1238,7 +1333,10 @@
     <span class="n">c</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="sdgo"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.sdgo">[docs]</a><span class="k">def</span> <span class="nf">sdgo</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="sdgo">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.sdgo">[docs]</a>
+<span class="k">def</span> <span class="nf">sdgo</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Show the option of a given data group.</span>
 
@@ -1265,7 +1363,10 @@
     <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">sdgo</span><span class="p">(</span><span class="n">data_group</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="cpc"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.cpc">[docs]</a><span class="k">def</span> <span class="nf">cpc</span><span class="p">(</span><span class="n">dest_dir</span><span class="p">,</span> <span class="n">force_overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">control_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="cpc">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.cpc">[docs]</a>
+<span class="k">def</span> <span class="nf">cpc</span><span class="p">(</span><span class="n">dest_dir</span><span class="p">,</span> <span class="n">force_overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">control_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Copy a control file and its referenced files to another folder.</span>
 
@@ -1287,6 +1388,7 @@
     <span class="k">with</span> <span class="n">cd</span><span class="p">(</span><span class="n">control_dir</span><span class="p">):</span>
         <span class="n">c</span> <span class="o">=</span> <span class="n">Control</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;control&quot;</span><span class="p">)</span>
         <span class="n">c</span><span class="o">.</span><span class="n">cpc</span><span class="p">(</span><span class="n">dest_dir</span><span class="o">=</span><span class="n">dest_dir</span><span class="p">,</span> <span class="n">force_overwrite</span><span class="o">=</span><span class="n">force_overwrite</span><span class="p">)</span></div>
+
 </pre></div>
 
            </div>

@@ -24,7 +24,7 @@
 Changelog
 =========
 
-Release 1.5.0 (Mar XX, 2024)
+Release 1.5.0 (Mar 27, 2024)
 ============================
 
 * Update of reference test files for Turbomole version 7.7.1.

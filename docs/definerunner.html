@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -15,9 +15,9 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=c2dd840c"></script>
+        <script src="_static/documentation_options.js?v=e0a75244"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -102,7 +102,7 @@
            <div itemprop="articleBody">
              
   <section id="running-define">
-<span id="id1"></span><h1>Running define<a class="headerlink" href="#running-define" title="Permalink to this heading"></a></h1>
+<span id="id1"></span><h1>Running define<a class="headerlink" href="#running-define" title="Link to this heading"></a></h1>
 <p>A crucial point of the execution of TURBOMOLE is generating the input through the <code class="docutils literal notranslate"><span class="pre">define</span></code> executable.
 Since <code class="docutils literal notranslate"><span class="pre">define</span></code> is executed interactively this step is challenging when aiming at automating
 the calculations with TURBOMOLE.
@@ -164,7 +164,7 @@ define. Simple data groups can be set after the execution of <code class="docuti
 standard functions available to modify a data group file (e.g. with the <code class="docutils literal notranslate"><span class="pre">cdg</span></code> function.
 See <a class="reference internal" href="datagroups.html#mod-data-group"><span class="std std-ref">Modifying a data group value</span></a> and <a class="reference internal" href="datagroups.html#control-object"><span class="std std-ref">The Control object</span></a>).</p>
 <section id="the-definerunner-parameters">
-<h2>The DefineRunner parameters<a class="headerlink" href="#the-definerunner-parameters" title="Permalink to this heading"></a></h2>
+<h2>The DefineRunner parameters<a class="headerlink" href="#the-definerunner-parameters" title="Link to this heading"></a></h2>
 <p>In this section we provide a full list of all the parameters that can be passed to the <code class="docutils literal notranslate"><span class="pre">parameter</span></code>
 argument when creating an instance of <code class="docutils literal notranslate"><span class="pre">DefineRunner</span></code>.</p>
 <ul class="simple">
@@ -261,7 +261,7 @@ This adds the <code class="docutils literal notranslate"><span class="pre">$cosm
 group, i.e. uses A matrix setup of TURBOMOLE 5.7.</p></li>
 </ul>
 <section id="validation">
-<h3>Validation<a class="headerlink" href="#validation" title="Permalink to this heading"></a></h3>
+<h3>Validation<a class="headerlink" href="#validation" title="Link to this heading"></a></h3>
 <p>An <strong>experimental feature</strong> is available to validate the correctness of the dictionary that you want
 to use as <code class="docutils literal notranslate"><span class="pre">paramaters</span></code> for <code class="docutils literal notranslate"><span class="pre">DefineRunner</span></code>. It is based on the
 <a class="reference external" href="https://docs.python-cerberus.org/en/stable/">cerberus</a> package and is implemented in the

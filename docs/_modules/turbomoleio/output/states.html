@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,9 +14,9 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=c2dd840c"></script>
+        <script src="../../../_static/documentation_options.js?v=e0a75244"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -132,7 +132,9 @@
 <span class="kn">from</span> <span class="nn">turbomoleio.core.symmetry</span> <span class="kn">import</span> <span class="n">irrep_size</span>
 
 
-<div class="viewcode-block" id="get_mos_energies"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.get_mos_energies">[docs]</a><span class="k">def</span> <span class="nf">get_mos_energies</span><span class="p">(</span><span class="n">dg_string</span><span class="p">):</span>
+<div class="viewcode-block" id="get_mos_energies">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.get_mos_energies">[docs]</a>
+<span class="k">def</span> <span class="nf">get_mos_energies</span><span class="p">(</span><span class="n">dg_string</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the molecular orbital energies.</span>
 
 <span class="sd">    Given the string of a mos datagroup or the content of the mos file</span>
@@ -165,7 +167,10 @@
     <span class="k">return</span> <span class="n">energies</span></div>
 
 
-<div class="viewcode-block" id="State"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.State">[docs]</a><span class="k">class</span> <span class="nc">State</span><span class="p">(</span><span class="n">MSONable</span><span class="p">):</span>
+
+<div class="viewcode-block" id="State">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.State">[docs]</a>
+<span class="k">class</span> <span class="nc">State</span><span class="p">(</span><span class="n">MSONable</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Object a single state of a calculation.</span>
 
@@ -242,7 +247,9 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if the state is only fractionally occupied.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">occupation</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_occupation</span>
 
-<div class="viewcode-block" id="State.as_dict"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.State.as_dict">[docs]</a>    <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="State.as_dict">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.State.as_dict">[docs]</a>
+    <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a JSON serializable dict representation of State.&quot;&quot;&quot;</span>
         <span class="n">occupation</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">occupation</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">occupation</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
         <span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
@@ -257,7 +264,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="State.from_dict"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.State.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+
+<div class="viewcode-block" id="State.from_dict">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.State.from_dict">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate object from JSON representation.&quot;&quot;&quot;</span>
         <span class="n">occupation</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span>
@@ -269,10 +279,14 @@
             <span class="n">irrep_index</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;irrep_index&quot;</span><span class="p">],</span>
             <span class="n">occupation</span><span class="o">=</span><span class="n">occupation</span><span class="p">,</span>
             <span class="n">spin</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;spin&quot;</span><span class="p">],</span>
-        <span class="p">)</span></div></div>
+        <span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="States"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.States">[docs]</a><span class="k">class</span> <span class="nc">States</span><span class="p">(</span><span class="n">MSONable</span><span class="p">,</span> <span class="n">MutableSequence</span><span class="p">):</span>
+
+<div class="viewcode-block" id="States">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.States">[docs]</a>
+<span class="k">class</span> <span class="nc">States</span><span class="p">(</span><span class="n">MSONable</span><span class="p">,</span> <span class="n">MutableSequence</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A sequence of State, sorted in increasing order of energy.</span>
 
@@ -308,9 +322,12 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the number of states.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_states</span><span class="p">)</span>
 
-<div class="viewcode-block" id="States.insert"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.States.insert">[docs]</a>    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+<div class="viewcode-block" id="States.insert">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.States.insert">[docs]</a>
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Insert state at the specified index.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_states</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span></div>
+
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_generate_states_lists</span><span class="p">(</span><span class="n">eigen_data</span><span class="p">,</span> <span class="n">shells</span><span class="p">,</span> <span class="n">spin</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -333,7 +350,7 @@
             <span class="n">irrep_ind</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">eig</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
             <span class="n">occ</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="k">if</span> <span class="n">irrep</span> <span class="ow">in</span> <span class="n">shells</span><span class="o">.</span><span class="n">irreps</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">irrep</span> <span class="ow">in</span> <span class="n">shells</span><span class="o">.</span><span class="n">irreps</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">irrep_shell</span><span class="p">,</span> <span class="n">index_shell</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">shells</span><span class="o">.</span><span class="n">states</span><span class="p">):</span>
                     <span class="k">if</span> <span class="n">irrep_shell</span> <span class="o">==</span> <span class="n">irrep</span> <span class="ow">and</span> <span class="n">index_shell</span> <span class="o">==</span> <span class="n">irrep_ind</span><span class="p">:</span>
                         <span class="n">degeneracy</span> <span class="o">=</span> <span class="n">irrep_size</span><span class="p">[</span><span class="n">irrep</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span>
@@ -342,7 +359,9 @@
 
         <span class="k">return</span> <span class="n">states</span>
 
-<div class="viewcode-block" id="States.from_file"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.States.from_file">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="States.from_file">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.States.from_file">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;control&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate the instance from a file (usually control).</span>
@@ -376,6 +395,7 @@
             <span class="n">states</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_generate_states_lists</span><span class="p">(</span><span class="n">eigen</span><span class="p">,</span> <span class="n">shells</span><span class="p">,</span> <span class="n">spin</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">states</span><span class="p">)</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">total_electrons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -497,7 +517,9 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if any of the states has a fractional occupation.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">has_fractional_occ</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_states</span><span class="p">)</span>
 
-<div class="viewcode-block" id="States.generate_lowest_filled_states"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.States.generate_lowest_filled_states">[docs]</a>    <span class="k">def</span> <span class="nf">generate_lowest_filled_states</span><span class="p">(</span>
+<div class="viewcode-block" id="States.generate_lowest_filled_states">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.States.generate_lowest_filled_states">[docs]</a>
+    <span class="k">def</span> <span class="nf">generate_lowest_filled_states</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">allow_fractional</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">only_occupied</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">reorder_irrep_index</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -555,7 +577,10 @@
 
         <span class="k">return</span> <span class="n">States</span><span class="p">(</span><span class="n">states</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="States.filter_states"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.States.filter_states">[docs]</a>    <span class="k">def</span> <span class="nf">filter_states</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">irrep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="States.filter_states">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.States.filter_states">[docs]</a>
+    <span class="k">def</span> <span class="nf">filter_states</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">irrep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a States instance with a subset of the State objects.</span>
 
@@ -585,7 +610,10 @@
 
         <span class="k">return</span> <span class="n">States</span><span class="p">(</span><span class="n">states</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="States.get_shells"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.States.get_shells">[docs]</a>    <span class="k">def</span> <span class="nf">get_shells</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spin</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="States.get_shells">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.States.get_shells">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_shells</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spin</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a Shells object with the occupied shells in the list of States.</span>
 
@@ -611,17 +639,24 @@
 
         <span class="k">return</span> <span class="n">Shells</span><span class="p">(</span><span class="n">shell_states</span><span class="p">,</span> <span class="n">occupations</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="States.as_dict"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.States.as_dict">[docs]</a>    <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="States.as_dict">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.States.as_dict">[docs]</a>
+    <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a JSON serializable dict representation of States.&quot;&quot;&quot;</span>
         <span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;states&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_states</span><span class="p">],</span>
             <span class="s2">&quot;@module&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span>
             <span class="s2">&quot;@class&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
         <span class="p">}</span>
-        <span class="k">return</span> <span class="n">d</span></div></div>
+        <span class="k">return</span> <span class="n">d</span></div>
+</div>
 
 
-<div class="viewcode-block" id="EigerOutput"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.EigerOutput">[docs]</a><span class="k">class</span> <span class="nc">EigerOutput</span><span class="p">:</span>
+
+<div class="viewcode-block" id="EigerOutput">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.EigerOutput">[docs]</a>
+<span class="k">class</span> <span class="nc">EigerOutput</span><span class="p">(</span><span class="n">MSONable</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to read and store the output from the eiger command.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -649,7 +684,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">gap</span> <span class="o">=</span> <span class="n">gap</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nelec</span> <span class="o">=</span> <span class="n">nelec</span>
 
-<div class="viewcode-block" id="EigerOutput.from_string"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.EigerOutput.from_string">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="EigerOutput.from_string">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.EigerOutput.from_string">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate the object from the string of the output from eiger.</span>
@@ -671,7 +708,7 @@
         <span class="n">r</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
             <span class="sa">r</span><span class="s2">&quot;^\s*\d+.\s+([ab]*)\s+(\d+)\s+([^\s]*)\s+([\d.+\-]*)\s+([\d.+\-]+)\s+H&quot;</span>
         <span class="p">)</span>
-        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>  <span class="c1"># pragma: no branch</span>
             <span class="k">if</span> <span class="s2">&quot;Gap&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
                 <span class="n">gap</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">2</span><span class="p">])</span>
             <span class="k">if</span> <span class="s2">&quot;Electrons=&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
@@ -696,7 +733,10 @@
 
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">,</span> <span class="n">irreps</span><span class="p">,</span> <span class="n">irrep_indices</span><span class="p">,</span> <span class="n">occupations</span><span class="p">,</span> <span class="n">spin</span><span class="p">,</span> <span class="n">gap</span><span class="p">,</span> <span class="n">nelec</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="EigerOutput.from_file"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.EigerOutput.from_file">[docs]</a>    <span class="nd">@classmethod</span>
+
+<div class="viewcode-block" id="EigerOutput.from_file">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.EigerOutput.from_file">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate the object from a file with the output from eiger.</span>
@@ -710,7 +750,10 @@
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="EigerOutput.compare_states"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.EigerOutput.compare_states">[docs]</a>    <span class="k">def</span> <span class="nf">compare_states</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+
+<div class="viewcode-block" id="EigerOutput.compare_states">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.EigerOutput.compare_states">[docs]</a>
+    <span class="k">def</span> <span class="nf">compare_states</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compare the current values with anoter States object.</span>
 
@@ -753,10 +796,14 @@
                     <span class="n">sp</span><span class="p">,</span> <span class="n">irrep</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="n">occ</span><span class="p">,</span> <span class="n">eig</span>
                 <span class="p">)</span>
 
-        <span class="k">return</span> <span class="kc">None</span></div></div>
+        <span class="k">return</span> <span class="kc">None</span></div>
+</div>
 
 
-<div class="viewcode-block" id="EigerRunner"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.EigerRunner">[docs]</a><span class="k">class</span> <span class="nc">EigerRunner</span><span class="p">:</span>
+
+<div class="viewcode-block" id="EigerRunner">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.EigerRunner">[docs]</a>
+<span class="k">class</span> <span class="nc">EigerRunner</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class that runs the eiger executable.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">executable</span><span class="o">=</span><span class="s2">&quot;eiger&quot;</span><span class="p">,</span> <span class="n">data_path</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">):</span>
@@ -770,7 +817,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">data_path</span> <span class="o">=</span> <span class="n">data_path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="EigerRunner.run"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.EigerRunner.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="EigerRunner.run">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.EigerRunner.run">[docs]</a>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run eiger in the data_path directory.</span>
 
@@ -781,7 +830,10 @@
             <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">&quot;-a&quot;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="EigerRunner.get_eiger_output"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.EigerRunner.get_eiger_output">[docs]</a>    <span class="k">def</span> <span class="nf">get_eiger_output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="EigerRunner.get_eiger_output">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.EigerRunner.get_eiger_output">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_eiger_output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an EigerOutput instance from the output of eiger.</span>
 
@@ -796,7 +848,10 @@
 
         <span class="k">return</span> <span class="n">EigerOutput</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="EigerRunner.to_file"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.EigerRunner.to_file">[docs]</a>    <span class="k">def</span> <span class="nf">to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+
+<div class="viewcode-block" id="EigerRunner.to_file">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.states.EigerRunner.to_file">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Write the output of eiger to a file.</span>
 
@@ -813,7 +868,9 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No output&quot;</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">)</span></div></div>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">)</span></div>
+</div>
+
 </pre></div>
 
            </div>

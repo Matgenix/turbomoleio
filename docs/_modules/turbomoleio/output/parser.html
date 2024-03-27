@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,9 +14,9 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=c2dd840c"></script>
+        <script src="../../../_static/documentation_options.js?v=e0a75244"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -348,7 +348,9 @@
 <span class="p">}</span>
 
 
-<div class="viewcode-block" id="convert_float"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.convert_float">[docs]</a><span class="k">def</span> <span class="nf">convert_float</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<div class="viewcode-block" id="convert_float">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.convert_float">[docs]</a>
+<span class="k">def</span> <span class="nf">convert_float</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a float from the output.</span>
 
@@ -369,7 +371,10 @@
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="convert_int"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.convert_int">[docs]</a><span class="k">def</span> <span class="nf">convert_int</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+
+<div class="viewcode-block" id="convert_int">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.convert_int">[docs]</a>
+<span class="k">def</span> <span class="nf">convert_int</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert an int from the output.</span>
 
@@ -388,7 +393,10 @@
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="convert_time_string"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.convert_time_string">[docs]</a><span class="k">def</span> <span class="nf">convert_time_string</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+
+<div class="viewcode-block" id="convert_time_string">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.convert_time_string">[docs]</a>
+<span class="k">def</span> <span class="nf">convert_time_string</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert the cpu and wall time string given in the Turbomole outputs to seconds.</span>
 
@@ -416,7 +424,10 @@
     <span class="k">return</span> <span class="n">time</span></div>
 
 
-<div class="viewcode-block" id="Parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser">[docs]</a><span class="k">class</span> <span class="nc">Parser</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser">[docs]</a>
+<span class="k">class</span> <span class="nc">Parser</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Main Parser object for Turbomole output files.</span>
 
@@ -444,7 +455,9 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the string given as an input.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_string</span>
 
-<div class="viewcode-block" id="Parser.from_file"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.from_file">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Parser.from_file">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.from_file">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">check_all_done</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance from a file path.</span>
@@ -460,7 +473,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">string</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>  <span class="c1"># pragma: no cover (unlikely + trivial anyway)</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">string</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
@@ -471,12 +484,18 @@
 
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="n">string</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Parser.all_done"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.all_done">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.all_done">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.all_done">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">all_done</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if &quot;all done&quot; is present in the string.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s2">&quot;all done&quot;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="Parser.header"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.header">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.header">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.header">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the information contained in the header of the output.</span>
@@ -532,7 +551,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.centers"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.centers">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.centers">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.centers">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">centers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the center of mass and center of charge values.</span>
@@ -560,7 +582,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.coordinates"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.coordinates">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.coordinates">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.coordinates">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the coordinates, species and charges of the atoms.</span>
@@ -594,7 +619,7 @@
 
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
             <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>  <span class="c1"># pragma: no cover (trivial)</span>
                 <span class="k">continue</span>
 
             <span class="n">split</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
@@ -605,7 +630,10 @@
 
         <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span> <span class="n">species</span><span class="o">=</span><span class="n">species</span><span class="p">,</span> <span class="n">charges</span><span class="o">=</span><span class="n">charges</span><span class="p">,</span> <span class="n">isotopes</span><span class="o">=</span><span class="n">isotopes</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Parser.basis"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.basis">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.basis">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.basis">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">basis</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the data of the basis used for the calculation.</span>
@@ -642,7 +670,7 @@
         <span class="n">match_atoms</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">r_atoms</span><span class="p">,</span> <span class="n">basis_string</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
 
         <span class="n">basis_per_specie</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">if</span> <span class="n">match_atoms</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">match_atoms</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">match_atoms</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
                 <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
@@ -673,15 +701,15 @@
         <span class="p">)</span>
 
         <span class="n">len_n_basis</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_n_basis_func</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">len_n_basis</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">len_n_basis</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># pragma: no cover (trivial)</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
                 <span class="s2">&quot;Found </span><span class="si">{}</span><span class="s2"> instances of &#39;total number of SCF-basis functions&#39;, while &quot;</span>
                 <span class="s2">&quot;expecting at most 2.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">len_n_basis</span><span class="p">)</span>
             <span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">len_n_basis</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">len_n_basis</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># pragma: no branch (trivial)</span>
             <span class="n">number_scf_basis_func</span> <span class="o">=</span> <span class="n">convert_int</span><span class="p">(</span><span class="n">list_n_basis_func</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: no cover (should not occur)</span>
             <span class="n">number_scf_basis_func</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="n">len_n_basis</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
@@ -697,7 +725,10 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.symmetry"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.symmetry">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.symmetry">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.symmetry">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">symmetry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the symmetry of the molecule and the irreducible representations.</span>
@@ -728,7 +759,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">,</span>
                 <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">match_reps</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">match_reps</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
                     <span class="s2">&quot;Could not parse correctly the list of representations&quot;</span>
                 <span class="p">)</span>
@@ -744,7 +775,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.cosmo_header"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.cosmo_header">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.cosmo_header">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.cosmo_header">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">cosmo_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the information from the header of the cosmo section (area and volume).</span>
@@ -777,7 +811,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.density_functional_data"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.density_functional_data">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.density_functional_data">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.density_functional_data">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">density_functional_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the information relative to DFT calculations (xf functional and grids).</span>
@@ -820,7 +857,7 @@
             <span class="sa">r</span><span class="s2">&quot;small grid|spherical integration)&quot;</span>
         <span class="p">)</span>
 
-        <span class="k">if</span> <span class="s2">&quot;USE AT YOUR OWN RISK&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dft_string</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;USE AT YOUR OWN RISK&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dft_string</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
             <span class="n">func_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">r_func</span><span class="p">,</span> <span class="n">dft_string</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
 
             <span class="c1"># Matches the type of functional based on the message produced by TM.</span>
@@ -829,11 +866,14 @@
             <span class="c1"># functional_strings dictionary should be updated accordingly.</span>
             <span class="c1"># Also arbitrary mix will be ignored (when &quot;USE AT YOUR OWN RISK&quot;</span>
             <span class="c1"># is present).</span>
-            <span class="k">if</span> <span class="n">func_match</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">func_match</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                 <span class="n">func_msg</span> <span class="o">=</span> <span class="n">func_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
                 <span class="n">d</span><span class="p">[</span><span class="s2">&quot;functional_msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">func_msg</span>
 
-                <span class="k">for</span> <span class="n">func_name</span><span class="p">,</span> <span class="n">desc_list</span> <span class="ow">in</span> <span class="n">functional_strings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">for</span> <span class="p">(</span>  <span class="c1"># pragma: no branch</span>
+                    <span class="n">func_name</span><span class="p">,</span>
+                    <span class="n">desc_list</span><span class="p">,</span>
+                <span class="p">)</span> <span class="ow">in</span> <span class="n">functional_strings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 
                     <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
                     <span class="k">for</span> <span class="n">desc</span> <span class="ow">in</span> <span class="n">desc_list</span><span class="p">:</span>
@@ -857,7 +897,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.rij_info"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.rij_info">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.rij_info">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.rij_info">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">rij_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract information about RI.</span>
@@ -906,12 +949,15 @@
             <span class="c1"># ricore in escf</span>
             <span class="n">r_ricore</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;Core memory available \(ricore\)\s+(\d+)&quot;</span>
             <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">r_ricore</span><span class="p">,</span> <span class="n">match_str</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">match</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                 <span class="n">d</span><span class="p">[</span><span class="s2">&quot;ricore&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.dftd"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.dftd">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.dftd">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.dftd">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">dftd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract information about dispersion correction in dft.</span>
@@ -949,11 +995,11 @@
                 <span class="sa">r</span><span class="s2">&quot;exponent of damping function \(d\)\s+(&quot;</span> <span class="o">+</span> <span class="n">float_number_re</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;)&quot;</span><span class="p">,</span>
                 <span class="n">match_str</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">if</span> <span class="n">damp_l</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">damp_l</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                 <span class="n">damp_val</span> <span class="o">=</span> <span class="n">convert_float</span><span class="p">(</span><span class="n">damp_l</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
                 <span class="k">if</span> <span class="n">damp_val</span> <span class="o">==</span> <span class="mi">20</span><span class="p">:</span>
                     <span class="n">d</span><span class="p">[</span><span class="s2">&quot;correction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;D2&quot;</span>
-                <span class="k">elif</span> <span class="n">damp_val</span> <span class="o">==</span> <span class="mi">23</span><span class="p">:</span>
+                <span class="k">elif</span> <span class="n">damp_val</span> <span class="o">==</span> <span class="mi">23</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                     <span class="n">d</span><span class="p">[</span><span class="s2">&quot;correction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;D1&quot;</span>
 
         <span class="c1"># Output for DFT-D3 has changed in Turbomole 7.5:</span>
@@ -965,12 +1011,15 @@
             <span class="n">match_str</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">corr_l</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">corr_l</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
             <span class="n">d</span><span class="p">[</span><span class="s2">&quot;en_corr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_float</span><span class="p">(</span><span class="n">corr_l</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.pre_scf_run"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.pre_scf_run">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.pre_scf_run">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.pre_scf_run">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">pre_scf_run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract &quot;pre-scf loop&quot; information extracted about the scf calculation.</span>
@@ -1037,7 +1086,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.scf_iterations"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.scf_iterations">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.scf_iterations">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.scf_iterations">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">scf_iterations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the data for each iteration of the scf loop.</span>
@@ -1071,7 +1123,7 @@
 
         <span class="c1"># dscf has a &quot;:&quot; while ridft as a &quot;=&quot;</span>
         <span class="n">dampings</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;current damping[\s:=]+&quot;</span> <span class="o">+</span> <span class="n">std_float</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">dampings</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">dampings</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
             <span class="n">dampings</span> <span class="o">=</span> <span class="p">[</span><span class="n">convert_float</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dampings</span><span class="p">]</span>
 
         <span class="n">converged</span> <span class="o">=</span> <span class="s2">&quot;convergence criteria satisfied after &quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span>
@@ -1086,7 +1138,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.scf_energies"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.scf_energies">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.scf_energies">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.scf_energies">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">scf_energies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the final energies for scf calculation.</span>
@@ -1130,7 +1185,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.riper_scf_energies"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.riper_scf_energies">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.riper_scf_energies">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.riper_scf_energies">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">riper_scf_energies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the final energies for scf calculation with riper executable.</span>
@@ -1190,7 +1248,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.cosmo_results"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.cosmo_results">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.cosmo_results">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.cosmo_results">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">cosmo_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the results of cosmo.</span>
@@ -1319,7 +1380,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.electrostatic_moments"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.electrostatic_moments">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.electrostatic_moments">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.electrostatic_moments">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">electrostatic_moments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the information about the electrostatic moment (dipole and quadrupole).</span>
@@ -1396,7 +1460,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.timings"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.timings">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.timings">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.timings">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">timings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the cpu and wall time for the calculation.</span>
@@ -1428,7 +1495,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.s2"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.s2">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.s2">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.s2">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">s2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the value S^2 of the spin.</span>
@@ -1448,7 +1518,10 @@
 
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;s2&quot;</span><span class="p">:</span> <span class="n">convert_float</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))}</span></div>
 
-<div class="viewcode-block" id="Parser.is_uhf"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.is_uhf">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.is_uhf">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.is_uhf">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">is_uhf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if the calculation is a UHF one.</span>
 
@@ -1466,7 +1539,10 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">is_uhf</span></div>
 
-<div class="viewcode-block" id="Parser.fermi"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.fermi">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.fermi">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.fermi">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">fermi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the information about smearing of occupations.</span>
@@ -1519,7 +1595,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.integral"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.integral">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.integral">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.integral">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">integral</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the thresholds for integrals.</span>
@@ -1557,7 +1636,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.pre_escf_run"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.pre_escf_run">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.pre_escf_run">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.pre_escf_run">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">pre_escf_run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the &quot;pre-escf iterations&quot; information about the escf calculation.</span>
@@ -1611,11 +1693,11 @@
             <span class="p">)</span>
 
         <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;number of occupied orbitals.*?$&quot;</span><span class="p">,</span> <span class="n">match_str</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
             <span class="n">d</span><span class="p">[</span><span class="s2">&quot;n_occupied_orbitals&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
         <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;orbital characterization.*?$&quot;</span><span class="p">,</span> <span class="n">match_str</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
             <span class="n">d</span><span class="p">[</span><span class="s2">&quot;orbital_characterization&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
         <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
@@ -1625,15 +1707,15 @@
             <span class="n">d</span><span class="p">[</span><span class="s2">&quot;max_davidson_iter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
         <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;machine precision.*?$&quot;</span><span class="p">,</span> <span class="n">match_str</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
             <span class="n">d</span><span class="p">[</span><span class="s2">&quot;machine_precision&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_float</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
         <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;maximum core memory set to.*?$&quot;</span><span class="p">,</span> <span class="n">match_str</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
             <span class="n">d</span><span class="p">[</span><span class="s2">&quot;max_core_mem&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_float</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
 
         <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;corresponding to\s+(\d+)\s+vectors in CAO basis&quot;</span><span class="p">,</span> <span class="n">match_str</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
             <span class="n">d</span><span class="p">[</span><span class="s2">&quot;max_cao_basis_vectors&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 
         <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
@@ -1641,7 +1723,7 @@
             <span class="n">match_str</span><span class="p">,</span>
             <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
             <span class="n">d</span><span class="p">[</span><span class="s2">&quot;max_treated_vectors&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
         <span class="c1"># In TM versions &lt; 7.7, IRREP&#39;s block is like:</span>
@@ -1695,7 +1777,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.escf_iterations"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.escf_iterations">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.escf_iterations">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.escf_iterations">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">escf_iterations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the data for each iteration of the escf loop.</span>
@@ -1744,11 +1829,11 @@
                 <span class="k">if</span> <span class="n">iter_step</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">iter_steps_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">iter_step</span><span class="p">)</span>
                 <span class="n">iter_step</span> <span class="o">=</span> <span class="p">[</span><span class="n">convert_line</span><span class="p">(</span><span class="n">split</span><span class="p">[</span><span class="mi">1</span><span class="p">:])]</span>
-            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">split</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">split</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                 <span class="n">iter_step</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">convert_line</span><span class="p">(</span><span class="n">split</span><span class="p">))</span>
-            <span class="k">else</span><span class="p">:</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;wrong line </span><span class="si">{}</span><span class="s2"> in escf iterations&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">iter_step</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">iter_step</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
             <span class="n">iter_steps_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">iter_step</span><span class="p">)</span>
 
         <span class="n">converged</span> <span class="o">=</span> <span class="s2">&quot;converged&quot;</span> <span class="ow">in</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -1757,7 +1842,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="Parser.escf_gs_total_en"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.escf_gs_total_en">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.escf_gs_total_en">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.escf_gs_total_en">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">escf_gs_total_en</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the value of the final total energy of escf.</span>
@@ -1779,7 +1867,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">convert_float</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Parser.escf_excitations"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.escf_excitations">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.escf_excitations">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.escf_excitations">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">escf_excitations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract all the values for each calculated excitation.</span>
@@ -1882,7 +1973,7 @@
             <span class="n">irrep</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">irrep_group</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
             <span class="n">match_excitations</span> <span class="o">=</span> <span class="n">regex_excited</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">irrep_group</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">match_excitations</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">match_excitations</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
                     <span class="s2">&quot;Could not extract the single excitation contributions&quot;</span>
                 <span class="p">)</span>
@@ -1899,19 +1990,19 @@
                 <span class="p">)</span>
 
                 <span class="n">match_tot_en</span> <span class="o">=</span> <span class="n">regex_tot_en</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">exc_group</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">match_tot_en</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">match_tot_en</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                     <span class="n">exc_data</span><span class="p">[</span><span class="s2">&quot;tot_en&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_float</span><span class="p">(</span><span class="n">match_tot_en</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 
                 <span class="n">match_osc_stre</span> <span class="o">=</span> <span class="n">regex_osc</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">exc_group</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">match_osc_stre</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">match_osc_stre</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                     <span class="n">exc_data</span><span class="p">[</span><span class="s2">&quot;osc_stre&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_float</span><span class="p">(</span><span class="n">match_osc_stre</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 
                 <span class="n">match_rot_stre</span> <span class="o">=</span> <span class="n">regex_rot</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">exc_group</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">match_rot_stre</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">match_rot_stre</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                     <span class="n">exc_data</span><span class="p">[</span><span class="s2">&quot;rot_stre&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_float</span><span class="p">(</span><span class="n">match_rot_stre</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 
                 <span class="n">match_dominant</span> <span class="o">=</span> <span class="n">regex_dom_contrib</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">exc_group</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">match_dominant</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">match_dominant</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                     <span class="n">dominant_contributions</span> <span class="o">=</span> <span class="p">[]</span>
                     <span class="c1"># loop over dominant contributions to the excitation</span>
                     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">match_dominant</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
@@ -1941,7 +2032,7 @@
                                     <span class="n">coeff</span><span class="o">=</span><span class="n">convert_float</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">6</span><span class="p">]),</span>
                                 <span class="p">)</span>
                             <span class="p">)</span>
-                        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>
+                        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                             <span class="n">occ_orb</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
                                 <span class="n">index</span><span class="o">=</span><span class="n">convert_int</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
                                 <span class="n">irrep</span><span class="o">=</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
@@ -1961,7 +2052,7 @@
                                     <span class="n">coeff</span><span class="o">=</span><span class="n">convert_float</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">8</span><span class="p">]),</span>
                                 <span class="p">)</span>
                             <span class="p">)</span>
-                        <span class="k">else</span><span class="p">:</span>
+                        <span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
                             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
                                 <span class="s2">&quot;error while parsing line of escf dominant &quot;</span>
                                 <span class="s2">&quot;contribution: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
@@ -1982,7 +2073,7 @@
                 <span class="k">for</span> <span class="n">str_c</span> <span class="ow">in</span> <span class="n">columns_to_parse</span><span class="p">:</span>
                     <span class="n">moments_data</span> <span class="o">=</span> <span class="p">{}</span>
                     <span class="n">match_elec_dip</span> <span class="o">=</span> <span class="n">regec_elec_dip</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">str_c</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">match_elec_dip</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">match_elec_dip</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                         <span class="n">el_dip</span> <span class="o">=</span> <span class="p">[]</span>
                         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">match_elec_dip</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
                             <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
@@ -1992,7 +2083,7 @@
                         <span class="n">moments_data</span><span class="p">[</span><span class="s2">&quot;electric_dipole&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">el_dip</span>
 
                     <span class="n">match_mag_dip</span> <span class="o">=</span> <span class="n">regec_mag_dip</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">str_c</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">match_mag_dip</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">match_mag_dip</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                         <span class="n">mag_dip</span> <span class="o">=</span> <span class="p">[]</span>
                         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">match_mag_dip</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
                             <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
@@ -2002,7 +2093,7 @@
                         <span class="n">moments_data</span><span class="p">[</span><span class="s2">&quot;magnetic_dipole&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mag_dip</span>
 
                     <span class="n">match_elec_quad</span> <span class="o">=</span> <span class="n">regec_elec_quad</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">str_c</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">match_elec_quad</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">match_elec_quad</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                         <span class="n">quadrupole</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
                         <span class="n">d_quadrupole</span> <span class="o">=</span> <span class="p">{}</span>
                         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">match_elec_quad</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
@@ -2031,10 +2122,10 @@
                         <span class="n">d_quadrupole</span><span class="p">[</span><span class="s2">&quot;moment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">quadrupole</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
                         <span class="n">moments_data</span><span class="p">[</span><span class="s2">&quot;electric_quadrupole&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d_quadrupole</span>
 
-                    <span class="k">if</span> <span class="n">moments_data</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">moments_data</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                         <span class="n">moments_columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">moments_data</span><span class="p">)</span>
 
-                <span class="k">if</span> <span class="n">moments_columns</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">moments_columns</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                     <span class="n">exc_data</span><span class="p">[</span><span class="s2">&quot;moments_columns&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">moments_columns</span>
 
                 <span class="n">single_excitations_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">exc_data</span><span class="p">)</span>
@@ -2043,7 +2134,10 @@
 
         <span class="k">return</span> <span class="n">excited_data</span></div>
 
-<div class="viewcode-block" id="Parser.rdgrad_memory"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.rdgrad_memory">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.rdgrad_memory">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.rdgrad_memory">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">rdgrad_memory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the memory allocated for rdgrad.</span>
@@ -2063,7 +2157,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">convert_int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="Parser.gradient"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.gradient">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.gradient">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.gradient">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the values of the gradients and dielectric data.</span>
@@ -2126,7 +2223,10 @@
 
         <span class="k">return</span> <span class="n">grad_data</span></div>
 
-<div class="viewcode-block" id="Parser.egrad_excited_state"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.egrad_excited_state">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.egrad_excited_state">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.egrad_excited_state">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">egrad_excited_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the information about the excited state chosen for optimization.</span>
@@ -2149,7 +2249,10 @@
 
         <span class="k">return</span> <span class="n">data</span></div>
 
-<div class="viewcode-block" id="Parser.statpt_info"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.statpt_info">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.statpt_info">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.statpt_info">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">statpt_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the initial information provided in statpt.</span>
@@ -2222,7 +2325,10 @@
 
         <span class="k">return</span> <span class="n">data</span></div>
 
-<div class="viewcode-block" id="Parser.relax_info"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.relax_info">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.relax_info">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.relax_info">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">relax_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the initial information provided in relax.</span>
@@ -2261,7 +2367,10 @@
 
         <span class="k">return</span> <span class="n">data</span></div>
 
-<div class="viewcode-block" id="Parser.relax_gradient_values"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.relax_gradient_values">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.relax_gradient_values">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.relax_gradient_values">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">relax_gradient_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the gradient values from the relax/stapt output.</span>
@@ -2311,7 +2420,10 @@
 
         <span class="k">return</span> <span class="n">data</span></div>
 
-<div class="viewcode-block" id="Parser.relax_conv_info"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.relax_conv_info">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.relax_conv_info">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.relax_conv_info">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">relax_conv_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the final information about convergence.</span>
@@ -2370,7 +2482,10 @@
 
         <span class="k">return</span> <span class="n">data</span></div>
 
-<div class="viewcode-block" id="Parser.aoforce_numerical_integration"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.aoforce_numerical_integration">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.aoforce_numerical_integration">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.aoforce_numerical_integration">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">aoforce_numerical_integration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract the information about the numerical integration in aoforce.</span>
@@ -2452,7 +2567,10 @@
 
         <span class="k">return</span> <span class="n">data</span></div>
 
-<div class="viewcode-block" id="Parser.aoforce_analysis"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.aoforce_analysis">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.aoforce_analysis">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.aoforce_analysis">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">aoforce_analysis</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Output of rotational and vibrational analysis in aoforce.</span>
@@ -2597,16 +2715,16 @@
                 <span class="k">return</span> <span class="kc">True</span>
             <span class="k">elif</span> <span class="n">v</span> <span class="o">==</span> <span class="s2">&quot;NO&quot;</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">False</span>
-            <span class="k">elif</span> <span class="n">v</span> <span class="o">==</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">v</span> <span class="o">==</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                 <span class="k">return</span> <span class="kc">None</span>
-            <span class="k">else</span><span class="p">:</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;cannot correctly parse active value </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
 
         <span class="c1"># splits the block of lines with one set of frequencies and loops over them</span>
         <span class="n">r</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;(mode\s</span><span class="si">{5}</span><span class="s2">.*?)(?=mode |\*{10,})&quot;</span>
         <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">split2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">):</span>
             <span class="n">match</span> <span class="o">=</span> <span class="n">regex_eigenvectors</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
                 <span class="k">continue</span>
             <span class="n">block_freqs</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
             <span class="n">block_eigenvectors</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
@@ -2640,7 +2758,7 @@
                     <span class="n">reduced_masses</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">convert_float</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
 
             <span class="n">eig_lines</span> <span class="o">=</span> <span class="n">block_eigenvectors</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">eig_lines</span><span class="p">)</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">eig_lines</span><span class="p">)</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
                     <span class="s2">&quot;number of line to be parsed for eigenvectors &quot;</span>
                     <span class="s2">&quot;seems wrong: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">eig_lines</span><span class="p">))</span>
@@ -2658,7 +2776,7 @@
         <span class="n">energies</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">re_zpve</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;zero point VIBRATIONAL energy.*?\*{10,}&quot;</span>
         <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">re_zpve</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">match</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
             <span class="n">energies</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;zpve&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;scf&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;total&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
                 <span class="k">if</span> <span class="s2">&quot;zero point VIBRATIONAL energy&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
@@ -2682,7 +2800,9 @@
         <span class="p">)</span>
 
         <span class="n">tot_n_freqs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">frequencies</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">k</span> <span class="o">!=</span> <span class="s2">&quot;energies&quot;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">!=</span> <span class="n">tot_n_freqs</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vib</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span>
+            <span class="n">k</span> <span class="o">!=</span> <span class="s2">&quot;energies&quot;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">!=</span> <span class="n">tot_n_freqs</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vib</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">):</span>  <span class="c1"># pragma: no cover</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
                 <span class="s2">&quot;Error parsing the vibrational frequencies, &quot;</span>
                 <span class="s2">&quot;for some quantity the list of &quot;</span>
@@ -2693,7 +2813,10 @@
 
         <span class="k">return</span> <span class="n">data</span></div>
 
-<div class="viewcode-block" id="Parser.mp2_data"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.mp2_data">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.mp2_data">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.mp2_data">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">mp2_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract information of MP2 calculation.</span>
@@ -2704,7 +2827,10 @@
         <span class="c1"># TODO: implement for mpgrad and rimp2/ricc2</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Parser.mp2_results"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.mp2_results">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.mp2_results">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.mp2_results">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">mp2_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract MP2 results.</span>
@@ -2723,7 +2849,7 @@
         <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">energy</span> <span class="o">=</span> <span class="n">convert_float</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
                 <span class="s2">&quot;Error parsing the MP2 results. Multiple occurrences of &quot;</span>
                 <span class="s2">&quot;MP2 results found.&quot;</span>
@@ -2740,14 +2866,14 @@
         <span class="p">)</span>
         <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">energy</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">energy</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
                     <span class="s2">&quot;Error parsing the MP2 results. &quot;</span>
                     <span class="s2">&quot;Found MP2 results from both mpgrad- and &quot;</span>
                     <span class="s2">&quot;rimp2/ricc2-like calculations.&quot;</span>
                 <span class="p">)</span>
             <span class="n">energy</span> <span class="o">=</span> <span class="n">convert_float</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
-        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
                 <span class="s2">&quot;Error parsing the MP2 results. Multiple occurrences of &quot;</span>
                 <span class="s2">&quot;MP2 results found.&quot;</span>
@@ -2755,7 +2881,10 @@
 
         <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">energy</span><span class="o">=</span><span class="n">energy</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Parser.periodicity_data"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.periodicity_data">[docs]</a>    <span class="nd">@lazy_property</span>
+
+<div class="viewcode-block" id="Parser.periodicity_data">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.periodicity_data">[docs]</a>
+    <span class="nd">@lazy_property</span>
     <span class="k">def</span> <span class="nf">periodicity_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Information about periodicity.</span>
@@ -2777,7 +2906,7 @@
         <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;More than one section on periodicity.&quot;</span><span class="p">)</span>
         <span class="n">periodicity_string</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">periodicity</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
@@ -2796,7 +2925,7 @@
                 <span class="n">convert_float</span><span class="p">(</span><span class="n">lp</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">lp</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">rlatparams</span><span class="p">,</span> <span class="n">periodicity_string</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="p">]</span>
-        <span class="k">elif</span> <span class="n">periodicity</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">periodicity</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
             <span class="n">rlatparams</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\+-</span><span class="si">{73}</span><span class="s2">&quot;</span>
             <span class="n">rlatparams</span> <span class="o">+=</span> <span class="sa">rf</span><span class="s2">&quot;\s+(</span><span class="si">{</span><span class="n">float_number_all_re</span><span class="si">}</span><span class="s2">)&quot;</span> <span class="o">*</span> <span class="mi">6</span>
             <span class="n">rlatparams</span> <span class="o">+=</span> <span class="sa">r</span><span class="s2">&quot;\s+\+-</span><span class="si">{73}</span><span class="s2">&quot;</span>
@@ -2804,7 +2933,7 @@
                 <span class="n">convert_float</span><span class="p">(</span><span class="n">lp</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">lp</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">rlatparams</span><span class="p">,</span> <span class="n">periodicity_string</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Wrong periodicity.&quot;</span><span class="p">)</span>
 
         <span class="n">shortest_interatomic_distance</span> <span class="o">=</span> <span class="n">convert_float</span><span class="p">(</span>
@@ -2848,7 +2977,10 @@
             <span class="n">reciprocal_space_vectors</span><span class="o">=</span><span class="n">reciprocal_space_vectors</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Parser.get_split_jobex_parsers"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.get_split_jobex_parsers">[docs]</a>    <span class="k">def</span> <span class="nf">get_split_jobex_parsers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Parser.get_split_jobex_parsers">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.get_split_jobex_parsers">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_split_jobex_parsers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get parser for each step of a jobex calculation.</span>
 
@@ -2882,7 +3014,7 @@
             <span class="k">elif</span> <span class="n">executable</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;grad&quot;</span><span class="p">,</span> <span class="s2">&quot;rdgrad&quot;</span><span class="p">,</span> <span class="s2">&quot;egrad&quot;</span><span class="p">,</span> <span class="s2">&quot;mpgrad&quot;</span><span class="p">,</span> <span class="s2">&quot;ricc2&quot;</span><span class="p">):</span>
                 <span class="n">p_grad</span> <span class="o">=</span> <span class="n">p</span>
                 <span class="n">exec_grad</span> <span class="o">=</span> <span class="n">executable</span>
-            <span class="k">elif</span> <span class="n">executable</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;relax&quot;</span><span class="p">,</span> <span class="s2">&quot;statpt&quot;</span><span class="p">,</span> <span class="s2">&quot;frog&quot;</span><span class="p">):</span>
+            <span class="k">elif</span> <span class="n">executable</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;relax&quot;</span><span class="p">,</span> <span class="s2">&quot;statpt&quot;</span><span class="p">,</span> <span class="s2">&quot;frog&quot;</span><span class="p">):</span>  <span class="c1"># pragma: no branch</span>
                 <span class="n">p_relax</span> <span class="o">=</span> <span class="n">p</span>
                 <span class="n">exec_relax</span> <span class="o">=</span> <span class="n">executable</span>
 
@@ -2900,7 +3032,10 @@
 
         <span class="k">return</span> <span class="n">JobexParsers</span><span class="p">(</span><span class="n">exec_en</span><span class="p">,</span> <span class="n">p_en</span><span class="p">,</span> <span class="n">exec_grad</span><span class="p">,</span> <span class="n">p_grad</span><span class="p">,</span> <span class="n">exec_relax</span><span class="p">,</span> <span class="n">p_relax</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Parser.grep_line"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.grep_line">[docs]</a>    <span class="k">def</span> <span class="nf">grep_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">nlines</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Parser.grep_line">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.grep_line">[docs]</a>
+    <span class="k">def</span> <span class="nf">grep_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">nlines</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Search the text in the string similarly to the grep command.</span>
 
@@ -2924,7 +3059,10 @@
 
         <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Parser.get_value"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.get_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">chunk</span><span class="p">,</span> <span class="n">occurrence</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Parser.get_value">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.parser.Parser.get_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">chunk</span><span class="p">,</span> <span class="n">occurrence</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get value from the string.</span>
 
@@ -2959,7 +3097,9 @@
         <span class="k">if</span> <span class="n">converter</span><span class="p">:</span>
             <span class="n">v</span> <span class="o">=</span> <span class="n">converter</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">v</span></div></div>
+        <span class="k">return</span> <span class="n">v</span></div>
+</div>
+
 </pre></div>
 
            </div>

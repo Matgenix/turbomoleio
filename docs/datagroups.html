@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -15,9 +15,9 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=c2dd840c"></script>
+        <script src="_static/documentation_options.js?v=e0a75244"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -104,7 +104,7 @@
            <div itemprop="articleBody">
              
   <section id="the-data-group-files">
-<span id="datagroup-files"></span><h1>The data group files<a class="headerlink" href="#the-data-group-files" title="Permalink to this heading"></a></h1>
+<span id="datagroup-files"></span><h1>The data group files<a class="headerlink" href="#the-data-group-files" title="Link to this heading"></a></h1>
 <p>Most of the input and output files in TURBOMOLE are structured as a list of data groups separated
 by a <code class="docutils literal notranslate"><span class="pre">$</span></code> symbol.  (e.g. <code class="docutils literal notranslate"><span class="pre">$coord</span></code>). The initial part of the of each group usually determines the type of
 data with optional values that might be defined on the same line or on subsequent lines.
@@ -112,7 +112,7 @@ In turbomoleio a basic object is implemented to allow the parsing and writing of
 with a set of subclasses to interact with selected types of file that require specific functionalities
 (e.g. the <code class="docutils literal notranslate"><span class="pre">control</span></code> file).</p>
 <section id="the-datagroups-object">
-<h2>The DataGroups object<a class="headerlink" href="#the-datagroups-object" title="Permalink to this heading"></a></h2>
+<h2>The DataGroups object<a class="headerlink" href="#the-datagroups-object" title="Link to this heading"></a></h2>
 <p>The most basic object to interact with data group files is <a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.datagroups.DataGroups" title="turbomoleio.core.datagroups.DataGroups"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.datagroups.DataGroups</span></code></a>.
 It keeps an internal representation of the file given by a list of data groups, i.e. of strings that should
 contain a single data group and start with <code class="docutils literal notranslate"><span class="pre">$</span></code>, stored in the <code class="docutils literal notranslate"><span class="pre">dg_list</span></code> attribute.
@@ -152,7 +152,7 @@ in python and may have some differences in their behavior, in addition to have s
 Note that, while the examples provided below are based on a <code class="docutils literal notranslate"><span class="pre">control</span></code> for simplicity, the methods
 can be applied to any file structured with data groups.</p>
 <section id="accessing-a-data-group-value">
-<h3>Accessing a data group value<a class="headerlink" href="#accessing-a-data-group-value" title="Permalink to this heading"></a></h3>
+<h3>Accessing a data group value<a class="headerlink" href="#accessing-a-data-group-value" title="Link to this heading"></a></h3>
 <p>The method to get the value of a data group is <code class="docutils literal notranslate"><span class="pre">show_data_group</span></code> with its shortcut <code class="docutils literal notranslate"><span class="pre">sdg</span></code>.
 The <code class="docutils literal notranslate"><span class="pre">data_group</span></code> string in input will be used to match the beginning of the elements of <code class="docutils literal notranslate"><span class="pre">dg_list</span></code>.
 Note that the leading <code class="docutils literal notranslate"><span class="pre">$</span></code> symbol is optional, if missing from <code class="docutils literal notranslate"><span class="pre">data_group</span></code> it will be added
@@ -197,7 +197,7 @@ will just check among the lines in the <code class="docutils literal notranslate
 <code class="docutils literal notranslate"><span class="pre">option</span></code> are return the remaining string contained in the line.</p>
 </section>
 <section id="modifying-a-data-group-value">
-<span id="mod-data-group"></span><h3>Modifying a data group value<a class="headerlink" href="#modifying-a-data-group-value" title="Permalink to this heading"></a></h3>
+<span id="mod-data-group"></span><h3>Modifying a data group value<a class="headerlink" href="#modifying-a-data-group-value" title="Link to this heading"></a></h3>
 <p>Different methods allow to change the values of the <code class="docutils literal notranslate"><span class="pre">dg_list</span></code>.
 The first considered is <code class="docutils literal notranslate"><span class="pre">kill_data_group</span></code> (or its shortcut <code class="docutils literal notranslate"><span class="pre">kdg</span></code>) that allows to remove an element from
 <code class="docutils literal notranslate"><span class="pre">dg_list</span></code>. The <code class="docutils literal notranslate"><span class="pre">data_group</span></code> and <code class="docutils literal notranslate"><span class="pre">strict</span></code> arguments have the same meaning as in <code class="docutils literal notranslate"><span class="pre">show_data_group</span></code>,
@@ -263,7 +263,7 @@ object.</p>
 </section>
 </section>
 <section id="the-control-object">
-<span id="control-object"></span><h2>The Control object<a class="headerlink" href="#the-control-object" title="Permalink to this heading"></a></h2>
+<span id="control-object"></span><h2>The Control object<a class="headerlink" href="#the-control-object" title="Link to this heading"></a></h2>
 <p>An important subclass of <code class="docutils literal notranslate"><span class="pre">DataGroups</span></code> is <a class="reference internal" href="api/turbomoleio.core.html#turbomoleio.core.control.Control" title="turbomoleio.core.control.Control"><code class="xref py py-class docutils literal notranslate"><span class="pre">turbomoleio.core.control.Control</span></code></a>. This is specifically
 designed to interact with the <code class="docutils literal notranslate"><span class="pre">control</span></code> file providing additional functionalities besides the one
 described for the basic data groups files. Different options are available to extract frequently
