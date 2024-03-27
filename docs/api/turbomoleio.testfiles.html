@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>turbomoleio.testfiles package &mdash; turbomoleio 1.4.0 documentation</title>
+  <title>turbomoleio.testfiles package &mdash; turbomoleio 1.5.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
 
@@ -15,14 +15,12 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=b308ce55"></script>
+        <script src="../_static/documentation_options.js?v=e0a75244"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
-        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Contributing" href="../developer/introduction.html" />
-    <link rel="prev" title="turbomoleio.output.tests package" href="turbomoleio.output.tests.html" /> 
+    <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -37,7 +35,7 @@
             turbomoleio
           </a>
               <div class="version">
-                1.4.0
+                1.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -48,22 +46,12 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../datagroups.html">The data group files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../coord.html">The coord file</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../definerunner.html">Running define</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../output_parsing.html">Outputs parsing</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../appendix.html">Appendix</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="modules.html">turbomoleio</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="turbomoleio.html">turbomoleio package</a><ul class="current">
-<li class="toctree-l4 current"><a class="reference internal" href="turbomoleio.html#subpackages">Subpackages</a></li>
-<li class="toctree-l4"><a class="reference internal" href="turbomoleio.html#module-turbomoleio">Module contents</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix.html">Appendix</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Developer guide</span></p>
 <ul>
@@ -95,9 +83,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../appendix.html">Appendix</a></li>
-          <li class="breadcrumb-item"><a href="modules.html">turbomoleio</a></li>
-          <li class="breadcrumb-item"><a href="turbomoleio.html">turbomoleio package</a></li>
       <li class="breadcrumb-item active">turbomoleio.testfiles package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/api/turbomoleio.testfiles.rst.txt" rel="nofollow"> View page source</a>
@@ -109,358 +94,22 @@
            <div itemprop="articleBody">
              
   <section id="turbomoleio-testfiles-package">
-<h1>turbomoleio.testfiles package<a class="headerlink" href="#turbomoleio-testfiles-package" title="Permalink to this heading"></a></h1>
+<h1>turbomoleio.testfiles package<a class="headerlink" href="#turbomoleio-testfiles-package" title="Link to this heading"></a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 </section>
-<section id="module-turbomoleio.testfiles.utils">
-<span id="turbomoleio-testfiles-utils-module"></span><h2>turbomoleio.testfiles.utils module<a class="headerlink" href="#module-turbomoleio.testfiles.utils" title="Permalink to this heading"></a></h2>
-<p>Module with utility functions for the testing infrastructure.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.ItestConfig">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.testfiles.utils.</span></span><span class="sig-name descname"><span class="pre">ItestConfig</span></span><a class="reference internal" href="../_modules/turbomoleio/testfiles/utils.html#ItestConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.testfiles.utils.ItestConfig" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Class to store the configuration parameters used inside the integration tests.</p>
-<p>The actual values are expected to be set by pytest.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.ItestConfig.define_timeout">
-<span class="sig-name descname"><span class="pre">define_timeout</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#turbomoleio.testfiles.utils.ItestConfig.define_timeout" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.ItestConfig.delete_tmp_dir">
-<span class="sig-name descname"><span class="pre">delete_tmp_dir</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#turbomoleio.testfiles.utils.ItestConfig.delete_tmp_dir" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.ItestConfig.dryrun">
-<span class="sig-name descname"><span class="pre">dryrun</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#turbomoleio.testfiles.utils.ItestConfig.dryrun" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.ItestConfig.dryrun_fpath">
-<span class="sig-name descname"><span class="pre">dryrun_fpath</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'dryrun_itest.json'</span></em><a class="headerlink" href="#turbomoleio.testfiles.utils.ItestConfig.dryrun_fpath" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.ItestConfig.dryrun_use_ref_control">
-<span class="sig-name descname"><span class="pre">dryrun_use_ref_control</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#turbomoleio.testfiles.utils.ItestConfig.dryrun_use_ref_control" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.ItestConfig.generate_ref">
-<span class="sig-name descname"><span class="pre">generate_ref</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#turbomoleio.testfiles.utils.ItestConfig.generate_ref" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.ItestConfig.tol">
-<span class="sig-name descname"><span class="pre">tol</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0001</span></em><a class="headerlink" href="#turbomoleio.testfiles.utils.ItestConfig.tol" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py exception">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.ItestError">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turbomoleio.testfiles.utils.</span></span><span class="sig-name descname"><span class="pre">ItestError</span></span><a class="reference internal" href="../_modules/turbomoleio/testfiles/utils.html#ItestError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.testfiles.utils.ItestError" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#BaseException" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseException</span></code></a></p>
-<p>Error to be raised if an itest fails.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.assert_MSONable">
-<span class="sig-prename descclassname"><span class="pre">turbomoleio.testfiles.utils.</span></span><span class="sig-name descname"><span class="pre">assert_MSONable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_if_subclass</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/testfiles/utils.html#assert_MSONable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.testfiles.utils.assert_MSONable" title="Permalink to this definition"></a></dt>
-<dd><p>Test if obj is MSONable.</p>
-<p>This tries to convert an object to a dictionary and back and
-checking if the dictionaries are equivalent.</p>
-<p>By default, the method tests whether obj is an instance of MSONable.
-This check can be deactivated by setting test_if_subclass to False.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>obj</strong> – the object to be tests</p></li>
-<li><p><strong>test_if_subclass</strong> – </p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.assert_almost_equal">
-<span class="sig-prename descclassname"><span class="pre">turbomoleio.testfiles.utils.</span></span><span class="sig-name descname"><span class="pre">assert_almost_equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actual</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desired</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignored_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">err_msg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/testfiles/utils.html#assert_almost_equal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.testfiles.utils.assert_almost_equal" title="Permalink to this definition"></a></dt>
-<dd><p>Assert whether two objects are equal within a given tolerance.</p>
-<p>This function imported from numpy.testing: assert_equal. Version 16.2.
-Two key modifications compared to the original implementation:
-1) allow comparison of numbers with a tolerance on the difference (other
-functions in numpy that allow a tolerance as an argument do not support
-comparison between dictionaries).
-2) allow to skip the explicit comparison of some attributes in dictionaries.</p>
-<p>Raises an AssertionError if two objects are not equal within the
-required tolerances.
-Given two objects (scalars, lists, tuples, dictionaries or numpy arrays),
-check that all elements of these objects are almost equal. An exception
-is raised at the first conflicting values.
-Comparison for numerical values is performed with assert_allclose.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>actual</strong> – the object to check.</p></li>
-<li><p><strong>desired</strong> – the expected object.</p></li>
-<li><p><strong>rtol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – relative tolerance.</p></li>
-<li><p><strong>atol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – absolute tolerance.</p></li>
-<li><p><strong>ignored_values</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – if a comparison between two dictionaries,
-keywords contained in this list will not be compared (the key
-should still exist in both the dictionaries though).</p></li>
-<li><p><strong>err_msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the error message to be printed in case of failure.</p></li>
-<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – if True, the conflicting values are appended to
-the error message.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.12)"><strong>AssertionError</strong></a> – if actual and desired are not equal.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.compare_differences">
-<span class="sig-prename descclassname"><span class="pre">turbomoleio.testfiles.utils.</span></span><span class="sig-name descname"><span class="pre">compare_differences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actual</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desired</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/testfiles/utils.html#compare_differences"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.testfiles.utils.compare_differences" title="Permalink to this definition"></a></dt>
-<dd><p>Compare a test object and a reference object to within some tolerance.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>actual</strong> – the object to check.</p></li>
-<li><p><strong>desired</strong> – the expected object.</p></li>
-<li><p><strong>rtol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – relative tolerance.</p></li>
-<li><p><strong>atol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – absolute tolerance.</p></li>
-<li><p><strong>current_level</strong> – current_level in a nested comparison.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The list of all differences found.</p>
-</dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.12)"><strong>AssertionError</strong></a> – if actual and desired are not equal.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.generate_control_for_test">
-<span class="sig-prename descclassname"><span class="pre">turbomoleio.testfiles.utils.</span></span><span class="sig-name descname"><span class="pre">generate_control_for_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_definition</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/testfiles/utils.html#generate_control_for_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.testfiles.utils.generate_control_for_test" title="Permalink to this definition"></a></dt>
-<dd><p>Regenerate control from the definition of the test.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>test_definition</strong> – Dictionary with the definition of the test.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.generate_reference_out_parser_files">
-<span class="sig-prename descclassname"><span class="pre">turbomoleio.testfiles.utils.</span></span><span class="sig-name descname"><span class="pre">generate_reference_out_parser_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_fpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/testfiles/utils.html#generate_reference_out_parser_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.testfiles.utils.generate_reference_out_parser_files" title="Permalink to this definition"></a></dt>
-<dd><p>Generate the reference test files for the File and Parser objects.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>log_fpath</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Path to the logfile.</p></li>
-<li><p><strong>outdir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Directory to output reference File and Parser_methods objects.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.generate_reference_output">
-<span class="sig-prename descclassname"><span class="pre">turbomoleio.testfiles.utils.</span></span><span class="sig-name descname"><span class="pre">generate_reference_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_definition</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/testfiles/utils.html#generate_reference_output"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.testfiles.utils.generate_reference_output" title="Permalink to this definition"></a></dt>
-<dd><p>Execute the list of Turbomole commands in the definition of the test.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>test_definition</strong> – Dictionary with the definition of the test</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.get_control_filepath">
-<span class="sig-prename descclassname"><span class="pre">turbomoleio.testfiles.utils.</span></span><span class="sig-name descname"><span class="pre">get_control_filepath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/testfiles/utils.html#get_control_filepath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.testfiles.utils.get_control_filepath" title="Permalink to this definition"></a></dt>
-<dd><p>Get the path to a reference control file in the testfiles/control folder.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the name of the reference control file.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>the absolute path to the coord file.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.get_control_integration">
-<span class="sig-prename descclassname"><span class="pre">turbomoleio.testfiles.utils.</span></span><span class="sig-name descname"><span class="pre">get_control_integration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/testfiles/utils.html#get_control_integration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.testfiles.utils.get_control_integration" title="Permalink to this definition"></a></dt>
-<dd><p>Get the path to a reference control file.</p>
-<p>Reference control files are in the testfiles/integration/control folder.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the name of the reference control file.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>the absolute path to the coord file.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.get_sp">
-<span class="sig-prename descclassname"><span class="pre">turbomoleio.testfiles.utils.</span></span><span class="sig-name descname"><span class="pre">get_sp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">struc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/testfiles/utils.html#get_sp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.testfiles.utils.get_sp" title="Permalink to this definition"></a></dt>
-<dd><p>Get the path to a structure in the testfiles/structures folder.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>struc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the name of the structure.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>the absolute path to the coord file.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.get_tfp">
-<span class="sig-prename descclassname"><span class="pre">turbomoleio.testfiles.utils.</span></span><span class="sig-name descname"><span class="pre">get_tfp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/testfiles/utils.html#get_tfp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.testfiles.utils.get_tfp" title="Permalink to this definition"></a></dt>
-<dd><p>Get test file path.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>file_name</strong> – The name of the explicit file of which to get the path.
-If None, will return the test directory path.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The full path if a file is given or the path of the testfile directory
-if file_name is None.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.gisnan">
-<span class="sig-prename descclassname"><span class="pre">turbomoleio.testfiles.utils.</span></span><span class="sig-name descname"><span class="pre">gisnan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/testfiles/utils.html#gisnan"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.testfiles.utils.gisnan" title="Permalink to this definition"></a></dt>
-<dd><p>Auxiliary function imported from numpy.testing._private version 16.2.</p>
-<p>Used in assert_almost_equal. Imported here since it is not exposed
-in the public interface.</p>
-<p>like isnan, but always raise an error if type not supported instead of
-returning a TypeError object.
-.. rubric:: Notes</p>
-<p>isnan and other ufunc sometimes return a NotImplementedType object instead
-of raising any exception. This function is a wrapper to make sure an
-exception is always raised.
-This should be removed once this problem is solved at the Ufunc level.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.has_matplotlib">
-<span class="sig-prename descclassname"><span class="pre">turbomoleio.testfiles.utils.</span></span><span class="sig-name descname"><span class="pre">has_matplotlib</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/testfiles/utils.html#has_matplotlib"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.testfiles.utils.has_matplotlib" title="Permalink to this definition"></a></dt>
-<dd><p>Determine if matplotlib is installed.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.run_itest">
-<span class="sig-prename descclassname"><span class="pre">turbomoleio.testfiles.utils.</span></span><span class="sig-name descname"><span class="pre">run_itest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">executables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">define_options</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord_filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">control_reference_filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_classes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datagroups_options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/testfiles/utils.html#run_itest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.testfiles.utils.run_itest" title="Permalink to this definition"></a></dt>
-<dd><p>Run the integration tests.</p>
-<p>First define is executed and the produced control file is compared
-with the reference. If successful the required turbomole executables
-are run and the numerical values of the outputs will be checked with
-the reference.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>executables</strong> – string or list of strings identifying the list of programs
-that should be executed.</p></li>
-<li><p><strong>define_options</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – the options passed to DefineRunner.</p></li>
-<li><p><strong>coord_filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the filename of the coord used. Will be taken from
-the testfiles/structures folder.</p></li>
-<li><p><strong>control_reference_filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the name of the reference control file
-used to check the correctness of the execution of DefineRunner.
-Will be taken from the testfiles/integration/control folder.</p></li>
-<li><p><strong>file_classes</strong> – a list of classes subclassing BaseData (or even a single one
-if only one program required). They will be used to generate outputs
-from stdout and compared with the reference.</p></li>
-<li><p><strong>arguments</strong> – string or list of strings with the arguments to be passed to
-the each executable.</p></li>
-<li><p><strong>datagroups_options</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – a dict of the form {“datagroup_name”:
-“datagroup_value”}. Can contain additional datagroups that will be set
-with the cdg utility before running the calculation.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>True if the test passed successfully</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)">bool</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.temp_dir">
-<span class="sig-prename descclassname"><span class="pre">turbomoleio.testfiles.utils.</span></span><span class="sig-name descname"><span class="pre">temp_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delete</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">changedir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/testfiles/utils.html#temp_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.testfiles.utils.temp_dir" title="Permalink to this definition"></a></dt>
-<dd><p>Create a context manager with a temporary directory.</p>
-<p>This uses with tempfile.mkdtemp and cd to it with monty.os.cd.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>delete</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – if True the directory will be deleted at the end of the job,
-if False it will be preserved.</p></li>
-<li><p><strong>changedir</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – if True inside the context manager will make a cd to
-the temporary directory.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Yields<span class="colon">:</span></dt>
-<dd class="field-even"><p>the path to the temporary directory created.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="turbomoleio.testfiles.utils.touch_file">
-<span class="sig-prename descclassname"><span class="pre">turbomoleio.testfiles.utils.</span></span><span class="sig-name descname"><span class="pre">touch_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/turbomoleio/testfiles/utils.html#touch_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#turbomoleio.testfiles.utils.touch_file" title="Permalink to this definition"></a></dt>
-<dd><p>Touches a file at the specified path.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – path to the file.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
+<section id="turbomoleio-testfiles-utils-module">
+<h2>turbomoleio.testfiles.utils module<a class="headerlink" href="#turbomoleio-testfiles-utils-module" title="Link to this heading"></a></h2>
 </section>
-<section id="module-turbomoleio.testfiles">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-turbomoleio.testfiles" title="Permalink to this heading"></a></h2>
-<p>Module containing test files and utilities.</p>
+<section id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
 </section>
 </section>
 
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="turbomoleio.output.tests.html" class="btn btn-neutral float-left" title="turbomoleio.output.tests package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../developer/introduction.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

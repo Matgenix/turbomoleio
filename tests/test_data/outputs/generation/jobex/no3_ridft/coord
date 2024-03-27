@@ -1,0 +1,27 @@
+# RCS ################################################################
+# $Id: no3,v 1.1 1992/04/14 15:03:22 chi Exp $
+# $Log: no3,v $
+# Revision 1.1  1992/04/14 15:03:22  chi
+# Initial revision
+#
+# RCS ################################################################
+$coord  natoms=     4
+    0.00000000000000      0.00000000000000      0.00000000000000      n
+   -1.15103063747470      1.99364354517457      0.00000000000000      o
+   -1.15103063747470     -1.99364354517457      0.00000000000000      o
+    2.30206127494940      0.00000000000000      0.00000000000000      o
+$intdef
+# definitions of internal coordinates
+   1 k  1.0000000000000 stre    1    2           val=   2.30206
+$redundant
+     number_of_atoms             4
+     degrees_of_freedom          1
+     internal_coordinates        1
+     frozen_coordinates          0
+# definitions of redundant internals
+   1 k  1.0000000000000 stre    1    2           val=   2.30206
+         1 non zero eigenvalues  of BmBt
+           1           1.000000000    1    0
+         1
+$user-defined bonds
+$end

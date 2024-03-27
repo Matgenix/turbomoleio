@@ -1,0 +1,123 @@
+
+ statpt (fedora) : TURBOMOLE rev. V7-7-1 compiled 3 Feb 2023 at 10:04:44
+ Copyright (C) 2023 TURBOMOLE GmbH, Karlsruhe
+
+
+    2024-03-14 08:40:08.152 
+
+
+
+                           this is S T A T P T   
+
+
+                     hessian and coordinate update for
+                          stationary point search 
+
+                     by barbara unterreiner, marek sierka,
+                           and reinhart ahlrichs
+
+                          quantum chemistry group
+                          universitaet  karlsruhe
+                                  germany
+
+
+
+
+              +--------------------------------------------------+
+              | Atomic coordinate, charge and isotop information |
+              +--------------------------------------------------+
+
+                    atomic coordinates            atom    charge  isotop
+          0.00000000    0.00000000   -0.72557892    o      8.000     0
+          1.41713421    0.00000000    0.36278946    h      1.000     0
+         -1.41713421    0.00000000    0.36278946    h      1.000     0
+ 
+       center of nuclear mass  :    0.00000000    0.00000000   -0.60378908
+       center of nuclear charge:    0.00000000    0.00000000   -0.50790525
+  Keyword $statpt not found - using default options
+ 
+        ***************  Stationary point options ******************
+        ************************************************************
+           Maximum allowed trust radius:           3.000000E-01
+           Minimum allowed trust radius:           1.000000E-03
+           Initial trust radius:                   1.500000E-01
+           GDIIS used if gradient norm <           1.000000E-02
+           Number of previous steps for GDIIS:       5
+           Hessian update method:                  BFGS
+                        *** Convergence criteria ***                
+           Threshold for energy change:            1.000000E-06
+           Threshold for max displacement element: 1.000000E-03
+           Threshold for max gradient element :    1.000000E-03
+           Threshold for RMS of displacement:      5.000000E-04
+           Threshold for RMS of gradient:          5.000000E-04
+        ************************************************************
+ 
+
+  Keyword $statp missing in file <control>
+
+  Keyword $statpt not found - using default options
+     Number of symmetry restricted degrees of freedom:     3
+     Constituted by:     1 translational degrees of freedom
+                         0 rotational degrees of freedom
+                         2 internal degrees of freedom
+
+
+  Keyword $optinfo  missing in file <control>
+
+  *************************************************************************
+   ATOM                      CARTESIAN COORDINATES
+    1 o       0.00000000000000      0.00000000000000     -0.72557892405437
+    2 h       1.41713420892173      0.00000000000000      0.36278946202719
+    3 h      -1.41713420892173      0.00000000000000      0.36278946202719
+  *************************************************************************
+   ATOM                      CARTESIAN GRADIENTS  
+    1 o       0.00000000000000      0.00000000000000      0.02385920008147
+    2 h      -0.11070393517652      0.00000000000000     -0.01192160850611
+    3 h       0.11070393517652      0.00000000000000     -0.01192160850611
+  *************************************************************************
+
+  norm of actual CARTESIAN gradient:  1.59262E-01
+  norm of actual INTERNAL  gradient:  1.69717E-01
+
+  ENERGY =     -75.9867015467 a.u.; # of cycle =    1
+
+
+  Keyword $hessapprox missing in file <control>
+
+  Using approximate Hessian in internal coordinates
+  Number of zero Hessian eigenvalues:   0
+
+  Results of the TRO shift search
+  Final shift: -6.14083E-01 residual -4.81004E-14
+  Final step radius: 1.50000E-01
+
+  Transforming internal coordinate displacements to Cartesian space
+      Iteration   1 residual norm     1.500000E-01
+      Iteration   2 residual norm     5.553918E-03
+      Iteration   3 residual norm     8.472364E-06
+      Iteration   4 residual norm     1.724899E-11
+      Transformation converged
+      Residual norm:    1.724899E-11 after    4 iterations
+
+      ****************************************************************** 
+                          CONVERGENCE INFORMATION
+
+                               Converged?     Value      Criterion
+             Energy change         no      75.9867015   0.0000010
+             RMS of displacement   no       0.1060660   0.0005000
+             RMS of gradient       no       0.1200079   0.0005000
+             MAX displacement      no       0.1065153   0.0010000
+             MAX gradient          no       0.1344397   0.0010000
+      ****************************************************************** 
+
+
+    ------------------------------------------------------------------------
+         total  cpu-time :   0.02 seconds
+         total wall-time :   0.02 seconds
+    ------------------------------------------------------------------------
+
+   ****  statpt : all done  ****
+
+
+    2024-03-14 08:40:08.158 
+

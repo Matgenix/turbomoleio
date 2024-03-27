@@ -27,14 +27,15 @@ turbomoleio
 turbomoleio is a python library containing a set of tools for the generation of inputs and parsing of
 outputs for `TURBOMOLE <http://www.turbomole.com/>`_, based on the open-source `pymatgen <http://pymatgen.org/>`_
 library. turbomoleio is compatible with python version 3.8 and higher. The current version of turbomoleio is
-compatible with TURBOMOLE version 7.6. Care is taken to provide backward compatibility for parsing of output
+compatible with TURBOMOLE version 7.7. Care is taken to provide backward compatibility for parsing of output
 files generated with versions of TURBOMOLE down to 7.3. Full compatibility (i.e. input generation using define)
-is only tested for TURBOMOLE version 7.6. The following table summarizes the compatibility (full, including input
+is only tested for TURBOMOLE version 7.7. The following table summarizes the compatibility (full, including input
 generation using define) between TURBOMOLE and turbomoleio versions:
 
 ======================= =======================
 TURBOMOLE version(s)    turbomoleio version(s)
 ======================= =======================
+7.7 series              1.5.x series
 7.6 series              1.4.x series
 7.5 series              1.3.x series
 7.4 series              1.2.x series

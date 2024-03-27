@@ -1,0 +1,26 @@
+# RCS ################################################################
+# $Id: h2o,v 1.1 1992/04/14 15:03:13 chi Exp $
+# $Log: h2o,v $
+# Revision 1.1  1992/04/14 15:03:13  chi
+# Initial revision
+#
+# RCS ################################################################
+$coord  natoms=     3
+    0.00000000000000      0.00000000000000     -0.72557892000000      o
+    1.41713421000000      0.00000000000000      0.36278946000000      h
+   -1.41713421000000      0.00000000000000      0.36278946000000      h
+$redundant
+     number_of_atoms             3
+     degrees_of_freedom          2
+     internal_coordinates        2
+     frozen_coordinates          0
+# definitions of redundant internals
+   1 k  1.0000000000000 stre    1    2           val=   1.78685
+   2 k  1.0000000000000 bend    3    2    1      val= 104.95100
+         2 non zero eigenvalues  of BmBt
+           1           2.360224921    1    0
+         1
+           2           0.796203514    2    0
+         2
+$user-defined bonds
+$end
