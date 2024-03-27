@@ -109,6 +109,13 @@ class TestFunctions(object):
 
     def test_get_test_data_dir(self, delete_tmp_dir):
         with temp_dir(delete_tmp_dir) as tmp_dir:
+            module_dir = os.path.join(tmp_dir, "tests", "test_data")
+            makedirs_p(module_dir)
+            some_other_dir = os.path.join(tmp_dir, "tata", "toto")
+            test_data = get_test_data_dir(some_other_dir)
+            assert str(test_data) == module_dir
+
+        with temp_dir(delete_tmp_dir) as tmp_dir:
             with pytest.raises(RuntimeError, match=r"test_data directory not found."):
                 get_test_data_dir(tmp_dir)
 
@@ -121,6 +128,17 @@ class TestFunctions(object):
                 RuntimeError, match=r"Found multiple turbomoleio directories."
             ):
                 get_test_data_dir(module_dir)
+
+        with temp_dir(delete_tmp_dir) as tmp_dir:
+            module_dir = os.path.join(tmp_dir, "tests", "test_data")
+            makedirs_p(module_dir)
+            some_other_dir = os.path.join(tmp_dir, "abc", "def", "tests", "test_data")
+            makedirs_p(some_other_dir)
+            here_dir = os.path.join(tmp_dir, "abc", "def", "ghij", "klmn")
+            with pytest.raises(
+                RuntimeError, match=r"Found multiple turbomoleio directories."
+            ):
+                get_test_data_dir(here_dir)
 
     def test_touch_file(self, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):

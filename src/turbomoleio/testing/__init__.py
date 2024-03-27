@@ -94,6 +94,15 @@ def get_test_data_dir(module=None):
     p = Path(module)
     parts = p.parts
     found_paths = []
+    # Depending on where we call this function (in which case module should be
+    # provided), we want to find the test_data directory. We do that by recursively
+    # looking for a path that "ends" with "/tests/test_data".
+    # For example if we apply it in a directory "/abc/def/ghi", it will see if it can
+    # find:
+    # 1/ /abc/def/ghi/tests/test_data, then
+    # 2/ /abc/def/tests/test_data, then
+    # 3/ /abc/tests/test_data, then
+    # 4/ /tests/test_data
     for ii in range(len(parts), 0, -1):
         test_path = Path(*parts[:ii]) / "tests" / "test_data"
         if test_path.exists():
@@ -108,8 +117,6 @@ def get_test_data_dir(module=None):
 def get_tests_configs_tm_versions(test_data_dir):
     """Get the test configs for all supported tm versions."""
     from monty.serialization import loadfn
-
-    from turbomoleio.testing import TM_VERSIONS
 
     return {
         tmv: loadfn(os.path.join(test_data_dir, "outputs", tmv, "tests_config.yaml"))

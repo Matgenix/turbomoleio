@@ -34,7 +34,7 @@ structures = ["h2o", "nh3"]
 @pytest.mark.integration
 class TestRimp2:
     @pytest.mark.parametrize("structure", structures)
-    def test_run_ridft_rimp2(self, structure):
+    def test_run_ridft_rimp2(self, structure, test_data):
 
         assert run_itest(
             ["ridft", "rimp2"],
@@ -42,9 +42,10 @@ class TestRimp2:
             structure,
             "ridft_rimp2_{}_std".format(structure),
             [ScfOutput, MP2Output],
+            test_data=test_data,
         )
 
-    def test_run_ridft_adc2(self):
+    def test_run_ridft_adc2(self, test_data):
 
         define_opt = get_define_template("ridft_rimp2")
         define_opt["method"] = "adc(2)"
@@ -58,22 +59,24 @@ class TestRimp2:
             "nh3",
             "ridft_rimp2_nh3_adc2",
             [ScfOutput, MP2Output],
+            test_data=test_data,
         )
 
     # FIXME according to TM: "CCSD(T) is no longer available in ricc2 : use ccsdf12"
     # move it to another module?
     # @pytest.mark.parametrize("structure", structures)
-    # def test_run_ridft_ccsdt(self, structure):
+    # def test_run_ridft_ccsdt(self, structure, test_data):
     #
     #     define_opt = get_define_template("ridft_rimp2")
     #     define_opt["method"] = "ccsdt"
     #     define_opt["mp2energy"] = True
     #
     #     assert run_itest(["ridft", "rimp2"], define_opt, structure,
-    #                      "ridft_rimp2_{}_ccsdt".format(structure), [ScfOutput, None])
+    #                      "ridft_rimp2_{}_ccsdt".format(structure), [ScfOutput, None],
+    #                      test_data=test_data)
 
     @pytest.mark.parametrize("structure", structures)
-    def test_run_ridft_f12(self, structure):
+    def test_run_ridft_f12(self, structure, test_data):
 
         define_opt = get_define_template("ridft_rimp2")
         define_opt["use_f12"] = True
@@ -89,10 +92,11 @@ class TestRimp2:
                 "ricc2": "\n   mp2 energy only",
                 "rir12": "\n   comaprox T+V",
             },
+            test_data=test_data,
         )
 
     @pytest.mark.parametrize("structure", structures)
-    def test_run_ridft_f12x(self, structure):
+    def test_run_ridft_f12x(self, structure, test_data):
 
         define_opt = get_define_template("ridft_rimp2")
         define_opt["use_f12"] = False
@@ -104,4 +108,5 @@ class TestRimp2:
             coord_filename=structure,
             control_reference_filename="ridft_rimp2_{}_f12*".format(structure),
             file_classes=[ScfOutput, MP2Output],
+            test_data=test_data,
         )

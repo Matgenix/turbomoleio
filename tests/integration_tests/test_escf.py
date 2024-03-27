@@ -34,7 +34,7 @@ structures = ["h2o", "nh3"]
 @pytest.mark.integration
 class TestEscf:
     @pytest.mark.parametrize("structure", structures)
-    def test_run_ridft_escf(self, structure):
+    def test_run_ridft_escf(self, structure, test_data):
         dp = get_define_template("ridft_escf")
         dp["desy"] = True
         dp["ex_all_states"] = 12
@@ -45,10 +45,11 @@ class TestEscf:
             structure,
             "ridft_escf_{}_std".format(structure),
             [ScfOutput, EscfOutput],
+            test_data=test_data,
         )
 
     @pytest.mark.parametrize("structure", structures)
-    def test_run_dscf_escf(self, structure):
+    def test_run_dscf_escf(self, structure, test_data):
         dp = get_define_template("dscf_escf")
         dp["desy"] = False
         dp["ex_all_states"] = None
@@ -60,10 +61,11 @@ class TestEscf:
             structure,
             "dscf_escf_{}_std".format(structure),
             [ScfOutput, EscfOutput],
+            test_data=test_data,
         )
 
     @pytest.mark.parametrize("structure", structures)
-    def test_run_dscf_escf_triplet(self, structure):
+    def test_run_dscf_escf_triplet(self, structure, test_data):
         dp = get_define_template("dscf_escf")
         dp["desy"] = True
         dp["ex_all_states"] = 10
@@ -75,10 +77,11 @@ class TestEscf:
             structure,
             "dscf_escf_{}_triplet".format(structure),
             [ScfOutput, EscfOutput],
+            test_data=test_data,
         )
 
     @pytest.mark.parametrize("structure", structures)
-    def test_run_dscf_escf_charged(self, structure):
+    def test_run_dscf_escf_charged(self, structure, test_data):
         dp = get_define_template("dscf_escf")
         dp["desy"] = True
         dp["ex_all_states"] = 10
@@ -90,9 +93,10 @@ class TestEscf:
             structure,
             "dscf_escf_{}_charged".format(structure),
             [ScfOutput, EscfOutput],
+            test_data=test_data,
         )
 
-    def test_run_dscf_escf_set_dict(self):
+    def test_run_dscf_escf_set_dict(self, test_data):
         """
         Tests some properties that are set with a dictionary.
 
@@ -119,4 +123,5 @@ class TestEscf:
             "nh3_wrong_internal",
             "dscf_escf_nh3_set_dict",
             [ScfOutput, EscfOutput],
+            test_data=test_data,
         )

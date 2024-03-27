@@ -44,7 +44,7 @@ disp_corrections = ["DFT-D2", "DFT-D3", "DFT-D3 BJ"]
 @pytest.mark.integration
 class TestDscf:
     @pytest.mark.parametrize("structure", structures)
-    def test_run_dscf(self, structure):
+    def test_run_dscf(self, structure, test_data):
 
         assert run_itest(
             "dscf",
@@ -52,19 +52,25 @@ class TestDscf:
             structure,
             "dscf_{}_std".format(structure),
             ScfOutput,
+            test_data=test_data,
         )
 
     @pytest.mark.parametrize("structure", structures)
-    def test_run_dscf_ired(self, structure):
+    def test_run_dscf_ired(self, structure, test_data):
         define_opt = get_define_template("dscf")
         define_opt["ired"] = True
 
         assert run_itest(
-            "dscf", define_opt, structure, "dscf_{}_ired".format(structure), ScfOutput
+            "dscf",
+            define_opt,
+            structure,
+            "dscf_{}_ired".format(structure),
+            ScfOutput,
+            test_data=test_data,
         )
 
     @pytest.mark.parametrize("structure", structures)
-    def test_run_dscf_hf(self, structure):
+    def test_run_dscf_hf(self, structure, test_data):
 
         define_opt = get_define_template("dscf")
         define_opt["method"] = "hf"
@@ -76,7 +82,12 @@ class TestDscf:
         define_opt["title"] = None
 
         assert run_itest(
-            "dscf", define_opt, structure, "dscf_{}_hf".format(structure), ScfOutput
+            "dscf",
+            define_opt,
+            structure,
+            "dscf_{}_hf".format(structure),
+            ScfOutput,
+            test_data=test_data,
         )
 
     def test_run_dscf_usemo(self, test_data):
@@ -89,9 +100,11 @@ class TestDscf:
         define_opt["basis"] = "def2-SV(P)"
         define_opt["usemo"] = test_data / "mo" / "mos_nh3_nosym"
 
-        assert run_itest("dscf", define_opt, "nh3", "dscf_nh3_usemo", ScfOutput)
+        assert run_itest(
+            "dscf", define_opt, "nh3", "dscf_nh3_usemo", ScfOutput, test_data=test_data
+        )
 
-    def test_run_dscf_ecp_atom(self):
+    def test_run_dscf_ecp_atom(self, test_data):
         """
         Tests the usemo functionalities with mos file
         """
@@ -101,10 +114,17 @@ class TestDscf:
         define_opt["basis"] = "def2-SV(P)"
         define_opt["ecp_atom"] = {"N": "ecp-2-sdf"}
 
-        assert run_itest("dscf", define_opt, "nh3", "dscf_nh3_ecp_atom", ScfOutput)
+        assert run_itest(
+            "dscf",
+            define_opt,
+            "nh3",
+            "dscf_nh3_ecp_atom",
+            ScfOutput,
+            test_data=test_data,
+        )
 
     # TODO check if alpha/beta for usemo are needed
-    # def test_run_dscf_usemo_alpha(self):
+    # def test_run_dscf_usemo_alpha(self, test_data):
     #     """
     #     Tests the usemo functionalities with alpha and
     #     beta files in the case of unpaired electrons
@@ -117,7 +137,14 @@ class TestDscf:
     #     define_opt["unpaired_electrons"] = 1
     #     define_opt["usemo"] = os.path.join(get_tfp(), "mo", "alpha_beta_nh3")
     #
-    #     assert run_itest("dscf", define_opt, "nh3", "dscf_nh3_usemo_alpha", {})
+    #     assert run_itest(
+    #         "dscf",
+    #         define_opt,
+    #         "nh3",
+    #         "dscf_nh3_usemo_alpha",
+    #         {},
+    #         test_data=test_data
+    #     )
 
     def test_run_dscf_copymo(self, test_data):
         """
@@ -129,7 +156,14 @@ class TestDscf:
         define_opt["basis"] = "def2-SV(P)"
         define_opt["copymo"] = test_data / "mo" / "mos_nh3"
 
-        assert run_itest("dscf", define_opt, "nh3", "dscf_nh3_copymo_mos", ScfOutput)
+        assert run_itest(
+            "dscf",
+            define_opt,
+            "nh3",
+            "dscf_nh3_copymo_mos",
+            ScfOutput,
+            test_data=test_data,
+        )
 
     def test_run_dscf_copymo_mos_unpaired(self, test_data):
         """
@@ -144,7 +178,12 @@ class TestDscf:
         define_opt["copymo"] = test_data / "mo" / "mos_nh3"
 
         assert run_itest(
-            "dscf", define_opt, "nh3", "dscf_nh3_copymo_mos_unpaired", ScfOutput
+            "dscf",
+            define_opt,
+            "nh3",
+            "dscf_nh3_copymo_mos_unpaired",
+            ScfOutput,
+            test_data=test_data,
         )
 
     def test_run_dscf_copymo_alpha_unpaired(self, test_data):
@@ -160,11 +199,16 @@ class TestDscf:
         define_opt["copymo"] = test_data / "mo" / "alpha_beta_nh3"
 
         assert run_itest(
-            "dscf", define_opt, "nh3", "dscf_nh3_copymo_alpha_unpaired", ScfOutput
+            "dscf",
+            define_opt,
+            "nh3",
+            "dscf_nh3_copymo_alpha_unpaired",
+            ScfOutput,
+            test_data=test_data,
         )
 
     @pytest.mark.parametrize("structure", structures)
-    def test_run_dscf_cosmo(self, structure):
+    def test_run_dscf_cosmo(self, structure, test_data):
 
         define_opt = get_define_template("dscf")
         define_opt["use_cosmo"] = True
@@ -180,13 +224,20 @@ class TestDscf:
             }
         )
         assert run_itest(
-            "dscf", define_opt, structure, "dscf_{}_cosmo".format(structure), ScfOutput
+            "dscf",
+            define_opt,
+            structure,
+            "dscf_{}_cosmo".format(structure),
+            ScfOutput,
+            test_data=test_data,
         )
 
     @pytest.mark.parametrize("disp", disp_corrections)
-    def test_run_dscf_disp(self, disp):
+    def test_run_dscf_disp(self, disp, test_data):
 
         define_opt = get_define_template("dscf")
         define_opt["disp"] = disp
         disp_fn = "dscf_nh3_disp_{}".format("_".join(disp.split()))
-        assert run_itest("dscf", define_opt, "nh3", disp_fn, ScfOutput)
+        assert run_itest(
+            "dscf", define_opt, "nh3", disp_fn, ScfOutput, test_data=test_data
+        )

@@ -35,7 +35,7 @@ structures = ["h2o", "nh3"]
 @pytest.mark.integration
 class TestJobex:
     @pytest.mark.parametrize("structure", structures)
-    def test_run_jobex_dscf(self, structure):
+    def test_run_jobex_dscf(self, structure, test_data):
         dp = get_define_template("dscf")
         dp["desy"] = True
         dp["ired"] = True
@@ -47,10 +47,11 @@ class TestJobex:
             "jobex_dscf_{}_sym".format(structure),
             JobexOutput,
             arguments="-c 2",
+            test_data=test_data,
         )
 
     @pytest.mark.parametrize("structure_filename", ["graphene"])
-    def test_run_jobex_riper(self, structure_filepath):
+    def test_run_jobex_riper(self, structure_filepath, test_data):
         structure_filename = os.path.basename(structure_filepath)
         dp = get_define_template("ridft")
         periodic = sdg("periodic", structure_filepath)
@@ -63,4 +64,5 @@ class TestJobex:
             JobexOutput,
             arguments="-c 2",
             datagroups_options={"periodic": periodic, "cell": cell, "optcell": ""},
+            test_data=test_data,
         )

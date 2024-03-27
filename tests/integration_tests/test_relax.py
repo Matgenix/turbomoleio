@@ -38,7 +38,7 @@ structures = ["h2o", "nh3"]
 @pytest.mark.integration
 class TestRelax:
     @pytest.mark.parametrize("structure", structures)
-    def test_run_dscf_grad_statpt(self, structure):
+    def test_run_dscf_grad_statpt(self, structure, test_data):
         dp = get_define_template("dscf")
         dp["desy"] = True
         dp["ired"] = True
@@ -49,10 +49,11 @@ class TestRelax:
             structure,
             "dscf_grad_statpt_{}_sym".format(structure),
             [ScfOutput, GradOutput, StatptOutput],
+            test_data=test_data,
         )
 
     @pytest.mark.parametrize("structure", structures)
-    def test_run_ridft_rdgrad_relax(self, structure):
+    def test_run_ridft_rdgrad_relax(self, structure, test_data):
         dp = get_define_template("ridft")
         dp["desy"] = True
         dp["ired"] = True
@@ -63,10 +64,11 @@ class TestRelax:
             structure,
             "ridft_rdgrad_relax_{}_sym".format(structure),
             [ScfOutput, GradOutput, RelaxOutput],
+            test_data=test_data,
         )
 
     @pytest.mark.parametrize("structure", structures)
-    def test_run_dscf_egrad_relax(self, structure):
+    def test_run_dscf_egrad_relax(self, structure, test_data):
         dp = get_define_template("dscf_escf")
         dp["desy"] = False
         dp["ired"] = False
@@ -77,10 +79,11 @@ class TestRelax:
             structure,
             "dscf_escf_relax_{}_nosym".format(structure),
             [ScfOutput, EgradOutput, RelaxOutput],
+            test_data=test_data,
         )
 
     @pytest.mark.parametrize("structure", structures)
-    def test_run_ridft_egrad_statpt_ex_irrep(self, structure):
+    def test_run_ridft_egrad_statpt_ex_irrep(self, structure, test_data):
         dp = get_define_template("ridft_escf")
         dp["desy"] = True
         dp["ired"] = True
@@ -93,4 +96,5 @@ class TestRelax:
             structure,
             "ridft_egrad_statpt_{}_ex_irrep".format(structure),
             [ScfOutput, EgradOutput, StatptOutput],
+            test_data=test_data,
         )

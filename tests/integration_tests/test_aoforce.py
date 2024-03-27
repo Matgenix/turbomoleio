@@ -32,7 +32,7 @@ structures = ["h2o", "nh3"]
 @pytest.mark.integration
 class TestAoforce:
     @pytest.mark.parametrize("structure", structures)
-    def test_run_ridft_aoforce_nosym(self, structure):
+    def test_run_ridft_aoforce_nosym(self, structure, test_data):
         dp = get_define_template("ridft")
         dp["desy"] = False
 
@@ -42,10 +42,11 @@ class TestAoforce:
             structure,
             "ridft_aoforce_{}_nosym".format(structure),
             [ScfOutput, AoforceOutput],
+            test_data=test_data,
         )
 
     @pytest.mark.parametrize("structure", structures)
-    def test_run_dscf_aoforce_sym(self, structure):
+    def test_run_dscf_aoforce_sym(self, structure, test_data):
         dp = get_define_template("dscf")
         dp["desy"] = True
 
@@ -55,4 +56,5 @@ class TestAoforce:
             structure,
             "dscf_aoforce_{}_sym".format(structure),
             [ScfOutput, AoforceOutput],
+            test_data=test_data,
         )

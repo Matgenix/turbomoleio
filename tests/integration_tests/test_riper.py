@@ -35,7 +35,7 @@ structures = ["graphene"]
 @pytest.mark.integration
 class TestRiper:
     @pytest.mark.parametrize("structure_filename", structures)
-    def test_run_riper(self, structure_filepath):
+    def test_run_riper(self, structure_filepath, test_data):
         structure_filename = os.path.basename(structure_filepath)
         # Turbomole does not seem to recognize periodic and cell within the coord file
         # even when they are reference in the control file with "$periodic file=coord"
@@ -49,4 +49,5 @@ class TestRiper:
             "ridft_riper_{}_std".format(structure_filename),
             [ScfOutput],
             datagroups_options={"periodic": periodic, "cell": cell},
+            test_data=test_data,
         )
