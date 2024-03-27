@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>turbomoleio.output.data &mdash; turbomoleio 1.4.0 documentation</title>
+  <title>turbomoleio.output.data &mdash; turbomoleio 1.5.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,9 +14,9 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=b308ce55"></script>
+        <script src="../../../_static/documentation_options.js?v=e0a75244"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -34,7 +34,7 @@
             turbomoleio
           </a>
               <div class="version">
-                1.4.0
+                1.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -134,10 +134,14 @@
 <span class="kn">from</span> <span class="nn">turbomoleio.output.parser</span> <span class="kn">import</span> <span class="n">Parser</span>
 
 
-<div class="viewcode-block" id="BaseData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.BaseData">[docs]</a><span class="k">class</span> <span class="nc">BaseData</span><span class="p">(</span><span class="n">MSONable</span><span class="p">,</span> <span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.BaseData">[docs]</a>
+<span class="k">class</span> <span class="nc">BaseData</span><span class="p">(</span><span class="n">MSONable</span><span class="p">,</span> <span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for the data extracted from the parser of the output files.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="BaseData.from_file"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.BaseData.from_file">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="BaseData.from_file">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.BaseData.from_file">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of the class from a file.</span>
@@ -157,7 +161,10 @@
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="BaseData.from_string"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.BaseData.from_string">[docs]</a>    <span class="nd">@classmethod</span>
+
+<div class="viewcode-block" id="BaseData.from_string">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.BaseData.from_string">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of the class from a string.</span>
@@ -173,7 +180,10 @@
         <span class="n">p</span> <span class="o">=</span> <span class="n">Parser</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_parser</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BaseData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.BaseData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+
+<div class="viewcode-block" id="BaseData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.BaseData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -190,7 +200,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            An instance of the class.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
+        <span class="k">pass</span>  <span class="c1"># pragma: no cover</span></div>
+
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a string representation of the object with print of the as_dict().&quot;&quot;&quot;</span>
@@ -200,7 +211,10 @@
         <span class="k">return</span> <span class="n">string</span></div>
 
 
-<div class="viewcode-block" id="CosmoData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.CosmoData">[docs]</a><span class="k">class</span> <span class="nc">CosmoData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CosmoData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.CosmoData">[docs]</a>
+<span class="k">class</span> <span class="nc">CosmoData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Information about the cosmo run. Inputs and outputs.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -234,7 +248,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">energies</span> <span class="o">=</span> <span class="n">energies</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">element_radius</span> <span class="o">=</span> <span class="n">element_radius</span>
 
-<div class="viewcode-block" id="CosmoData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.CosmoData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="CosmoData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.CosmoData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of CosmoData from a parser.</span>
@@ -258,10 +274,11 @@
             <span class="n">parameters</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span>
             <span class="n">screening_charge</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;screening_charge&quot;</span><span class="p">]</span>
             <span class="n">energies</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;energies&quot;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;element_radius&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">element_radius</span> <span class="o">=</span> <span class="p">{}</span>
-                <span class="k">for</span> <span class="n">el</span><span class="p">,</span> <span class="n">el_data</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;element_radius&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                    <span class="n">element_radius</span><span class="p">[</span><span class="n">el</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()]</span> <span class="o">=</span> <span class="n">el_data</span>
+            <span class="n">element_radius</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">er_results</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;element_radius&quot;</span><span class="p">]</span> <span class="ow">or</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">el</span><span class="p">,</span> <span class="n">el_data</span> <span class="ow">in</span> <span class="n">er_results</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">element_radius</span><span class="p">[</span><span class="n">el</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()]</span> <span class="o">=</span> <span class="n">el_data</span>
+            <span class="n">element_radius</span> <span class="o">=</span> <span class="n">element_radius</span> <span class="ow">or</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="nb">all</span><span class="p">(</span>
             <span class="n">i</span> <span class="ow">is</span> <span class="kc">None</span>
@@ -275,10 +292,14 @@
             <span class="n">screening_charge</span><span class="o">=</span><span class="n">screening_charge</span><span class="p">,</span>
             <span class="n">energies</span><span class="o">=</span><span class="n">energies</span><span class="p">,</span>
             <span class="n">element_radius</span><span class="o">=</span><span class="n">element_radius</span><span class="p">,</span>
-        <span class="p">)</span></div></div>
+        <span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="TurbomoleData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.TurbomoleData">[docs]</a><span class="k">class</span> <span class="nc">TurbomoleData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TurbomoleData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.TurbomoleData">[docs]</a>
+<span class="k">class</span> <span class="nc">TurbomoleData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Information about the Turbomole version and executable used.</span>
 
@@ -297,7 +318,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">build</span> <span class="o">=</span> <span class="n">build</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">executable</span> <span class="o">=</span> <span class="n">executable</span>
 
-<div class="viewcode-block" id="TurbomoleData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.TurbomoleData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TurbomoleData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.TurbomoleData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of TurbomoleData from a parser.</span>
@@ -320,10 +343,14 @@
             <span class="n">version</span><span class="o">=</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;tm_version&quot;</span><span class="p">],</span>
             <span class="n">build</span><span class="o">=</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;tm_build&quot;</span><span class="p">],</span>
             <span class="n">executable</span><span class="o">=</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;executable&quot;</span><span class="p">],</span>
-        <span class="p">)</span></div></div>
+        <span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="RunData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RunData">[docs]</a><span class="k">class</span> <span class="nc">RunData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="RunData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RunData">[docs]</a>
+<span class="k">class</span> <span class="nc">RunData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Information about where the calculation was executed and the timings.</span>
 
@@ -348,7 +375,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">cpu_time</span> <span class="o">=</span> <span class="n">cpu_time</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wall_time</span> <span class="o">=</span> <span class="n">wall_time</span>
 
-<div class="viewcode-block" id="RunData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RunData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="RunData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RunData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of RunData from a parser.</span>
@@ -385,10 +414,14 @@
             <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;cpu_time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time_data</span><span class="p">[</span><span class="s2">&quot;cpu_time&quot;</span><span class="p">]</span>
             <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;wall_time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time_data</span><span class="p">[</span><span class="s2">&quot;wall_time&quot;</span><span class="p">]</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="BasisData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.BasisData">[docs]</a><span class="k">class</span> <span class="nc">BasisData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="BasisData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.BasisData">[docs]</a>
+<span class="k">class</span> <span class="nc">BasisData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Information about the basis used for the calculation.</span>
 
@@ -417,7 +450,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">number_scf_basis_func</span> <span class="o">=</span> <span class="n">number_scf_basis_func</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">number_scf_aux_basis_func</span> <span class="o">=</span> <span class="n">number_scf_aux_basis_func</span>
 
-<div class="viewcode-block" id="BasisData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.BasisData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="BasisData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.BasisData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of BasisData from a parser.</span>
@@ -436,10 +471,14 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">basis_data</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">basis_data</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">basis_data</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="SymmetryData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.SymmetryData">[docs]</a><span class="k">class</span> <span class="nc">SymmetryData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SymmetryData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.SymmetryData">[docs]</a>
+<span class="k">class</span> <span class="nc">SymmetryData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Information on the symmetry of the molecule.</span>
 
@@ -459,7 +498,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">n_reps</span> <span class="o">=</span> <span class="n">n_reps</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reps</span> <span class="o">=</span> <span class="n">reps</span>
 
-<div class="viewcode-block" id="SymmetryData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.SymmetryData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SymmetryData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.SymmetryData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of SymmetryData from a parser.</span>
@@ -478,10 +519,14 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">sym_data</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">sym_data</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">sym_data</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="FunctionalData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.FunctionalData">[docs]</a><span class="k">class</span> <span class="nc">FunctionalData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FunctionalData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.FunctionalData">[docs]</a>
+<span class="k">class</span> <span class="nc">FunctionalData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Information about the exchange-correlation functional.</span>
 
@@ -504,7 +549,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">func_type</span> <span class="o">=</span> <span class="n">func_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">xcfun</span> <span class="o">=</span> <span class="n">xcfun</span>
 
-<div class="viewcode-block" id="FunctionalData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.FunctionalData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="FunctionalData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.FunctionalData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of FunctionalData from a parser.</span>
@@ -527,10 +574,14 @@
             <span class="n">name</span><span class="o">=</span><span class="n">func_data</span><span class="p">[</span><span class="s2">&quot;functional_name&quot;</span><span class="p">],</span>
             <span class="n">func_type</span><span class="o">=</span><span class="n">func_data</span><span class="p">[</span><span class="s2">&quot;functional_type&quot;</span><span class="p">],</span>
             <span class="n">xcfun</span><span class="o">=</span><span class="n">func_data</span><span class="p">[</span><span class="s2">&quot;xcfun&quot;</span><span class="p">],</span>
-        <span class="p">)</span></div></div>
+        <span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="RiData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RiData">[docs]</a><span class="k">class</span> <span class="nc">RiData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="RiData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RiData">[docs]</a>
+<span class="k">class</span> <span class="nc">RiData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Information about RI calculations.</span>
 
@@ -551,7 +602,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">rij_memory</span> <span class="o">=</span> <span class="n">rij_memory</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rik</span> <span class="o">=</span> <span class="n">rik</span>
 
-<div class="viewcode-block" id="RiData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RiData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="RiData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RiData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of RiData from a parser.</span>
@@ -570,10 +623,14 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ri_data</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">ri_data</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">ri_data</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="DispersionCorrectionData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.DispersionCorrectionData">[docs]</a><span class="k">class</span> <span class="nc">DispersionCorrectionData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DispersionCorrectionData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.DispersionCorrectionData">[docs]</a>
+<span class="k">class</span> <span class="nc">DispersionCorrectionData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Information about the dispersion correction used in the calculation.</span>
 
@@ -590,7 +647,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">correction</span> <span class="o">=</span> <span class="n">correction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">en_corr</span> <span class="o">=</span> <span class="n">en_corr</span>
 
-<div class="viewcode-block" id="DispersionCorrectionData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.DispersionCorrectionData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="DispersionCorrectionData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.DispersionCorrectionData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of DispersionCorrectionData from a parser.</span>
@@ -607,10 +666,14 @@
         <span class="n">d</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">dftd</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">d</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">d</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="DFTData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.DFTData">[docs]</a><span class="k">class</span> <span class="nc">DFTData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DFTData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.DFTData">[docs]</a>
+<span class="k">class</span> <span class="nc">DFTData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The information about a dft calculation.</span>
 
@@ -642,7 +705,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">gridpoints</span> <span class="o">=</span> <span class="n">gridpoints</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dispersion_correction</span> <span class="o">=</span> <span class="n">dispersion_correction</span>
 
-<div class="viewcode-block" id="DFTData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.DFTData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="DFTData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.DFTData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of DFTData from a parser.</span>
@@ -677,10 +742,14 @@
             <span class="n">spherical_gridsize</span><span class="o">=</span><span class="n">spherical_gridsize</span><span class="p">,</span>
             <span class="n">gridpoints</span><span class="o">=</span><span class="n">gridpoints</span><span class="p">,</span>
             <span class="n">dispersion_correction</span><span class="o">=</span><span class="n">disp</span><span class="p">,</span>
-        <span class="p">)</span></div></div>
+        <span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="ScfIterationData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.ScfIterationData">[docs]</a><span class="k">class</span> <span class="nc">ScfIterationData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ScfIterationData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.ScfIterationData">[docs]</a>
+<span class="k">class</span> <span class="nc">ScfIterationData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Details about the iteration in a scf calculation.</span>
 
@@ -712,7 +781,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dampings</span> <span class="o">=</span> <span class="n">dampings</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">converged</span> <span class="o">=</span> <span class="n">converged</span>
 
-<div class="viewcode-block" id="ScfIterationData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.ScfIterationData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="ScfIterationData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.ScfIterationData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of ScfIterationData from a parser.</span>
@@ -738,7 +809,10 @@
             <span class="n">converged</span><span class="o">=</span><span class="n">iter_data</span><span class="p">[</span><span class="s2">&quot;converged&quot;</span><span class="p">],</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="ScfIterationData.plot_energies"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.ScfIterationData.plot_energies">[docs]</a>    <span class="nd">@add_fig_kwargs</span>
+
+<div class="viewcode-block" id="ScfIterationData.plot_energies">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.ScfIterationData.plot_energies">[docs]</a>
+    <span class="nd">@add_fig_kwargs</span>
     <span class="k">def</span> <span class="nf">plot_energies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot the evolution of the energies in the scf loop.</span>
@@ -753,7 +827,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">pymatgen.util.plotting</span> <span class="kn">import</span> <span class="n">get_ax_fig_plt</span>
 
-            <span class="n">ax</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">plt</span> <span class="o">=</span> <span class="n">get_ax_fig_plt</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">plt</span> <span class="o">=</span> <span class="n">get_ax_fig_plt</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>  <span class="c1"># pragma: no cover (old pymatgen)</span>
         <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">pymatgen.util.plotting</span> <span class="kn">import</span> <span class="n">get_ax_fig</span>
 
@@ -763,10 +837,14 @@
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Steps&quot;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Energy&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">fig</span></div></div>
+        <span class="k">return</span> <span class="n">fig</span></div>
+</div>
 
 
-<div class="viewcode-block" id="ScfData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.ScfData">[docs]</a><span class="k">class</span> <span class="nc">ScfData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ScfData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.ScfData">[docs]</a>
+<span class="k">class</span> <span class="nc">ScfData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Information about options and operations in an scf calculation.</span>
 
@@ -816,7 +894,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">restart_file</span> <span class="o">=</span> <span class="n">restart_file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_occupied_orbitals</span> <span class="o">=</span> <span class="n">n_occupied_orbitals</span>
 
-<div class="viewcode-block" id="ScfData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.ScfData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="ScfData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.ScfData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of ScfData from a parser.</span>
@@ -839,16 +919,20 @@
 
         <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
 
-        <span class="k">if</span> <span class="n">iterations</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">iterations</span><span class="p">:</span>  <span class="c1"># pragma: no branch (trivial)</span>
             <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;iterations&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">iterations</span>
 
-        <span class="k">if</span> <span class="n">scf_data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">scf_data</span><span class="p">:</span>  <span class="c1"># pragma: no branch (trivial)</span>
             <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">scf_data</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="ScfEnergiesData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.ScfEnergiesData">[docs]</a><span class="k">class</span> <span class="nc">ScfEnergiesData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ScfEnergiesData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.ScfEnergiesData">[docs]</a>
+<span class="k">class</span> <span class="nc">ScfEnergiesData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Final energies and different contributions obtained from an scf calculation.</span>
 
@@ -893,7 +977,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">free_energy</span> <span class="o">=</span> <span class="n">free_energy</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sigma0_energy</span> <span class="o">=</span> <span class="n">sigma0_energy</span>
 
-<div class="viewcode-block" id="ScfEnergiesData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.ScfEnergiesData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="ScfEnergiesData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.ScfEnergiesData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of ScfEnergiesData from a parser.</span>
@@ -919,10 +1005,14 @@
         <span class="k">elif</span> <span class="n">riper_en_data</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">riper_en_data</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="kc">None</span></div></div>
+        <span class="k">return</span> <span class="kc">None</span></div>
+</div>
 
 
-<div class="viewcode-block" id="ElectrostaticMomentsData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.ElectrostaticMomentsData">[docs]</a><span class="k">class</span> <span class="nc">ElectrostaticMomentsData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ElectrostaticMomentsData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.ElectrostaticMomentsData">[docs]</a>
+<span class="k">class</span> <span class="nc">ElectrostaticMomentsData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The data of the electrostatic moments (charge, dipole and quadrupole).</span>
 
@@ -958,7 +1048,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">quadrupole_trace</span> <span class="o">=</span> <span class="n">quadrupole_trace</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">quadrupole_anisotropy</span> <span class="o">=</span> <span class="n">quadrupole_anisotropy</span>
 
-<div class="viewcode-block" id="ElectrostaticMomentsData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.ElectrostaticMomentsData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="ElectrostaticMomentsData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.ElectrostaticMomentsData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of ElectrostaticMomentsData from a parser.</span>
@@ -987,10 +1079,14 @@
             <span class="n">quadrupole_tensor</span><span class="o">=</span><span class="n">quad</span><span class="p">[</span><span class="s2">&quot;moment&quot;</span><span class="p">],</span>
             <span class="n">quadrupole_trace</span><span class="o">=</span><span class="n">quad</span><span class="p">[</span><span class="s2">&quot;trace&quot;</span><span class="p">],</span>
             <span class="n">quadrupole_anisotropy</span><span class="o">=</span><span class="n">quad</span><span class="p">[</span><span class="s2">&quot;anisotropy&quot;</span><span class="p">],</span>
-        <span class="p">)</span></div></div>
+        <span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="GeometryData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.GeometryData">[docs]</a><span class="k">class</span> <span class="nc">GeometryData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="GeometryData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.GeometryData">[docs]</a>
+<span class="k">class</span> <span class="nc">GeometryData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Data of the geometry of the system: molecule and centers.</span>
 
@@ -1009,7 +1105,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">center_of_charge</span> <span class="o">=</span> <span class="n">center_of_charge</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">molecule</span> <span class="o">=</span> <span class="n">molecule</span>
 
-<div class="viewcode-block" id="GeometryData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.GeometryData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="GeometryData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.GeometryData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of GeometryData from a parser.</span>
@@ -1027,24 +1125,30 @@
 
         <span class="n">coords_data</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">coordinates</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">centers_data</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">coords_data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="ow">not</span> <span class="n">centers_data</span> <span class="ow">or</span> <span class="nb">all</span><span class="p">(</span><span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">centers_data</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+        <span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">coords_data</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">center_of_mass</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">center_of_charge</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">molecule</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">centers_data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">centers_data</span><span class="p">:</span>  <span class="c1"># pragma: no branch (trivial)</span>
             <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">centers_data</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">coords_data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">coords_data</span><span class="p">:</span>  <span class="c1"># pragma: no branch (trivial)</span>
             <span class="n">species</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">coords_data</span><span class="p">[</span><span class="s2">&quot;species&quot;</span><span class="p">]]</span>
             <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">coords_data</span><span class="p">[</span><span class="s2">&quot;coords&quot;</span><span class="p">])</span> <span class="o">*</span> <span class="n">bohr_to_ang</span>
             <span class="n">mol</span> <span class="o">=</span> <span class="n">Molecule</span><span class="p">(</span><span class="n">species</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
             <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;molecule&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mol</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="SpinData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.SpinData">[docs]</a><span class="k">class</span> <span class="nc">SpinData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SpinData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.SpinData">[docs]</a>
+<span class="k">class</span> <span class="nc">SpinData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Information about the spin in the calculation.</span>
 
@@ -1061,7 +1165,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">unrestricted</span> <span class="o">=</span> <span class="n">unrestricted</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">s2</span> <span class="o">=</span> <span class="n">s2</span>
 
-<div class="viewcode-block" id="SpinData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.SpinData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpinData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.SpinData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of SpinData from a parser.</span>
@@ -1075,10 +1181,14 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            SpinData.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">unrestricted</span><span class="o">=</span><span class="n">parser</span><span class="o">.</span><span class="n">is_uhf</span><span class="p">,</span> <span class="n">s2</span><span class="o">=</span><span class="n">parser</span><span class="o">.</span><span class="n">s2</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">unrestricted</span><span class="o">=</span><span class="n">parser</span><span class="o">.</span><span class="n">is_uhf</span><span class="p">,</span> <span class="n">s2</span><span class="o">=</span><span class="n">parser</span><span class="o">.</span><span class="n">s2</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="SmearingData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.SmearingData">[docs]</a><span class="k">class</span> <span class="nc">SmearingData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SmearingData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.SmearingData">[docs]</a>
+<span class="k">class</span> <span class="nc">SmearingData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Information about the smearing ($fermi datagroup).</span>
 
@@ -1110,7 +1220,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">annealing_homo_lumo_gap_limit</span> <span class="o">=</span> <span class="n">annealing_homo_lumo_gap_limit</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">smearing_de_limit</span> <span class="o">=</span> <span class="n">smearing_de_limit</span>
 
-<div class="viewcode-block" id="SmearingData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.SmearingData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SmearingData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.SmearingData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of SmearingData from a parser.</span>
@@ -1129,10 +1241,14 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">fermi_data</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">fermi_data</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">fermi_data</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="IntegralData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.IntegralData">[docs]</a><span class="k">class</span> <span class="nc">IntegralData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="IntegralData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.IntegralData">[docs]</a>
+<span class="k">class</span> <span class="nc">IntegralData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Data about the thresholds for integrals.</span>
 
@@ -1151,7 +1267,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">thize</span> <span class="o">=</span> <span class="n">thize</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">thime</span> <span class="o">=</span> <span class="n">thime</span>
 
-<div class="viewcode-block" id="IntegralData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.IntegralData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="IntegralData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.IntegralData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of IntegralData from a parser.</span>
@@ -1170,10 +1288,14 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">integral_data</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">integral_data</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">integral_data</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="EscfIterationData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.EscfIterationData">[docs]</a><span class="k">class</span> <span class="nc">EscfIterationData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="EscfIterationData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.EscfIterationData">[docs]</a>
+<span class="k">class</span> <span class="nc">EscfIterationData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Details about the iteration in an escf calculation.</span>
 
@@ -1194,7 +1316,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">steps</span> <span class="o">=</span> <span class="n">steps</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">converged</span> <span class="o">=</span> <span class="n">converged</span>
 
-<div class="viewcode-block" id="EscfIterationData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.EscfIterationData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="EscfIterationData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.EscfIterationData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of EscfIterationData from a parser.</span>
@@ -1212,10 +1336,14 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">iter_data</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">iter_data</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">iter_data</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="SingleExcitation"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.SingleExcitation">[docs]</a><span class="k">class</span> <span class="nc">SingleExcitation</span><span class="p">(</span><span class="n">MSONable</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SingleExcitation">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.SingleExcitation">[docs]</a>
+<span class="k">class</span> <span class="nc">SingleExcitation</span><span class="p">(</span><span class="n">MSONable</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Auxiliary object to store the information about an escf/egrad calculation.</span>
 
@@ -1257,7 +1385,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">moments_columns</span> <span class="o">=</span> <span class="n">moments_columns</span></div>
 
 
-<div class="viewcode-block" id="EscfData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.EscfData">[docs]</a><span class="k">class</span> <span class="nc">EscfData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="EscfData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.EscfData">[docs]</a>
+<span class="k">class</span> <span class="nc">EscfData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Output data of an escf calculation.</span>
 
@@ -1318,7 +1449,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">gs_tot_en</span> <span class="o">=</span> <span class="n">gs_tot_en</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">excitations</span> <span class="o">=</span> <span class="n">excitations</span>
 
-<div class="viewcode-block" id="EscfData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.EscfData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="EscfData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.EscfData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of EscfData from a parser.</span>
@@ -1361,13 +1494,17 @@
         <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;excitations&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">converted_excitations</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;gs_tot_en&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">escf_gs_total_en</span>
 
-        <span class="k">if</span> <span class="n">escf_data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">escf_data</span><span class="p">:</span>  <span class="c1"># pragma: no branch (trivial)</span>
             <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">escf_data</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="StatptData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.StatptData">[docs]</a><span class="k">class</span> <span class="nc">StatptData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="StatptData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.StatptData">[docs]</a>
+<span class="k">class</span> <span class="nc">StatptData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initial information provided in statpt.</span>
 
@@ -1423,7 +1560,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">use_defaults</span> <span class="o">=</span> <span class="n">use_defaults</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">final_step_radius</span> <span class="o">=</span> <span class="n">final_step_radius</span>
 
-<div class="viewcode-block" id="StatptData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.StatptData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="StatptData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.StatptData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of StatptData from a parser.</span>
@@ -1441,10 +1580,14 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">statpt_data</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">statpt_data</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">statpt_data</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="RelaxData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RelaxData">[docs]</a><span class="k">class</span> <span class="nc">RelaxData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="RelaxData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RelaxData">[docs]</a>
+<span class="k">class</span> <span class="nc">RelaxData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initial information provided in relax.</span>
 
@@ -1462,7 +1605,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">optimizations</span> <span class="o">=</span> <span class="n">optimizations</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">thr_int_coord</span> <span class="o">=</span> <span class="n">thr_int_coord</span>
 
-<div class="viewcode-block" id="RelaxData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RelaxData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="RelaxData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RelaxData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of RelaxData from a parser.</span>
@@ -1480,10 +1625,14 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">relax_data</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">relax_data</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">relax_data</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="RelaxGradientsData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RelaxGradientsData">[docs]</a><span class="k">class</span> <span class="nc">RelaxGradientsData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="RelaxGradientsData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RelaxGradientsData">[docs]</a>
+<span class="k">class</span> <span class="nc">RelaxGradientsData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Data about gradients in a relaxation calculation.</span>
 
@@ -1505,7 +1654,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">norm_internal</span> <span class="o">=</span> <span class="n">norm_internal</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_internal</span> <span class="o">=</span> <span class="n">max_internal</span>
 
-<div class="viewcode-block" id="RelaxGradientsData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RelaxGradientsData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="RelaxGradientsData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RelaxGradientsData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of RelaxGradientsData from a parser.</span>
@@ -1523,10 +1674,14 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">grad_data</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">grad_data</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">grad_data</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="RelaxConvergenceData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RelaxConvergenceData">[docs]</a><span class="k">class</span> <span class="nc">RelaxConvergenceData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="RelaxConvergenceData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RelaxConvergenceData">[docs]</a>
+<span class="k">class</span> <span class="nc">RelaxConvergenceData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Final information about relaxation convergence.</span>
 
@@ -1564,7 +1719,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">rms_grad</span> <span class="o">=</span> <span class="n">rms_grad</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_grad</span> <span class="o">=</span> <span class="n">max_grad</span>
 
-<div class="viewcode-block" id="RelaxConvergenceData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RelaxConvergenceData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="RelaxConvergenceData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.RelaxConvergenceData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of RelaxConvergenceData from a parser.</span>
@@ -1582,10 +1739,14 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">conv_data</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">conv_data</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">conv_data</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="AoforceNumericalIntegrationData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceNumericalIntegrationData">[docs]</a><span class="k">class</span> <span class="nc">AoforceNumericalIntegrationData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="AoforceNumericalIntegrationData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceNumericalIntegrationData">[docs]</a>
+<span class="k">class</span> <span class="nc">AoforceNumericalIntegrationData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Information about the numerical integration in aoforce.</span>
 
@@ -1616,7 +1777,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">atoms_per_loop</span> <span class="o">=</span> <span class="n">atoms_per_loop</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">construction_timings</span> <span class="o">=</span> <span class="n">construction_timings</span>
 
-<div class="viewcode-block" id="AoforceNumericalIntegrationData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceNumericalIntegrationData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="AoforceNumericalIntegrationData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceNumericalIntegrationData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of AoforceNumericalIntegrationData from a parser.</span>
@@ -1637,10 +1800,14 @@
         <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;construction_timings&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;construction_timings&quot;</span><span class="p">]}</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;memory&quot;</span><span class="p">])</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="AoforceRotationalData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceRotationalData">[docs]</a><span class="k">class</span> <span class="nc">AoforceRotationalData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="AoforceRotationalData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceRotationalData">[docs]</a>
+<span class="k">class</span> <span class="nc">AoforceRotationalData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Analysis of rotational states in aoforce.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">intensities</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dipole_moment</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1658,7 +1825,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">=</span> <span class="n">m</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dipole_moment</span> <span class="o">=</span> <span class="n">dipole_moment</span>
 
-<div class="viewcode-block" id="AoforceRotationalData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceRotationalData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="AoforceRotationalData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceRotationalData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of AoforceRotationalData from a parser.</span>
@@ -1676,10 +1845,14 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span> <span class="ow">or</span> <span class="s2">&quot;rotational&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;rotational&quot;</span><span class="p">])</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;rotational&quot;</span><span class="p">])</span></div>
+</div>
 
 
-<div class="viewcode-block" id="AoforceVibrationalData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceVibrationalData">[docs]</a><span class="k">class</span> <span class="nc">AoforceVibrationalData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="AoforceVibrationalData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceVibrationalData">[docs]</a>
+<span class="k">class</span> <span class="nc">AoforceVibrationalData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Analysis of vibrational states in aoforce.</span>
 
@@ -1730,7 +1903,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">reduced_masses</span> <span class="o">=</span> <span class="n">reduced_masses</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">energies</span> <span class="o">=</span> <span class="n">energies</span>
 
-<div class="viewcode-block" id="AoforceVibrationalData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceVibrationalData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="AoforceVibrationalData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceVibrationalData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of AoforceVibrationalData from a parser.</span>
@@ -1750,7 +1925,10 @@
 
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;vibrational&quot;</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="AoforceVibrationalData.get_freqs_df"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceVibrationalData.get_freqs_df">[docs]</a>    <span class="k">def</span> <span class="nf">get_freqs_df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="AoforceVibrationalData.get_freqs_df">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceVibrationalData.get_freqs_df">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_freqs_df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a pandas DataFrame with the frequencies and their properties.</span>
 
@@ -1781,7 +1959,10 @@
         <span class="p">]</span>
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AoforceVibrationalData.n_negative_freqs"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceVibrationalData.n_negative_freqs">[docs]</a>    <span class="k">def</span> <span class="nf">n_negative_freqs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+
+<div class="viewcode-block" id="AoforceVibrationalData.n_negative_freqs">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceVibrationalData.n_negative_freqs">[docs]</a>
+    <span class="k">def</span> <span class="nf">n_negative_freqs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the number of negative frequencies.</span>
 
@@ -1796,7 +1977,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">)</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tol</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="AoforceVibrationalData.n_positive_freqs"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceVibrationalData.n_positive_freqs">[docs]</a>    <span class="k">def</span> <span class="nf">n_positive_freqs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+
+<div class="viewcode-block" id="AoforceVibrationalData.n_positive_freqs">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceVibrationalData.n_positive_freqs">[docs]</a>
+    <span class="k">def</span> <span class="nf">n_positive_freqs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the number of positive frequencies.</span>
 
@@ -1811,7 +1995,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tol</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="AoforceVibrationalData.n_zero_freqs"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceVibrationalData.n_zero_freqs">[docs]</a>    <span class="k">def</span> <span class="nf">n_zero_freqs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+
+<div class="viewcode-block" id="AoforceVibrationalData.n_zero_freqs">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.AoforceVibrationalData.n_zero_freqs">[docs]</a>
+    <span class="k">def</span> <span class="nf">n_zero_freqs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the number of frequencies close to zero.</span>
 
@@ -1827,10 +2014,14 @@
         <span class="n">f_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tol</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">f_arr</span><span class="p">,</span> <span class="n">f_arr</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tol</span><span class="p">))</span>
-        <span class="p">)</span></div></div>
+        <span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="MP2Data"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.MP2Data">[docs]</a><span class="k">class</span> <span class="nc">MP2Data</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="MP2Data">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.MP2Data">[docs]</a>
+<span class="k">class</span> <span class="nc">MP2Data</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Data object containing parameters used to run the MP2 calculation.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy_only</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1841,7 +2032,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">energy_only</span> <span class="o">=</span> <span class="n">energy_only</span>
 
-<div class="viewcode-block" id="MP2Data.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.MP2Data.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="MP2Data.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.MP2Data.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of MP2Data from a parser.</span>
@@ -1856,13 +2049,17 @@
 <span class="sd">            MP2Data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">mp2_data</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># pragma: no cover</span></div>
+</div>
 
 
-<div class="viewcode-block" id="MP2Results"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.MP2Results">[docs]</a><span class="k">class</span> <span class="nc">MP2Results</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="MP2Results">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.MP2Results">[docs]</a>
+<span class="k">class</span> <span class="nc">MP2Results</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Results from an MP2 calculation.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1873,7 +2070,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">energy</span>
 
-<div class="viewcode-block" id="MP2Results.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.MP2Results.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="MP2Results.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.MP2Results.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of MP2Results from a parser.</span>
@@ -1888,13 +2087,17 @@
 <span class="sd">            MP2Results.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">mp2_results</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span> <span class="ow">or</span> <span class="s2">&quot;energy&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span> <span class="ow">or</span> <span class="s2">&quot;energy&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">or</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;energy&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="PeriodicityData"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.PeriodicityData">[docs]</a><span class="k">class</span> <span class="nc">PeriodicityData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PeriodicityData">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.PeriodicityData">[docs]</a>
+<span class="k">class</span> <span class="nc">PeriodicityData</span><span class="p">(</span><span class="n">BaseData</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Information about periodicity.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -1948,7 +2151,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">direct_space_vectors</span> <span class="o">=</span> <span class="n">direct_space_vectors</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reciprocal_space_vectors</span> <span class="o">=</span> <span class="n">reciprocal_space_vectors</span>
 
-<div class="viewcode-block" id="PeriodicityData.from_parser"><a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.PeriodicityData.from_parser">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="PeriodicityData.from_parser">
+<a class="viewcode-back" href="../../../api/turbomoleio.output.html#turbomoleio.output.data.PeriodicityData.from_parser">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parser</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate an instance of PeriodicityData from a parser.</span>
@@ -1977,7 +2182,7 @@
                 <span class="n">bohr_to_ang</span> <span class="o">*</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;tm_lattice_params&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
                 <span class="n">data</span><span class="p">[</span><span class="s2">&quot;tm_lattice_params&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span>
             <span class="p">]</span>
-        <span class="k">elif</span> <span class="n">periodicity</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">periodicity</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
             <span class="c1"># a, b, c, alpha, beta, gamma</span>
             <span class="n">lattice_params</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="n">bohr_to_ang</span> <span class="o">*</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;tm_lattice_params&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
@@ -1987,7 +2192,7 @@
                 <span class="n">data</span><span class="p">[</span><span class="s2">&quot;tm_lattice_params&quot;</span><span class="p">][</span><span class="mi">4</span><span class="p">],</span>
                 <span class="n">data</span><span class="p">[</span><span class="s2">&quot;tm_lattice_params&quot;</span><span class="p">][</span><span class="mi">5</span><span class="p">],</span>
             <span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: no cover (should not occur...)</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;&quot;periodicity&quot; should be 1, 2 or 3.&#39;</span><span class="p">)</span>
 
         <span class="n">direct_space_vectors</span> <span class="o">=</span> <span class="p">[</span>
@@ -2005,7 +2210,9 @@
             <span class="o">*</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;shortest_interatomic_distance&quot;</span><span class="p">],</span>
             <span class="n">direct_space_vectors</span><span class="o">=</span><span class="n">direct_space_vectors</span><span class="p">,</span>
             <span class="n">reciprocal_space_vectors</span><span class="o">=</span><span class="n">reciprocal_space_vectors</span><span class="p">,</span>
-        <span class="p">)</span></div></div>
+        <span class="p">)</span></div>
+</div>
+
 </pre></div>
 
            </div>

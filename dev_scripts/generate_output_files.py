@@ -35,6 +35,7 @@ import argparse
 import os
 import shutil
 import sys
+from pathlib import Path
 
 from monty.os import cd, makedirs_p
 from monty.serialization import dumpfn, loadfn
@@ -45,17 +46,20 @@ from turbomoleio.input.define import DefineRunner
 from turbomoleio.input.utils import get_define_template
 from turbomoleio.output.files import EscfOnlyOutput, JobexOutput, exec_to_out_obj
 from turbomoleio.output.parser import Parser
-from turbomoleio.testfiles.utils import (
+from turbomoleio.testing import (
     PARSER_METHODS,
-    TESTDIR,
     TM_VERSIONS,
     compare_differences,
     generate_control_for_test,
     generate_reference_output,
 )
 
-gen_dir = os.path.join(TESTDIR, "outputs", "generation")
-OUTPUTS_BASENAMES = loadfn(os.path.join(gen_dir, "tests_config.yaml"))["testlist"]
+module_dir = Path(__file__).resolve().parent.parent
+TEST_DATA = module_dir / "tests" / "test_data"
+TEST_DATA = TEST_DATA.resolve()
+
+gen_dir = TEST_DATA / "outputs" / "generation"
+OUTPUTS_BASENAMES = loadfn(gen_dir / "tests_config.yaml")["testlist"]
 exec_to_out_obj = dict(exec_to_out_obj)
 exec_to_out_obj["jobex"] = JobexOutput
 
@@ -247,8 +251,8 @@ def get_version_dir(version_dir, force, compare_to):
     print(f"Turbomole version {tm_version} detected")
     if not version_dir:
         version_dir = f"TM_v{tm_version}"
-    vdir_path = os.path.join(TESTDIR, "outputs", version_dir)
-    if not force and os.path.exists(vdir_path):
+    vdir_path = TEST_DATA / "outputs" / version_dir
+    if not force and vdir_path.exists():
         print(
             "Directory exists. If generation of existing tests is performed, "
             "code will exit. Use --force to overwrite."
@@ -259,10 +263,10 @@ def get_version_dir(version_dir, force, compare_to):
         f"<testfiles/outputs/{version_dir}>."
     )
     if compare_to is None:
-        ref_vdir_path = os.path.join(TESTDIR, "outputs", TM_VERSIONS[-1])
+        ref_vdir_path = TEST_DATA / "outputs" / TM_VERSIONS[-1]
     else:
-        ref_vdir_path = os.path.join(TESTDIR, "outputs", compare_to)
-    if not os.path.exists(ref_vdir_path):
+        ref_vdir_path = TEST_DATA / "outputs" / compare_to
+    if not ref_vdir_path.exists():
         print("Reference version directory does not exist")
         exit()
     return vdir_path, ref_vdir_path
@@ -641,7 +645,7 @@ def update_json_files(dryrun, rtol, atol, print_diffs):
     """
     print("Updating json files")
     for tm_version in TM_VERSIONS:
-        vdir_path = os.path.join(TESTDIR, "outputs", tm_version)
+        vdir_path = os.path.join(TEST_DATA, "outputs", tm_version)
         vdir_testlist = loadfn(os.path.join(vdir_path, "tests_config.yaml"))["testlist"]
         version_all_diffs = {}
         for tm_exec, testnames in vdir_testlist.items():

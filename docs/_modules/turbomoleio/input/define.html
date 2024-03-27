@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>turbomoleio.input.define &mdash; turbomoleio 1.4.0 documentation</title>
+  <title>turbomoleio.input.define &mdash; turbomoleio 1.5.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,9 +14,9 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=b308ce55"></script>
+        <script src="../../../_static/documentation_options.js?v=e0a75244"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -34,7 +34,7 @@
             turbomoleio
           </a>
               <div class="version">
-                1.4.0
+                1.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -130,7 +130,9 @@
 <span class="kn">from</span> <span class="nn">turbomoleio.core.control</span> <span class="kn">import</span> <span class="n">Control</span><span class="p">,</span> <span class="n">cdg</span><span class="p">,</span> <span class="n">mdgo</span><span class="p">,</span> <span class="n">sdg</span>
 
 
-<div class="viewcode-block" id="DefineError"><a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.DefineError">[docs]</a><span class="k">class</span> <span class="nc">DefineError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="DefineError">
+<a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.DefineError">[docs]</a>
+<span class="k">class</span> <span class="nc">DefineError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Base exception for define errors.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -143,7 +145,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span></div>
 
 
-<div class="viewcode-block" id="DefineExpectError"><a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.DefineExpectError">[docs]</a><span class="k">class</span> <span class="nc">DefineExpectError</span><span class="p">(</span><span class="n">DefineError</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DefineExpectError">
+<a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.DefineExpectError">[docs]</a>
+<span class="k">class</span> <span class="nc">DefineExpectError</span><span class="p">(</span><span class="n">DefineError</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception raised when an expect fail, going in timeout or EOF.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
@@ -157,7 +162,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">pattern</span> <span class="o">=</span> <span class="n">pattern</span></div>
 
 
-<div class="viewcode-block" id="DefineParameterError"><a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.DefineParameterError">[docs]</a><span class="k">class</span> <span class="nc">DefineParameterError</span><span class="p">(</span><span class="n">DefineError</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DefineParameterError">
+<a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.DefineParameterError">[docs]</a>
+<span class="k">class</span> <span class="nc">DefineParameterError</span><span class="p">(</span><span class="n">DefineError</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception raised when parameters are not defined properly.</span>
 
@@ -168,7 +176,10 @@
     <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="DefineIredError"><a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.DefineIredError">[docs]</a><span class="k">class</span> <span class="nc">DefineIredError</span><span class="p">(</span><span class="n">DefineError</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DefineIredError">
+<a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.DefineIredError">[docs]</a>
+<span class="k">class</span> <span class="nc">DefineIredError</span><span class="p">(</span><span class="n">DefineError</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception raised for problems related to the generation of internal coordinates.</span>
 
@@ -178,7 +189,10 @@
     <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="UnsupportedDefineStateError"><a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.UnsupportedDefineStateError">[docs]</a><span class="k">class</span> <span class="nc">UnsupportedDefineStateError</span><span class="p">(</span><span class="n">DefineError</span><span class="p">):</span>
+
+<div class="viewcode-block" id="UnsupportedDefineStateError">
+<a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.UnsupportedDefineStateError">[docs]</a>
+<span class="k">class</span> <span class="nc">UnsupportedDefineStateError</span><span class="p">(</span><span class="n">DefineError</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception for unexpected behavior of define.</span>
 
@@ -190,7 +204,10 @@
     <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="DefineRunner"><a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.DefineRunner">[docs]</a><span class="k">class</span> <span class="nc">DefineRunner</span><span class="p">:</span>
+
+<div class="viewcode-block" id="DefineRunner">
+<a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.DefineRunner">[docs]</a>
+<span class="k">class</span> <span class="nc">DefineRunner</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class that runs the define executable.</span>
 
 <span class="sd">    This uses pexpect to communicate with the code.</span>
@@ -343,7 +360,9 @@
 
         <span class="k">return</span> <span class="n">bin_path</span>
 
-<div class="viewcode-block" id="DefineRunner.run_full"><a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.DefineRunner.run_full">[docs]</a>    <span class="k">def</span> <span class="nf">run_full</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DefineRunner.run_full">
+<a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.DefineRunner.run_full">[docs]</a>
+    <span class="k">def</span> <span class="nf">run_full</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run define going through all the menus using the parameters.</span>
 
@@ -399,7 +418,7 @@
                     <span class="k">if</span> <span class="p">(</span>
                         <span class="nb">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">ex_keys</span><span class="p">)</span>
                         <span class="ow">and</span> <span class="n">method</span> <span class="o">!=</span> <span class="s2">&quot;adc(2)&quot;</span>
-                    <span class="p">):</span>
+                    <span class="p">):</span>  <span class="c1"># pragma: no cover (no jump to function exit ?)</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_excited_state_menu</span><span class="p">()</span>
 
                     <span class="c1"># general menu</span>
@@ -412,7 +431,9 @@
                         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;check end of define&quot;</span><span class="p">,</span>
                     <span class="p">)</span>
 
-                    <span class="k">if</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="p">(</span>  <span class="c1"># pragma: no branch (trivial unit test not covered...)</span>
+                        <span class="n">case</span> <span class="o">==</span> <span class="mi">0</span>
+                    <span class="p">):</span>
                         <span class="n">ended_normally</span> <span class="o">=</span> <span class="kc">True</span>
 
                     <span class="c1"># wait for the EOF with a timeout</span>
@@ -432,7 +453,10 @@
 
         <span class="k">return</span> <span class="n">ended_normally</span></div>
 
-<div class="viewcode-block" id="DefineRunner.run_update_internal_coords"><a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.DefineRunner.run_update_internal_coords">[docs]</a>    <span class="k">def</span> <span class="nf">run_update_internal_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DefineRunner.run_update_internal_coords">
+<a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.DefineRunner.run_update_internal_coords">[docs]</a>
+    <span class="k">def</span> <span class="nf">run_update_internal_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run the define to update internal coordinates of the system.</span>
 
@@ -491,7 +515,10 @@
 
         <span class="k">return</span> <span class="n">coords_updated</span></div>
 
-<div class="viewcode-block" id="DefineRunner.run_generate_mo_files"><a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.DefineRunner.run_generate_mo_files">[docs]</a>    <span class="k">def</span> <span class="nf">run_generate_mo_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DefineRunner.run_generate_mo_files">
+<a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.DefineRunner.run_generate_mo_files">[docs]</a>
+    <span class="k">def</span> <span class="nf">run_generate_mo_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run define to regenerate the molecular orbital files.</span>
 
@@ -541,7 +568,7 @@
                         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;switch to molecular orbital definition menu&quot;</span><span class="p">,</span>
                     <span class="p">)</span>
 
-                    <span class="k">if</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># pragma: no branch (</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_sendline</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;start modification of mo data&quot;</span><span class="p">)</span>
 
                     <span class="c1"># molecular orbital definition menu</span>
@@ -572,6 +599,7 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">_close</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="kc">True</span></div>
+
 
     <span class="k">def</span> <span class="nf">_set_metric</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the metric.&quot;&quot;&quot;</span>
@@ -917,7 +945,7 @@
 
         <span class="k">if</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_sendline</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;do not enter in the atomic attribute menu&quot;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># pragma: no branch (only 2 cases possible)</span>
             <span class="c1"># here define entered in the definition of the menu, meaning that the</span>
             <span class="c1"># atomic properties are not defined. This case is not supported here.</span>
             <span class="k">raise</span> <span class="n">UnsupportedDefineStateError</span><span class="p">(</span>
@@ -1157,7 +1185,7 @@
                 <span class="c1"># Other cases cover messages when regenerating the mo files.</span>
                 <span class="k">pass</span>
 
-            <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_go_to_general_menu</span><span class="p">()</span>
 
         <span class="k">finally</span><span class="p">:</span>
@@ -1198,7 +1226,7 @@
             <span class="c1"># extended hueckel will be treated in next block</span>
             <span class="k">pass</span>
 
-        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
             <span class="c1"># send default (=y)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_sendline</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;default values for Hueckel&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_expect</span><span class="p">(</span>
@@ -1243,8 +1271,8 @@
                 <span class="c1"># send default (=y; of course we accept this occupation...)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_sendline</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;don&#39;t keep default electrons occupation&quot;</span><span class="p">)</span>
 
-        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">unpaired_electrons</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
+            <span class="k">if</span> <span class="n">unpaired_electrons</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
                 <span class="k">raise</span> <span class="n">DefineParameterError</span><span class="p">(</span>
                     <span class="s2">&quot;unpaired_electrons keywork is required if no default is present&quot;</span>
                 <span class="p">)</span>
@@ -1275,7 +1303,7 @@
             <span class="c1"># Other cases cover messages when regenerating the mo files.</span>
             <span class="k">pass</span>
 
-        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_go_to_general_menu</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_excited_state_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1459,7 +1487,7 @@
                 <span class="n">action</span><span class="o">=</span><span class="s2">&quot;back to response calulation menu&quot;</span><span class="p">,</span>
             <span class="p">)</span>
 
-        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># pragma: no branch</span>
             <span class="c1"># already at the end of the other cases</span>
             <span class="k">pass</span>
 
@@ -1642,7 +1670,9 @@
 
             <span class="c1"># Note: it seems that the line ccsdapprox ccsd(f12*) is already there</span>
             <span class="c1"># with just use_f12. This option is kept for safety.</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_f12*&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">and</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;ccsd(t)&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>  <span class="c1"># pragma: no branch</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_f12*&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">and</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;ccsd(t)&quot;</span>
+            <span class="p">):</span>
                 <span class="n">mdgo</span><span class="p">(</span><span class="s2">&quot;rir12&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;ccsdapprox&quot;</span><span class="p">:</span> <span class="s2">&quot;ccsdapprox  ccsd(f12*)&quot;</span><span class="p">})</span>
 
         <span class="c1"># go to submenu &quot;ricc2&quot;</span>
@@ -1735,7 +1765,7 @@
 <span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># if flag copymo - copy files (mos/alpha/beta) to current folder</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;copymo&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;copymo&quot;</span><span class="p">]:</span>  <span class="c1"># pragma: no branch</span>
 
             <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;copymo&quot;</span><span class="p">]</span>
             <span class="n">source_mos</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;mos&quot;</span><span class="p">)</span>
@@ -1778,8 +1808,8 @@
                     <span class="n">new_alpha</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
                 <span class="n">new_beta</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">new_alpha</span><span class="p">)</span>
 
-                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_alpha</span><span class="p">)):</span>
-                    <span class="k">if</span> <span class="s2">&quot;scfmo&quot;</span> <span class="ow">in</span> <span class="n">new_alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_alpha</span><span class="p">)):</span>  <span class="c1"># pragma: no branch</span>
+                    <span class="k">if</span> <span class="s2">&quot;scfmo&quot;</span> <span class="ow">in</span> <span class="n">new_alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>  <span class="c1"># pragma: no branch</span>
                         <span class="n">new_alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;scfmo&quot;</span><span class="p">,</span> <span class="s2">&quot;uhfmo_alpha&quot;</span><span class="p">)</span>
                         <span class="n">new_beta</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_beta</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;scfmo&quot;</span><span class="p">,</span> <span class="s2">&quot;uhfmo_beta&quot;</span><span class="p">)</span>
                         <span class="k">break</span>
@@ -1823,7 +1853,9 @@
         <span class="n">c</span><span class="o">.</span><span class="n">set_disp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;disp&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
         <span class="n">c</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s2">&quot;control&quot;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DefineRunner.dump_command_file"><a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.DefineRunner.dump_command_file">[docs]</a>    <span class="k">def</span> <span class="nf">dump_command_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;define_commands&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="DefineRunner.dump_command_file">
+<a class="viewcode-back" href="../../../api/turbomoleio.input.html#turbomoleio.input.define.DefineRunner.dump_command_file">[docs]</a>
+    <span class="k">def</span> <span class="nf">dump_command_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;define_commands&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Dump a file with the commands given to define.</span>
 
@@ -1838,7 +1870,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="c1"># add one file empty space to be sure of sending the last command</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sent_commands</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]))</span></div></div>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sent_commands</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]))</span></div>
+</div>
+
 </pre></div>
 
            </div>

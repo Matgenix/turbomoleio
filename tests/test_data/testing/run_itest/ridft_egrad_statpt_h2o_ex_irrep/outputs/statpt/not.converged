@@ -1,0 +1,10 @@
+$convcrit
+  energy               6.0000000
+  cartesian gradient   3.0000000
+  cycles               20
+  previous value          -75.9867015467
+$convinfo
+ energy change  : actual value =   -75.99     threshold =   0.1000E-05
+ geom. gradient : actual value =   0.1344     threshold =   0.1000E-02
+$convergence not reached
+$end

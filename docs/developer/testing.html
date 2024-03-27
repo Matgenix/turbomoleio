@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Testing &mdash; turbomoleio 1.4.0 documentation</title>
+  <title>Testing &mdash; turbomoleio 1.5.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
 
@@ -15,9 +15,9 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=b308ce55"></script>
+        <script src="../_static/documentation_options.js?v=e0a75244"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
-        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -37,7 +37,7 @@
             turbomoleio
           </a>
               <div class="version">
-                1.4.0
+                1.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -111,7 +111,7 @@
            <div itemprop="articleBody">
              
   <section id="testing">
-<span id="developer-testing"></span><h1>Testing<a class="headerlink" href="#testing" title="Permalink to this heading"></a></h1>
+<span id="developer-testing"></span><h1>Testing<a class="headerlink" href="#testing" title="Link to this heading"></a></h1>
 <p>Tests are an essential part of the development process. Their aim is to check that the
 different portions of the code meet their design and behave as intended. Providing an exhaustive
 guide about how to write tests in python is beyond the scope of this document, so in this section we
@@ -129,7 +129,7 @@ with the TURBOMOLE executables.</p></li>
 adding it to turbomoleio. It is also important to consider adding new tests when a bug is identified
 and fixed. This will prevent that such a bug will be reintroduced in later developments.</p>
 <section id="the-test-suite">
-<span id="developer-test-suite"></span><h2>The test suite<a class="headerlink" href="#the-test-suite" title="Permalink to this heading"></a></h2>
+<span id="developer-test-suite"></span><h2>The test suite<a class="headerlink" href="#the-test-suite" title="Link to this heading"></a></h2>
 <p>The testing suite is based on <strong>pytest</strong> and makes wide use of its functionalities, like for example
 fixtures, marking and custom command line arguments. The pytest package should thus be installed
 and the tests should be executed using the <code class="docutils literal notranslate"><span class="pre">pytest</span></code> command. For a reference on all its features you
@@ -155,7 +155,7 @@ in the <code class="docutils literal notranslate"><span class="pre">.coveragerc_
 the project.</p>
 </section>
 <section id="unit-tests">
-<h2>Unit tests<a class="headerlink" href="#unit-tests" title="Permalink to this heading"></a></h2>
+<h2>Unit tests<a class="headerlink" href="#unit-tests" title="Link to this heading"></a></h2>
 <p>As mentioned above, we call unit tests those that test each single component on its own.
 Each module folder in turbomoleio contains a <code class="docutils literal notranslate"><span class="pre">tests</span></code> subfolder where the unit tests for
 all the components in that module are implemented.
@@ -189,7 +189,7 @@ folder contains the necessary information to generate new output files for a new
 a specific development script (see <a class="reference internal" href="#developer-utest-output"><span class="std std-ref">Unit-tests for output parsing</span></a>).</p>
 </section>
 <section id="integration-tests">
-<h2>Integration tests<a class="headerlink" href="#integration-tests" title="Permalink to this heading"></a></h2>
+<h2>Integration tests<a class="headerlink" href="#integration-tests" title="Link to this heading"></a></h2>
 <p>Integration tests aim to verify the integration between the different components and
 in particular with the Turbomole executables. For this reason they are all collected in the
 <code class="docutils literal notranslate"><span class="pre">turbomoleio/integrations_tests</span></code> folder and, to allow to execute them separately, they
@@ -205,13 +205,13 @@ turbomoleio keeps being read correctly in TURBOMOLE and if an output file produc
 by an execution of TURBOMOLE is still parsed correctly. For some functionalities anyway
 there is not really a meaning in performing an integration test. In these cases the
 portion of the code can be excluded from the coverage analysis.</p>
-<p>The integration tests are all performed using the <a class="reference internal" href="../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.run_itest" title="turbomoleio.testfiles.utils.run_itest"><code class="xref py py-func docutils literal notranslate"><span class="pre">turbomoleio.testfiles.utils.run_itest()</span></code></a>
+<p>The integration tests are all performed using the <code class="xref py py-func docutils literal notranslate"><span class="pre">turbomoleio.testfiles.utils.run_itest()</span></code>
 helper function. This first runs <code class="docutils literal notranslate"><span class="pre">define</span></code> using <code class="docutils literal notranslate"><span class="pre">DefineRunner</span></code> based on the parameters given
 in input, the produced control file is compared with a reference stored previously. If successful
 the required turbomole executables are run and the outputs are extracted using the objects
 implemented here. The numerical values of these outputs are checked with a respect to
 references stored in JSON files. Note that the comparison is performed using the
-<a class="reference internal" href="../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.assert_almost_equal" title="turbomoleio.testfiles.utils.assert_almost_equal"><code class="xref py py-func docutils literal notranslate"><span class="pre">turbomoleio.testfiles.utils.assert_almost_equal()</span></code></a>. For this comparison some values
+<code class="xref py py-func docutils literal notranslate"><span class="pre">turbomoleio.testfiles.utils.assert_almost_equal()</span></code>. For this comparison some values
 are outright excluded from the check. In some cases a comparison will be obviously meaningless
 (e.g. the date of execution, the elapsed time), while in some other cases the values,
 while physically and chemically equivalent, may be reported in slightly different ways in
@@ -269,7 +269,7 @@ tests is lower compared to the unit tests. As of version 1.0.0 the integration t
 the turbomoleio source code.</p>
 </section>
 <section id="writing-new-tests">
-<h2>Writing new tests<a class="headerlink" href="#writing-new-tests" title="Permalink to this heading"></a></h2>
+<h2>Writing new tests<a class="headerlink" href="#writing-new-tests" title="Link to this heading"></a></h2>
 <p>New contributions to turbomoleio should always come with their set of unit and, if suitable, integration tests.
 The tests that you add should be organized in the same way as the other tests already available,
 as described in the previous sections.</p>
@@ -283,9 +283,9 @@ fixtures.</p>
 your own. Several resources are available online discussing the testing best practices and the
 pytest documentation is a good starting point as well. Here we will limit to the description of
 the options and utils specific to turbomoleio.</p>
-<p>Helper functions and utilities specific for testing can be found in the <a class="reference internal" href="../api/turbomoleio.testfiles.html#module-turbomoleio.testfiles.utils" title="turbomoleio.testfiles.utils"><code class="xref py py-mod docutils literal notranslate"><span class="pre">turbomoleio.testfiles.utils</span></code></a>
+<p>Helper functions and utilities specific for testing can be found in the <code class="xref py py-mod docutils literal notranslate"><span class="pre">turbomoleio.testfiles.utils</span></code>
 module. In particular this contains a context manager that is used in most of the tests present
-in the test suite: <a class="reference internal" href="../api/turbomoleio.testfiles.html#turbomoleio.testfiles.utils.temp_dir" title="turbomoleio.testfiles.utils.temp_dir"><code class="xref py py-func docutils literal notranslate"><span class="pre">turbomoleio.testfiles.utils.temp_dir()</span></code></a>.
+in the test suite: <code class="xref py py-func docutils literal notranslate"><span class="pre">turbomoleio.testfiles.utils.temp_dir()</span></code>.
 Whenever you write a test that needs to access files from or write files to the file system this should be done
 in a temporary directory specific for the test, otherwise the files will be written all over the project
 folders. This context manager can be easily used to create the temporary directory, optionally change directory
@@ -304,7 +304,7 @@ might be needed for your unit and integration tests. Modifying existing files is
 If it cannot be avoided (e.g. for the update to a new TURBOMOLE version) you should at least
 check that all the tests relying on the files that you plan to modify will keep working as expected.</p>
 <section id="tests-for-output-parsing">
-<h3>Tests for output parsing<a class="headerlink" href="#tests-for-output-parsing" title="Permalink to this heading"></a></h3>
+<h3>Tests for output parsing<a class="headerlink" href="#tests-for-output-parsing" title="Link to this heading"></a></h3>
 <p>In order to create a new unit test for output parsing, you should:</p>
 <ol class="arabic simple">
 <li><p>Create a test directory in the <cite>~turbomoleio/testfiles/outputs/generation</cite> directory.</p></li>
@@ -346,12 +346,12 @@ is structured.</p>
 </li>
 </ol>
 <p>6. Add the test in the <cite>tests_config.yaml</cite> current Turbomole version directory of
-<cite>~turbomoleio/testfiles/outputs/TM_vX.Y.Z</cite>. For example, if this new test is added in turbomoleio 1.3,
-corresponding to Turbomole v7.5.1, add the test in the file
-<cite>~turbomoleio/testfiles/outputs/TM_v7.5.1/tests_config.yaml</cite>.</p>
+<cite>~turbomoleio/testfiles/outputs/TM_vX.Y.Z</cite>. For example, if this new test is added in turbomoleio 1.5,
+corresponding to Turbomole v7.7.1, add the test in the file
+<cite>~turbomoleio/testfiles/outputs/TM_v7.7.1/tests_config.yaml</cite>.</p>
 </section>
 <section id="turbomole-version-change">
-<h3>Turbomole version change<a class="headerlink" href="#turbomole-version-change" title="Permalink to this heading"></a></h3>
+<h3>Turbomole version change<a class="headerlink" href="#turbomole-version-change" title="Link to this heading"></a></h3>
 <p>When the version of Turbomole changes, two main things have to be performed.</p>
 <ol class="arabic simple">
 <li><p>Check integration tests and regenerate reference files.</p></li>
@@ -360,10 +360,10 @@ corresponding to Turbomole v7.5.1, add the test in the file
 <p>The actions to be performed when changing from one Turbomole version to the next one is
 listed below. More details are also provided after the standard procedure.</p>
 <section id="standard-procedure">
-<h4>Standard procedure<a class="headerlink" href="#standard-procedure" title="Permalink to this heading"></a></h4>
+<h4>Standard procedure<a class="headerlink" href="#standard-procedure" title="Link to this heading"></a></h4>
 <p>The following assumes you change from one version of Turbomole to the next one. For example,
-turbomoleio 1.0.x and 1.1.x are fully compatible with Turbomole version 7.3. To change to Turbomole
-version 7.4 (and thus turbomoleio 1.2.0), change your Turbomole distribution to version 7.4
+turbomoleio 1.5.x is fully compatible with Turbomole version 7.7. To change to Turbomole
+version 7.7 (and thus turbomoleio 1.5.x), change your Turbomole distribution to version 7.7
 and apply the following list of actions.</p>
 <ol class="arabic">
 <li><dl>
@@ -398,7 +398,7 @@ reference files for the new Turbomole version by running <cite>python generate_o
 in <a class="reference internal" href="versioning.html#developer-versioning"><span class="std std-ref">Versioning</span></a>.</p>
 </section>
 <section id="id1">
-<h4>Integration tests<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h4>
+<h4>Integration tests<a class="headerlink" href="#id1" title="Link to this heading"></a></h4>
 <p>For the integration tests, the check and generation is performed using the pytest
 infrastructure. The integration tests are run using:</p>
 <blockquote>
@@ -432,7 +432,7 @@ are then regenerated using:</p>
 with care (first checking the differences as described above) !</p>
 </section>
 <section id="unit-tests-for-output-parsing">
-<span id="developer-utest-output"></span><h4>Unit-tests for output parsing<a class="headerlink" href="#unit-tests-for-output-parsing" title="Permalink to this heading"></a></h4>
+<span id="developer-utest-output"></span><h4>Unit-tests for output parsing<a class="headerlink" href="#unit-tests-for-output-parsing" title="Link to this heading"></a></h4>
 <p>In order to keep backward compatibility of the parsing of the outputs of previous
 Turbomole versions, output files and reference serialized objects for the new Turbomole
 version have to be checked and generated. Note that the old output files and

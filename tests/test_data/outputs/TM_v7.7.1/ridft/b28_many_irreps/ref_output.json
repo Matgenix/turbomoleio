@@ -1,0 +1,694 @@
+{
+  "@module": "turbomoleio.output.files",
+  "@class": "ScfOutput",
+  "@version": "1.4.0",
+  "dft": {
+    "@module": "turbomoleio.output.data",
+    "@class": "DFTData",
+    "@version": "1.4.0",
+    "functional": {
+      "@module": "turbomoleio.output.data",
+      "@class": "FunctionalData",
+      "@version": "1.4.0",
+      "msg": "B-P86 functional\n exchange:    LDA + Becke (B88)\n correlation: LDA (VWN) + Perdew (P86)",
+      "name": "b-p",
+      "func_type": "GGA",
+      "xcfun": null
+    },
+    "ri": {
+      "@module": "turbomoleio.output.data",
+      "@class": "RiData",
+      "@version": "1.4.0",
+      "ricore": 500,
+      "marij": false,
+      "rij_memory": 15,
+      "rik": false
+    },
+    "spherical_gridsize": 3,
+    "gridpoints": 302,
+    "dispersion_correction": null
+  },
+  "scf": {
+    "@module": "turbomoleio.output.data",
+    "@class": "ScfData",
+    "@version": "1.4.0",
+    "iterations": {
+      "@module": "turbomoleio.output.data",
+      "@class": "ScfIterationData",
+      "@version": "1.4.0",
+      "energies": [
+        -690.81171680079,
+        -693.36290445798,
+        -694.31761760025,
+        -694.70646513458,
+        -694.84934704177,
+        -694.89089207283,
+        -694.89994244928,
+        -694.90163951347,
+        -694.90192253699,
+        -694.90197215239,
+        -694.90198375436,
+        -694.90198805354,
+        -694.90198957417,
+        -694.9019902126,
+        -694.90199042487,
+        -694.90199049898,
+        -694.90185728053
+      ],
+      "first_index": 1,
+      "n_steps": 17,
+      "dampings": [
+        1.0,
+        0.95,
+        0.85,
+        0.75,
+        0.65,
+        0.55,
+        0.45,
+        0.3,
+        0.15,
+        0.1,
+        0.15,
+        0.2,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3
+      ],
+      "converged": true
+    },
+    "diis": true,
+    "diis_error_vect": "FDS-SDF",
+    "conv_tot_en": 1e-07,
+    "conv_one_e_en": 0.0001,
+    "virtual_orbital_shift_on": false,
+    "virtual_orbital_shift_limit": null,
+    "orbital_characterization": "expanded",
+    "restart_file": "alpha",
+    "n_occupied_orbitals": 71
+  },
+  "energies": {
+    "@module": "turbomoleio.output.data",
+    "@class": "ScfEnergiesData",
+    "@version": "1.4.0",
+    "total_energy": -694.90185728053,
+    "kinetic_energy": 684.60513479092,
+    "potential_energy": -1379.50699207145,
+    "virial_theorem": 1.98518247954,
+    "wavefunction_norm": 1.0,
+    "coulomb_energy": null,
+    "xc_energy": null,
+    "ts_energy": null,
+    "free_energy": null,
+    "sigma0_energy": null
+  },
+  "electrostatic": {
+    "@module": "turbomoleio.output.data",
+    "@class": "ElectrostaticMomentsData",
+    "@version": "1.4.0",
+    "charge": 0.0,
+    "unrestricted_electrons": 2.0,
+    "dipole_vector": [
+      0.0,
+      -0.0,
+      0.0
+    ],
+    "dipole_norm": 0.0,
+    "quadrupole_tensor": [
+      [
+        -109.773433,
+        0.0,
+        -0.0
+      ],
+      [
+        0.0,
+        -109.773433,
+        -0.0
+      ],
+      [
+        -0.0,
+        -0.0,
+        -127.610081
+      ]
+    ],
+    "quadrupole_trace": -347.156946,
+    "quadrupole_anisotropy": 17.836648
+  },
+  "geometry": {
+    "@module": "turbomoleio.output.data",
+    "@class": "GeometryData",
+    "@version": "1.4.0",
+    "center_of_mass": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "center_of_charge": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "molecule": {
+      "@module": "pymatgen.core.structure",
+      "@class": "Molecule",
+      "charge": 0.0,
+      "spin_multiplicity": 1,
+      "sites": [
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -0.40817862437751534,
+            -3.6226854943626905,
+            0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            1.2040680923806342,
+            -3.4410289169748,
+            0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            2.57783435732768,
+            -2.57783435732768,
+            0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            3.4410289169748,
+            -1.2040680923806342,
+            0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            3.6226854943626905,
+            0.40817862437751534,
+            0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            3.086824780577758,
+            1.9395805626203368,
+            0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            1.9395805626203368,
+            3.086824780577758,
+            0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            0.40817862437751534,
+            3.6226854943626905,
+            0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -1.2040680923806342,
+            3.4410289169748,
+            0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -2.57783435732768,
+            2.57783435732768,
+            0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -3.4410289169748,
+            1.2040680923806342,
+            0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -3.6226854943626905,
+            -0.40817862437751534,
+            0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -3.086824780577758,
+            -1.9395805626203368,
+            0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -1.9395805626203368,
+            -3.086824780577758,
+            0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -0.40817862437751534,
+            3.6226854943626905,
+            -0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -1.9395805626203368,
+            3.086824780577758,
+            -0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -3.086824780577758,
+            1.9395805626203368,
+            -0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -3.6226854943626905,
+            0.40817862437751534,
+            -0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -3.4410289169748,
+            -1.2040680923806342,
+            -0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -2.57783435732768,
+            -2.57783435732768,
+            -0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -1.2040680923806342,
+            -3.4410289169748,
+            -0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            0.40817862437751534,
+            -3.6226854943626905,
+            -0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            1.9395805626203368,
+            -3.086824780577758,
+            -0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            3.086824780577758,
+            -1.9395805626203368,
+            -0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            3.6226854943626905,
+            -0.40817862437751534,
+            -0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            3.4410289169748,
+            1.2040680923806342,
+            -0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            2.57783435732768,
+            2.57783435732768,
+            -0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        },
+        {
+          "name": "B",
+          "species": [
+            {
+              "element": "B",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            1.2040680923806342,
+            3.4410289169748,
+            -0.7626115293746029
+          ],
+          "properties": {},
+          "label": "B"
+        }
+      ]
+    }
+  },
+  "basis": {
+    "@module": "turbomoleio.output.data",
+    "@class": "BasisData",
+    "@version": "1.4.0",
+    "basis_per_specie": {
+      "b": "def-SV(P)"
+    },
+    "aux_basis_per_specie": {
+      "b": "def-SV(P)"
+    },
+    "number_scf_basis_func": 392,
+    "number_scf_aux_basis_func": 1036
+  },
+  "run": {
+    "@module": "turbomoleio.output.data",
+    "@class": "RunData",
+    "@version": "1.4.0",
+    "host": "fedora",
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2024-02-23 14:24:35.968000"
+    },
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2024-02-23 14:24:38.898000"
+    },
+    "cpu_time": 2.91,
+    "wall_time": 2.94
+  },
+  "tm": {
+    "@module": "turbomoleio.output.data",
+    "@class": "TurbomoleData",
+    "@version": "1.4.0",
+    "version": "7.7.1",
+    "build": null,
+    "executable": "ridft"
+  },
+  "cosmo": null,
+  "spin": {
+    "@module": "turbomoleio.output.data",
+    "@class": "SpinData",
+    "@version": "1.4.0",
+    "unrestricted": true,
+    "s2": {
+      "s2": 2.00153224
+    }
+  },
+  "integral": {
+    "@module": "turbomoleio.output.data",
+    "@class": "IntegralData",
+    "@version": "1.4.0",
+    "integral_neglect_threshold": 7.9e-12,
+    "thize": 1e-05,
+    "thime": 5
+  },
+  "smearing": null,
+  "symmetry": {
+    "@module": "turbomoleio.output.data",
+    "@class": "SymmetryData",
+    "@version": "1.4.0",
+    "symbol": "d14d",
+    "n_reps": 17,
+    "reps": [
+      "a1",
+      "a2",
+      "b1",
+      "b2",
+      "e1",
+      "e2",
+      "e3",
+      "e4",
+      "e5",
+      "e6",
+      "e7",
+      "e8",
+      "e9",
+      "e10",
+      "e11",
+      "e12",
+      "e13"
+    ]
+  },
+  "periodicity": null
+}

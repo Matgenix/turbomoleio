@@ -1,0 +1,207 @@
+{
+  "all_done": true,
+  "header": {
+    "executable": "dscf",
+    "host": "fedora",
+    "tm_version": "7.7.1",
+    "tm_build": null,
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2024-02-23 14:23:58.670000"
+    }
+  },
+  "centers": {
+    "center_of_mass": [
+      0.0,
+      0.0,
+      -0.60378908
+    ],
+    "center_of_charge": [
+      0.0,
+      0.0,
+      -0.50790525
+    ]
+  },
+  "coordinates": {
+    "coords": [
+      [
+        0.0,
+        0.0,
+        -0.72557892
+      ],
+      [
+        1.41713421,
+        0.0,
+        0.36278946
+      ],
+      [
+        -1.41713421,
+        0.0,
+        0.36278946
+      ]
+    ],
+    "species": [
+      "o",
+      "h",
+      "h"
+    ],
+    "charges": [
+      8.0,
+      1.0,
+      1.0
+    ],
+    "isotopes": [
+      0,
+      0,
+      0
+    ]
+  },
+  "basis": {
+    "basis_per_specie": {
+      "o": "def-SV(P)",
+      "h": "def-SV(P)"
+    },
+    "aux_basis_per_specie": {},
+    "number_scf_basis_func": 18,
+    "number_scf_aux_basis_func": null
+  },
+  "symmetry": {
+    "symbol": "c1",
+    "n_reps": 1,
+    "reps": [
+      "a"
+    ]
+  },
+  "cosmo_header": null,
+  "density_functional_data": {
+    "functional_msg": "B-P86 functional\n exchange:    LDA + Becke (B88)\n correlation: LDA (VWN) + Perdew (P86)",
+    "functional_name": "b-p",
+    "functional_type": "GGA",
+    "xcfun": null,
+    "spherical_gridsize": 3,
+    "gridpoints": 302
+  },
+  "rij_info": null,
+  "dftd": null,
+  "pre_scf_run": {
+    "diis": true,
+    "diis_error_vect": "FDS-SDF",
+    "conv_tot_en": 1e-07,
+    "conv_one_e_en": 0.0001,
+    "virtual_orbital_shift_on": false,
+    "virtual_orbital_shift_limit": null,
+    "orbital_characterization": "expanded",
+    "restart_file": "alpha",
+    "n_occupied_orbitals": 5
+  },
+  "scf_iterations": {
+    "energies": [
+      -75.709149222343,
+      -75.816081492466,
+      -75.857212061739,
+      -75.874157090013,
+      -75.879194045962,
+      -75.880260802113,
+      -75.880414311673,
+      -75.880428556505,
+      -75.880429245802,
+      -75.880429377768,
+      -75.88056067654
+    ],
+    "first_index": 1,
+    "n_steps": 11,
+    "dampings": [
+      1.0,
+      0.95,
+      0.8,
+      0.65,
+      0.5,
+      0.35,
+      0.2,
+      0.1,
+      0.15,
+      0.2,
+      0.25
+    ],
+    "converged": true
+  },
+  "scf_energies": {
+    "total_energy": -75.88056067654,
+    "kinetic_energy": 75.74900599616,
+    "potential_energy": -151.6295666727,
+    "virial_theorem": 1.99826629272,
+    "wavefunction_norm": 1.0
+  },
+  "cosmo_results": null,
+  "electrostatic_moments": {
+    "unrestricted_electrons": 1.0,
+    "charge": 1.0,
+    "dipole": {
+      "norm": 0.3735,
+      "moment": [
+        -0.0,
+        0.0,
+        0.37348
+      ]
+    },
+    "quadrupole": {
+      "trace": -9.192144,
+      "anisotropy": 1.970245,
+      "moment": [
+        [
+          -1.774499,
+          -0.0,
+          0.0
+        ],
+        [
+          -0.0,
+          -3.4926,
+          -0.0
+        ],
+        [
+          0.0,
+          -0.0,
+          -3.925046
+        ]
+      ]
+    }
+  },
+  "timings": {
+    "cpu_time": 0.14,
+    "wall_time": 0.14,
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2024-02-23 14:23:58.804000"
+    }
+  },
+  "s2": {
+    "s2": 0.7520542
+  },
+  "is_uhf": true,
+  "fermi": null,
+  "integral": {
+    "integral_neglect_threshold": 1.8e-10,
+    "thize": 1e-05,
+    "thime": 5
+  },
+  "pre_escf_run": null,
+  "escf_iterations": null,
+  "escf_gs_total_en": null,
+  "escf_excitations": null,
+  "rdgrad_memory": null,
+  "gradient": null,
+  "egrad_excited_state": null,
+  "statpt_info": null,
+  "relax_info": null,
+  "relax_gradient_values": null,
+  "relax_conv_info": null,
+  "aoforce_numerical_integration": null,
+  "aoforce_analysis": null,
+  "mp2_results": {
+    "energy": null
+  },
+  "riper_scf_energies": null,
+  "periodicity_data": null
+}

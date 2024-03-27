@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>turbomoleio.core.periodic &mdash; turbomoleio 1.4.0 documentation</title>
+  <title>turbomoleio.core.periodic &mdash; turbomoleio 1.5.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,9 +14,9 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=b308ce55"></script>
+        <script src="../../../_static/documentation_options.js?v=e0a75244"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -34,7 +34,7 @@
             turbomoleio
           </a>
               <div class="version">
-                1.4.0
+                1.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -129,7 +129,9 @@
 <span class="kn">from</span> <span class="nn">turbomoleio.core.datagroups</span> <span class="kn">import</span> <span class="n">DataGroups</span>
 
 
-<div class="viewcode-block" id="PeriodicSystem"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.periodic.PeriodicSystem">[docs]</a><span class="k">class</span> <span class="nc">PeriodicSystem</span><span class="p">(</span><span class="n">BaseSystem</span><span class="p">):</span>
+<div class="viewcode-block" id="PeriodicSystem">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.periodic.PeriodicSystem">[docs]</a>
+<span class="k">class</span> <span class="nc">PeriodicSystem</span><span class="p">(</span><span class="n">BaseSystem</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Object with information on the geometry of a periodic structure and its dynamics.</span>
 
@@ -148,6 +150,10 @@
 <span class="sd">            periodicity (int): periodicity of the system when a Structure object</span>
 <span class="sd">                is given. Can be 1, 2, or 3.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">Structure</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;A Structure object should be provided for periodic systems.&quot;</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">structure</span><span class="o">.</span><span class="n">is_ordered</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;PeriodicSystem does not handle disordered structures.&quot;</span><span class="p">)</span>
 
@@ -155,12 +161,9 @@
         <span class="k">if</span> <span class="n">periodicity</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;Periodicity should be 1, 2 or 3. For molecules (i.e. &quot;</span>
-                <span class="s2">&quot;periodicity = 0), use the MoleculeSystem)&quot;</span>
+                <span class="s2">&quot;periodicity = 0), use the MoleculeSystem.&quot;</span>
             <span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">Structure</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;A Structure object should be provided for periodic systems.&quot;</span>
-            <span class="p">)</span>
+
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">molecule_or_structure</span><span class="o">=</span><span class="n">structure</span><span class="p">,</span>
             <span class="n">frozen_indices</span><span class="o">=</span><span class="n">frozen_indices</span><span class="p">,</span>
@@ -172,7 +175,9 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the pymatgen Structure.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molecule_or_structure</span>
 
-<div class="viewcode-block" id="PeriodicSystem.from_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.periodic.PeriodicSystem.from_string">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="PeriodicSystem.from_string">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.periodic.PeriodicSystem.from_string">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;coord&quot;</span><span class="p">,</span> <span class="n">periodic_extension</span><span class="o">=</span><span class="mf">5.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create an instance from a string.</span>
@@ -238,7 +243,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">Structure</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">fmt</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PeriodicSystem.from_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.periodic.PeriodicSystem.from_file">[docs]</a>    <span class="nd">@classmethod</span>
+
+<div class="viewcode-block" id="PeriodicSystem.from_file">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.periodic.PeriodicSystem.from_file">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">periodic_extension</span><span class="o">=</span><span class="mf">5.0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create an instance from a file.</span>
@@ -265,7 +273,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">structure</span><span class="o">=</span><span class="n">Structure</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PeriodicSystem.to_coord_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.periodic.PeriodicSystem.to_coord_string">[docs]</a>    <span class="k">def</span> <span class="nf">to_coord_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PeriodicSystem.to_coord_string">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.periodic.PeriodicSystem.to_coord_string">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_coord_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create the string of a coord file for this system.</span>
 
@@ -313,7 +324,10 @@
 
         <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PeriodicSystem.as_dict"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.periodic.PeriodicSystem.as_dict">[docs]</a>    <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PeriodicSystem.as_dict">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.periodic.PeriodicSystem.as_dict">[docs]</a>
+    <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a JSON serializable dict representation of an object.</span>
 
@@ -333,7 +347,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="PeriodicSystem.from_dict"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.periodic.PeriodicSystem.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+
+<div class="viewcode-block" id="PeriodicSystem.from_dict">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.periodic.PeriodicSystem.from_dict">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate object from JSON representation.</span>
@@ -353,7 +370,9 @@
         <span class="n">d</span><span class="p">[</span><span class="s2">&quot;structure&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dec</span><span class="o">.</span><span class="n">process_decoded</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;structure&quot;</span><span class="p">])</span>
         <span class="n">d</span><span class="p">[</span><span class="s2">&quot;frozen_indices&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">dec</span><span class="o">.</span><span class="n">process_decoded</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;frozen_indices&quot;</span><span class="p">])</span>
         <span class="n">d</span><span class="p">[</span><span class="s2">&quot;periodicity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;periodicity&quot;</span><span class="p">]</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">d</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+</div>
+
 </pre></div>
 
            </div>

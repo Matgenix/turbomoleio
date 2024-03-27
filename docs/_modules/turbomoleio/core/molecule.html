@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>turbomoleio.core.molecule &mdash; turbomoleio 1.4.0 documentation</title>
+  <title>turbomoleio.core.molecule &mdash; turbomoleio 1.5.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,9 +14,9 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=b308ce55"></script>
+        <script src="../../../_static/documentation_options.js?v=e0a75244"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -34,7 +34,7 @@
             turbomoleio
           </a>
               <div class="version">
-                1.4.0
+                1.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -131,7 +131,9 @@
 <span class="kn">from</span> <span class="nn">turbomoleio.core.datagroups</span> <span class="kn">import</span> <span class="n">DataGroups</span>
 
 
-<div class="viewcode-block" id="MoleculeSystem"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem">[docs]</a><span class="k">class</span> <span class="nc">MoleculeSystem</span><span class="p">(</span><span class="n">BaseSystem</span><span class="p">):</span>
+<div class="viewcode-block" id="MoleculeSystem">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem">[docs]</a>
+<span class="k">class</span> <span class="nc">MoleculeSystem</span><span class="p">(</span><span class="n">BaseSystem</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Object providing information about the geometry of a molecule and its dynamics.</span>
 
@@ -175,7 +177,9 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the pymatgen Molecule.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molecule_or_structure</span>
 
-<div class="viewcode-block" id="MoleculeSystem.from_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.from_string">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="MoleculeSystem.from_string">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.from_string">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;coord&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create an instance from a string.</span>
@@ -229,7 +233,7 @@
                 <span class="c1"># splitting first on &quot;,&quot; and then on &quot;-&quot; and &quot;|&quot;</span>
                 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">user_def_bonds_str</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
                     <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span> <span class="ow">or</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span> <span class="ow">or</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">):</span>  <span class="c1"># pragma: no cover (trivial)</span>
                         <span class="k">continue</span>
                     <span class="k">for</span> <span class="n">bond</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">):</span>
                         <span class="k">for</span> <span class="n">separator</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;|&quot;</span><span class="p">):</span>
@@ -261,7 +265,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">Molecule</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">fmt</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="MoleculeSystem.from_file"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.from_file">[docs]</a>    <span class="nd">@classmethod</span>
+
+<div class="viewcode-block" id="MoleculeSystem.from_file">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.from_file">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create an instance from a file.</span>
@@ -284,7 +291,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">molecule</span><span class="o">=</span><span class="n">Molecule</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="MoleculeSystem.to_coord_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.to_coord_string">[docs]</a>    <span class="k">def</span> <span class="nf">to_coord_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="MoleculeSystem.to_coord_string">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.to_coord_string">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_coord_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create the string of a coord file for this system.</span>
 
@@ -309,6 +319,7 @@
 
         <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span></div>
 
+
     <span class="k">def</span> <span class="nf">_check_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices_list</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check atom indices.</span>
 
@@ -328,7 +339,9 @@
                 <span class="s2">&quot;larger then the number of sites&quot;</span>
             <span class="p">)</span>
 
-<div class="viewcode-block" id="MoleculeSystem.add_distance"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.add_distance">[docs]</a>    <span class="k">def</span> <span class="nf">add_distance</span><span class="p">(</span>
+<div class="viewcode-block" id="MoleculeSystem.add_distance">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.add_distance">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_distance</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">atom1</span><span class="p">,</span>
         <span class="n">atom2</span><span class="p">,</span>
@@ -381,7 +394,10 @@
             <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">user_defined_bonds</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="MoleculeSystem.add_bond_angle"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.add_bond_angle">[docs]</a>    <span class="k">def</span> <span class="nf">add_bond_angle</span><span class="p">(</span>
+
+<div class="viewcode-block" id="MoleculeSystem.add_bond_angle">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.add_bond_angle">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_bond_angle</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">atom1</span><span class="p">,</span>
         <span class="n">atom2</span><span class="p">,</span>
@@ -440,7 +456,10 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">user_defined_bonds</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">user_defined_bonds</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">j</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="MoleculeSystem.add_dihedral"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.add_dihedral">[docs]</a>    <span class="k">def</span> <span class="nf">add_dihedral</span><span class="p">(</span>
+
+<div class="viewcode-block" id="MoleculeSystem.add_dihedral">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.add_dihedral">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_dihedral</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">atom1</span><span class="p">,</span>
         <span class="n">atom2</span><span class="p">,</span>
@@ -508,7 +527,10 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">user_defined_bonds</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">j</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">user_defined_bonds</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">l</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="MoleculeSystem.get_int_def_inconsistencies"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.get_int_def_inconsistencies">[docs]</a>    <span class="k">def</span> <span class="nf">get_int_def_inconsistencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">ltol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span>
+
+<div class="viewcode-block" id="MoleculeSystem.get_int_def_inconsistencies">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.get_int_def_inconsistencies">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_int_def_inconsistencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">ltol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get inconsistent internal coordinates.</span>
 
 <span class="sd">        This returns a list of the internal coordinates whose values are not</span>
@@ -528,14 +550,17 @@
                 <span class="n">tol</span> <span class="o">=</span> <span class="n">ltol</span>
             <span class="k">elif</span> <span class="n">idef</span><span class="o">.</span><span class="n">coord_type</span> <span class="o">==</span> <span class="s2">&quot;angle&quot;</span><span class="p">:</span>
                 <span class="n">tol</span> <span class="o">=</span> <span class="n">atol</span>
-            <span class="k">else</span><span class="p">:</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: no cover (internal coordinates are length or angle)</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;unknow coord_type </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idef</span><span class="o">.</span><span class="n">coord_type</span><span class="p">))</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">idef</span><span class="o">.</span><span class="n">is_valid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">molecule</span><span class="p">,</span> <span class="n">tol</span><span class="p">):</span>
                 <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idef</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">errors</span></div>
 
-<div class="viewcode-block" id="MoleculeSystem.has_inconsistencies"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.has_inconsistencies">[docs]</a>    <span class="k">def</span> <span class="nf">has_inconsistencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">ltol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span>
+
+<div class="viewcode-block" id="MoleculeSystem.has_inconsistencies">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.has_inconsistencies">[docs]</a>
+    <span class="k">def</span> <span class="nf">has_inconsistencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">ltol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if any inconsistency in internal coordinates is present.</span>
 
@@ -548,7 +573,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_int_def_inconsistencies</span><span class="p">(</span><span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">,</span> <span class="n">ltol</span><span class="o">=</span><span class="n">ltol</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="MoleculeSystem.as_dict"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.as_dict">[docs]</a>    <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="MoleculeSystem.as_dict">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.as_dict">[docs]</a>
+    <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a JSON serializable dict representation of an object.</span>
 
@@ -569,7 +597,10 @@
 
         <span class="k">return</span> <span class="n">d</span></div>
 
-<div class="viewcode-block" id="MoleculeSystem.from_dict"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+
+<div class="viewcode-block" id="MoleculeSystem.from_dict">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.MoleculeSystem.from_dict">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate object from JSON representation.</span>
@@ -590,10 +621,14 @@
         <span class="n">d</span><span class="p">[</span><span class="s2">&quot;int_def&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">dec</span><span class="o">.</span><span class="n">process_decoded</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;int_def&quot;</span><span class="p">]]</span>
         <span class="n">d</span><span class="p">[</span><span class="s2">&quot;frozen_indices&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">dec</span><span class="o">.</span><span class="n">process_decoded</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;frozen_indices&quot;</span><span class="p">])</span>
         <span class="n">d</span><span class="p">[</span><span class="s2">&quot;user_defined_bonds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;user_defined_bonds&quot;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">d</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="InternalDefinition"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.InternalDefinition">[docs]</a><span class="k">class</span> <span class="nc">InternalDefinition</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">,</span> <span class="n">MSONable</span><span class="p">):</span>
+
+<div class="viewcode-block" id="InternalDefinition">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.InternalDefinition">[docs]</a>
+<span class="k">class</span> <span class="nc">InternalDefinition</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">,</span> <span class="n">MSONable</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Abstract class for the definition of an internal coordinate.</span>
 
@@ -666,7 +701,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">weights</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
 
-<div class="viewcode-block" id="InternalDefinition.get_subclass_from_str"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.InternalDefinition.get_subclass_from_str">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="InternalDefinition.get_subclass_from_str">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.InternalDefinition.get_subclass_from_str">[docs]</a>
+    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_subclass_from_str</span><span class="p">(</span><span class="n">coord_str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the correct subclass based on the string description.</span>
@@ -685,7 +722,10 @@
             <span class="s2">&quot;Could not find a subclass with coord_str matching </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coord_str</span><span class="p">)</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="InternalDefinition.from_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.InternalDefinition.from_string">[docs]</a>    <span class="nd">@classmethod</span>
+
+<div class="viewcode-block" id="InternalDefinition.from_string">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.InternalDefinition.from_string">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a concrete subclass of InternalDefinition from a tm string.</span>
@@ -726,7 +766,10 @@
 
         <span class="k">return</span> <span class="n">coord_cls</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="InternalDefinition.to_string"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.InternalDefinition.to_string">[docs]</a>    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+
+<div class="viewcode-block" id="InternalDefinition.to_string">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.InternalDefinition.to_string">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate the turbomole string used in $intdef.</span>
 
@@ -752,7 +795,10 @@
 
         <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="InternalDefinition.is_valid"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.InternalDefinition.is_valid">[docs]</a>    <span class="k">def</span> <span class="nf">is_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span>
+
+<div class="viewcode-block" id="InternalDefinition.is_valid">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.InternalDefinition.is_valid">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if this internal definition is consistent with the molecule.</span>
 
 <span class="sd">        If the value of this internal coordinate is not None, it checks if it is</span>
@@ -777,7 +823,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">computed_value</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span></div>
 
-<div class="viewcode-block" id="InternalDefinition.compute_value"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.InternalDefinition.compute_value">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+
+<div class="viewcode-block" id="InternalDefinition.compute_value">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.InternalDefinition.compute_value">[docs]</a>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">compute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the value of the internal coordinate based on the given molecule.</span>
@@ -788,17 +837,23 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            float: the calculated value of the internal coordinate.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div></div>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+</div>
 
 
-<div class="viewcode-block" id="Distance"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.Distance">[docs]</a><span class="k">class</span> <span class="nc">Distance</span><span class="p">(</span><span class="n">InternalDefinition</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Distance">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.Distance">[docs]</a>
+<span class="k">class</span> <span class="nc">Distance</span><span class="p">(</span><span class="n">InternalDefinition</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class defining a distance internal coordinate (stre in TM).&quot;&quot;&quot;</span>
 
     <span class="n">coord_str</span> <span class="o">=</span> <span class="s2">&quot;stre&quot;</span>
     <span class="n">n_atoms</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="n">coord_type</span> <span class="o">=</span> <span class="s2">&quot;length&quot;</span>
 
-<div class="viewcode-block" id="Distance.compute_value"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.Distance.compute_value">[docs]</a>    <span class="k">def</span> <span class="nf">compute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">):</span>
+<div class="viewcode-block" id="Distance.compute_value">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.Distance.compute_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">compute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the value of the internal coordinate based on the given molecule.</span>
 
@@ -818,19 +873,25 @@
 
         <span class="k">return</span> <span class="n">tot_val</span></div>
 
+
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a string representation of the Distance.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;Distance between atoms with indices </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="BondAngle"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.BondAngle">[docs]</a><span class="k">class</span> <span class="nc">BondAngle</span><span class="p">(</span><span class="n">InternalDefinition</span><span class="p">):</span>
+
+<div class="viewcode-block" id="BondAngle">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.BondAngle">[docs]</a>
+<span class="k">class</span> <span class="nc">BondAngle</span><span class="p">(</span><span class="n">InternalDefinition</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class defining a bond angle internal coordinate (bend in TM).&quot;&quot;&quot;</span>
 
     <span class="n">coord_str</span> <span class="o">=</span> <span class="s2">&quot;bend&quot;</span>
     <span class="n">n_atoms</span> <span class="o">=</span> <span class="mi">3</span>
     <span class="n">coord_type</span> <span class="o">=</span> <span class="s2">&quot;angle&quot;</span>
 
-<div class="viewcode-block" id="BondAngle.compute_value"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.BondAngle.compute_value">[docs]</a>    <span class="k">def</span> <span class="nf">compute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">):</span>
+<div class="viewcode-block" id="BondAngle.compute_value">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.BondAngle.compute_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">compute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the value of the internal coordinate based on the given molecule.</span>
 
@@ -847,19 +908,25 @@
 
         <span class="k">return</span> <span class="n">tot_val</span></div>
 
+
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a string representation of the Angle.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;Angle between atoms with indices </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="DihedralAngle"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.DihedralAngle">[docs]</a><span class="k">class</span> <span class="nc">DihedralAngle</span><span class="p">(</span><span class="n">InternalDefinition</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DihedralAngle">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.DihedralAngle">[docs]</a>
+<span class="k">class</span> <span class="nc">DihedralAngle</span><span class="p">(</span><span class="n">InternalDefinition</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class defining a dihedral angle internal coordinate (tors in TM).&quot;&quot;&quot;</span>
 
     <span class="n">coord_str</span> <span class="o">=</span> <span class="s2">&quot;tors&quot;</span>
     <span class="n">n_atoms</span> <span class="o">=</span> <span class="mi">4</span>
     <span class="n">coord_type</span> <span class="o">=</span> <span class="s2">&quot;angle&quot;</span>
 
-<div class="viewcode-block" id="DihedralAngle.compute_value"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.DihedralAngle.compute_value">[docs]</a>    <span class="k">def</span> <span class="nf">compute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">):</span>
+<div class="viewcode-block" id="DihedralAngle.compute_value">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.DihedralAngle.compute_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">compute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the value of the internal coordinate based on the given molecule.</span>
 
@@ -878,6 +945,7 @@
 
         <span class="k">return</span> <span class="n">tot_val</span></div>
 
+
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a string representation of the Dihedral Angle.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span>
@@ -887,14 +955,19 @@
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="InverseDistance"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.InverseDistance">[docs]</a><span class="k">class</span> <span class="nc">InverseDistance</span><span class="p">(</span><span class="n">InternalDefinition</span><span class="p">):</span>
+
+<div class="viewcode-block" id="InverseDistance">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.InverseDistance">[docs]</a>
+<span class="k">class</span> <span class="nc">InverseDistance</span><span class="p">(</span><span class="n">InternalDefinition</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class defining a inverse distance internal coordinate (invr in TM).&quot;&quot;&quot;</span>
 
     <span class="n">coord_str</span> <span class="o">=</span> <span class="s2">&quot;invr&quot;</span>
     <span class="n">n_atoms</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="n">coord_type</span> <span class="o">=</span> <span class="s2">&quot;length&quot;</span>
 
-<div class="viewcode-block" id="InverseDistance.compute_value"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.InverseDistance.compute_value">[docs]</a>    <span class="k">def</span> <span class="nf">compute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">):</span>
+<div class="viewcode-block" id="InverseDistance.compute_value">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.InverseDistance.compute_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">compute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the value of the internal coordinate based on the given molecule.</span>
 
@@ -914,19 +987,25 @@
 
         <span class="k">return</span> <span class="n">tot_val</span></div>
 
+
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a string representation of the Inverse Distance.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;Inverse distance between atoms with indices </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="OutOfPlaneAngle"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.OutOfPlaneAngle">[docs]</a><span class="k">class</span> <span class="nc">OutOfPlaneAngle</span><span class="p">(</span><span class="n">InternalDefinition</span><span class="p">):</span>
+
+<div class="viewcode-block" id="OutOfPlaneAngle">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.OutOfPlaneAngle">[docs]</a>
+<span class="k">class</span> <span class="nc">OutOfPlaneAngle</span><span class="p">(</span><span class="n">InternalDefinition</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class defining an out-of-plane angle internal coordinate (outp in TM).&quot;&quot;&quot;</span>
 
     <span class="n">coord_str</span> <span class="o">=</span> <span class="s2">&quot;outp&quot;</span>
     <span class="n">n_atoms</span> <span class="o">=</span> <span class="mi">4</span>
     <span class="n">coord_type</span> <span class="o">=</span> <span class="s2">&quot;angle&quot;</span>
 
-<div class="viewcode-block" id="OutOfPlaneAngle.compute_value"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.OutOfPlaneAngle.compute_value">[docs]</a>    <span class="k">def</span> <span class="nf">compute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">):</span>
+<div class="viewcode-block" id="OutOfPlaneAngle.compute_value">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.OutOfPlaneAngle.compute_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">compute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the value of the internal coordinate based on the given molecule.</span>
 
@@ -954,19 +1033,25 @@
 
         <span class="k">return</span> <span class="n">tot_val</span></div>
 
+
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a string representation of the Out of plane angle.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;Out of plane angle between atoms with indices </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="CollinearBendingAngle"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.CollinearBendingAngle">[docs]</a><span class="k">class</span> <span class="nc">CollinearBendingAngle</span><span class="p">(</span><span class="n">InternalDefinition</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CollinearBendingAngle">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.CollinearBendingAngle">[docs]</a>
+<span class="k">class</span> <span class="nc">CollinearBendingAngle</span><span class="p">(</span><span class="n">InternalDefinition</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class defining an collinear bending angle internal coordinate (linc in TM).&quot;&quot;&quot;</span>
 
     <span class="n">coord_str</span> <span class="o">=</span> <span class="s2">&quot;linc&quot;</span>
     <span class="n">n_atoms</span> <span class="o">=</span> <span class="mi">4</span>
     <span class="n">coord_type</span> <span class="o">=</span> <span class="s2">&quot;angle&quot;</span>
 
-<div class="viewcode-block" id="CollinearBendingAngle.compute_value"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.CollinearBendingAngle.compute_value">[docs]</a>    <span class="k">def</span> <span class="nf">compute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">):</span>
+<div class="viewcode-block" id="CollinearBendingAngle.compute_value">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.CollinearBendingAngle.compute_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">compute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the value of the internal coordinate based on the given molecule.</span>
 
@@ -994,19 +1079,25 @@
 
         <span class="k">return</span> <span class="n">tot_val</span></div>
 
+
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a string representation of the Collinear bending angle.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;Collinear bending angle for atoms with indices </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="PerpendicularBendingAngle"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.PerpendicularBendingAngle">[docs]</a><span class="k">class</span> <span class="nc">PerpendicularBendingAngle</span><span class="p">(</span><span class="n">InternalDefinition</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PerpendicularBendingAngle">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.PerpendicularBendingAngle">[docs]</a>
+<span class="k">class</span> <span class="nc">PerpendicularBendingAngle</span><span class="p">(</span><span class="n">InternalDefinition</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class defining an collinear bending angle internal coordinate (linp in TM).&quot;&quot;&quot;</span>
 
     <span class="n">coord_str</span> <span class="o">=</span> <span class="s2">&quot;linp&quot;</span>
     <span class="n">n_atoms</span> <span class="o">=</span> <span class="mi">4</span>
     <span class="n">coord_type</span> <span class="o">=</span> <span class="s2">&quot;angle&quot;</span>
 
-<div class="viewcode-block" id="PerpendicularBendingAngle.compute_value"><a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.PerpendicularBendingAngle.compute_value">[docs]</a>    <span class="k">def</span> <span class="nf">compute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">):</span>
+<div class="viewcode-block" id="PerpendicularBendingAngle.compute_value">
+<a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.molecule.PerpendicularBendingAngle.compute_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">compute_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the value of the internal coordinate based on the given molecule.</span>
 
@@ -1038,11 +1129,13 @@
 
         <span class="k">return</span> <span class="n">tot_val</span></div>
 
+
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a string representation of the Perpendicular bending angle.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;Perpendicular bending angle for atoms with indices </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">indices</span>
         <span class="p">)</span></div>
+
 </pre></div>
 
            </div>
