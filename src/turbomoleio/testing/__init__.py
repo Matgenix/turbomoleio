@@ -47,7 +47,15 @@ from turbomoleio.output.files import EscfOnlyOutput, JobexOutput, exec_to_out_ob
 from turbomoleio.output.parser import Parser
 from turbomoleio.output.states import EigerRunner, States
 
-TM_VERSIONS = ["TM_v7.3", "TM_v7.3.1", "TM_v7.4.1", "TM_v7.5.1", "TM_v7.6", "TM_v7.7.1", "TM_v7.8.1"]
+TM_VERSIONS = [
+    "TM_v7.3",
+    "TM_v7.3.1",
+    "TM_v7.4.1",
+    "TM_v7.5.1",
+    "TM_v7.6",
+    "TM_v7.7.1",
+    "TM_v7.8.1",
+]
 PARSER_METHODS = [
     "all_done",
     "header",

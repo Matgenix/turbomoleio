@@ -1161,8 +1161,9 @@ class Parser:
                 # rsolv [A]: 1.3000
                 # if more are added the regex may need an update.
                 if re.search(k + r"[\s\[A\]]*:", line):
-                    if k in ('epsilon', 'refind'):
-                        # In Turbomole 7.8, the epsilon and refind parameters lines have been modified from
+                    if k in ("epsilon", "refind"):
+                        # In Turbomole 7.8, the epsilon and refind parameters lines
+                        # have been modified from
                         #   epsilon: <VALUE>
                         #   refind: <VALUE>
                         # to
