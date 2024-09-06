@@ -1,3 +1,5 @@
+$title
+ridft_escf
 $symmetry c1
 $user-defined bonds    file=coord
 $coord    file=coord
@@ -18,11 +20,14 @@ $basis    file=basis
 $uhfmo_alpha   file=alpha
 $uhfmo_beta   file=beta
 $uhf
+$alpha shells
+ a       1-16                                   ( 1 )
+$beta shells
+ a       1-15                                   ( 1 )
 $scfiterlimit      200
 $thize     0.10000000E-04
 $thime        5
 $scfdamp   start=1.000  step=0.050  min=0.100
-$scfdump
 $scfintunit
  unit=30       size=0        file=twoint
 $scfdiis
@@ -67,11 +72,4 @@ $rundimensions
 $last step     define
 $cosmo
 $cosmo_out = out.cosmo
-$maxcor    500 MiB  per_core
-$title
-ridft_escf
-$alpha shells
- a       1-16                                   ( 1 )
-$beta shells
- a       1-15                                   ( 1 )
 $end

@@ -1,0 +1,126 @@
+
+ statpt (dwa-Precision-3590) : TURBOMOLE rev. V7-8-1 compiled 26 Feb 2024 at 17:03:36
+ Copyright (C) 2024 TURBOMOLE GmbH, Karlsruhe
+
+
+    2024-09-06 12:40:22.841 
+
+
+
+                           this is S T A T P T   
+
+
+                     hessian and coordinate update for
+                          stationary point search 
+
+                     by barbara unterreiner, marek sierka,
+                           and reinhart ahlrichs
+
+                          quantum chemistry group
+                          universitaet  karlsruhe
+                                  germany
+
+
+
+
+              +--------------------------------------------------+
+              | Atomic coordinate, charge and isotop information |
+              +--------------------------------------------------+
+
+                    atomic coordinates            atom    charge  isotop
+          0.00000000    0.00000000   -0.34653371    c      6.000     0
+          0.97212285    1.68376616   -0.98142628    h      1.000     0
+          0.97212285   -1.68376616   -0.98142628    h      1.000     0
+         -1.94424569    0.00000000   -0.98142628    h      1.000     0
+          0.00000000    0.00000000    3.29081255    br    35.000     0
+ 
+       center of nuclear mass  :    0.00000000    0.00000000    2.69459223
+       center of nuclear charge:    0.00000000    0.00000000    2.50352177
+  Keyword $statpt not found - using default options
+ 
+        ***************  Stationary point options ******************
+        ************************************************************
+           Maximum allowed trust radius:           3.000000E-01
+           Minimum allowed trust radius:           1.000000E-03
+           Initial trust radius:                   1.500000E-01
+           GDIIS used if gradient norm <           1.000000E-02
+           Number of previous steps for GDIIS:       5
+           Hessian update method:                  BFGS
+                        *** Convergence criteria ***                
+           Threshold for energy change:            1.000000E-06
+           Threshold for max displacement element: 1.000000E-03
+           Threshold for max gradient element :    1.000000E-03
+           Threshold for RMS of displacement:      5.000000E-04
+           Threshold for RMS of gradient:          5.000000E-04
+        ************************************************************
+ 
+
+  Keyword $statp missing in file <control>
+
+  Keyword $statpt not found - using default options
+     Number of symmetry restricted degrees of freedom:     4
+     Constituted by:     1 translational degrees of freedom
+                         0 rotational degrees of freedom
+                         3 internal degrees of freedom
+
+
+  Keyword $optinfo  missing in file <control>
+
+  *************************************************************************
+   ATOM                      CARTESIAN COORDINATES
+    1 c       0.00000000000000      0.00000000000000     -0.34653371221582
+    2 h       0.97212284572838      1.68376616000000     -0.98142627852278
+    3 h       0.97212284572838     -1.68376616000000     -0.98142627852278
+    4 h      -1.94424569145676      0.00000000000000     -0.98142627852278
+    5 br      0.00000000000000      0.00000000000000      3.29081254778418
+  *************************************************************************
+   ATOM                      CARTESIAN GRADIENTS  
+    1 c       0.00000000000000      0.00000000000000     -0.00697859407397
+    2 h      -0.00776359109247     -0.01344693422135      0.00622749282382
+    3 h      -0.00776359109247      0.01344693422135      0.00622749282382
+    4 h       0.01552718218494      0.00000000000000      0.00622749282382
+    5 br     -0.00000000000004      0.00000000000000     -0.01171476382954
+  *************************************************************************
+
+  norm of actual CARTESIAN gradient:  3.20244E-02
+  norm of actual INTERNAL  gradient:  3.13254E-02
+
+  ENERGY =   -2614.0056595560 a.u.; # of cycle =    1
+
+
+  Keyword $hessapprox missing in file <control>
+
+  Using approximate Hessian in internal coordinates
+  Number of zero Hessian eigenvalues:   0
+  Final step radius: 6.99353E-02
+
+  Transforming internal coordinate displacements to Cartesian space
+      Iteration   1 residual norm     6.993529E-02
+      Iteration   2 residual norm     1.754013E-04
+      Iteration   3 residual norm     1.256710E-08
+      Iteration   4 residual norm     6.431872E-16
+      Transformation converged
+      Residual norm:    6.431872E-16 after    4 iterations
+
+      ****************************************************************** 
+                          CONVERGENCE INFORMATION
+
+                               Converged?     Value      Criterion
+             Energy change         no    2614.0056596   0.0000010
+             RMS of displacement   no       0.0403772   0.0005000
+             RMS of gradient       no       0.0180857   0.0005000
+             MAX displacement      no       0.0649630   0.0010000
+             MAX gradient          no       0.0289148   0.0010000
+      ****************************************************************** 
+
+
+    ------------------------------------------------------------------------
+         total  cpu-time :   0.01 seconds
+         total wall-time :   0.01 seconds
+    ------------------------------------------------------------------------
+
+   ****  statpt : all done  ****
+
+
+    2024-09-06 12:40:22.844 
+

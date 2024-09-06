@@ -1,0 +1,268 @@
+
+ rdgrad (dwa-Precision-3590) : TURBOMOLE rev. V7-8-1 compiled 26 Feb 2024 at 17:12:58
+ Copyright (C) 2024 TURBOMOLE GmbH, Karlsruhe
+
+
+    2024-09-06 12:40:00.578 
+
+
+
+                                 r d g r a d
+
+                          gradient for ridft program 
+
+                        by K.Eichkorn, O.Treutler, H.Oehm, 
+                             M.Haeser and R.Ahlrichs
+                  (Chemical Physics Letters 242 (1995) 652-660)
+                    parallel version: M.v.Arnim  &  R.Ahlrichs
+                            quantum chemistry group
+                             university  karlsruhe
+                                   germany
+
+
+
+
+                          References             
+                                                 
+          Density Functional:                              
+              O. Treutler and R. Ahlrichs                      
+              Efficient Molecular Numerical Integration Schemes
+              J. Chem. Phys. 102: 346 (1995)                   
+          Parallel Version:                                
+              Performance of parallel TURBOMOLE for Density    
+              Functional Calculations                          
+              M. v. Arnim and R. Ahlrichs                      
+              J. Comp. Chem. 19: 1746 (1998)                   
+          RI-J Method:                                     
+              Auxiliary Basis Sets to approximate Coulomb      
+              Potentials                                       
+              Chem. Phys. Lett. 240: 283 (1995)                
+              K. Eichkorn, O. Treutler, H. Oehm, M. Haeser     
+              and R. Ahlrichs                                  
+              Chem. Phys. Lett. 242: 652 (1995)                
+                                                           
+              Auxiliary Basis Sets for Main Row Atoms and their
+              Use to approximate Coulomb Potentials            
+              K. Eichkorn, F. Weigend, O. Treutler and         
+              R. Ahlrichs                                      
+              Theo. Chem. Acc. 97: 119 (1997)                  
+          Relativistic Two-component ECP formalism             
+              Efficient two-component self-consistent field    
+              procedures and gradients: implementation in      
+              TURBOMOLE and application to Au20-               
+              A. Baldes and F. Weigend                         
+              Mol. Phys. 111: 2617 (2013)                      
+          Relativistic all-electron 2c calculations (X2C, DLU) 
+              Efficient implementation of one- and two-component
+              analytical energy gradients in exact two-component
+              theory                                           
+              Y. J. Franzke, N. Middendorf and F. Weigend      
+              J. Chem. Phys. 148: 104110 (2018)                
+          Exploitation of symmetry in scalar X2C response      
+              NMR shielding tensors and chemical shifts in     
+              scalar-relativistic local exact two-component    
+              theory                                           
+              Y. J. Franzke and F. Weigend                     
+              J. Chem. Theory Comput. 15: 1028 (2019)          
+                                                              
+
+
+
+   *************************************************************************
+   ridft                                                                    
+   *************************************************************************
+
+
+
+ integral neglect threshold       :  0.18E-10
+ integral storage threshold THIZE :  0.10E-04
+ integral storage threshold THIME :         5
+
+ B-P86 functional
+ exchange:    LDA + Becke (B88)
+ correlation: LDA (VWN) + Perdew (P86)
+ A DFT gradient calculation using the RI-J approximation will be carried out.
+  
+  
+ AUXILIARY BASIS SET information:
+
+ symmetry group of the molecule :   c1 
+
+ the group has the following generators :
+   c1(z)
+
+    1 symmetry operations found
+
+ there are 1 real representations :   a   
+
+ maximum number of shells which are related by symmetry :  1
+
+
+    mo occupation :
+   irrep   mo's   occupied
+    a       18        5
+ 
+ number of basis functions   :    18
+ number of occupied orbitals :     5
+ 
+
+ number of off-diagonal lagrangians expected :  0
+
+ biggest AO integral is expected to be     4.776656448
+  
+           ------------------
+           density functional
+           ------------------
+ B-P86 functional
+ exchange:    LDA + Becke (B88)
+ correlation: LDA (VWN) + Perdew (P86)
+ iterations will be done with small grid
+  
+ spherical integration : Lebedev's spherical grid
+ spherical gridsize    :                     3
+    i.e. gridpoints    :                   302
+  maximum batchsize    :                   100
+ value for diffuse not defined
+ radial integration    : Chebyshev 2nd kind (scaling 3)
+ radial gridsize       :                     3
+ integration cells     :                     3
+ partition function    : becke
+ partition sharpness   :                     3
+  
+  
+           ------------------------
+             RDGRAD - INFORMATION
+           ------------------------
+  
+ Threshold for integral neglect (rithr1): 1E-10
+ Threshold for integral neglect (rithr2): 1E-10
+ Contributions to RI integral batches: 
+  neglected integral batches:                     0
+  direct contribution:                           55
+     
+ ****************************************
+ Memory allocated for RDGRAD: 1 MiB
+ ****************************************
+                                            
+     
+
+ nuclear repulsion energy  :   9.30715477358    
+
+  MOs are in ASCII format !
+
+
+ reading orbital data $scfmo  from file mos
+ orbital characterization : scfconv=8
+  Deviation of MOs from orthonormality   5.173639294753229E-014
+
+    ----------------------------------------
+     S+T+V CONTRIBUTIONS TO ENERGY GRADIENT 
+    ----------------------------------------
+
+ 1e-integral 1st. derivatives will be neglected if expon. factor < 0.352378E-13
+
+  _________________________________
+ |                                 |
+ |         DFTD3 V3.1 Rev 0        |
+ | S.Grimme, University Bonn       |
+ |            June  2014           |
+ |   see standalone version        |
+ |       dftd3 -h for options      |
+ |_________________________________|
+ 
+ Please cite DFT-D3 work done with this code as:
+ S. Grimme, J. Antony, S. Ehrlich and H. Krieg,
+ J. Chem. Phys, 132 (2010), 154104.
+ If used with BJ-damping cite also
+ S. Grimme, S. Ehrlich and L. Goerigk,
+ J. Comput. Chem. 32 (2011), 1456-1465
+ For DFT-D2 the reference is
+ S. Grimme, J. Comput. Chem., 27 (2006), 1787-1799
+ 
+C6 coefficients used:
+                     2  C6 for element                      1
+Z=  1 CN= 0.912     C6(AA)=    3.03
+Z=  1 CN= 0.000     C6(AA)=    7.59
+                     3  C6 for element                      8
+Z=  8 CN= 0.000     C6(AA)=   15.51
+Z=  8 CN= 0.993     C6(AA)=   12.82
+Z=  8 CN= 1.989     C6(AA)=   10.37
+
+#           XYZ [au]              R0(AA) [Ang.]  CN          C6(AA)     C8(AA)   C10(AA) [au]
+  1   0.00000   0.00000  -0.72558   o   0.469  1.991        10.4       210.1      5194.4
+  2   1.41713   0.00000   0.36279   h   0.363  0.997         3.1        37.4       553.5
+  3  -1.41713   0.00000   0.36279   h   0.363  0.997         3.1        37.4       553.5
+
+molecular C6(AA) [au] =        44.52
+
+           DFT-D V3(BJ)
+ DF b-p                                               
+ parameters
+ s6       :    1.0000
+ s8       :    3.2822
+ a1       :    0.3946
+ a2       :    4.8516
+ k1-k3    :   16.0000    1.3333   -4.0000
+ 
+ Edisp /kcal,au:    -0.2880 -0.00045892
+
+ E6    /kcal :    -0.1313
+ E8    /kcal :    -0.1567
+ % E8        : 54.41
+ 
+ doing analytical gradient O(N^2) ...
+ 
+ |G|=  3.332908356730437E-006
+
+ setting up bound for integral derivative estimation
+
+ increment for numerical differentiation : 0.00050000
+
+ biggest AO integral is expected to be     4.776656448
+ biggest cartesian 1st derivative AO integral is expected to be     8.648821438
+          Overall gridpoints after grid construction =         13740
+
+ Integrated ground state density     :   9.999998376409401    
+
+
+          ------------------------------------------------
+           cartesian gradient of the energy (hartree/bohr)
+          ------------------------------------------------
+
+  ATOM      1 o           2 h           3 h 
+dE/dx  0.7307738D-13 -0.2702341D-01  0.2702341D-01
+dE/dy  0.9311052D-13 -0.4001707D-13 -0.1287668D-13
+dE/dz  0.4147683D-01 -0.2072180D-01 -0.2072180D-01
+ 
+ resulting FORCE  (fx,fy,fz) = (0.105D-12,0.402D-13,0.332D-04)
+ resulting MOMENT (mx,my,mz) = (0.867D-13,-.204D-13,-.385D-13)
+
+
+ exx =      -0.076592 eyy =       0.000000 ezz =      -0.045130
+ eyz =      -0.000000 exz =      -0.000000 exy =      -0.000000
+
+
+ **********************************************************************
+  |maximum component of gradient| : 0.41476828E-01  (atom  1 o )       
+   gradient norm                  : 0.63558181E-01
+ **********************************************************************
+
+ <getgrd> : data group $grad  is missing 
+
+   ***  cartesian gradients written onto <gradient>  ***
+
+
+     --- calculation of the energy gradient finished ---
+
+
+
+    ------------------------------------------------------------------------
+         total  cpu-time :   0.06 seconds
+         total wall-time :   0.06 seconds
+    ------------------------------------------------------------------------
+
+   ****  rdgrad : all done  ****
+
+
+    2024-09-06 12:40:00.631 
+
