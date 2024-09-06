@@ -30,7 +30,7 @@ with open(
     exec(f.read(), about)  # nosec
 
 project = "turbomoleio"
-copyright = "2018-2022 BASF SE, Matgenix SRL"
+copyright = "2018-2024 BASF SE, Matgenix SRL"
 author = "Guido Petretto, David Waroquiers, Susanne Salzmann"
 
 # The short X.Y version
