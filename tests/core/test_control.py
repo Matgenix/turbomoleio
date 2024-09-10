@@ -495,6 +495,13 @@ class TestControl(object):
         assert "cavity" not in dg
         assert "use_old_amat" not in dg
 
+        with pytest.raises(
+            ValueError, match=r"Solvent with name bad_solvent_name is not available\."
+        ):
+            control.add_cosmo(
+                solvent="bad_solvent_name",
+            )
+
     def test_energy(self, test_data, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
             for fname in ["control", "energy"]:
