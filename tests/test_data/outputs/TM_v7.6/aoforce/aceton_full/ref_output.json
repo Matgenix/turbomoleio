@@ -1,11 +1,11 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "AoforceOutput",
-  "@version": "1.3.0",
+  "@version": "1.5.0",
   "numerical_integration": {
     "@module": "turbomoleio.output.data",
     "@class": "AoforceNumericalIntegrationData",
-    "@version": "1.3.0",
+    "@version": "1.5.0",
     "core_memory_dft": 497,
     "memory_per_atom": 61,
     "atoms_per_loop": 10,
@@ -80,7 +80,7 @@
   "rotational": {
     "@module": "turbomoleio.output.data",
     "@class": "AoforceRotationalData",
-    "@version": "1.3.0",
+    "@version": "1.5.0",
     "b": [
       0.3345568942,
       0.276870323,
@@ -117,7 +117,7 @@
   "vibrational": {
     "@module": "turbomoleio.output.data",
     "@class": "AoforceVibrationalData",
-    "@version": "1.3.0",
+    "@version": "1.5.0",
     "frequencies": [
       -113.75,
       0.0,
@@ -1945,7 +1945,7 @@
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": "1.3.0",
+    "@version": "1.5.0",
     "host": "frontal3",
     "start_time": {
       "@module": "datetime",
@@ -1963,7 +1963,7 @@
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": "1.3.0",
+    "@version": "1.5.0",
     "version": "7.6",
     "build": null,
     "executable": "force"

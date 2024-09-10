@@ -27,6 +27,7 @@ It also contains other objects related to the control file, e.g. gradient,
 energy, etc ...
 """
 
+import importlib.resources
 import os
 import re
 import shutil
@@ -43,6 +44,11 @@ from turbomoleio.core.datagroups import DataGroups
 from turbomoleio.core.molecule import MoleculeSystem
 from turbomoleio.core.periodic import PeriodicSystem
 from turbomoleio.core.symmetry import irrep_size
+
+with importlib.resources.open_text(
+    "turbomoleio.core.data", "available_solvents.txt"
+) as f:
+    available_solvents = [solvent.lower() for solvent in f.readlines()]
 
 
 class Defaults:
@@ -641,7 +647,9 @@ class Control(DataGroups):
 
     def add_cosmo(
         self,
+        solvent=None,
         epsilon=None,
+        refind=None,
         nppa=None,
         nspa=None,
         disex=None,
@@ -657,7 +665,11 @@ class Control(DataGroups):
         If None all the options will not be written to the control file.
 
         Args:
+            solvent (str): name of solvent used. This sets the values of epsilon and
+                refind below from predefined solvents.
             epsilon (float): permittivity used for scaling of the screening charges.
+            refind (float): refractive index used for the calculation of vertical
+                excitations and numerical frequencies.
             nppa (int): number of basis grid points per atom.
             nspa (int): number of segments per atom.
             disex (float): distance threshold for A matrix elements (Angstrom).
@@ -675,8 +687,18 @@ class Control(DataGroups):
         """
         cosmo_lines = [""]
 
+        if solvent is not None:
+            if solvent.lower() not in available_solvents:
+                raise ValueError(
+                    f"Solvent with name {solvent} is not available. "
+                    f"See turbomoleio/core/data/available_solvents.txt for available "
+                    f"solvents."
+                )
+            cosmo_lines.append("   solvent={}".format(solvent))
         if epsilon is not None:
             cosmo_lines.append("   epsilon={}".format(epsilon))
+        if refind is not None:
+            cosmo_lines.append("   refind={}".format(refind))
         if nppa is not None:
             cosmo_lines.append("   nppa={}".format(nppa))
         if nspa is not None:
@@ -764,7 +786,7 @@ class Control(DataGroups):
 
         if dispersion_correction == "dft-d1":
             raise ValueError(
-                "D1 dispersion correction is not working anymore in " "Turbomole v7.5."
+                "D1 dispersion correction is not working anymore in Turbomole v7.5."
             )
             # self.add_data_group("olddisp", "")
         elif dispersion_correction == "dft-d2":

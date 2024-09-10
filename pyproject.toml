@@ -58,6 +58,7 @@ dev = [
 
 [tool.setuptools.package-data]
 "turbomoleio.input.templates" = ["*.yaml"]
+"turbomoleio.core.data" = ["*.txt"]
 
 [tool.isort]
 multi_line_output = 3

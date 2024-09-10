@@ -476,6 +476,7 @@ def compare_to_reference_files(
     all_diffs,
     tm_exec,
     ref_fname="ref_output.json",
+    dryrun=False,
 ):
     """
     Generate the output object and compare it to the reference one.
@@ -495,6 +496,7 @@ def compare_to_reference_files(
             the reference log files.
         tm_exec: Turbomole executable being tested.
         ref_fname: Filename of the json-serialized reference output object.
+        dryrun: Whether in dryrun mode.
 
     Returns:
         tuple: Output object and serialized Output object.
@@ -520,13 +522,34 @@ def compare_to_reference_files(
             )
             for idiff, diff in enumerate(out_diffs, start=1):
                 print(f"#{idiff} {diff[0]}\n  {diff[1]}")
-        all_diffs[f"{tm_exec}_{out_cls.__name__}"] = out_diffs
+        test_name = f"{tm_exec}_{out_cls.__name__}"
+        all_diffs[test_name] = out_diffs
+        if dryrun:
+            dumpfn(
+                ref_out,
+                os.path.join(ref_test_dirpath, f"{test_name}_REF.json"),
+                indent=2,
+                sort_keys=True,
+            )
+            dumpfn(
+                gen_out_dict,
+                os.path.join(ref_test_dirpath, f"{test_name}_NEW.json"),
+                indent=2,
+                sort_keys=True,
+            )
 
     return gen_out, gen_out_dict
 
 
 def compare_to_reference_parser(
-    log_fpath, ref_test_dirpath, rtol, atol, print_diffs, all_diffs, tm_exec
+    log_fpath,
+    ref_test_dirpath,
+    rtol,
+    atol,
+    print_diffs,
+    all_diffs,
+    tm_exec,
+    dryrun,
 ):
     """
     Generate all results of parser methods and compare to the reference parser file.
@@ -541,6 +564,7 @@ def compare_to_reference_parser(
             updated if differences are found between the new and the reference
             parser files.
         tm_exec: Turbomole executable being tested.
+        dryrun: Whether in dryrun mode.
 
     Returns:
         dict: Dictionary mapping each parser method with it's resulting parsed data.
@@ -568,13 +592,34 @@ def compare_to_reference_parser(
             print("There are differences in the parsed methods:")
             for idiff, diff in enumerate(parser_diffs, start=1):
                 print(f"#{idiff} {diff[0]}\n  {diff[1]}")
-        all_diffs[f"{tm_exec}_Parser"] = parser_diffs
+        test_name = f"{tm_exec}_Parser"
+        all_diffs[test_name] = parser_diffs
+        if dryrun:
+            dumpfn(
+                ref_parser_methods,
+                os.path.join(ref_test_dirpath, f"{test_name}_REF.json"),
+                indent=2,
+                sort_keys=True,
+            )
+            dumpfn(
+                parsed_data,
+                os.path.join(ref_test_dirpath, f"{test_name}_NEW.json"),
+                indent=2,
+                sort_keys=True,
+            )
 
     return parsed_data
 
 
 def get_outputs_and_parser_objects_and_compare(
-    log_fpath, ref_test_dirpath, rtol, atol, print_diffs, all_diffs, tm_exec
+    log_fpath,
+    ref_test_dirpath,
+    rtol,
+    atol,
+    print_diffs,
+    all_diffs,
+    tm_exec,
+    dryrun,
 ):
     """
     Get the serialized output and parser objects and compare them to the reference.
@@ -589,6 +634,7 @@ def get_outputs_and_parser_objects_and_compare(
             Will be updated if differences are found
             between the new and the reference parser and/or output files.
         tm_exec: Turbomole executable being tested.
+        dryrun: Whether in dryrun mode.
 
     Returns:
         dict: Dictionary mapping the reference outputs and parser filenames
@@ -605,6 +651,7 @@ def get_outputs_and_parser_objects_and_compare(
         all_diffs,
         tm_exec,
         ref_fname="ref_output.json",
+        dryrun=dryrun,
     )
     outputs_parser_dicts = {"ref_output.json": output_dict}
     if tm_exec == "escf":
@@ -618,11 +665,19 @@ def get_outputs_and_parser_objects_and_compare(
             all_diffs,
             tm_exec,
             ref_fname="ref_escf_output.json",
+            dryrun=dryrun,
         )
         outputs_parser_dicts["ref_escf_output.json"] = escf_output_dict
 
     outputs_parser_dicts["ref_parser.json"] = compare_to_reference_parser(
-        log_fpath, ref_test_dirpath, rtol, atol, print_diffs, all_diffs, tm_exec
+        log_fpath,
+        ref_test_dirpath,
+        rtol,
+        atol,
+        print_diffs,
+        all_diffs,
+        tm_exec,
+        dryrun=dryrun,
     )
 
     return outputs_parser_dicts
@@ -656,7 +711,14 @@ def update_json_files(dryrun, rtol, atol, print_diffs):
                 # to the old ones.
                 log_fpath = get_log_fpath(test_dirpath, tm_exec)
                 outputs_parser_dicts = get_outputs_and_parser_objects_and_compare(
-                    log_fpath, test_dirpath, rtol, atol, print_diffs, all_diffs, tm_exec
+                    log_fpath,
+                    test_dirpath,
+                    rtol,
+                    atol,
+                    print_diffs,
+                    all_diffs,
+                    tm_exec,
+                    dryrun=dryrun,
                 )
 
                 # Dump the new json-serialized reference output and parser objects.
@@ -761,6 +823,7 @@ def main():
                     args.print_diffs,
                     all_diffs,
                     tm_exec,
+                    dryrun=dryrun,
                 )
 
                 # Dump the new json-serialized reference output and parser objects.

@@ -1,18 +1,18 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "MP2Output",
-  "@version": "1.1.0",
+  "@version": "1.5.0",
   "info": null,
   "results": {
     "@module": "turbomoleio.output.data",
     "@class": "MP2Results",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "energy": -76.1252418682
   },
   "geometry": {
     "@module": "turbomoleio.output.data",
     "@class": "GeometryData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "center_of_mass": [
       -0.0,
       0.0,
@@ -42,7 +42,8 @@
             0.0,
             -0.38395982917561094
           ],
-          "properties": {}
+          "properties": {},
+          "label": "O"
         },
         {
           "name": "H",
@@ -57,7 +58,8 @@
             0.0,
             0.19197991458780547
           ],
-          "properties": {}
+          "properties": {},
+          "label": "H"
         },
         {
           "name": "H",
@@ -72,15 +74,17 @@
             0.0,
             0.19197991458780547
           ],
-          "properties": {}
+          "properties": {},
+          "label": "H"
         }
-      ]
+      ],
+      "properties": {}
     }
   },
   "basis": {
     "@module": "turbomoleio.output.data",
     "@class": "BasisData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "basis_per_specie": {
       "o": "def-SV(P)",
       "h": "def-SV(P)"
@@ -92,7 +96,7 @@
   "symmetry": {
     "@module": "turbomoleio.output.data",
     "@class": "SymmetryData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "symbol": "c1",
     "n_reps": 1,
     "reps": [
@@ -103,7 +107,7 @@
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "host": "fedora",
     "start_time": {
       "@module": "datetime",
@@ -121,7 +125,7 @@
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "version": "7.3.1",
     "build": null,
     "executable": "ricc2"

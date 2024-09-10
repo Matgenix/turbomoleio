@@ -1146,7 +1146,9 @@ class Parser:
             phsran=float,
             ampran=float,
             cavity=str,
-            epsilon=str,
+            solvent=str,
+            source=str,
+            epsilon=float,
             refind=float,
             fepsi=float,
         )
@@ -1171,6 +1173,8 @@ class Parser:
                         #   refind: <VALUE> ( <TEMP> C)
                         # This deals with both pre-7.8 and post-7.8 Turbomole versions.
                         d_parameters[k] = t(line.split()[1])
+                    elif k in ("solvent", "source"):
+                        d_parameters[k] = t(line.split(f"{k}:")[1].strip())
                     else:
                         d_parameters[k] = t(line.split()[-1])
                     break

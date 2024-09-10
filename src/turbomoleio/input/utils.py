@@ -227,6 +227,18 @@ schema_define_params = {
         "default": None,
     },
     "use_cosmo": {"type": "boolean", "default": False},
+    "solvent": {
+        "type": "string",
+        "nullable": True,
+        "default": None,
+        "dependencies": {"use_cosmo": True},
+    },
+    "refind": {
+        "type": "float",
+        "nullable": True,
+        "default": None,
+        "dependencies": {"use_cosmo": True},
+    },
     "epsilon": {
         "type": "float",
         "nullable": True,

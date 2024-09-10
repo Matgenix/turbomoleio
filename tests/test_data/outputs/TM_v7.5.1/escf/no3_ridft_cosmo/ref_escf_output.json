@@ -1,16 +1,16 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "EscfOnlyOutput",
-  "@version": "1.2.0",
+  "@version": "1.5.0",
   "escf": {
     "@module": "turbomoleio.output.data",
     "@class": "EscfData",
-    "@version": "1.2.0",
+    "@version": "1.5.0",
     "calc_type": "RPA UHF-EXCITATION",
     "iterations": {
       "@module": "turbomoleio.output.data",
       "@class": "EscfIterationData",
-      "@version": "1.2.0",
+      "@version": "1.5.0",
       "steps": [
         [
           [
@@ -84,7 +84,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.2.0",
+          "@version": "1.5.0",
           "tot_en": -280.0032131563601,
           "osc_stre": 3.719617446837913e-10,
           "rot_stre": -2.148566954469757e-07,
@@ -144,7 +144,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.2.0",
+          "@version": "1.5.0",
           "tot_en": -280.0032035309166,
           "osc_stre": 4.241926721711561e-10,
           "rot_stre": -2.239185350211801e-07,
@@ -204,7 +204,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.2.0",
+          "@version": "1.5.0",
           "tot_en": -279.971923215418,
           "osc_stre": 0.01213515077654053,
           "rot_stre": 1.691625219233536e-07,
@@ -264,7 +264,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.2.0",
+          "@version": "1.5.0",
           "tot_en": -279.9719177248411,
           "osc_stre": 0.01212432511854487,
           "rot_stre": 1.803708591585089e-07,
@@ -324,7 +324,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.2.0",
+          "@version": "1.5.0",
           "tot_en": -279.883228397969,
           "osc_stre": 1.429312706109896e-12,
           "rot_stre": -4.76960561607152e-13,
@@ -384,7 +384,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.2.0",
+          "@version": "1.5.0",
           "tot_en": -279.8785348391943,
           "osc_stre": 0.0001027026040590607,
           "rot_stre": 6.779943374226516e-09,
@@ -474,7 +474,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.2.0",
+          "@version": "1.5.0",
           "tot_en": -279.8785300080916,
           "osc_stre": 0.0001032848683783444,
           "rot_stre": 5.42547791325346e-09,
@@ -564,7 +564,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.2.0",
+          "@version": "1.5.0",
           "tot_en": -279.8470719905897,
           "osc_stre": 1.201101735376373e-10,
           "rot_stre": 6.172414033730236e-08,
@@ -624,7 +624,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.2.0",
+          "@version": "1.5.0",
           "tot_en": -279.8470565182872,
           "osc_stre": 1.653585337873509e-10,
           "rot_stre": 6.773613724646783e-08,
@@ -684,7 +684,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.2.0",
+          "@version": "1.5.0",
           "tot_en": -279.811630271145,
           "osc_stre": 1.847579396066183e-09,
           "rot_stre": 3.638891963995962e-07,
@@ -762,7 +762,7 @@
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": "1.2.0",
+    "@version": "1.5.0",
     "host": "fedora",
     "start_time": {
       "@module": "datetime",
@@ -780,7 +780,7 @@
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": "1.2.0",
+    "@version": "1.5.0",
     "version": "7.5.1",
     "build": null,
     "executable": "escf"

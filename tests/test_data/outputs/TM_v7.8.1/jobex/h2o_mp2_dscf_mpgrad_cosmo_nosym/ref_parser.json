@@ -127,7 +127,9 @@
       "phsran": 0.0,
       "ampran": 1e-05,
       "cavity": "closed",
-      "epsilon": "infinity",
+      "solvent": "not set",
+      "source": "Custom values, not taken from cosmosolvent list!",
+      "epsilon": Infinity,
       "refind": 1.3,
       "fepsi": 1.0
     },

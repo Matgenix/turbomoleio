@@ -1,12 +1,12 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "AoforceOutput",
-  "@version": "1.1.0",
+  "@version": "1.5.0",
   "numerical_integration": null,
   "rotational": {
     "@module": "turbomoleio.output.data",
     "@class": "AoforceRotationalData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "b": [
       56.3661785582,
       56.3661785582,
@@ -43,7 +43,7 @@
   "vibrational": {
     "@module": "turbomoleio.output.data",
     "@class": "AoforceVibrationalData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "frequencies": [
       0.0,
       0.0,
@@ -191,7 +191,7 @@
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "host": "ucl-laptop",
     "start_time": {
       "@module": "datetime",
@@ -209,7 +209,7 @@
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "version": "7.3",
     "build": "22118",
     "executable": "force"
