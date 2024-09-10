@@ -10,7 +10,7 @@ Subpackages
    turbomoleio.core
    turbomoleio.input
    turbomoleio.output
-   turbomoleio.testfiles
+   turbomoleio.testing
 
 Module contents
 ---------------

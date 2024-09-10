@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>turbomoleio.output.parser &mdash; turbomoleio 1.5.0 documentation</title>
+  <title>turbomoleio.output.parser &mdash; turbomoleio 1.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,8 +14,8 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=e0a75244"></script>
-        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/documentation_options.js?v=72d88caf"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -34,7 +34,7 @@
             turbomoleio
           </a>
               <div class="version">
-                1.5.0
+                1.6.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -1299,7 +1299,9 @@
             <span class="n">phsran</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
             <span class="n">ampran</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
             <span class="n">cavity</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-            <span class="n">epsilon</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">solvent</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">source</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">epsilon</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
             <span class="n">refind</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
             <span class="n">fepsi</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
         <span class="p">)</span>
@@ -1314,7 +1316,20 @@
                 <span class="c1"># rsolv [A]: 1.3000</span>
                 <span class="c1"># if more are added the regex may need an update.</span>
                 <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;[\s\[A\]]*:&quot;</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
-                    <span class="n">d_parameters</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;epsilon&quot;</span><span class="p">,</span> <span class="s2">&quot;refind&quot;</span><span class="p">):</span>
+                        <span class="c1"># In Turbomole 7.8, the epsilon and refind parameters lines</span>
+                        <span class="c1"># have been modified from</span>
+                        <span class="c1">#   epsilon: &lt;VALUE&gt;</span>
+                        <span class="c1">#   refind: &lt;VALUE&gt;</span>
+                        <span class="c1"># to</span>
+                        <span class="c1">#   epsilon: &lt;VALUE&gt; ( &lt;TEMP&gt; C)</span>
+                        <span class="c1">#   refind: &lt;VALUE&gt; ( &lt;TEMP&gt; C)</span>
+                        <span class="c1"># This deals with both pre-7.8 and post-7.8 Turbomole versions.</span>
+                        <span class="n">d_parameters</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="k">elif</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;solvent&quot;</span><span class="p">,</span> <span class="s2">&quot;source&quot;</span><span class="p">):</span>
+                        <span class="n">d_parameters</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">d_parameters</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
                     <span class="k">break</span>
 
         <span class="n">d_screening</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">cosmo</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">correction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -3109,7 +3124,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2018-2022 BASF SE, Matgenix SRL.</p>
+    <p>&#169; Copyright 2018-2024 BASF SE, Matgenix SRL.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

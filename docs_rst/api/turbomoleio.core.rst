@@ -1,14 +1,6 @@
 turbomoleio.core package
 ========================
 
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 4
-
-   turbomoleio.core.tests
-
 Submodules
 ----------
 

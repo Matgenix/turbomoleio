@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>turbomoleio.input.define &mdash; turbomoleio 1.5.0 documentation</title>
+  <title>turbomoleio.input.define &mdash; turbomoleio 1.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,8 +14,8 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=e0a75244"></script>
-        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/documentation_options.js?v=72d88caf"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -34,7 +34,7 @@
             turbomoleio
           </a>
               <div class="version">
-                1.5.0
+                1.6.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -1827,7 +1827,17 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">cosmo_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;epsilon&quot;</span><span class="p">,</span> <span class="s2">&quot;nppa&quot;</span><span class="p">,</span> <span class="s2">&quot;nspa&quot;</span><span class="p">,</span> <span class="s2">&quot;disex&quot;</span><span class="p">,</span> <span class="s2">&quot;rsolv&quot;</span><span class="p">,</span> <span class="s2">&quot;routf&quot;</span><span class="p">,</span> <span class="s2">&quot;cavity&quot;</span><span class="p">]</span>
+        <span class="n">cosmo_keys</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;solvent&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;epsilon&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;refind&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;nppa&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;nspa&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;disex&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;rsolv&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;routf&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;cavity&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
 
         <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">cosmo_keys</span><span class="p">}</span>
 
@@ -1882,7 +1892,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2018-2022 BASF SE, Matgenix SRL.</p>
+    <p>&#169; Copyright 2018-2024 BASF SE, Matgenix SRL.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
