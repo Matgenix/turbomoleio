@@ -48,7 +48,7 @@ from turbomoleio.core.symmetry import irrep_size
 with importlib.resources.open_text(
     "turbomoleio.core.data", "available_solvents.txt"
 ) as f:
-    available_solvents = [solvent.lower() for solvent in f.readlines()]
+    available_solvents = [solvent.strip().lower() for solvent in f.readlines()]
 
 
 class Defaults:
@@ -688,13 +688,14 @@ class Control(DataGroups):
         cosmo_lines = [""]
 
         if solvent is not None:
-            if solvent.lower() not in available_solvents:
+            solvent_lower = solvent.lower()
+            if solvent_lower not in available_solvents:
                 raise ValueError(
                     f"Solvent with name {solvent} is not available. "
                     f"See turbomoleio/core/data/available_solvents.txt for available "
                     f"solvents."
                 )
-            cosmo_lines.append("   solvent={}".format(solvent))
+            cosmo_lines.append("   solvent={}".format(solvent_lower))
         if epsilon is not None:
             cosmo_lines.append("   epsilon={}".format(epsilon))
         if refind is not None:

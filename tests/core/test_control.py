@@ -446,6 +446,7 @@ class TestControl(object):
 
         dg = control.show_data_group("$cosmo")
         assert "epsilon" in dg
+        assert "refind" not in dg
         assert "nppa" in dg
         assert "disex" in dg
         assert "rsolv" in dg
@@ -455,6 +456,7 @@ class TestControl(object):
 
         control.add_cosmo(
             epsilon=0.1,
+            refind=1.55,
             nppa=1,
             nspa=1,
             disex=0.1,
@@ -466,6 +468,7 @@ class TestControl(object):
 
         dg = control.show_data_group("$cosmo")
         assert "epsilon" in dg
+        assert "refind=1.55" in dg
         assert "nppa" in dg
         assert "disex" in dg
         assert "rsolv" in dg
@@ -473,6 +476,24 @@ class TestControl(object):
         assert "cavity" in dg
         assert "use_old_amat" in dg
         assert dg.count("epsilon") == 1
+
+    @pytest.mark.parametrize("control_filename", ["control_test-Control"])
+    def test_add_cosmo_solvent(self, control):
+        """Testing addition of Cosmo using predefined solvent."""
+        control.add_cosmo(
+            solvent="1,2-dIbROMOethanE",
+        )
+        dg = control.show_data_group("$cosmo")
+        assert "solvent" in dg
+        assert "1,2-dibromoethane" in dg
+        assert "epsilon" not in dg
+        assert "refind" not in dg
+        assert "nppa" not in dg
+        assert "disex" not in dg
+        assert "rsolv" not in dg
+        assert "routf" not in dg
+        assert "cavity" not in dg
+        assert "use_old_amat" not in dg
 
     def test_energy(self, test_data, delete_tmp_dir):
         with temp_dir(delete_tmp_dir):
