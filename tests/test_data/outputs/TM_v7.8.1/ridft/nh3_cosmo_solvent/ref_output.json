@@ -1,0 +1,331 @@
+{
+  "@module": "turbomoleio.output.files",
+  "@class": "ScfOutput",
+  "@version": "1.5.0",
+  "dft": {
+    "@module": "turbomoleio.output.data",
+    "@class": "DFTData",
+    "@version": "1.5.0",
+    "functional": {
+      "@module": "turbomoleio.output.data",
+      "@class": "FunctionalData",
+      "@version": "1.5.0",
+      "msg": "B-P86 functional\n exchange:    LDA + Becke (B88)\n correlation: LDA (VWN) + Perdew (P86)",
+      "name": "b-p",
+      "func_type": "GGA",
+      "xcfun": null
+    },
+    "ri": {
+      "@module": "turbomoleio.output.data",
+      "@class": "RiData",
+      "@version": "1.5.0",
+      "ricore": 500,
+      "marij": false,
+      "rij_memory": 1,
+      "rik": false
+    },
+    "spherical_gridsize": 3,
+    "gridpoints": 302,
+    "dispersion_correction": null
+  },
+  "scf": {
+    "@module": "turbomoleio.output.data",
+    "@class": "ScfData",
+    "@version": "1.5.0",
+    "iterations": {
+      "@module": "turbomoleio.output.data",
+      "@class": "ScfIterationData",
+      "@version": "1.5.0",
+      "energies": [
+        -56.336540119675,
+        -56.479958927105,
+        -56.4982938347,
+        -56.501072894816,
+        -56.501728949599,
+        -56.501743592515,
+        -56.501743985843,
+        -56.502016214659
+      ],
+      "first_index": 1,
+      "n_steps": 8,
+      "dampings": [
+        0.3,
+        0.25,
+        0.2,
+        0.25,
+        0.3,
+        0.15,
+        0.1,
+        0.15
+      ],
+      "converged": true
+    },
+    "diis": true,
+    "diis_error_vect": "FDS-SDF",
+    "conv_tot_en": 1e-07,
+    "conv_one_e_en": 0.0001,
+    "virtual_orbital_shift_on": true,
+    "virtual_orbital_shift_limit": 0.1,
+    "orbital_characterization": "expanded",
+    "restart_file": null,
+    "n_occupied_orbitals": 5
+  },
+  "energies": {
+    "@module": "turbomoleio.output.data",
+    "@class": "ScfEnergiesData",
+    "@version": "1.5.0",
+    "total_energy": -56.50201621466,
+    "kinetic_energy": 56.09698178995,
+    "potential_energy": -112.5989980046,
+    "virial_theorem": 1.99283150493,
+    "wavefunction_norm": 1.0,
+    "coulomb_energy": null,
+    "xc_energy": null,
+    "ts_energy": null,
+    "free_energy": null,
+    "sigma0_energy": null
+  },
+  "electrostatic": {
+    "@module": "turbomoleio.output.data",
+    "@class": "ElectrostaticMomentsData",
+    "@version": "1.5.0",
+    "charge": -0.0,
+    "unrestricted_electrons": null,
+    "dipole_vector": [
+      -0.000114,
+      -6.1e-05,
+      -0.822406
+    ],
+    "dipole_norm": 0.8224,
+    "quadrupole_tensor": [
+      [
+        -4.527021,
+        6e-06,
+        0.000168
+      ],
+      [
+        6e-06,
+        -4.526831,
+        -1.8e-05
+      ],
+      [
+        0.000168,
+        -1.8e-05,
+        -6.33556
+      ]
+    ],
+    "quadrupole_trace": -15.389412,
+    "quadrupole_anisotropy": 1.808634
+  },
+  "geometry": {
+    "@module": "turbomoleio.output.data",
+    "@class": "GeometryData",
+    "@version": "1.5.0",
+    "center_of_mass": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "center_of_charge": [
+      -0.0,
+      0.0,
+      -0.08907541
+    ],
+    "molecule": {
+      "@module": "pymatgen.core.structure",
+      "@class": "Molecule",
+      "charge": 0.0,
+      "spin_multiplicity": 1,
+      "sites": [
+        {
+          "name": "N",
+          "species": [
+            {
+              "element": "N",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            0.0,
+            0.0,
+            0.06835414842221127
+          ],
+          "properties": {},
+          "label": "N"
+        },
+        {
+          "name": "H",
+          "species": [
+            {
+              "element": "H",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            0.9293011495767791,
+            0.0,
+            -0.3166152662034489
+          ],
+          "properties": {},
+          "label": "H"
+        },
+        {
+          "name": "H",
+          "species": [
+            {
+              "element": "H",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -0.46465057478838956,
+            0.8047984044784159,
+            -0.3166152662034489
+          ],
+          "properties": {},
+          "label": "H"
+        },
+        {
+          "name": "H",
+          "species": [
+            {
+              "element": "H",
+              "occu": 1
+            }
+          ],
+          "xyz": [
+            -0.46465057478838956,
+            -0.8047984044784159,
+            -0.3166152662034489
+          ],
+          "properties": {},
+          "label": "H"
+        }
+      ],
+      "properties": {}
+    }
+  },
+  "basis": {
+    "@module": "turbomoleio.output.data",
+    "@class": "BasisData",
+    "@version": "1.5.0",
+    "basis_per_specie": {
+      "n": "def-SV(P)",
+      "h": "def-SV(P)"
+    },
+    "aux_basis_per_specie": {
+      "n": "def-SV(P)",
+      "h": "def-SV(P)"
+    },
+    "number_scf_basis_func": 20,
+    "number_scf_aux_basis_func": 52
+  },
+  "run": {
+    "@module": "turbomoleio.output.data",
+    "@class": "RunData",
+    "@version": "1.5.0",
+    "host": "dwa-Precision-3590",
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2024-09-10 09:35:06.367000"
+    },
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2024-09-10 09:35:06.450000"
+    },
+    "cpu_time": 0.09,
+    "wall_time": 0.09
+  },
+  "tm": {
+    "@module": "turbomoleio.output.data",
+    "@class": "TurbomoleData",
+    "@version": "1.5.0",
+    "version": "7.8.1",
+    "build": null,
+    "executable": "ridft"
+  },
+  "cosmo": {
+    "@module": "turbomoleio.output.data",
+    "@class": "CosmoData",
+    "@version": "1.5.0",
+    "info": {
+      "area": 172.967551,
+      "volume": 205.077776
+    },
+    "parameters": {
+      "nppa": 1082,
+      "nspa": 92,
+      "nsph": 32,
+      "nps": 168,
+      "npspher": 105,
+      "disex": 10.0,
+      "disex2": 3600.83,
+      "rsolv": 1.3,
+      "routf": 0.85,
+      "phsran": 0.0,
+      "ampran": 1e-05,
+      "cavity": "closed",
+      "solvent": "1,1,2,2-tetrachloroethene",
+      "source": "CRC Handbook of Chemistry and Physics, 94th Edition, edited by William M. Haynes, 2013, CRC Press.",
+      "epsilon": 8.5,
+      "refind": 1.494,
+      "fepsi": 0.8333333
+    },
+    "screening_charge": {
+      "cosmo": -0.008362,
+      "correction": 0.008124,
+      "total": -0.000238
+    },
+    "energies": {
+      "total_energy": -56.5020162146593,
+      "total_energy_oc_corr": -56.5020460829,
+      "dielectric_energy": -0.0081111465,
+      "dielectric_energy_oc_corr": -0.0081410147
+    },
+    "element_radius": {
+      "N": {
+        "radius": 1.83,
+        "sites": [
+          1
+        ]
+      },
+      "H": {
+        "radius": 1.3,
+        "sites": [
+          2,
+          3,
+          4
+        ]
+      }
+    }
+  },
+  "spin": {
+    "@module": "turbomoleio.output.data",
+    "@class": "SpinData",
+    "@version": "1.5.0",
+    "unrestricted": false,
+    "s2": null
+  },
+  "integral": {
+    "@module": "turbomoleio.output.data",
+    "@class": "IntegralData",
+    "@version": "1.5.0",
+    "integral_neglect_threshold": 1.6e-10,
+    "thize": 1e-05,
+    "thime": 5
+  },
+  "smearing": null,
+  "symmetry": {
+    "@module": "turbomoleio.output.data",
+    "@class": "SymmetryData",
+    "@version": "1.5.0",
+    "symbol": "c1",
+    "n_reps": 1,
+    "reps": [
+      "a"
+    ]
+  },
+  "periodicity": null
+}

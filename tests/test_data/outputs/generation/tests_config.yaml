@@ -41,6 +41,7 @@ testlist:
     - h2o_dftd3-bj_not_conv
     - b28_many_irreps
     - h2o_dftd2_marij
+    - nh3_cosmo_solvent
     - nh3_rijk_xcfun_m06
     - nh3_rijk_libxc_m06
   rimp2:
