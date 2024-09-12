@@ -24,6 +24,13 @@
 Changelog
 =========
 
+Release 1.6.0 (Sep 6, 2024)
+============================
+
+* Update of reference test files for Turbomole version 7.8.1.
+* Checked consistency of package with Turbomole version 7.8.1.
+* Documentation updated.
+
 Release 1.5.0 (Mar 27, 2024)
 ============================
 

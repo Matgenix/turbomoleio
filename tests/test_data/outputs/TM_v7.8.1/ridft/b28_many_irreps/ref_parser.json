@@ -1,0 +1,441 @@
+{
+  "all_done": true,
+  "header": {
+    "executable": "ridft",
+    "host": "dwa-Precision-3590",
+    "tm_version": "7.8.1",
+    "tm_build": null,
+    "start_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2024-09-06 12:40:01.478000"
+    }
+  },
+  "centers": {
+    "center_of_mass": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "center_of_charge": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "coordinates": {
+    "coords": [
+      [
+        -0.77134581,
+        -6.84588342,
+        1.44112693
+      ],
+      [
+        2.27535893,
+        -6.50260224,
+        1.44112693
+      ],
+      [
+        4.87140093,
+        -4.87140093,
+        1.44112693
+      ],
+      [
+        6.50260224,
+        -2.27535893,
+        1.44112693
+      ],
+      [
+        6.84588342,
+        0.77134581,
+        1.44112693
+      ],
+      [
+        5.83325343,
+        3.66527606,
+        1.44112693
+      ],
+      [
+        3.66527606,
+        5.83325343,
+        1.44112693
+      ],
+      [
+        0.77134581,
+        6.84588342,
+        1.44112693
+      ],
+      [
+        -2.27535893,
+        6.50260224,
+        1.44112693
+      ],
+      [
+        -4.87140093,
+        4.87140093,
+        1.44112693
+      ],
+      [
+        -6.50260224,
+        2.27535893,
+        1.44112693
+      ],
+      [
+        -6.84588342,
+        -0.77134581,
+        1.44112693
+      ],
+      [
+        -5.83325343,
+        -3.66527606,
+        1.44112693
+      ],
+      [
+        -3.66527606,
+        -5.83325343,
+        1.44112693
+      ],
+      [
+        -0.77134581,
+        6.84588342,
+        -1.44112693
+      ],
+      [
+        -3.66527606,
+        5.83325343,
+        -1.44112693
+      ],
+      [
+        -5.83325343,
+        3.66527606,
+        -1.44112693
+      ],
+      [
+        -6.84588342,
+        0.77134581,
+        -1.44112693
+      ],
+      [
+        -6.50260224,
+        -2.27535893,
+        -1.44112693
+      ],
+      [
+        -4.87140093,
+        -4.87140093,
+        -1.44112693
+      ],
+      [
+        -2.27535893,
+        -6.50260224,
+        -1.44112693
+      ],
+      [
+        0.77134581,
+        -6.84588342,
+        -1.44112693
+      ],
+      [
+        3.66527606,
+        -5.83325343,
+        -1.44112693
+      ],
+      [
+        5.83325343,
+        -3.66527606,
+        -1.44112693
+      ],
+      [
+        6.84588342,
+        -0.77134581,
+        -1.44112693
+      ],
+      [
+        6.50260224,
+        2.27535893,
+        -1.44112693
+      ],
+      [
+        4.87140093,
+        4.87140093,
+        -1.44112693
+      ],
+      [
+        2.27535893,
+        6.50260224,
+        -1.44112693
+      ]
+    ],
+    "species": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "charges": [
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0,
+      5.0
+    ],
+    "isotopes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "basis": {
+    "basis_per_specie": {
+      "b": "def-SV(P)"
+    },
+    "aux_basis_per_specie": {
+      "b": "def-SV(P)"
+    },
+    "number_scf_basis_func": 392,
+    "number_scf_aux_basis_func": 1036
+  },
+  "symmetry": {
+    "symbol": "d14d",
+    "n_reps": 17,
+    "reps": [
+      "a1",
+      "a2",
+      "b1",
+      "b2",
+      "e1",
+      "e2",
+      "e3",
+      "e4",
+      "e5",
+      "e6",
+      "e7",
+      "e8",
+      "e9",
+      "e10",
+      "e11",
+      "e12",
+      "e13"
+    ]
+  },
+  "cosmo_header": null,
+  "density_functional_data": {
+    "functional_msg": "B-P86 functional\n exchange:    LDA + Becke (B88)\n correlation: LDA (VWN) + Perdew (P86)",
+    "functional_name": "b-p",
+    "functional_type": "GGA",
+    "xcfun": null,
+    "spherical_gridsize": 3,
+    "gridpoints": 302
+  },
+  "rij_info": {
+    "marij": false,
+    "rij_memory": 15,
+    "rik": false,
+    "ricore": 500
+  },
+  "dftd": null,
+  "pre_scf_run": {
+    "diis": true,
+    "diis_error_vect": "FDS-SDF",
+    "conv_tot_en": 1e-07,
+    "conv_one_e_en": 0.0001,
+    "virtual_orbital_shift_on": false,
+    "virtual_orbital_shift_limit": null,
+    "orbital_characterization": "expanded",
+    "restart_file": null,
+    "n_occupied_orbitals": 71
+  },
+  "scf_iterations": {
+    "energies": [
+      -690.81171680079,
+      -693.36290445798,
+      -694.31761760025,
+      -694.70646513458,
+      -694.84934704177,
+      -694.89089207283,
+      -694.89994244928,
+      -694.90163951347,
+      -694.90192253699,
+      -694.90197215239,
+      -694.90198375436,
+      -694.90198805354,
+      -694.90198957417,
+      -694.9019902126,
+      -694.90199042487,
+      -694.90199049898,
+      -694.90185728053
+    ],
+    "first_index": 1,
+    "n_steps": 17,
+    "dampings": [
+      1.0,
+      0.95,
+      0.85,
+      0.75,
+      0.65,
+      0.55,
+      0.45,
+      0.3,
+      0.15,
+      0.1,
+      0.15,
+      0.2,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3
+    ],
+    "converged": true
+  },
+  "scf_energies": {
+    "total_energy": -694.90185728053,
+    "kinetic_energy": 684.60513479092,
+    "potential_energy": -1379.50699207145,
+    "virial_theorem": 1.98518247954,
+    "wavefunction_norm": 1.0
+  },
+  "cosmo_results": null,
+  "electrostatic_moments": {
+    "unrestricted_electrons": 2.0,
+    "charge": 0.0,
+    "dipole": {
+      "norm": 0.0,
+      "moment": [
+        0.0,
+        -0.0,
+        0.0
+      ]
+    },
+    "quadrupole": {
+      "trace": -347.156946,
+      "anisotropy": 17.836648,
+      "moment": [
+        [
+          -109.773433,
+          0.0,
+          -0.0
+        ],
+        [
+          0.0,
+          -109.773433,
+          -0.0
+        ],
+        [
+          -0.0,
+          -0.0,
+          -127.610081
+        ]
+      ]
+    }
+  },
+  "timings": {
+    "cpu_time": 1.05,
+    "wall_time": 1.05,
+    "end_time": {
+      "@module": "datetime",
+      "@class": "datetime",
+      "string": "2024-09-06 12:40:02.526000"
+    }
+  },
+  "s2": {
+    "s2": 2.00153224
+  },
+  "is_uhf": true,
+  "fermi": null,
+  "integral": {
+    "integral_neglect_threshold": 7.9e-12,
+    "thize": 1e-05,
+    "thime": 5
+  },
+  "pre_escf_run": null,
+  "escf_iterations": null,
+  "escf_gs_total_en": null,
+  "escf_excitations": null,
+  "rdgrad_memory": null,
+  "gradient": null,
+  "egrad_excited_state": null,
+  "statpt_info": null,
+  "relax_info": null,
+  "relax_gradient_values": null,
+  "relax_conv_info": null,
+  "aoforce_numerical_integration": null,
+  "aoforce_analysis": null,
+  "mp2_results": {
+    "energy": null
+  },
+  "riper_scf_energies": null,
+  "periodicity_data": null
+}

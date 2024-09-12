@@ -15,7 +15,7 @@ authors = [
     { name = "Guido Petretto", email = "guido.petretto@matgenix.com" },
     { name = "David Waroquiers", email = "david.waroquiers@matgenix.com" }
 ]
-version = "1.5.0"
+version = "1.6.0"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
@@ -55,9 +55,14 @@ dev = [
     "mypy >= 0.790",
     "invoke >= 1.6"
 ]
+doc = [
+    "sphinx",
+    "sphinx_rtd_theme",
+]
 
 [tool.setuptools.package-data]
 "turbomoleio.input.templates" = ["*.yaml"]
+"turbomoleio.core.data" = ["*.txt"]
 
 [tool.isort]
 multi_line_output = 3

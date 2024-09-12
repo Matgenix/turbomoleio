@@ -1706,7 +1706,17 @@ class DefineRunner:
         Returns:
             None
         """
-        cosmo_keys = ["epsilon", "nppa", "nspa", "disex", "rsolv", "routf", "cavity"]
+        cosmo_keys = [
+            "solvent",
+            "epsilon",
+            "refind",
+            "nppa",
+            "nspa",
+            "disex",
+            "rsolv",
+            "routf",
+            "cavity",
+        ]
 
         d = {k: v for k, v in self.parameters.items() if k in cosmo_keys}
 

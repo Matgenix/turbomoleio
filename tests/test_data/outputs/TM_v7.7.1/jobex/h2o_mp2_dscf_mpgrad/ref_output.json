@@ -1,20 +1,20 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "JobexOutput",
-  "@version": "1.4.0",
+  "@version": "1.5.0",
   "energy": {
     "@module": "turbomoleio.output.files",
     "@class": "ScfOutput",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "dft": null,
     "scf": {
       "@module": "turbomoleio.output.data",
       "@class": "ScfData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "iterations": {
         "@module": "turbomoleio.output.data",
         "@class": "ScfIterationData",
-        "@version": "1.4.0",
+        "@version": "1.5.0",
         "energies": [
           -75.937703474357,
           -75.937703478569,
@@ -46,7 +46,7 @@
     "energies": {
       "@module": "turbomoleio.output.data",
       "@class": "ScfEnergiesData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "total_energy": -75.93770347958,
       "kinetic_energy": 75.83518869155,
       "potential_energy": -151.77289217113,
@@ -61,7 +61,7 @@
     "electrostatic": {
       "@module": "turbomoleio.output.data",
       "@class": "ElectrostaticMomentsData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "charge": 0.0,
       "unrestricted_electrons": null,
       "dipole_vector": [
@@ -93,7 +93,7 @@
     "geometry": {
       "@module": "turbomoleio.output.data",
       "@class": "GeometryData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "center_of_mass": [
         0.0,
         0.0,
@@ -158,13 +158,14 @@
             "properties": {},
             "label": "H"
           }
-        ]
+        ],
+        "properties": {}
       }
     },
     "basis": {
       "@module": "turbomoleio.output.data",
       "@class": "BasisData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "basis_per_specie": {
         "o": "def-SV(P)",
         "h": "def-SV(P)"
@@ -176,7 +177,7 @@
     "run": {
       "@module": "turbomoleio.output.data",
       "@class": "RunData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "host": "fedora",
       "start_time": {
         "@module": "datetime",
@@ -194,7 +195,7 @@
     "tm": {
       "@module": "turbomoleio.output.data",
       "@class": "TurbomoleData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "version": "7.7.1",
       "build": null,
       "executable": "dscf"
@@ -203,14 +204,14 @@
     "spin": {
       "@module": "turbomoleio.output.data",
       "@class": "SpinData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "unrestricted": false,
       "s2": null
     },
     "integral": {
       "@module": "turbomoleio.output.data",
       "@class": "IntegralData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "integral_neglect_threshold": 1.8e-10,
       "thize": 1e-05,
       "thime": 5
@@ -219,7 +220,7 @@
     "symmetry": {
       "@module": "turbomoleio.output.data",
       "@class": "SymmetryData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "symbol": "c2v",
       "n_reps": 4,
       "reps": [
@@ -234,18 +235,18 @@
   "gradient": {
     "@module": "turbomoleio.output.files",
     "@class": "MP2Output",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "info": null,
     "results": {
       "@module": "turbomoleio.output.data",
       "@class": "MP2Results",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "energy": -76.12864841684413
     },
     "geometry": {
       "@module": "turbomoleio.output.data",
       "@class": "GeometryData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "center_of_mass": [
         0.0,
         0.0,
@@ -310,13 +311,14 @@
             "properties": {},
             "label": "H"
           }
-        ]
+        ],
+        "properties": {}
       }
     },
     "basis": {
       "@module": "turbomoleio.output.data",
       "@class": "BasisData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "basis_per_specie": {
         "o": "def-SV(P)",
         "h": "def-SV(P)"
@@ -328,7 +330,7 @@
     "symmetry": {
       "@module": "turbomoleio.output.data",
       "@class": "SymmetryData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "symbol": "c2v",
       "n_reps": 4,
       "reps": [
@@ -342,7 +344,7 @@
     "run": {
       "@module": "turbomoleio.output.data",
       "@class": "RunData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "host": "fedora",
       "start_time": {
         "@module": "datetime",
@@ -360,7 +362,7 @@
     "tm": {
       "@module": "turbomoleio.output.data",
       "@class": "TurbomoleData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "version": "7.7.1",
       "build": null,
       "executable": "mpgrad"
@@ -369,11 +371,11 @@
   "relax": {
     "@module": "turbomoleio.output.files",
     "@class": "StatptOutput",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "info": {
       "@module": "turbomoleio.output.data",
       "@class": "StatptData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "max_trust_radius": 0.3,
       "min_trust_radius": 0.001,
       "init_trust_radius": 0.15,
@@ -391,7 +393,7 @@
     "gradients": {
       "@module": "turbomoleio.output.data",
       "@class": "RelaxGradientsData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "norm_cartesian": 0.000101974,
       "norm_internal": 0.000106026,
       "max_internal": null
@@ -399,7 +401,7 @@
     "convergence": {
       "@module": "turbomoleio.output.data",
       "@class": "RelaxConvergenceData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "energy_change": {
         "value": 2e-07,
         "thr": 1e-06,
@@ -429,7 +431,7 @@
     "run": {
       "@module": "turbomoleio.output.data",
       "@class": "RunData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "host": "fedora",
       "start_time": {
         "@module": "datetime",
@@ -447,7 +449,7 @@
     "tm": {
       "@module": "turbomoleio.output.data",
       "@class": "TurbomoleData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "version": "7.7.1",
       "build": null,
       "executable": "statpt"

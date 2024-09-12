@@ -1,15 +1,15 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "ScfOutput",
-  "@version": "1.1.0",
+  "@version": "1.5.0",
   "dft": {
     "@module": "turbomoleio.output.data",
     "@class": "DFTData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "functional": {
       "@module": "turbomoleio.output.data",
       "@class": "FunctionalData",
-      "@version": "1.1.0",
+      "@version": "1.5.0",
       "msg": "M06 meta-GGA functional\n Truhlar functional with 27% HF exchange\n USING XCfun library, see documentation\n XCFun library is being used, version:   1.99000000000000     \nXCFun DFT library Copyright 2009-2011 Ulf Ekstrom and contributors.\nSee http://admol.org/xcfun for more information.\n\nThis is free software; see the source code for copying conditions.\nThere is ABSOLUTELY NO WARRANTY; not even for MERCHANTABILITY or\nFITNESS FOR A PARTICULAR PURPOSE. For details see the documentation.\nScientific users of this library should cite\nU. Ekstrom, L. Visscher, R. Bast, A. J. Thorvaldsen and K. Ruud;\nJ.Chem.Theor.Comp. 2010, DOI: 10.1021/ct100117s\n\n\nXCFun uses functional: m06",
       "name": "m06",
       "func_type": "MHYB",
@@ -18,7 +18,7 @@
     "ri": {
       "@module": "turbomoleio.output.data",
       "@class": "RiData",
-      "@version": "1.1.0",
+      "@version": "1.5.0",
       "ricore": 500,
       "marij": false,
       "rij_memory": 1,
@@ -31,11 +31,11 @@
   "scf": {
     "@module": "turbomoleio.output.data",
     "@class": "ScfData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "iterations": {
       "@module": "turbomoleio.output.data",
       "@class": "ScfIterationData",
-      "@version": "1.1.0",
+      "@version": "1.5.0",
       "energies": [
         -56.28467929817,
         -56.40025311363,
@@ -77,7 +77,7 @@
   "energies": {
     "@module": "turbomoleio.output.data",
     "@class": "ScfEnergiesData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "total_energy": -56.45331043355,
     "kinetic_energy": 56.11917468313,
     "potential_energy": -112.57248511668,
@@ -92,7 +92,7 @@
   "electrostatic": {
     "@module": "turbomoleio.output.data",
     "@class": "ElectrostaticMomentsData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "charge": -0.0,
     "unrestricted_electrons": null,
     "dipole_vector": [
@@ -124,7 +124,7 @@
   "geometry": {
     "@module": "turbomoleio.output.data",
     "@class": "GeometryData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "center_of_mass": [
       -0.0,
       0.0,
@@ -154,7 +154,8 @@
             0.0,
             0.06835414842221127
           ],
-          "properties": {}
+          "properties": {},
+          "label": "N"
         },
         {
           "name": "H",
@@ -169,7 +170,8 @@
             0.0,
             -0.3166152662034489
           ],
-          "properties": {}
+          "properties": {},
+          "label": "H"
         },
         {
           "name": "H",
@@ -184,7 +186,8 @@
             0.8047984044784159,
             -0.3166152662034489
           ],
-          "properties": {}
+          "properties": {},
+          "label": "H"
         },
         {
           "name": "H",
@@ -199,15 +202,17 @@
             -0.8047984044784159,
             -0.3166152662034489
           ],
-          "properties": {}
+          "properties": {},
+          "label": "H"
         }
-      ]
+      ],
+      "properties": {}
     }
   },
   "basis": {
     "@module": "turbomoleio.output.data",
     "@class": "BasisData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "basis_per_specie": {
       "n": "def-SV(P)",
       "h": "def-SV(P)"
@@ -222,7 +227,7 @@
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "host": "fedora",
     "start_time": {
       "@module": "datetime",
@@ -240,7 +245,7 @@
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "version": "7.3.1",
     "build": null,
     "executable": "ridft"
@@ -249,14 +254,14 @@
   "spin": {
     "@module": "turbomoleio.output.data",
     "@class": "SpinData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "unrestricted": false,
     "s2": null
   },
   "integral": {
     "@module": "turbomoleio.output.data",
     "@class": "IntegralData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "integral_neglect_threshold": 1.6e-09,
     "thize": 1e-05,
     "thime": 5
@@ -265,7 +270,7 @@
   "symmetry": {
     "@module": "turbomoleio.output.data",
     "@class": "SymmetryData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "symbol": "c1",
     "n_reps": 1,
     "reps": [

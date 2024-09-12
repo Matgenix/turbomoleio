@@ -30,7 +30,7 @@ with open(
     exec(f.read(), about)  # nosec
 
 project = "turbomoleio"
-copyright = "2018-2022 BASF SE, Matgenix SRL"
+copyright = "2018-2024 BASF SE, Matgenix SRL"
 author = "Guido Petretto, David Waroquiers, Susanne Salzmann"
 
 # The short X.Y version
@@ -74,7 +74,7 @@ master_doc = "index"
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = "en"
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -175,7 +175,7 @@ texinfo_documents = [
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {"https://docs.python.org/": None}
+intersphinx_mapping = {"python": ("https://docs.python.org/", None)}
 
 # -- Options for todo extension ----------------------------------------------
 

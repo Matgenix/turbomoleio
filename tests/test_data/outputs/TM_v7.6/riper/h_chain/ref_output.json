@@ -1,13 +1,13 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "ScfOutput",
-  "@version": "1.3.0",
+  "@version": "1.5.0",
   "dft": null,
   "scf": null,
   "energies": {
     "@module": "turbomoleio.output.data",
     "@class": "ScfEnergiesData",
-    "@version": "1.3.0",
+    "@version": "1.5.0",
     "total_energy": -1.1595574974,
     "kinetic_energy": 1.0583304493,
     "potential_energy": null,
@@ -23,7 +23,7 @@
   "geometry": {
     "@module": "turbomoleio.output.data",
     "@class": "GeometryData",
-    "@version": "1.3.0",
+    "@version": "1.5.0",
     "center_of_mass": [
       1.88972612,
       0.5,
@@ -53,7 +53,8 @@
             0.2645886054515,
             0.2645886054515
           ],
-          "properties": {}
+          "properties": {},
+          "label": "H"
         },
         {
           "name": "H",
@@ -68,16 +69,18 @@
             0.2645886054515,
             0.2645886054515
           ],
-          "properties": {}
+          "properties": {},
+          "label": "H"
         }
-      ]
+      ],
+      "properties": {}
     }
   },
   "basis": null,
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": "1.3.0",
+    "@version": "1.5.0",
     "host": "frontal3",
     "start_time": {
       "@module": "datetime",
@@ -95,7 +98,7 @@
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": "1.3.0",
+    "@version": "1.5.0",
     "version": "7.6",
     "build": null,
     "executable": "riper"
@@ -104,7 +107,7 @@
   "spin": {
     "@module": "turbomoleio.output.data",
     "@class": "SpinData",
-    "@version": "1.3.0",
+    "@version": "1.5.0",
     "unrestricted": false,
     "s2": null
   },
@@ -114,7 +117,7 @@
   "periodicity": {
     "@module": "turbomoleio.output.data",
     "@class": "PeriodicityData",
-    "@version": "1.3.0",
+    "@version": "1.5.0",
     "periodicity": 1,
     "lattice_params": [
       2.0000000003960676

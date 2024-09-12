@@ -1,14 +1,6 @@
 turbomoleio.output package
 ==========================
 
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 4
-
-   turbomoleio.output.tests
-
 Submodules
 ----------
 

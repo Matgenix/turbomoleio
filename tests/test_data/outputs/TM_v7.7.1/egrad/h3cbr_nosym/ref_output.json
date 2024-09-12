@@ -1,7 +1,7 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "EgradOutput",
-  "@version": "1.4.0",
+  "@version": "1.5.0",
   "gradients": [
     [
       -0.09995971,
@@ -49,11 +49,11 @@
   "dft": {
     "@module": "turbomoleio.output.data",
     "@class": "DFTData",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "functional": {
       "@module": "turbomoleio.output.data",
       "@class": "FunctionalData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "msg": "B-P86 functional\n exchange:    LDA + Becke (B88)\n correlation: LDA (VWN) + Perdew (P86)",
       "name": "b-p",
       "func_type": "GGA",
@@ -67,12 +67,12 @@
   "escf": {
     "@module": "turbomoleio.output.data",
     "@class": "EscfData",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "calc_type": "RPA SINGLET-EXCITATION",
     "iterations": {
       "@module": "turbomoleio.output.data",
       "@class": "EscfIterationData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "steps": [
         [
           [
@@ -139,7 +139,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.4.0",
+          "@version": "1.5.0",
           "tot_en": -2613.775721258578,
           "osc_stre": 7.973690670244891e-06,
           "rot_stre": 2.121536783270742e-16,
@@ -199,7 +199,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.4.0",
+          "@version": "1.5.0",
           "tot_en": -2613.775700528467,
           "osc_stre": 8.181619354124146e-06,
           "rot_stre": 1.167025156131811e-15,
@@ -259,7 +259,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.4.0",
+          "@version": "1.5.0",
           "tot_en": -2613.706981293913,
           "osc_stre": 7.777246410005825e-06,
           "rot_stre": 1.027949995238671e-15,
@@ -319,7 +319,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.4.0",
+          "@version": "1.5.0",
           "tot_en": -2613.706962649916,
           "osc_stre": 7.954267516440373e-06,
           "rot_stre": -4.388587607412937e-15,
@@ -379,7 +379,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.4.0",
+          "@version": "1.5.0",
           "tot_en": -2613.667110040014,
           "osc_stre": 3.45123549297808e-07,
           "rot_stre": 1.299033172679367e-14,
@@ -454,7 +454,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.4.0",
+          "@version": "1.5.0",
           "tot_en": -2613.665607743472,
           "osc_stre": 0.002845517535932563,
           "rot_stre": -1.023883498043832e-15,
@@ -529,7 +529,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.4.0",
+          "@version": "1.5.0",
           "tot_en": -2613.665600553972,
           "osc_stre": 0.002815298074742812,
           "rot_stre": 1.111812487360173e-15,
@@ -604,7 +604,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.4.0",
+          "@version": "1.5.0",
           "tot_en": -2613.663555484773,
           "osc_stre": 0.03127875409479967,
           "rot_stre": -1.284235064493069e-14,
@@ -679,7 +679,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.4.0",
+          "@version": "1.5.0",
           "tot_en": -2613.616757104312,
           "osc_stre": 0.009014111779600457,
           "rot_stre": -3.753893460566976e-16,
@@ -739,7 +739,7 @@
         {
           "@module": "turbomoleio.output.data",
           "@class": "SingleExcitation",
-          "@version": "1.4.0",
+          "@version": "1.5.0",
           "tot_en": -2613.616732439692,
           "osc_stre": 0.00907125167066234,
           "rot_stre": -6.478487012366631e-16,
@@ -802,7 +802,7 @@
   "geometry": {
     "@module": "turbomoleio.output.data",
     "@class": "GeometryData",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "center_of_mass": [
       0.0,
       0.0,
@@ -899,13 +899,14 @@
           "properties": {},
           "label": "Br"
         }
-      ]
+      ],
+      "properties": {}
     }
   },
   "basis": {
     "@module": "turbomoleio.output.data",
     "@class": "BasisData",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "basis_per_specie": {
       "c": "def-SV(P)",
       "h": "def-SV(P)",
@@ -918,7 +919,7 @@
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "host": "fedora",
     "start_time": {
       "@module": "datetime",
@@ -936,7 +937,7 @@
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "version": "7.7.1",
     "build": null,
     "executable": "egrad"
@@ -945,7 +946,7 @@
   "integral": {
     "@module": "turbomoleio.output.data",
     "@class": "IntegralData",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "integral_neglect_threshold": 3.3e-11,
     "thize": 1e-05,
     "thime": 5

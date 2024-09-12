@@ -1,15 +1,15 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "ScfOutput",
-  "@version": "1.1.0",
+  "@version": "1.5.0",
   "dft": {
     "@module": "turbomoleio.output.data",
     "@class": "DFTData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "functional": {
       "@module": "turbomoleio.output.data",
       "@class": "FunctionalData",
-      "@version": "1.1.0",
+      "@version": "1.5.0",
       "msg": "B-P86 functional\n exchange:    LDA + Becke (B88)\n correlation: LDA (VWN) + Perdew (P86)",
       "name": "b-p",
       "func_type": "GGA",
@@ -21,7 +21,7 @@
     "dispersion_correction": {
       "@module": "turbomoleio.output.data",
       "@class": "DispersionCorrectionData",
-      "@version": "1.1.0",
+      "@version": "1.5.0",
       "correction": "D1",
       "en_corr": -2.4631e-05
     }
@@ -29,11 +29,11 @@
   "scf": {
     "@module": "turbomoleio.output.data",
     "@class": "ScfData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "iterations": {
       "@module": "turbomoleio.output.data",
       "@class": "ScfIterationData",
-      "@version": "1.1.0",
+      "@version": "1.5.0",
       "energies": [
         -56.32162568773,
         -56.442322902614,
@@ -83,7 +83,7 @@
   "energies": {
     "@module": "turbomoleio.output.data",
     "@class": "ScfEnergiesData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "total_energy": -56.49442914943,
     "kinetic_energy": 56.11675895132,
     "potential_energy": -112.61118810076,
@@ -98,7 +98,7 @@
   "electrostatic": {
     "@module": "turbomoleio.output.data",
     "@class": "ElectrostaticMomentsData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "charge": -0.0,
     "unrestricted_electrons": null,
     "dipole_vector": [
@@ -130,7 +130,7 @@
   "geometry": {
     "@module": "turbomoleio.output.data",
     "@class": "GeometryData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "center_of_mass": [
       -0.0,
       0.0,
@@ -160,7 +160,8 @@
             0.0,
             0.28872706096924505
           ],
-          "properties": {}
+          "properties": {},
+          "label": "N"
         },
         {
           "name": "H",
@@ -175,7 +176,8 @@
             0.8047984044784159,
             -0.09624235365641504
           ],
-          "properties": {}
+          "properties": {},
+          "label": "H"
         },
         {
           "name": "H",
@@ -190,7 +192,8 @@
             -0.8047984044784159,
             -0.09624235365641504
           ],
-          "properties": {}
+          "properties": {},
+          "label": "H"
         },
         {
           "name": "H",
@@ -205,15 +208,17 @@
             0.0,
             -0.09624235365641504
           ],
-          "properties": {}
+          "properties": {},
+          "label": "H"
         }
-      ]
+      ],
+      "properties": {}
     }
   },
   "basis": {
     "@module": "turbomoleio.output.data",
     "@class": "BasisData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "basis_per_specie": {
       "n": "def-SV(P)",
       "h": "def-SV(P)"
@@ -225,7 +230,7 @@
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "host": "ucl-laptop",
     "start_time": {
       "@module": "datetime",
@@ -243,7 +248,7 @@
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "version": "7.3",
     "build": "22118",
     "executable": "dscf"
@@ -252,14 +257,14 @@
   "spin": {
     "@module": "turbomoleio.output.data",
     "@class": "SpinData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "unrestricted": false,
     "s2": null
   },
   "integral": {
     "@module": "turbomoleio.output.data",
     "@class": "IntegralData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "integral_neglect_threshold": 1.6e-09,
     "thize": 1e-05,
     "thime": 5
@@ -268,7 +273,7 @@
   "symmetry": {
     "@module": "turbomoleio.output.data",
     "@class": "SymmetryData",
-    "@version": "1.1.0",
+    "@version": "1.5.0",
     "symbol": "c3v",
     "n_reps": 3,
     "reps": [

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>turbomoleio.core.control &mdash; turbomoleio 1.5.0 documentation</title>
+  <title>turbomoleio.core.control &mdash; turbomoleio 1.6.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -14,8 +14,8 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=e0a75244"></script>
-        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/documentation_options.js?v=72d88caf"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -34,7 +34,7 @@
             turbomoleio
           </a>
               <div class="version">
-                1.5.0
+                1.6.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -122,6 +122,7 @@
 <span class="sd">energy, etc ...</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">importlib.resources</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
@@ -138,6 +139,11 @@
 <span class="kn">from</span> <span class="nn">turbomoleio.core.molecule</span> <span class="kn">import</span> <span class="n">MoleculeSystem</span>
 <span class="kn">from</span> <span class="nn">turbomoleio.core.periodic</span> <span class="kn">import</span> <span class="n">PeriodicSystem</span>
 <span class="kn">from</span> <span class="nn">turbomoleio.core.symmetry</span> <span class="kn">import</span> <span class="n">irrep_size</span>
+
+<span class="k">with</span> <span class="n">importlib</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">open_text</span><span class="p">(</span>
+    <span class="s2">&quot;turbomoleio.core.data&quot;</span><span class="p">,</span> <span class="s2">&quot;available_solvents.txt&quot;</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">available_solvents</span> <span class="o">=</span> <span class="p">[</span><span class="n">solvent</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">solvent</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()]</span>
 
 
 <div class="viewcode-block" id="Defaults">
@@ -791,7 +797,9 @@
 <a class="viewcode-back" href="../../../api/turbomoleio.core.html#turbomoleio.core.control.Control.add_cosmo">[docs]</a>
     <span class="k">def</span> <span class="nf">add_cosmo</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
+        <span class="n">solvent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">epsilon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">refind</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">nppa</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">nspa</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">disex</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -807,7 +815,11 @@
 <span class="sd">        If None all the options will not be written to the control file.</span>
 
 <span class="sd">        Args:</span>
+<span class="sd">            solvent (str): name of solvent used. This sets the values of epsilon and</span>
+<span class="sd">                refind below from predefined solvents.</span>
 <span class="sd">            epsilon (float): permittivity used for scaling of the screening charges.</span>
+<span class="sd">            refind (float): refractive index used for the calculation of vertical</span>
+<span class="sd">                excitations and numerical frequencies.</span>
 <span class="sd">            nppa (int): number of basis grid points per atom.</span>
 <span class="sd">            nspa (int): number of segments per atom.</span>
 <span class="sd">            disex (float): distance threshold for A matrix elements (Angstrom).</span>
@@ -825,8 +837,19 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cosmo_lines</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
 
+        <span class="k">if</span> <span class="n">solvent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">solvent_lower</span> <span class="o">=</span> <span class="n">solvent</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">solvent_lower</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_solvents</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Solvent with name </span><span class="si">{</span><span class="n">solvent</span><span class="si">}</span><span class="s2"> is not available. &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;See turbomoleio/core/data/available_solvents.txt for available &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;solvents.&quot;</span>
+                <span class="p">)</span>
+            <span class="n">cosmo_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;   solvent=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solvent_lower</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">epsilon</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">cosmo_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;   epsilon=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epsilon</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">refind</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cosmo_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;   refind=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">refind</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">nppa</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">cosmo_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;   nppa=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nppa</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">nspa</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -920,7 +943,7 @@
 
         <span class="k">if</span> <span class="n">dispersion_correction</span> <span class="o">==</span> <span class="s2">&quot;dft-d1&quot;</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;D1 dispersion correction is not working anymore in &quot;</span> <span class="s2">&quot;Turbomole v7.5.&quot;</span>
+                <span class="s2">&quot;D1 dispersion correction is not working anymore in Turbomole v7.5.&quot;</span>
             <span class="p">)</span>
             <span class="c1"># self.add_data_group(&quot;olddisp&quot;, &quot;&quot;)</span>
         <span class="k">elif</span> <span class="n">dispersion_correction</span> <span class="o">==</span> <span class="s2">&quot;dft-d2&quot;</span><span class="p">:</span>
@@ -1398,7 +1421,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2018-2022 BASF SE, Matgenix SRL.</p>
+    <p>&#169; Copyright 2018-2024 BASF SE, Matgenix SRL.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

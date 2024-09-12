@@ -295,9 +295,9 @@ is structured.
     python generate_output_files.py --test TESTEXEC TESTNAME --generate_control
 
 6. Add the test in the `tests_config.yaml` current Turbomole version directory of
-`~turbomoleio/testfiles/outputs/TM_vX.Y.Z`. For example, if this new test is added in turbomoleio 1.5,
-corresponding to Turbomole v7.7.1, add the test in the file
-`~turbomoleio/testfiles/outputs/TM_v7.7.1/tests_config.yaml`.
+`~turbomoleio/testfiles/outputs/TM_vX.Y.Z`. For example, if this new test is added in turbomoleio 1.6,
+corresponding to Turbomole v7.8.1, add the test in the file
+`~turbomoleio/testfiles/outputs/TM_v7.8.1/tests_config.yaml`.
 
 Turbomole version change
 ------------------------
@@ -314,8 +314,8 @@ Standard procedure
 ^^^^^^^^^^^^^^^^^^
 
 The following assumes you change from one version of Turbomole to the next one. For example,
-turbomoleio 1.5.x is fully compatible with Turbomole version 7.7. To change to Turbomole
-version 7.7 (and thus turbomoleio 1.5.x), change your Turbomole distribution to version 7.7
+turbomoleio 1.6.x is fully compatible with Turbomole version 7.8. To change to Turbomole
+version 7.9 (and thus turbomoleio 1.7.x), change your Turbomole distribution to version 7.9
 and apply the following list of actions.
 
 1. Integration tests

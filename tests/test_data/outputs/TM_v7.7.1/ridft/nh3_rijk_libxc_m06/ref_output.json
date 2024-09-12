@@ -1,15 +1,15 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "ScfOutput",
-  "@version": "1.4.0",
+  "@version": "1.5.0",
   "dft": {
     "@module": "turbomoleio.output.data",
     "@class": "DFTData",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "functional": {
       "@module": "turbomoleio.output.data",
       "@class": "FunctionalData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "msg": "Name of XC-Functional: Minnesota M06 hybrid exchange functional\n HF exchange scaling factor =    0.27000\n [1] Y. Zhao and D. G. Truhlar, Theor. Chem. Acc. 120, 215 (2008)",
       "name": "m06",
       "func_type": "MHYB",
@@ -18,7 +18,7 @@
     "ri": {
       "@module": "turbomoleio.output.data",
       "@class": "RiData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "ricore": 500,
       "marij": false,
       "rij_memory": 1,
@@ -31,11 +31,11 @@
   "scf": {
     "@module": "turbomoleio.output.data",
     "@class": "ScfData",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "iterations": {
       "@module": "turbomoleio.output.data",
       "@class": "ScfIterationData",
-      "@version": "1.4.0",
+      "@version": "1.5.0",
       "energies": [
         -56.284679298172,
         -56.430416233621,
@@ -75,7 +75,7 @@
   "energies": {
     "@module": "turbomoleio.output.data",
     "@class": "ScfEnergiesData",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "total_energy": -56.45331086579,
     "kinetic_energy": 56.12047867503,
     "potential_energy": -112.57378954082,
@@ -90,7 +90,7 @@
   "electrostatic": {
     "@module": "turbomoleio.output.data",
     "@class": "ElectrostaticMomentsData",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "charge": -0.0,
     "unrestricted_electrons": null,
     "dipole_vector": [
@@ -122,7 +122,7 @@
   "geometry": {
     "@module": "turbomoleio.output.data",
     "@class": "GeometryData",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "center_of_mass": [
       -0.0,
       0.0,
@@ -203,13 +203,14 @@
           "properties": {},
           "label": "H"
         }
-      ]
+      ],
+      "properties": {}
     }
   },
   "basis": {
     "@module": "turbomoleio.output.data",
     "@class": "BasisData",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "basis_per_specie": {
       "n": "def-SV(P)",
       "h": "def-SV(P)"
@@ -224,7 +225,7 @@
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "host": "fedora",
     "start_time": {
       "@module": "datetime",
@@ -242,7 +243,7 @@
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "version": "7.7.1",
     "build": null,
     "executable": "ridft"
@@ -251,14 +252,14 @@
   "spin": {
     "@module": "turbomoleio.output.data",
     "@class": "SpinData",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "unrestricted": false,
     "s2": null
   },
   "integral": {
     "@module": "turbomoleio.output.data",
     "@class": "IntegralData",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "integral_neglect_threshold": 1.6e-10,
     "thize": 1e-05,
     "thime": 5
@@ -267,7 +268,7 @@
   "symmetry": {
     "@module": "turbomoleio.output.data",
     "@class": "SymmetryData",
-    "@version": "1.4.0",
+    "@version": "1.5.0",
     "symbol": "c1",
     "n_reps": 1,
     "reps": [

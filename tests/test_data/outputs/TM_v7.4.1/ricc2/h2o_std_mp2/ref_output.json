@@ -1,17 +1,17 @@
 {
   "@module": "turbomoleio.output.files",
   "@class": "Ricc2Output",
-  "@version": "1.1.1",
+  "@version": "1.5.0",
   "mp2": {
     "@module": "turbomoleio.output.data",
     "@class": "MP2Results",
-    "@version": "1.1.1",
+    "@version": "1.5.0",
     "energy": -76.1252418683
   },
   "run": {
     "@module": "turbomoleio.output.data",
     "@class": "RunData",
-    "@version": "1.1.1",
+    "@version": "1.5.0",
     "host": "fedora",
     "start_time": {
       "@module": "datetime",
@@ -29,7 +29,7 @@
   "tm": {
     "@module": "turbomoleio.output.data",
     "@class": "TurbomoleData",
-    "@version": "1.1.1",
+    "@version": "1.5.0",
     "version": "7.4.1",
     "build": "b987a8a8",
     "executable": "ricc2"

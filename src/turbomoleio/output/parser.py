@@ -1146,7 +1146,9 @@ class Parser:
             phsran=float,
             ampran=float,
             cavity=str,
-            epsilon=str,
+            solvent=str,
+            source=str,
+            epsilon=float,
             refind=float,
             fepsi=float,
         )
@@ -1161,7 +1163,20 @@ class Parser:
                 # rsolv [A]: 1.3000
                 # if more are added the regex may need an update.
                 if re.search(k + r"[\s\[A\]]*:", line):
-                    d_parameters[k] = t(line.split()[-1])
+                    if k in ("epsilon", "refind"):
+                        # In Turbomole 7.8, the epsilon and refind parameters lines
+                        # have been modified from
+                        #   epsilon: <VALUE>
+                        #   refind: <VALUE>
+                        # to
+                        #   epsilon: <VALUE> ( <TEMP> C)
+                        #   refind: <VALUE> ( <TEMP> C)
+                        # This deals with both pre-7.8 and post-7.8 Turbomole versions.
+                        d_parameters[k] = t(line.split()[1])
+                    elif k in ("solvent", "source"):
+                        d_parameters[k] = t(line.split(f"{k}:")[1].strip())
+                    else:
+                        d_parameters[k] = t(line.split()[-1])
                     break
 
         d_screening = dict(cosmo=None, correction=None, total=None)

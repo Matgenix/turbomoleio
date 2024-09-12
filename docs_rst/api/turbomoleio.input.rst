@@ -8,7 +8,6 @@ Subpackages
    :maxdepth: 4
 
    turbomoleio.input.templates
-   turbomoleio.input.tests
 
 Submodules
 ----------
